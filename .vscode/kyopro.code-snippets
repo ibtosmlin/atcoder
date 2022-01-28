@@ -1,0 +1,890 @@
+{
+    "LCA": {
+        "prefix": [
+            "lib_最小共通祖先_LCA"
+        ],
+        "body": [
+            "from collections import deque",
+            "",
+            "",
+            "class lca():",
+            "    \"\"\"Lowest Common Ancestor",
+            "",
+            "    u, vの共通の親",
+            "    ダブリング p[i][v] = vの2^i個 親",
+            "",
+            "    Parameters",
+            "    ----------",
+            "    n : int",
+            "        nodeの数",
+            "",
+            "    Methods",
+            "    ----------",
+            "    set_root :",
+            "",
+            "",
+            "",
+            "    \"\"\"",
+            "    def __init__(self, n: int) -> None:",
+            "        self.n = n",
+            "        self.root = None",
+            "        self.edges = [[] for _ in range(n)]",
+            "        self.lv = n.bit_length()",
+            "        self.p = [[None] * n for _ in range(self.lv)]",
+            "        self.depth = [None] * n",
+            "        self.distance = [None] * n",
+            "        self.is_constructed = False",
+            "",
+            "",
+            "    def set_root(self, root: int = 0) -> None:",
+            "        \"\"\"木の根を設定する",
+            "",
+            "        Parameters",
+            "        ----------",
+            "        root : int",
+            "            省略時は 0",
+            "        \"\"\"",
+            "        self.root = root",
+            "        self.is_constructed = False",
+            "",
+            "",
+            "    def add_edge(self, fm: int, to: int, dist: int=1) -> None:",
+            "        \"\"\"辺の設定",
+            "",
+            "        Parameters",
+            "        ----------",
+            "        fm : int",
+            "            辺の始点",
+            "        to : [type]",
+            "            辺の終点",
+            "        \"\"\"",
+            "        self.edges[fm].append((to, dist))",
+            "        self.is_constructed = False",
+            "",
+            "",
+            "    def __construct(self):",
+            "        \"\"\"深さと親の設定とダブリング",
+            "        \"\"\"",
+            "        # 深さと親の設定",
+            "        q = deque()",
+            "        q.append((self.root, 0, 0))",
+            "        self.depth[self.root] = 0",
+            "        self.distance[self.root] = 0",
+            "        self.p[0][self.root] = 0",
+            "        while q:",
+            "            cur, dep, dist = q.popleft()",
+            "            for nxt, nd in self.edges[cur]:",
+            "                if self.p[0][nxt]!=None: continue",
+            "                q.append((nxt, dep+1, dist+nd))",
+            "                self.depth[nxt] = dep+1",
+            "                self.distance[nxt] = dist+nd",
+            "                self.p[0][nxt] = cur",
+            "        # ダブリング",
+            "        for i in range(1, self.lv):",
+            "            for v in range(self.n):",
+            "                self.p[i][v] = self.p[i-1][self.p[i-1][v]]",
+            "        self.is_constructed = True",
+            "",
+            "",
+            "    def la(self, x, h):",
+            "        if not self.is_constructed:",
+            "            self.__construct()",
+            "        for i in range(self.lv)[::-1]:",
+            "            if h >= 1 << i:",
+            "                x = self.p[i][x]",
+            "                h -= 1 << i",
+            "        return x",
+            "",
+            "",
+            "    def lca(self, u, v):",
+            "        \"\"\"共通祖先",
+            "",
+            "        Parameters",
+            "        ----------",
+            "        u, v : node",
+            "            ノード",
+            "",
+            "        Returns",
+            "        -------",
+            "        int",
+            "            共通祖先のノード",
+            "        \"\"\"",
+            "        # u,vの高さを合わせる",
+            "        if not self.is_constructed:",
+            "            self.__construct()",
+            "        if self.depth[u] < self.depth[v]: u, v = v, u",
+            "        u = self.la(u, self.depth[u] - self.depth[v])",
+            "        if u == v: return u",
+            "        # u, vのギリギリ合わない高さまで昇る",
+            "        for i in range(self.lv)[::-1]:",
+            "            if self.p[i][u] != self.p[i][v]:",
+            "                u = self.p[i][u]",
+            "                v = self.p[i][v]",
+            "        return self.p[0][u]",
+            "",
+            "",
+            "    def nodesdist(self, u, v):",
+            "        \"\"\"ノード間の距離",
+            "",
+            "        Parameters",
+            "        ----------",
+            "        u, v : node",
+            "            ノード",
+            "",
+            "        Returns",
+            "        -------",
+            "        int",
+            "            ノード間の距離",
+            "        \"\"\"",
+            "        if not self.is_constructed:",
+            "            self.__construct()",
+            "        lca = self.lca(u, v)",
+            "        return self.depth[u] + self.depth[v] - 2 * self.depth[lca]",
+            "",
+            "",
+            "    def distance(self, u, v):",
+            "        \"\"\"ノード間の経路の長さ",
+            "",
+            "        Parameters",
+            "        ----------",
+            "        u, v : node",
+            "            ノード",
+            "",
+            "        Returns",
+            "        -------",
+            "        int",
+            "            ノード間の距離",
+            "        \"\"\"",
+            "        if not self.is_constructed:",
+            "            self.__construct()",
+            "        lca = self.lca(u, v)",
+            "        return self.distance[u] + self.distance[v] - 2 * self.distance[lca]",
+            "",
+            "",
+            "########################################",
+            "",
+            "n, q = map(int, input().split())",
+            "l = lca(n)",
+            "l.set_root(0)",
+            "for i, ai in enumerate(list(map(int, input().split()))):",
+            "    l.add_edge(ai, i+1)",
+            "",
+            "",
+            "for i in range(q):",
+            "    u, v = map(int1, input().split())",
+            "    print(l.lca(u, v))",
+            ""
+        ],
+        "description": [
+            "最小共通祖先"
+        ]
+    },
+    "二分探索": {
+        "prefix": [
+            "lib_二分探索"
+        ],
+        "body": [
+            "def is_ok(x):",
+            "    ###",
+            "    return True",
+            "ok = x",
+            "ng = y",
+            "while abs(ok - ng) > 1:",
+            "    mid = (ok + ng) // 2",
+            "    if is_ok(mid): ok = mid",
+            "    else: ng = mid",
+            "print(ok)"
+        ],
+        "description": [
+            "二分探索"
+        ]
+    },
+    "ユニオンファインド": {
+        "prefix": [
+            "lib_unionfind"
+        ],
+        "body": [
+            "class UnionFind:",
+            "    def __init__(self, n):                      # 初期化",
+            "        self.n = n                              # 要素数",
+            "        self.parents = [i for i in range(n)]    # 親",
+            "        self.ranks = [0] * n                    # 木の深さ",
+            "        self.sizes = [1] * n                    # グループの要素数",
+            "        self.group_count = n                    # グループの数",
+            "",
+            "    def find(self, x):",
+            "        \"\"\"親を出力",
+            "        Parameters",
+            "        ----------",
+            "        x : int",
+            "            ノード番号",
+            "        \"\"\"",
+            "        if self.parents[x] == x:",
+            "            return x",
+            "        else:",
+            "            p = self.find(self.parents[x])",
+            "            self.parents[x] = p",
+            "            return p",
+            "",
+            "    def unite(self, x, y):",
+            "        \"\"\"ユニオン",
+            "        \"\"\"",
+            "        x = self.find(x)",
+            "        y = self.find(y)",
+            "        if x == y: return",
+            "        if self.ranks[x] > self.ranks[y]:",
+            "            x , y = y, x    #yを親にする",
+            "        if self.ranks[x] == self.ranks[y]:",
+            "                self.ranks[y] += 1",
+            "        self.parents[x] = y",
+            "        self.sizes[y] += self.sizes[x]",
+            "        self.group_count -= 1",
+            "",
+            "    def same(self, x, y) -> bool:",
+            "        \"\"\"xとyが同じグループかどうか",
+            "        \"\"\"",
+            "        return self.find(x) == self.find(y)",
+            "",
+            "    def members(self, x):",
+            "        \"\"\"xと同じグループの要素",
+            "        \"\"\"",
+            "        root = self.find(x)",
+            "        return {i for i in range(self.n) if self.find(i) == root}",
+            "",
+            "    def size(self, x):",
+            "        \"\"\"xのグループの要素数",
+            "        \"\"\"",
+            "        return self.sizes[self.find(x)]",
+            "",
+            "    @property",
+            "    def roots(self):",
+            "        \"\"\"親の要素一覧",
+            "        \"\"\"",
+            "        return {i for i, x in enumerate(self.parents) if i == x}",
+            "",
+            "    @property",
+            "    def all_group_members(self):",
+            "        \"\"\"グループのメンバー一覧",
+            "        \"\"\"",
+            "        group_members = defaultdict(list)",
+            "        for x in range(self.n):",
+            "            group_members[self.find(x)].append(x)",
+            "        return group_members",
+            "",
+            "    def __str__(self):",
+            "        return '\\n'.join(f'{r}: {self.members(r)}' for r in self.roots)",
+            "",
+            "################",
+            "",
+            "n, q = map(int, input().split())",
+            "uf = UnionFind(n)",
+            "for _ in range(q):",
+            "    p, _a, _b = map(int,input().split())",
+            "    _a -= 1; _b -= 1",
+            "    if p == 0:",
+            "        uf.unite(_a, _b)",
+            "    else:",
+            "        if uf.same(_a, _b):",
+            "            print('Yes')",
+            "        else:",
+            "            print('No')",
+            "",
+            "# https://atcoder.jp/contests/atc001/tasks/unionfind_a",
+            ""
+        ],
+        "description": [
+            "ユニオンファインド"
+        ]
+    },
+    "translate": {
+        "prefix": [
+            "translate",
+            "replace"
+        ],
+        "body": [
+            "s = '54IZSB'",
+            "ts = s.translate(str.maketrans(\"BSI\",\"123\"))",
+            "print(ts)",
+            "# 543Z21"
+        ],
+        "description": [
+            "複数の文字列を変換"
+        ]
+    },
+    "d進数": {
+        "prefix": [
+            "n進数",
+            "d進数"
+        ],
+        "body": [
+            "##############################",
+            "# nをd進数表記",
+            "# d進数表記を10進数表記に",
+            "##############################",
+            "",
+            "n = 32",
+            "",
+            "print(format(n, 'b'))  # ２進数",
+            "print(format(n, 'o'))  # ８進数",
+            "print(format(n, 'x'))  # 16進数",
+            "",
+            "print(bin(n))  # ２進数",
+            "print(oct(n))  # ８進数",
+            "print(hex(n))  # 16進数",
+            "",
+            "# 任意のd進数",
+            "def base_repr(n:int, d:int) -> str:",
+            "    ret = ''",
+            "    while n != 0:",
+            "        n, r = divmod(n, d)",
+            "        ret += str(r)",
+            "    return ret[::-1]",
+            "",
+            "print(base_repr(n, 2))",
+            "print(base_repr(n, 30))",
+            "",
+            "",
+            "##############################",
+            "# d進数表記を10進数表記に",
+            "##############################",
+            "s = '12'",
+            "d = 9",
+            "print(int(s, base=d))",
+            "",
+            "# 関数版",
+            "def myint(s:str, d:int) -> int:",
+            "    ret = 0",
+            "    dig = 1",
+            "    for xi in s[::-1]:",
+            "        ret += int(xi)*dig",
+            "        dig *= d",
+            "    return ret",
+            "",
+            "print(myint(s, 9))",
+            ""
+        ],
+        "description": [
+            "nをd進数表記"
+        ]
+    },
+    "intinput": {
+        "prefix": [
+            "intinput",
+            "int(input())"
+        ],
+        "body": [
+            "int(input())"
+        ],
+        "description": [
+            "int型でのinput"
+        ]
+    },
+    "mapint": {
+        "prefix": [
+            "mapintinput",
+            "map(int,input().split())"
+        ],
+        "body": [
+            "map(int, input().split())"
+        ],
+        "description": [
+            "int型で複数数値のinput"
+        ]
+    },
+    "listmapint": {
+        "prefix": [
+            "listmapintinput",
+            "list(map(int,input().split()))"
+        ],
+        "body": [
+            "list(map(int, input().split()))"
+        ],
+        "description": [
+            "int型でlistのinput"
+        ]
+    },
+    "tuplemapint": {
+        "prefix": [
+            "tuplemapintinput",
+            "tuple(map(int,input().split()))"
+        ],
+        "body": [
+            "tuple(map(int, input().split()))"
+        ],
+        "description": [
+            "int型でtupleのinput"
+        ]
+    },
+    "座標圧縮": {
+        "prefix": [
+            "compress_zaatsu",
+            "lib_座標圧縮"
+        ],
+        "body": [
+            "def compress(points, reverse=False, spacing=False):",
+            "    \"\"\"一次元座標圧縮",
+            "",
+            "    Parameters",
+            "    ----------",
+            "    points : list",
+            "         値のリスト [100,300,50,900,200]",
+            "",
+            "    Returns",
+            "    -------",
+            "    pos : {50: 0, 100: 1, 200: 2, 300: 3, 900: 4}",
+            "    vals : {0: 50, 1: 100, 2: 200, 3: 300, 4: 900}",
+            "    \"\"\"",
+            "    pos = {}",
+            "    vals = {}",
+            "    sx = set(points)",
+            "    if spacing:",
+            "        for p in points:",
+            "            sx.add(p+1)",
+            "",
+            "    for i, xi in enumerate(sorted(set(sx), reverse=reverse)):",
+            "        pos[xi] = i",
+            "        vals[i] = xi",
+            "    sx_cmp = [pos[xi] for xi in sx]",
+            "    return pos, vals, sx_cmp",
+            "",
+            "",
+            "def compress2d(points, spacing=False):",
+            "    \"\"\"二次元座標圧縮",
+            "    \"\"\"",
+            "    sx = [point[0] for point in points]",
+            "    sy = [point[1] for point in points]",
+            "    xpos, xvals, sx_cmp = compress(sx, False, spacing)",
+            "    ypos, yvals, sy_cmp = compress(sy, False, spacing)",
+            "    points_cmp = list(zip(sx_cmp, sy_cmp))",
+            "",
+            "    return xpos, ypos, xvals, yvals, points_cmp",
+            ""
+        ],
+        "description": [
+            "座標圧縮"
+        ]
+    },
+    "BIT演算subset": {
+        "prefix": [
+            "lib_BIT演算全部分集合"
+        ],
+        "body": [
+            "# 集合Mの部分集合を列挙",
+            "def subset(n)->list:",
+            "    v = (-1) & n",
+            "    ret = []",
+            "    while v:",
+            "        ret.append(v)",
+            "        v = (v - 1) & n",
+            "    return ret",
+            "n = int('101', 2)",
+            "print(list(map(bin, subset(n))))",
+            "# ['0b101', '0b100', '0b1']",
+            "",
+            "# サイズKの部分集合を列挙",
+            "def ksubset(n, k)->list:",
+            "    ret = []",
+            "    v = (1 << k) - 1",
+            "    while v < (1 << n):",
+            "        ret.append(v)",
+            "        x = v & -v; y = v + x",
+            "        v = ((v & ~y) // x >> 1) | y",
+            "    return ret",
+            "n, k = 5, 2",
+            "print(list(map(bin, ksubset(n, k))))",
+            "# ['0b11', '0b101', '0b110', '0b1001', '0b1010', '0b1100', '0b10001', '0b10010', '0b10100', '0b11000']",
+            ""
+        ],
+        "description": [
+            "集合Mの部分集合"
+        ]
+    },
+    "reverse=True": {
+        "prefix": [
+            "reverse=True"
+        ],
+        "body": [
+            "reverse=True"
+        ],
+        "description": [
+            "ソートでのリバース"
+        ]
+    },
+    "sort(key=itemgetter": {
+        "prefix": [
+            "sert(key",
+            "itemgetter"
+        ],
+        "body": [
+            "sort(key=itemgetter($index))"
+        ],
+        "description": [
+            "itemgetterソート"
+        ]
+    },
+    "defaultdict": {
+        "prefix": [
+            "defaultdict",
+            "d=defaultdict"
+        ],
+        "body": [
+            "d = defaultdict($int)"
+        ],
+        "description": [
+            "デフォルトディクショナリ"
+        ]
+    },
+    "sort_by_function": {
+        "prefix": [
+            "sort_by_function"
+        ],
+        "body": [
+            "from functools import cmp_to_key",
+            "def sort_by_function(x):",
+            "    \"\"\"比較関数を設定してソート",
+            "    \"\"\"",
+            "    def compare(item1, item2):",
+            "        \"\"\" \"小さい\" -> -1",
+            "            \"等しい\" -> 0",
+            "            \"大きい\" -> 1",
+            "        \"\"\"",
+            "        # 以下はx, yが与えられてy/xで比較する例",
+            "        # y1/x1 < y2/x2",
+            "        # -> y1*x2 < y2*x1",
+            "        x1, y1 = item1",
+            "        x2, y2 = item2",
+            "",
+            "        if y1*x2 < y2*x1:",
+            "            return -1",
+            "        elif y1*x2 > y2*x1:",
+            "            return 1",
+            "        else:",
+            "            return 0",
+            "    x.sort(key=cmp_to_key(compare))",
+            "    return x",
+            "########################################",
+            "a = [[1, 2], [2, 6] , [3, 6], [4, 5], [5, 7]]",
+            "print(a)",
+            "a = sort_by_function(a)",
+            "print(a)",
+            "# [[4, 5], [5, 7], [1, 2], [3, 6], [2, 6]]",
+            "#   1.25    0.714    0.5     0.5    0.333"
+        ],
+        "description": [
+            "比較関数使って並べ替え"
+        ]
+    },
+    "順列・組み合わせ": {
+        "prefix": [
+            "itertools",
+            "lib_順列・組み合わせ"
+        ],
+        "body": [
+            "P = list(permutations(range(n), r))   # 順列(nPr)",
+            "C = list(combinations(range(n), r))   # 組み合わせ(nCr)",
+            "CR = list(combinations_with_replacement(range(n), r))  # 重複も許容した組み合わせ(nHr=n+r-1Cr)",
+            "PN = list(product(range(n), repeat=r)) # 重複順列(n**r)",
+            "T = [[1, 2],[3, 4, 5, 6],[7, 8, 9]]",
+            "PT = list(product(*T))"
+        ],
+        "description": [
+            "順列・組み合わせ"
+        ]
+    },
+    "区間カウント": {
+        "prefix": [
+            "lib_区間カウント"
+        ],
+        "body": [
+            "def count_intervals(a:list, x)->int:",
+            "    dm = a + [float('inf')]",
+            "    ret = 0",
+            "    is_yes = False",
+            "    for ai in dm:",
+            "        if ai == x:",
+            "            if is_yes: continue",
+            "            is_yes = True",
+            "        else:",
+            "            if not is_yes: continue",
+            "            is_yes = False",
+            "            ret += 1",
+            "",
+            "    return ret",
+            "# A=[0, 0, 1, 1, 1, 1, 0, 1, 1, 1]",
+            "# x=1 の区間がいくつあるか ans = 2"
+        ],
+        "description": [
+            "区間カウント",
+            "A=[0, 0, 1, 1, 1, 1, 0, 1, 1, 1]",
+            "x=1 の区間がいくつあるか ans = 2"
+        ]
+    },
+    "lib_math": {
+        "prefix": [
+            "lib_最大公約数_三角関数",
+            "import math"
+        ],
+        "body": [
+            "import math",
+            "print(math.sin(math.pi/4))",
+            "print(math.cos(math.pi/4))",
+            "print(math.tan(math.pi/4))",
+            "print(math.gcd(x, y))"
+        ],
+        "description": [
+            "mathのライブラリ"
+        ]
+    },
+    "lib_decimal": {
+        "prefix": [
+            "lib_四捨五入_Decimal"
+        ],
+        "body": [
+            "from decimal import Decimal",
+            "x, y, r = map(Decimal, input().split())",
+            "f = 123.456",
+            "fd = Decimal(str(f))",
+            "fr = fd.quantize(Decimal('0'), rounding=ROUND_HALF_UP)  #123",
+            "fr = fd.quantize(Decimal('0.1'), rounding=ROUND_HALF_UP)#123.5"
+        ],
+        "description": [
+            "四捨五入が正しくできるツール",
+            "Decimal で扱う"
+        ]
+    },
+    "強連結成分分解": {
+        "prefix": [
+            "lib_強連結成分分解_SCC"
+        ],
+        "body": [
+            "class SCCGraph:",
+            "    def __init__(self, n:int) -> None:",
+            "        self.n = n                          # 頂点サイズ",
+            "        self.size = None                    # 分解後連結成分数",
+            "        self.label = [None] * n             # それぞれの頂点がどの連結成分に属しているか",
+            "        self.gf = [[] for _ in range(n)]    # 順方向の有向グラフ",
+            "        self.gr = [[] for _ in range(n)]    # 逆方向の有向グラフ",
+            "        self.edges = None                   # 縮約後の辺(隣接リスト)",
+            "        self.groups = None                  # 分解後の成分のトポロジカルソート",
+            "",
+            "",
+            "    def add_edge(self, fm, to):",
+            "        self.gf[fm].append(to)",
+            "        self.gr[to].append(fm)",
+            "",
+            "",
+            "    def build(self):",
+            "        order = []",
+            "        used = [False] * self.n",
+            "",
+            "        def dfs(s):",
+            "            used[s] = True",
+            "            for t in self.gf[s]:",
+            "                if not used[t]: dfs(t)",
+            "            order.append(s)",
+            "        def rdfs(s, col):",
+            "            self.label[s] = col",
+            "            used[s] = True",
+            "            for t in self.gr[s]:",
+            "                if not used[t]: rdfs(t, col)",
+            "",
+            "        for s in range(n):",
+            "            if not used[s]: dfs(s)",
+            "        used = [False] * self.n",
+            "        self.size = 0",
+            "        for s in reversed(order):",
+            "            if not used[s]:",
+            "                rdfs(s, self.size)",
+            "                self.size += 1",
+            "",
+            "        # 縮約後のグラフを構築",
+            "        self.edges = [set() for _ in range(self.size)]",
+            "        self.groups = [[] for _ in range(self.size)]",
+            "        for s in range(n):",
+            "            lbs = self.label[s]",
+            "            for t in self.gf[s]:",
+            "                lbt = self.label[t]",
+            "                if lbs == lbt: continue",
+            "                self.edges[lbs].add(lbt)",
+            "            self.groups[lbs].append(s)",
+            "",
+            "",
+            "####################################",
+            "",
+            "n, m = map(int, input().split())",
+            "scc = SCCGraph(n)",
+            "",
+            "for i in range(m):",
+            "    _a, _b = map(int, input().split())",
+            "    _a -= 1; _b -= 1",
+            "    scc.add_edge(_a, _b)",
+            "",
+            "scc.build()",
+            "",
+            "print(scc.size)",
+            "for gi in scc.groups:",
+            "    print(len(gi), *gi)",
+            "",
+            "# 強連結成分分解(SCC): グラフgに対するSCCを行う",
+            "# https://hkawabata.github.io/technical-note/note/Algorithm/graph/scc.html",
+            "# 有向グラフで、互いに行き来できる連結成分を分類する",
+            "# 元の有向グラフが DAG でなくとも、そのグラフの SCC は DAG を形成する",
+            "# 作り方",
+            "# 適当に選んだ頂点から深さ優先（帰りがけ探索）し、1から番号を増やしながらラベリング：",
+            "# エッジをすべて逆向きにしたグラフを用意：",
+            "# 頂点のうち、ラベル番号が最大のものを選んでグラフ探索 → 通った頂点はすべて1つの SCC に属する：",
+            "# 未探索の頂点のうち、ラベル番号が最大のものを選んでグラフ探索 → 通った頂点はすべて1つの SCC に属する：",
+            "",
+            "# https://atcoder.jp/contests/practice2/tasks/practice2_g",
+            ""
+        ],
+        "description": [
+            "強連結成分分解(SCC): グラフgに対するSCCを行う"
+        ]
+    },
+    "ユニオンファインド重み付き": {
+        "prefix": [
+            "lib_unionfind_weighted"
+        ],
+        "body": [],
+        "description": [
+            "ユニオンファインド重み付き",
+            "ass UnionFindWeighted:",
+            "  def __init__(self, n):                      # 初期化",
+            "      self.n = n                              # 要素数",
+            "      self.parents = [i for i in range(n)]    # 親",
+            "      self.ranks = [0] * n                    # 木の深さ",
+            "      self.sizes = [1] * n                    # グループの要素数",
+            "      self.weights = [0] * n                  # 親との重み",
+            "",
+            "  #親を出力",
+            "  def find(self, x):",
+            "      if self.parents[x] == x:",
+            "          return x",
+            "      else:",
+            "          p = self.find(self.parents[x])",
+            "          self.weights[x] += self.weights[self.parents[x]]",
+            "          self.parents[x] = p",
+            "          return p",
+            "",
+            "  # ユニオン",
+            "  def unite(self, x, y, w):",
+            "      # a[x]->a[y]  の差はw  # a[y]=a[x]+w",
+            "      rx = self.find(x)",
+            "      ry = self.find(y)",
+            "      wx = self.weight(x)",
+            "      wy = self.weight(y)",
+            "      if rx == ry: return",
+            "      if self.ranks[rx] > self.ranks[ry]:",
+            "          rx , ry = ry, rx    #ryを親にする",
+            "          wx , wy = wy, wx",
+            "          w *= -1",
+            "      self.parents[rx] = ry",
+            "      self.sizes[ry] += self.sizes[rx]",
+            "      self.weights[rx] = wy - wx - w",
+            "      if self.ranks[rx]==self.ranks[ry]:",
+            "          self.ranks[rx] += 1",
+            "",
+            "  #xとyが同じグループかどうか",
+            "  def same(self, x, y):",
+            "      return self.find(x) == self.find(y)",
+            "",
+            "  #xと同じグループの要素",
+            "  def members(self, x):",
+            "      root = self.find(x)",
+            "      return {i for i in range(self.n) if self.find(i) == root}",
+            "",
+            "  #グループの要素数",
+            "  def size(self, x):",
+            "      root = self.find(x)",
+            "      return self.sizes[root]",
+            "",
+            "  #親の要素一覧",
+            "  def roots(self):",
+            "      return {i for i, x in enumerate(self.parents) if i == x}",
+            "",
+            "  #グループの個数",
+            "  def group_count(self):",
+            "      return len(self.roots())",
+            "",
+            "  #グループのメンバー一覧",
+            "  def all_group_members(self):",
+            "      return {r: self.members(r) for r in self.roots()}",
+            "",
+            "  #重みの差",
+            "  def weight(self, x):",
+            "      _ = self.find(x)",
+            "      return self.weights[x]",
+            "",
+            "  #重みの差",
+            "  def diff(self, x, y):",
+            "      rx = self.find(x)",
+            "      ry = self.find(y)",
+            "      if rx != ry: return float('inf')",
+            "      return self.weight(y) - self.weight(x)",
+            "",
+            "  def __str__(self):",
+            "      return '\\n'.join('{}: {}'.format(r, self.members(r)) for r in self.roots())",
+            "",
+            "##############",
+            "",
+            " m = map(int, input().split())",
+            " = UnionFindWeighted(n)",
+            "r _ in range(m):",
+            "  a, b, w = map(int,input().split())",
+            "  a -= 1; b -= 1",
+            "  uf.unite(a, b, w)",
+            ""
+        ]
+    },
+    "n=intinput": {
+        "prefix": [
+            "n=int(input())",
+            "n =int(input())",
+            "nintinput"
+        ],
+        "body": [
+            "n = int(input())"
+        ],
+        "description": [
+            "整数nの読み込み"
+        ]
+    },
+    "s=input": {
+        "prefix": [
+            "s=input()",
+            "s =input()",
+            "sinput"
+        ],
+        "body": [
+            "s = input()"
+        ],
+        "description": [
+            "文字列sの読み込み"
+        ]
+    },
+    "ab=mapintinput": {
+        "prefix": [
+            "a,b=map",
+            "ab=mapintinput"
+        ],
+        "body": [
+            "a, b = map(int, input().split())"
+        ],
+        "description": [
+            "整数a, bの読み込み"
+        ]
+    },
+    "n,m=map(int, input().split())": {
+        "prefix": [
+            "n,m=map",
+            "nm=mapintinput"
+        ],
+        "body": [
+            "n, m = map(int, input().split())"
+        ],
+        "description": [
+            "整数n, mの読み込み"
+        ]
+    }
+}
