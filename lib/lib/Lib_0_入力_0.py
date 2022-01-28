@@ -6,7 +6,16 @@
 int(input())
 #prefix#
 # intinput
-# int(input())
+#end#
+
+#name#
+# inputsplit
+#description#
+# inputをsplit
+#body#
+input().split()
+#prefix#
+# inputsplit
 #end#
 
 #name#
@@ -17,7 +26,6 @@ int(input())
 map(int, input().split())
 #prefix#
 # mapintinput
-# map(int,input().split())
 #end#
 
 #name#
@@ -28,7 +36,6 @@ map(int, input().split())
 list(map(int, input().split()))
 #prefix#
 # listmapintinput
-# list(map(int,input().split()))
 #end#
 
 #name#
@@ -39,5 +46,4 @@ list(map(int, input().split()))
 tuple(map(int, input().split()))
 #prefix#
 # tuplemapintinput
-# tuple(map(int,input().split()))
 #end#

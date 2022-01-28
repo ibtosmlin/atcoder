@@ -11,12 +11,3 @@ def input(): return sys.stdin.readline().rstrip()
 def int1(x): return int(x)-1
 def end(r=-1): print(r); exit()
 def alp(i): return chr(ord('a') + i%26)    # i=0->'a', i=26->'z'
-
-
-ret = 0
-print(ret)
-
-# print('Yes' if ret else 'No')
-# print(-1 if ret == INF else ret)
-# print('\n'.join(ret))
-# print('\n'.join(map(str, ret)))

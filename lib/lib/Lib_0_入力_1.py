@@ -5,9 +5,7 @@
 #body#
 n = int(input())
 #prefix#
-# n=int(input())
 # n =int(input())
-# nintinput
 #end#
 
 #name#
@@ -17,9 +15,7 @@ n = int(input())
 #body#
 s = input()
 #prefix#
-# s=input()
 # s =input()
-# sinput
 #end#
 
 #name#
@@ -29,8 +25,7 @@ s = input()
 #body#
 a, b = map(int, input().split())
 #prefix#
-# a,b=map
-# ab=mapintinput
+# a, b=map
 #end#
 
 #name#
@@ -40,6 +35,5 @@ a, b = map(int, input().split())
 #body#
 n, m = map(int, input().split())
 #prefix#
-# n,m=map
-# nm=mapintinput
+# n, m=map
 #end#

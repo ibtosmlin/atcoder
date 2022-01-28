@@ -369,8 +369,7 @@
     },
     "intinput": {
         "prefix": [
-            "intinput",
-            "int(input())"
+            "intinput"
         ],
         "body": [
             "int(input())"
@@ -379,10 +378,20 @@
             "int型でのinput"
         ]
     },
+    "inputsplit": {
+        "prefix": [
+            "inputsplit"
+        ],
+        "body": [
+            "input().split()"
+        ],
+        "description": [
+            "inputをsplit"
+        ]
+    },
     "mapint": {
         "prefix": [
-            "mapintinput",
-            "map(int,input().split())"
+            "mapintinput"
         ],
         "body": [
             "map(int, input().split())"
@@ -393,8 +402,7 @@
     },
     "listmapint": {
         "prefix": [
-            "listmapintinput",
-            "list(map(int,input().split()))"
+            "listmapintinput"
         ],
         "body": [
             "list(map(int, input().split()))"
@@ -405,8 +413,7 @@
     },
     "tuplemapint": {
         "prefix": [
-            "tuplemapintinput",
-            "tuple(map(int,input().split()))"
+            "tuplemapintinput"
         ],
         "body": [
             "tuple(map(int, input().split()))"
@@ -499,6 +506,61 @@
             "集合Mの部分集合"
         ]
     },
+    "output0": {
+        "prefix": [
+            "print(0ret)"
+        ],
+        "body": [
+            "print(ret)"
+        ],
+        "description": [
+            "print(ret)"
+        ]
+    },
+    "output": {
+        "prefix": [
+            "print(1Yes/No)"
+        ],
+        "body": [
+            "print('Yes' if ret else 'No')"
+        ],
+        "description": [
+            "print(Yes/No)"
+        ]
+    },
+    "output2": {
+        "prefix": [
+            "print(2INF)"
+        ],
+        "body": [
+            "print(-1 if ret == INF else ret)"
+        ],
+        "description": [
+            "print(INF)"
+        ]
+    },
+    "output3": {
+        "prefix": [
+            "print(3joinret)"
+        ],
+        "body": [
+            "print('\\n'.join(ret))"
+        ],
+        "description": [
+            "print(joinret)"
+        ]
+    },
+    "output4": {
+        "prefix": [
+            "print(4join(map(str(ret)"
+        ],
+        "body": [
+            "print('\\n'.join(map(str, ret)))"
+        ],
+        "description": [
+            "print(join(map(str(ret)"
+        ]
+    },
     "reverse=True": {
         "prefix": [
             "reverse=True"
@@ -512,8 +574,7 @@
     },
     "sort(key=itemgetter": {
         "prefix": [
-            "sert(key",
-            "itemgetter"
+            "sort(key=itemgetter"
         ],
         "body": [
             "sort(key=itemgetter($index))"
@@ -839,9 +900,7 @@
     },
     "n=intinput": {
         "prefix": [
-            "n=int(input())",
-            "n =int(input())",
-            "nintinput"
+            "n =int(input())"
         ],
         "body": [
             "n = int(input())"
@@ -852,9 +911,7 @@
     },
     "s=input": {
         "prefix": [
-            "s=input()",
-            "s =input()",
-            "sinput"
+            "s =input()"
         ],
         "body": [
             "s = input()"
@@ -865,8 +922,7 @@
     },
     "ab=mapintinput": {
         "prefix": [
-            "a,b=map",
-            "ab=mapintinput"
+            "a, b=map"
         ],
         "body": [
             "a, b = map(int, input().split())"
@@ -877,8 +933,7 @@
     },
     "n,m=map(int, input().split())": {
         "prefix": [
-            "n,m=map",
-            "nm=mapintinput"
+            "n, m=map"
         ],
         "body": [
             "n, m = map(int, input().split())"

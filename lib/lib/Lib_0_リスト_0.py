@@ -15,8 +15,7 @@ reverse=True
 #body#
 sort(key=itemgetter($index))
 #prefix#
-# sert(key
-# itemgetter
+# sort(key=itemgetter
 #end#
 
 #name#
