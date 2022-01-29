@@ -28,3 +28,13 @@ fr = fd.quantize(Decimal('0.1'), rounding=ROUND_HALF_UP)#123.5
 #prefix#
 # lib_四捨五入_Decimal
 #end#
+
+#name#
+# lib_再帰関数
+#description#
+# 再帰関数
+#body#
+@lru_cache(maxsize=None)
+#prefix#
+# lib_再帰関数
+#end#

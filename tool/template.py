@@ -3,6 +3,7 @@ from itertools import *
 from operator import itemgetter
 from collections import defaultdict, Counter, deque
 from heapq import heapify, heappop, heappush
+from functools import lru_cache
 sys.setrecursionlimit(10001000)
 INF = float('inf')
 mod = 1000000007; mod1 = 998244353
