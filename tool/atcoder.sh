@@ -31,7 +31,7 @@ cd ${cwd}
 
 if [ $arg = 'd' ]; then
 # download
-    x-www-browser $url
+#    x-www-browser $url
     echo "Downloading....."
     mkdir -p $ctaskwd
     cd $ctaskwd

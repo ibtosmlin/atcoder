@@ -12,5 +12,5 @@ NAME=${NAME##*/}
 job_id=${1}
 
 
-atc ${con_root}/${con_id}/tasks/${con_id}_${NAME} ${job_id}
+at ${con_root}/${con_id}/tasks/${con_id}_${NAME} ${job_id}
 #echo ${con_root}/${con_id}/tasks/${con_id}_${NAME} ${job_id}
