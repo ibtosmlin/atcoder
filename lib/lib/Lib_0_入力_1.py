@@ -13,9 +13,9 @@ n = int(input())
 #description#
 # 文字列sの読み込み
 #body#
-s = input()
+s = list(input())
 #prefix#
-# s =input()
+# s =list(input())
 #end#
 
 #name#
