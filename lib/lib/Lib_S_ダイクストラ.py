@@ -73,5 +73,5 @@ for i in range(n):
 print(ret)
 
 #prefix#
-# lib_ダイクストラ_最短経路探索
+# lib_s_最短経路探索_dijkstra
 #end#

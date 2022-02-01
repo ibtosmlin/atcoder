@@ -1,4 +1,101 @@
 {
+    "ワーシャルフロイド法": {
+        "prefix": [],
+        "body": [],
+        "description": []
+    },
+    "iscription#": {
+        "prefix": [],
+        "body": [],
+        "description": []
+    },
+    "全頂点間最短路": {
+        "prefix": [],
+        "body": [],
+        "description": []
+    },
+    "d[i][j]は2頂点間i, j間の移動コストを格納, Mは頂点数": {
+        "prefix": [],
+        "body": [],
+        "description": []
+    },
+    "O(N^3)": {
+        "prefix": [
+            "lib_最短経路探索_ワーシャルフロイド"
+        ],
+        "body": [
+            "import copy",
+            "",
+            "class warshall_floyd:",
+            "    def __init__(self, n:int) -> None:",
+            "        self.INF = float(\"inf\")",
+            "        self.n = n",
+            "        self.d = [[self.INF] * n for _ in range(n)]",
+            "        #d[u][v] : 辺uvのコスト(存在しないときはinf)",
+            "        for i in range(n):",
+            "            self.d[i][i] = 0 #自身のところに行くコストは０",
+            "",
+            "",
+            "",
+            "    def build(self):",
+            "        n = self.n",
+            "        wf = copy.deepcopy(self.d)",
+            "        for k in range(n):",
+            "            for i in range(n):",
+            "                for j in range(n):",
+            "                    wf[i][j] = min(wf[i][j], wf[i][k] + wf[k][j])",
+            "",
+            "        self.wf = wf #wf[i][j]に頂点i, j間の最短距離を格納",
+            "",
+            "",
+            "    def add_edge(self, fm, to, cost):",
+            "        self.d[fm][to] = cost",
+            "",
+            "",
+            "    # 負値閉路検索",
+            "    @property",
+            "    def is_neg_cycle(self) -> bool:",
+            "        for i in range(self.n):",
+            "            if self.wf[i][i] < 0:",
+            "                return True",
+            "        return False",
+            "",
+            "",
+            "    # 経路復元",
+            "    def path(self, s, g):",
+            "        ret = []",
+            "        if s == g or self.wf[s][g] == self.INF:",
+            "            return ret",
+            "        cur = s",
+            "        while cur!=g:",
+            "            for nxt in range(self.n):",
+            "                if nxt==cur or nxt==s: continue",
+            "                if self.d[cur][nxt] + self.wf[nxt][g] == self.wf[cur][g]:",
+            "                    ret.append((cur, nxt))",
+            "    #                ret.append((nxt, cur))",
+            "                    cur = nxt",
+            "                    break",
+            "        return ret",
+            "",
+            "##############################",
+            "",
+            "n, m = map(int,input().split()) #N:頂点数 m:辺の数",
+            "",
+            "WF = warshall_floyd(n)",
+            "",
+            "for _ in range(m):",
+            "    _u, _v, _w = map(int,input().split())",
+            "    _u -= 1; _v -= 1",
+            "    WF.add_edge(_u, _v, _w)",
+            "    WF.add_edge(_v, _u, _w)",
+            "",
+            "WF.build()",
+            "",
+            "print(WF.path(0, n-1))",
+            ""
+        ],
+        "description": []
+    },
     "三分探索": {
         "prefix": [
             "lib_三分探索"
@@ -606,6 +703,100 @@
         "body": [],
         "description": []
     },
+    "転置行列": {
+        "prefix": [
+            "rotate_matrix"
+        ],
+        "body": [
+            "def rotate(A, reverse = False):",
+            "    if reverse:",
+            "        return [list(x) for x in zip(*A)][::-1]",
+            "    else:",
+            "        return [list(x) for x in zip(*A[::-1])]"
+        ],
+        "description": [
+            "転置行列"
+        ]
+    },
+    "ダイクストラ法": {
+        "prefix": [
+            "lib_最短経路探索_ダイクストラ"
+        ],
+        "body": [
+            "# ダイクストラ法",
+            "# 重み付きグラフ関係により最短経路のリストを作る",
+            "# 有向グラフで優先度付きキューで探索",
+            "# https://atcoder.jp/contests/abc035/tasks/abc035_d",
+            "# O((E+V)logV)",
+            "class dijkstra:",
+            "    def __init__(self, n, edges):",
+            "        self.n = n              # ノード数",
+            "        self.edges = edges      # 有向グラフ",
+            "        self.prev = [-1] * n    # 前のノード",
+            "        self.start = None       # 始点",
+            "",
+            "    def build(self, start):",
+            "        self.dist = [INF] * self.n",
+            "        self.dist[start] = 0",
+            "        next_q = [(0, start)]",
+            "        heapify(next_q)",
+            "        while next_q:",
+            "            cd, cn = heappop(next_q)",
+            "            if self.dist[cn] < cd: continue",
+            "            for nn, nd in self.edges[cn]:",
+            "                # 変則的な距離の場合はここを調整 ##",
+            "                nd_ = self.dist[cn] + nd",
+            "                ############################",
+            "                if self.dist[nn] <= nd_: continue",
+            "                self.dist[nn] = nd_",
+            "                self.prev[nn] = cn",
+            "                heappush(next_q, (nd_, nn))",
+            "",
+            "",
+            "    def get_dist(self, goal):",
+            "        return self.dist[goal]",
+            "",
+            "",
+            "    def get_path(self, goal):",
+            "        path = []",
+            "        node = goal",
+            "        while node is not None:",
+            "            path.append(node)",
+            "            node = self.prev[node]",
+            "        return path[::-1]",
+            "",
+            "",
+            "##########################################",
+            "",
+            "INF = float('inf')",
+            "n, m, t = map(int, input().split())",
+            "edges = [[] for _ in range(n)]",
+            "edges_R = [[] for _ in range(n)]    #行きと帰りを分けた（有向グラフ）場合",
+            "#リストの作成",
+            "for _ in range(m):",
+            "    a, b, c = map(int, input().split())",
+            "    a, b = a-1, b-1",
+            "    edges[a].append((b,c))",
+            "    edges[b].append((a,c))",
+            "    edges_R[b].append((a,c))        #行きと帰りを分けた（有向グラフ）場合",
+            "",
+            "dij = dijkstra(n, edges)  #クラスのインスタンス化",
+            "dijR = dijkstra(n, edges_R)",
+            "F = dij.build(0)",
+            "R = dijR.build(0)",
+            "",
+            "ret = 0",
+            "for i in range(n):",
+            "    ret = max(ret, (t-F[i]-R[i])*A[i])",
+            "print(ret)",
+            ""
+        ],
+        "description": [
+            "ダイクストラ法",
+            "辺の重みが小さいものから、決めていく",
+            ""
+        ]
+    },
     "intinput": {
         "prefix": [
             "intinput"
@@ -681,17 +872,6 @@
         ],
         "description": [
             "文字列でmatrixのinput"
-        ]
-    },
-    "転置行列": {
-        "prefix": [
-            "transpose_matrix"
-        ],
-        "body": [
-            "tA = [list(x) for x in zip(*A)]"
-        ],
-        "description": [
-            "転置行列"
         ]
     },
     "Binary Indexed Tree": {
@@ -1694,83 +1874,75 @@
             "nCr剰余"
         ]
     },
-    "ダイクストラ法": {
+    "ベルマンフォード法": {
         "prefix": [
-            "lib_ダイクストラ_最短経路探索"
+            "lib_最短経路探索_ベルマンフォード"
         ],
         "body": [
-            "# ダイクストラ法",
+            "# ベルマンフォード法",
             "# 重み付きグラフ関係により最短経路のリストを作る",
-            "# 有向グラフで優先度付きキューで探索",
-            "# https://atcoder.jp/contests/abc035/tasks/abc035_d",
-            "# O((E+V)logV)",
-            "class dijkstra:",
-            "    def __init__(self, n, edges):",
-            "        self.n = n              # ノード数",
-            "        self.edges = edges      # 有向グラフ",
-            "        self.prev = [-1] * n    # 前のノード",
-            "        self.start = None       # 始点",
+            "# 辺を繰り返しみて、最小化していく",
+            "# |V|回更新するとで収束する/しなければ、負の閉路がある",
             "",
-            "    def build(self, start):",
-            "        self.dist = [INF] * self.n",
-            "        self.dist[start] = 0",
-            "        next_q = [(0, start)]",
-            "        heapify(next_q)",
-            "        while next_q:",
-            "            cd, cn = heappop(next_q)",
-            "            if self.dist[cn] < cd: continue",
-            "            for nn, nd in self.edges[cn]:",
-            "                # 変則的な距離の場合はここを調整 ##",
-            "                nd_ = self.dist[cn] + nd",
-            "                ############################",
-            "                if self.dist[nn] <= nd_: continue",
-            "                self.dist[nn] = nd_",
-            "                self.prev[nn] = cn",
-            "                heappush(next_q, (nd_, nn))",
+            "# https://atcoder.jp/contests/abc061/tasks/abc061_d",
             "",
+            "def bellman_ford(st=0):",
+            "    \"\"\"",
+            "    n: グラフの頂点数",
+            "    st: 始点",
+            "    G[v] = [(w, cost), ...]: 頂点vからコストcostで到達できる頂点w",
+            "    returns",
+            "    dist or -1 if 閉路あり",
+            "    \"\"\"",
             "",
-            "    def get_dist(self, goal):",
-            "        return self.dist[goal]",
+            "    INF = float('INF')",
+            "    dist = [INF] * n",
+            "    dist[st] = 0",
+            "    for _ in range(n):",
+            "        update = False",
+            "        for v, e in enumerate(G):",
+            "            for t, cost in e:",
+            "                if dist[v] == INF: continue",
+            "                if dist[v] + cost >= dist[t]: continue",
+            "                dist[t] = dist[v] + cost",
+            "                update = True",
+            "                upi = t",
+            "        if not update: return dist",
+            "    # 負閉路検出処理",
+            "    dist[upi] = -INF",
+            "    for _ in range(n):",
+            "        update = False",
+            "        for v, e in enumerate(G):",
+            "            for t, cost in e:",
+            "                if dist[v] == INF: continue",
+            "                if dist[v] + cost >= dist[t]: continue",
+            "                dist[t] = dist[v] + cost",
+            "                update = True",
+            "                upi = t",
+            "        if not update: return dist",
+            "    return -1",
             "",
+            "######################################",
             "",
-            "    def get_path(self, goal):",
-            "        path = []",
-            "        node = goal",
-            "        while node is not None:",
-            "            path.append(node)",
-            "            node = self.prev[node]",
-            "        return path[::-1]",
-            "",
-            "",
-            "##########################################",
-            "",
-            "INF = float('inf')",
-            "n, m, t = map(int, input().split())",
-            "edges = [[] for _ in range(n)]",
-            "edges_R = [[] for _ in range(n)]    #行きと帰りを分けた（有向グラフ）場合",
-            "#リストの作成",
+            "n, m = map(int, input().split())",
+            "G = [[] for _ in range(n)]",
+            "# 隣接リストの作成",
             "for _ in range(m):",
-            "    a, b, c = map(int, input().split())",
-            "    a, b = a-1, b-1",
-            "    edges[a].append((b,c))",
-            "    edges[b].append((a,c))",
-            "    edges_R[b].append((a,c))        #行きと帰りを分けた（有向グラフ）場合",
+            "    _a, _b, _c = map(int, input().split())",
+            "    _a -= 1; _b -= 1",
+            "    G[_a].append((_b, -_c))",
             "",
-            "dij = dijkstra(n, edges)  #クラスのインスタンス化",
-            "dijR = dijkstra(n, edges_R)",
-            "F = dij.build(0)",
-            "R = dijR.build(0)",
-            "",
-            "ret = 0",
-            "for i in range(n):",
-            "    ret = max(ret, (t-F[i]-R[i])*A[i])",
-            "print(ret)",
+            "st = 0",
+            "ret = bellman_ford(st)",
+            "if ret == -1:",
+            "    print('inf')",
+            "else:",
+            "    print(-ret[-1])",
             ""
         ],
         "description": [
-            "ダイクストラ法",
-            "辺の重みが小さいものから、決めていく",
-            ""
+            "ベルマンフォード法・負閉路OK",
+            "O(NM)"
         ]
     },
     "差分最小値探索": {
@@ -1949,6 +2121,81 @@
         ],
         "description": [
             "整数n, mの読み込み"
+        ]
+    },
+    "n,k=map(int, input().split())": {
+        "prefix": [
+            "n, k=map"
+        ],
+        "body": [
+            "n, k = map(int, input().split())"
+        ],
+        "description": [
+            "整数n, kの読み込み"
+        ]
+    },
+    "a=list(map(int, input().split()))": {
+        "prefix": [
+            "a =list"
+        ],
+        "body": [
+            "a = list(map(int, input().split()))"
+        ],
+        "description": [
+            "リストの読み込み"
+        ]
+    },
+    "b=list(map(int, input().split()))": {
+        "prefix": [
+            "b =list"
+        ],
+        "body": [
+            "b = list(map(int, input().split()))"
+        ],
+        "description": [
+            "リストの読み込み"
+        ]
+    },
+    "edges": {
+        "prefix": [
+            "edges ="
+        ],
+        "body": [
+            "edges = [[] for _ in range(n)]",
+            "for _ in range(m):",
+            "    _a, _b = map(int1, input().split())",
+            "    edges[_a].append(_b)",
+            "    edges[_b].append(_a)"
+        ],
+        "description": [
+            "edges"
+        ]
+    },
+    "edgesweighted": {
+        "prefix": [
+            "edges = w"
+        ],
+        "body": [
+            "edges = [[] for _ in range(n)]",
+            "for _ in range(m):",
+            "    _a, _b, _w = map(int, input().split())",
+            "    _a -= 1; _b -= 1",
+            "    edges[_a].append((_b, _w))",
+            "    edges[_b].append((_a, _w))"
+        ],
+        "description": [
+            "edges(重み付き)"
+        ]
+    },
+    "0インデックス": {
+        "prefix": [
+            "a -= 1; b -= 1"
+        ],
+        "body": [
+            "a -= 1; b -= 1"
+        ],
+        "description": [
+            "0-indexed"
         ]
     }
 }

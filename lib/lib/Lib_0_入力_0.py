@@ -68,12 +68,3 @@ ma = [list(input()) for _ in range($n)]
 # [listinput()
 #end#
 
-#name#
-# 転置行列
-#description#
-# 転置行列
-#body#
-tA = [list(x) for x in zip(*A)]
-#prefix#
-# transpose_matrix
-#end#

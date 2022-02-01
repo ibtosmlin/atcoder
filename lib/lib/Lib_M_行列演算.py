@@ -37,3 +37,30 @@ for r in prod(ma, mb):
 #prefix#
 # Lib_行列演算_matrix
 #end#
+
+
+#name#
+# 転置行列
+#description#
+# 転置行列
+#body#
+def trans(A):
+    return [list(x) for x in zip(*A)]
+#prefix#
+# transpose_matrix
+#end#
+
+
+#name#
+# 転置行列
+#description#
+# 転置行列
+#body#
+def rotate(A, reverse = False):
+    if reverse:
+        return [list(x) for x in zip(*A)][::-1]
+    else:
+        return [list(x) for x in zip(*A[::-1])]
+#prefix#
+# rotate_matrix
+#end#
