@@ -12,26 +12,17 @@ def input(): return sys.stdin.readline().rstrip()
 def int1(x): return int(x)-1
 def end(r=-1): print(r); exit()
 def alp(i): return chr(ord('a') + i%26)    # i=0->'a', i=26->'z'
-n, x = map(int, input().split())
-h = list(map(int, input().split()))
-edges = [[] for _ in range(n)]
-for _ in range(n-1):
-    _a, _b = map(int1, input().split())
-    edges[_a].append(_b)
-    edges[_b].append(_a)
+s = input()
+wall = []
+cnt = 0
+prev = 0
+for i in range(len(s)):
+    if s[i].isupper():
+        cnt += 1
+    if cnt%2==0:
+        wall.append(s[prev:i+1])
+        prev = i + 1
 
-ret = 0
-def dfs(cur, prev=-1):
-    global ret
-    if prev != -1 and len(edges[cur]) == 1:
-        return h[cur]
-    nw = h[cur]
-    for nxt in edges[cur]:
-        if nxt == prev: continue
-        fg = dfs(nxt, cur)
-        if fg: ret += 2
-        nw |= fg
-    return nw
+wall.sort(key=lambda x : x.lower())
 
-dfs(x-1)
-print(ret)
+print("".join(wall))
