@@ -32,3 +32,6 @@ def g(x):
         return 1 ^ x
     elif x % 4 == 3:
         return 0
+
+
+x + y = x ^ y + 2*(x & y)

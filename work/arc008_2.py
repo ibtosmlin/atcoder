@@ -12,13 +12,18 @@ def input(): return sys.stdin.readline().rstrip()
 def int1(x): return int(x)-1
 def end(r=-1): print(r); exit()
 def alp(i): return chr(ord('a') + i%26)    # i=0->'a', i=26->'z'
-t = int(input())
+n, m = map(int, input().split())
+name = list(input())
+kit = list(input())
 
-def f(x):
-    return x**2+2*x+3
+name = Counter(name)
+kit = Counter(kit)
 
-def g(x):
-     return  f(f(f(t)+t)+f(f(t)))
+ret = 0
+for k, v in name.items():
+    if not k in kit:
+        end(-1)
+    u = kit[k]
+    ret = max(ret, (v + u - 1) // u)
 
-
-print(g(t))
+print(ret)

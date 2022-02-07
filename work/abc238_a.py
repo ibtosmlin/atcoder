@@ -12,13 +12,7 @@ def input(): return sys.stdin.readline().rstrip()
 def int1(x): return int(x)-1
 def end(r=-1): print(r); exit()
 def alp(i): return chr(ord('a') + i%26)    # i=0->'a', i=26->'z'
-t = int(input())
-
-def f(x):
-    return x**2+2*x+3
-
-def g(x):
-     return  f(f(f(t)+t)+f(f(t)))
-
-
-print(g(t))
+n = int(input())
+ret = n == 2 or n == 3 or n == 4
+ret = not ret
+print('Yes' if ret else 'No')

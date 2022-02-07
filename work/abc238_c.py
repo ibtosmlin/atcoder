@@ -12,13 +12,26 @@ def input(): return sys.stdin.readline().rstrip()
 def int1(x): return int(x)-1
 def end(r=-1): print(r); exit()
 def alp(i): return chr(ord('a') + i%26)    # i=0->'a', i=26->'z'
-t = int(input())
 
-def f(x):
-    return x**2+2*x+3
+inv2 = modinv(2, mod1)
 
-def g(x):
-     return  f(f(f(t)+t)+f(f(t)))
+def g(n):
+    s = len(str(n))-1
+    x = 10**s-1
+    cnt = n-x
+    ret = cnt*(cnt+1) // 2
+    ret %= mod1
+    return ret
 
+def gk(k):
+    x = 10**k - 1
+    return g(x)
 
-print(g(t))
+n = int(input())
+k = len(str(n))
+
+ret = g(n)
+for i in range(1, k):
+    ret += gk(i)
+    ret %= mod1
+print(ret)

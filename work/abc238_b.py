@@ -12,13 +12,16 @@ def input(): return sys.stdin.readline().rstrip()
 def int1(x): return int(x)-1
 def end(r=-1): print(r); exit()
 def alp(i): return chr(ord('a') + i%26)    # i=0->'a', i=26->'z'
-t = int(input())
+n = int(input())
+a = list(map(int, input().split()))
+b = [0]
+for ai in a:
+    b.append((b[-1]+ai)%360)
 
-def f(x):
-    return x**2+2*x+3
+b.sort()
 
-def g(x):
-     return  f(f(f(t)+t)+f(f(t)))
+ret = 0
+for i in range(n-1):
+    ret = max(ret, b[i+1]-b[i])
 
-
-print(g(t))
+print(max(ret, (0-b[-1])%360))

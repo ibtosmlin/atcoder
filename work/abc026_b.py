@@ -12,13 +12,21 @@ def input(): return sys.stdin.readline().rstrip()
 def int1(x): return int(x)-1
 def end(r=-1): print(r); exit()
 def alp(i): return chr(ord('a') + i%26)    # i=0->'a', i=26->'z'
-t = int(input())
 
-def f(x):
-    return x**2+2*x+3
+n = int(input())
+ret = 0
+import math
+rs = []
+for i in range(n):
+    r = int(input())
+    rs.append(r)
 
-def g(x):
-     return  f(f(f(t)+t)+f(f(t)))
+rs.sort(reverse=True)
+for i in range(n):
+    r = rs[i]
+    if i%2==0:
+        ret += r*r
+    else:
+        ret -= r*r
 
-
-print(g(t))
+print(math.pi*ret)
