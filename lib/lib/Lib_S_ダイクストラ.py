@@ -64,13 +64,10 @@ for _ in range(m):
 
 dij = dijkstra(n, edges)  #クラスのインスタンス化
 dijR = dijkstra(n, edges_R)
-F = dij.build(0)
-R = dijR.build(0)
+dij.build(0)
+dijR.build(0)
 
-ret = 0
-for i in range(n):
-    ret = max(ret, (t-F[i]-R[i])*A[i])
-print(ret)
+dij.get(n-1)
 
 #prefix#
 # lib_s_最短経路探索_dijkstra
