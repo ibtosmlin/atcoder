@@ -67,7 +67,7 @@ dijR = dijkstra(n, edges_R)
 dij.build(0)
 dijR.build(0)
 
-dij.get(n-1)
+dij.get_dist(n-1)
 
 #prefix#
 # lib_s_最短経路探索_dijkstra
