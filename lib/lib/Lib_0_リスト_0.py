@@ -110,3 +110,4 @@ def count_intervals(a:list, x)->int:
 #prefix#
 # lib_区間カウント
 #end#
+
