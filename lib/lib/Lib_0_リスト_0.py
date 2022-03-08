@@ -111,3 +111,19 @@ def count_intervals(a:list, x)->int:
 # lib_区間カウント
 #end#
 
+
+
+#name#
+# direc
+#description#
+# direc
+#body#
+direc = {(1, 0), (-1, 0), (0, 1), (0, -1)}
+direc = {(1, 0), (-1, 0), (0, 1), (0, -1), (1, 1), (1, -1) (-1, 1), (-1, -1)}
+
+for dh, dw in direc:
+    nh, nw = ch + dh, cw + dw
+    if not (0 <= nh < h and 0 <= nw < w): continue
+#prefix#
+# direc
+#end#

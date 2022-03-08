@@ -782,13 +782,10 @@
             "",
             "dij = dijkstra(n, edges)  #クラスのインスタンス化",
             "dijR = dijkstra(n, edges_R)",
-            "F = dij.build(0)",
-            "R = dijR.build(0)",
+            "dij.build(0)",
+            "dijR.build(0)",
             "",
-            "ret = 0",
-            "for i in range(n):",
-            "    ret = max(ret, (t-F[i]-R[i])*A[i])",
-            "print(ret)",
+            "dij.get_dist(n-1)",
             ""
         ],
         "description": [
@@ -1399,6 +1396,22 @@
             "区間カウント",
             "A=[0, 0, 1, 1, 1, 1, 0, 1, 1, 1]",
             "x=1 の区間がいくつあるか ans = 2"
+        ]
+    },
+    "direc": {
+        "prefix": [
+            "direc"
+        ],
+        "body": [
+            "direc = {(1, 0), (-1, 0), (0, 1), (0, -1)}",
+            "direc = {(1, 0), (-1, 0), (0, 1), (0, -1), (1, 1), (1, -1) (-1, 1), (-1, -1)}",
+            "",
+            "for dh, dw in direc:",
+            "    nh, nw = ch + dh, cw + dw",
+            "    if not (0 <= nh < h and 0 <= nw < w): continue"
+        ],
+        "description": [
+            "direc"
         ]
     },
     "lib_math": {
