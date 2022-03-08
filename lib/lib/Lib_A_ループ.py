@@ -22,26 +22,27 @@ class Loop():
         https://atcoder.jp/contests/typical90/tasks/typical90_bf
 
     """
-    def __init__(self, n, x, f):
+    def __init__(self, n, x, f, g):
         self.hole = n
-        self.ini_v = x
-        self.nextv = f
+        self.ini_p = x
+        self.nextp = f
+        self.value = g
         self.__build()
 
 
     def __build(self):
-        x = self.ini_v
+        x = self.ini_p
         seen = defaultdict(int)
         seqs = []
         for i in range(self.hole + 10):
             seen[x] = i
             seqs.append(x)
-            x = self.nextv(x)
+            x = self.nextp(x)
             if x in seen: break
         p = seen[x]
 
-        self.ini_seq = self.sequence(seqs[:p])
-        self.lp_seq = self.sequence(seqs[p:])
+        self.ini_seq = self.sequence([self.value(x)for pos in seqs[:p]])
+        self.lp_seq = self.sequence([self.value(x)for pos in seqs[p:]])
 
 
 
@@ -89,7 +90,14 @@ if n == 0:
     print(0)
     exit()
 
-lp = Loop(100001)
+def f(x):
+    ...
+
+def g(x):
+    ...
+
+
+lp = Loop(n, 0, f, g)
 print(lp.getkth(k))
 
 #prefix#
