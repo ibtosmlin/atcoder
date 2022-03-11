@@ -52,9 +52,9 @@ def trans(A):
 
 
 #name#
-# 転置行列
+# 行列90度回転
 #description#
-# 転置行列
+# 行列90度回転
 #body#
 def rotate(A, reverse = False):
     if reverse:

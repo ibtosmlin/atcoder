@@ -20,73 +20,60 @@ gx, gy = map(int, input().split())
 rocks = [tuple(map(int, input().split())) for _ in range(n)]
 INF = 10**10
 
-ylistatx = dict()
-xlistaty = dict()
-
-
-ylistatx[sx] = set([-INF, INF])
-xlistaty[sy] = set([-INF, INF])
+yatx = dict()
+xaty = dict()
 
 
 for x, y in rocks:
-    if x not in ylistatx:
-        ylistatx[x] = set([-INF, INF])
-    ylistatx[x].add(y)
-    if y not in xlistaty:
-        xlistaty[y] = set([-INF, INF])
-    xlistaty[y].add(x)
+    if x in yatx:
+        yatx[x].append(y)
+    else:
+        yatx[x] = [-INF, y, INF]
+    if y in xaty:
+        xaty[y].append(x)
+    else:
+        xaty[y] = [-INF, x, INF]
 
-ylx = {x: sorted(list(ylistatx[x])) for x in ylistatx}
-xly = {y: sorted(list(xlistaty[y])) for y in xlistaty}
-
-def search(a, x):
-    ok = len(a)-1
-    ng = 0
-    while ok - ng > 0:
-
+for s in yatx.values():
+    s.sort()
+for s in xaty.values():
+    s.sort()
 
 seen = set()
 ret = defaultdict(int)
-que = deque([(sx, sy)])
 seen.add((sx, sy))
+que = deque([(sx, sy)])
 ret[(sx, sy)] = 0
+
 
 while que:
     cx, cy = que.popleft()
     nowd = ret[(cx, cy)]
 
-    p = ylx[cx][bisect_right(ylx[cx], cy)]
-    if p<cy and p!=-INF:
-        if (cx, p+1) in seen: continue
-        que.append((cx, p+1))
-        seen.add((cx, p+1))
-        ret[(cx, p+1)] = nowd + 1
+    nxts = []
+    if cy in xaty:
+        p = bisect_left(xaty[cy], cx)
+        if xaty[cy][p-1] != -INF:
+            nxts.append([xaty[cy][p-1] + 1 , cy])
+        p = bisect_right(xaty[cy], cx)
+        if xaty[cy][p] != INF:
+            nxts.append([xaty[cy][p] - 1 , cy])
 
-    p = ylx[cx][bisect_left(ylx[cx], cy)]
-    if cy<p and p!=INF:
-        if (cx, p-1) in seen: continue
-        que.append((cx, p-1))
-        seen.add((cx, p-1))
-        ret[(cx, p-1)] = nowd + 1
+    if cx in yatx:
+        p = bisect_left(yatx[cx], cy)
+        if yatx[cx][p-1] != -INF:
+            nxts.append([cx, yatx[cx][p-1] + 1])
+        p = bisect_right(yatx[cx], cy)
+        if yatx[cx][p] != INF:
+            nxts.append([cx, yatx[cx][p] - 1])
 
-    p = xly[cy][bisect_right(xly[cy], cx)]
-    print(xly[cy], p)
-    if p<cx and p!=-INF:
-        if (p+1, cy) in seen: continue
-        que.append((p+1, cy))
-        seen.add((p+1, cy))
-        ret[(p+1, cy)] = nowd + 1
-
-    p = xly[cy][bisect_left(xly[cy], cx)]
-    if cx<p and p!=INF:
-        if (p-1, cy) in seen: continue
-        que.append((p-1, cy))
-        seen.add((p-1, cy))
-        ret[(p-1, cy)] = nowd + 1
+    for nx, ny in nxts:
+        if (nx, ny) in seen: continue
+        seen.add((nx, ny))
+        ret[(nx, ny)] = nowd + 1
+        que.append((nx, ny))
 
 if (gx, gy) in ret:
     print(ret[(gx, gy)])
 else:
     print(-1)
-
-print(ret)
