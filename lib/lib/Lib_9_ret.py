@@ -47,3 +47,13 @@ print('\n'.join(map(str, ret)))
 #prefix#
 # print(4join(map(str(ret)
 #end#
+
+#name#
+# output5
+#description#
+# interactive
+#body#
+print(ret, flush=True)
+#prefix#
+# print(5interactive)
+#end#

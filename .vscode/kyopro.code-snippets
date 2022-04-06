@@ -705,6 +705,18 @@
     },
     "転置行列": {
         "prefix": [
+            "transpose_matrix"
+        ],
+        "body": [
+            "def trans(A):",
+            "    return [list(x) for x in zip(*A)]"
+        ],
+        "description": [
+            "転置行列"
+        ]
+    },
+    "行列90度回転": {
+        "prefix": [
             "rotate_matrix"
         ],
         "body": [
@@ -715,7 +727,7 @@
             "        return [list(x) for x in zip(*A[::-1])]"
         ],
         "description": [
-            "転置行列"
+            "行列90度回転"
         ]
     },
     "ダイクストラ法": {
@@ -1158,6 +1170,17 @@
         ],
         "description": [
             "print(join(map(str(ret)"
+        ]
+    },
+    "output5": {
+        "prefix": [
+            "print(5interactive)"
+        ],
+        "body": [
+            "print(ret, flush=True)"
+        ],
+        "description": [
+            "interactive"
         ]
     },
     "半分全列挙": {
