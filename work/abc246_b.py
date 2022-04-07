@@ -13,3 +13,7 @@ def input(): return sys.stdin.readline().rstrip()
 def int1(x): return int(x)-1
 def alp(i): return chr(ord('a') + i%26)    # i=0->'a', i=26->'z'
 def end(r=-1): print(r); exit()
+
+a, b = map(int, input().split())
+d = (a**2+b**2)**0.5
+print(a/d, b/d)

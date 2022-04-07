@@ -13,3 +13,20 @@ def input(): return sys.stdin.readline().rstrip()
 def int1(x): return int(x)-1
 def alp(i): return chr(ord('a') + i%26)    # i=0->'a', i=26->'z'
 def end(r=-1): print(r); exit()
+
+
+pts = []
+for _ in range(3):
+    x, y = map(int, input().split())
+    pts.append((x, y))
+
+for i in range(3):
+    x, y = pts[i]
+    nx, ny = pts[(i+1)%3]
+    mx, my = pts[(i+2)%3]
+    if x==nx and y == my:
+        print(mx, ny)
+        exit()
+    if x==mx and y == ny:
+        print(nx, my)
+        exit()

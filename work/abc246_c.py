@@ -13,3 +13,15 @@ def input(): return sys.stdin.readline().rstrip()
 def int1(x): return int(x)-1
 def alp(i): return chr(ord('a') + i%26)    # i=0->'a', i=26->'z'
 def end(r=-1): print(r); exit()
+
+n, k, x = map(int, input().split())
+a = list(map(int, input().split()))
+
+for i in range(n):
+    use = min(k, a[i] // x)
+    k -= use
+    a[i] -= use*x
+
+a.sort(reverse=True)
+print(sum(a[k:]))
+
