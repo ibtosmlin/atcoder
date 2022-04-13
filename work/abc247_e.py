@@ -13,29 +13,21 @@ def input(): return sys.stdin.readline().rstrip()
 def int1(x): return int(x)-1
 def alp(i): return chr(ord('a') + i%26)    # i=0->'a', i=26->'z'
 def end(r=-1): print(r); exit()
+n, x, y = map(int, input().split())
+a = list(map(int, input().split()))
 
-n = int(input())
-s = list(input())
-t = s[:]
+posx = -1
+posy = -1
+posng = -1
 
-a = [(i, si) for i, si in enumerate(s)][::-1]
-a.sort(key=itemgetter(1))
+ret = 0
+for r, ar in enumerate(a):
+    if ar < y or ar > x:
+        posng = r
+    if ar == y:
+        posy = r
+    if ar == x:
+        posx = r
+    ret += max(0, min(posx, posy) - posng)
 
-
-
-l = -1
-r = n
-
-for p in range(n):
-    for i, si in a:
-        if not (l < i < r): continue
-        r = i
-        while l < r and s[l] <= si:
-            l += 1
-        if l>=r: break
-        t[l], t[r] = s[r], s[l]
-        l += 1
-        if l>=r: break
-
-
-print("".join(t))
+print(ret)

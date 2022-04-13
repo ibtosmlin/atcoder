@@ -13,29 +13,20 @@ def input(): return sys.stdin.readline().rstrip()
 def int1(x): return int(x)-1
 def alp(i): return chr(ord('a') + i%26)    # i=0->'a', i=26->'z'
 def end(r=-1): print(r); exit()
-
 n = int(input())
-s = list(input())
-t = s[:]
 
-a = [(i, si) for i, si in enumerate(s)][::-1]
-a.sort(key=itemgetter(1))
+m = []
+d = defaultdict(int)
+for _ in range(n):
+    a, b = input().split()
+    m.append((a, b))
+    d[a] += 1
+    d[b] += 1
 
-
-
-l = -1
-r = n
-
-for p in range(n):
-    for i, si in a:
-        if not (l < i < r): continue
-        r = i
-        while l < r and s[l] <= si:
-            l += 1
-        if l>=r: break
-        t[l], t[r] = s[r], s[l]
-        l += 1
-        if l>=r: break
-
-
-print("".join(t))
+for i in range(n):
+    a,b = m[i]
+    if d[a] > 1 and d[b] > 1 and a!=b:
+        end('No')
+    elif a == b and d[a] > 2 and d[b] > 2:
+        end('No')
+end('Yes')

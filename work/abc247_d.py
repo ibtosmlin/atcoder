@@ -14,28 +14,23 @@ def int1(x): return int(x)-1
 def alp(i): return chr(ord('a') + i%26)    # i=0->'a', i=26->'z'
 def end(r=-1): print(r); exit()
 
-n = int(input())
-s = list(input())
-t = s[:]
-
-a = [(i, si) for i, si in enumerate(s)][::-1]
-a.sort(key=itemgetter(1))
-
-
-
-l = -1
-r = n
-
-for p in range(n):
-    for i, si in a:
-        if not (l < i < r): continue
-        r = i
-        while l < r and s[l] <= si:
-            l += 1
-        if l>=r: break
-        t[l], t[r] = s[r], s[l]
-        l += 1
-        if l>=r: break
+q = int(input())
+que = deque()
+for _ in range(q):
+    query = list(map(int, input().split()))
+    if query[0] == 1:
+        que.append((query[1], query[2]))
+    else:
+        c = query[1]
+        ret = 0
+        while c > 0:
+            xi, ci = que.popleft()
+            use = min(c, ci)
+            ret += use * xi
+            c -= use
+            ci -= use
+        if ci != 0:
+            que.appendleft((xi, ci))
+        print(ret)
 
 
-print("".join(t))
