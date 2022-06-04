@@ -14,20 +14,28 @@ def int1(x): return int(x)-1
 def alp(i): return chr(ord('a') + i%26)    # i=0->'a', i=26->'z'
 def end(r=-1): print(r); exit()
 
+##############################
+# 約数列挙 O(n**0.5)
+# returns sorted list
+##############################
+def make_divisors(n:int) -> list:
+    lower_divisors, upper_divisors = [], []
+    for i in range(1, int(n**0.5)+1):
+        if n % i != 0: i += 1; continue
+        lower_divisors.append(i)
+        j = n // i
+        if i != j: upper_divisors.append(j)
+    return lower_divisors + upper_divisors[::-1]
+
 n = int(input())
 a = list(map(int, input().split()))
+ca = Counter(a)
+nm = list(ca.keys())
+nm.sort()
 
-#dp[i][j]  i番目の行動をしたかどうかj=0,j=1かどうか。
+ret = 0
+for ni in nm:
+    for nj in make_divisors(ni):
+        ret += ca[ni]*ca[nj]*ca[ni//nj]
 
-
-dp = [[[INF]*2 for j in range(n)] for k in range(2)]
-dp[0][0] = [0, INF]
-dp[1][0] = [INF, 0]
-for i in range(n):
-    ai = a[i]
-    for k in range(2):
-        dp[k][i][1] = min(dp[k][i][1], dp[k][i-1][0] + ai)
-        dp[k][i][1] = min(dp[k][i][1], dp[k][i-1][1] + ai)
-        dp[k][i][0] = min(dp[k][i][0], dp[k][i-1][1])
-
-print(min(dp[0][-1][0], dp[1][-1][1]))
+print(ret)

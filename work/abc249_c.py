@@ -13,13 +13,22 @@ def input(): return sys.stdin.readline().rstrip()
 def int1(x): return int(x)-1
 def alp(i): return chr(ord('a') + i%26)    # i=0->'a', i=26->'z'
 def end(r=-1): print(r); exit()
+n, k = map(int, input().split())
+s = [[0]*26 for _ in range(n)]
+for i in range(n):
+    si = input()
+    for sii in si:
+        s[i][ord(sii)-ord('a')] += 1
 
-w = int(input())
-ret = []
-for i in range(1, 100):
-    ret.append(i)
-    ret.append(i*100)
-    ret.append(i*10000)
-
-print(len(ret))
-print(*ret)
+ret = 0
+for i in range(1<<n):
+    nw = 0
+    for l in range(26):
+        cnt = 0
+        for j in range(n):
+            if i >> j & 1:
+                cnt += s[j][l]
+        if cnt == k:
+            nw += 1
+    ret = max(nw, ret)
+print(ret)

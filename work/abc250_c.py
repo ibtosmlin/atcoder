@@ -13,13 +13,27 @@ def input(): return sys.stdin.readline().rstrip()
 def int1(x): return int(x)-1
 def alp(i): return chr(ord('a') + i%26)    # i=0->'a', i=26->'z'
 def end(r=-1): print(r); exit()
+n, q = map(int, input().split())
 
-w = int(input())
-ret = []
-for i in range(1, 100):
-    ret.append(i)
-    ret.append(i*100)
-    ret.append(i*10000)
+pos = [i for i in range(n)]
+lis = [i for i in range(n)]
 
-print(len(ret))
+for _ in range(q):
+    x = int(input())
+    x -= 1
+    px = pos[x]
+    #x:pxにいる
+    if px == n-1:
+        py = px - 1
+    else:
+        py = px + 1
+    y = lis[py]
+    #y:pyとスイッチ
+
+    pos[x] = py
+    pos[y] = px
+    lis[px] = y
+    lis[py] = x
+
+ret = [i+1 for i in lis]
 print(*ret)

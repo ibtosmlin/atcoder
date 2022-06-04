@@ -14,12 +14,28 @@ def int1(x): return int(x)-1
 def alp(i): return chr(ord('a') + i%26)    # i=0->'a', i=26->'z'
 def end(r=-1): print(r); exit()
 
-w = int(input())
-ret = []
-for i in range(1, 100):
-    ret.append(i)
-    ret.append(i*100)
-    ret.append(i*10000)
+a, b, c, d, e, f, x = map(int, input().split())
 
-print(len(ret))
-print(*ret)
+taka = 0
+aoki = 0
+
+tn = x
+while tn >= a+c:
+    taka += b*a
+    tn -= a+c
+
+taka += min(tn, a) * b
+
+ta = x
+while ta >= d+f:
+    aoki += d*e
+    ta -= d+f
+
+aoki += min(ta, d) * e
+
+if taka > aoki:
+    print('Takahashi')
+elif taka < aoki:
+    print('Aoki')
+else:
+    print('Draw')

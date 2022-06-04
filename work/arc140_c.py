@@ -13,13 +13,4 @@ def input(): return sys.stdin.readline().rstrip()
 def int1(x): return int(x)-1
 def alp(i): return chr(ord('a') + i%26)    # i=0->'a', i=26->'z'
 def end(r=-1): print(r); exit()
-
-w = int(input())
-ret = []
-for i in range(1, 100):
-    ret.append(i)
-    ret.append(i*100)
-    ret.append(i*10000)
-
-print(len(ret))
-print(*ret)
+n, x = map(int, input().split())

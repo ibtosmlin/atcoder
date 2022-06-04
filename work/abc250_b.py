@@ -13,13 +13,13 @@ def input(): return sys.stdin.readline().rstrip()
 def int1(x): return int(x)-1
 def alp(i): return chr(ord('a') + i%26)    # i=0->'a', i=26->'z'
 def end(r=-1): print(r); exit()
+n, a, b = map(int, input().split())
 
-w = int(input())
-ret = []
-for i in range(1, 100):
-    ret.append(i)
-    ret.append(i*100)
-    ret.append(i*10000)
+ret = [["."]*(b*n) for _ in range(a*n)]
 
-print(len(ret))
-print(*ret)
+for i in range(a*n):
+    for j in range(b*n):
+        if (i//a)%2 ^ (j//b)%2:
+            ret[i][j] = "#"
+for reti in ret:
+    print(''.join(reti))

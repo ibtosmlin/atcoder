@@ -14,12 +14,26 @@ def int1(x): return int(x)-1
 def alp(i): return chr(ord('a') + i%26)    # i=0->'a', i=26->'z'
 def end(r=-1): print(r); exit()
 
-w = int(input())
-ret = []
-for i in range(1, 100):
-    ret.append(i)
-    ret.append(i*100)
-    ret.append(i*10000)
+n, m = map(int, input().split())
+edges = [[] for _ in range(n)]
+for _ in range(m):
+    _a, _b = map(int1, input().split())
+    _a -=1
+    _b -=1
+    edges[_a].append(_b)
+    edges[_b].append(_a)
 
-print(len(ret))
-print(*ret)
+
+t1 = []
+q = deque([])
+seen = [False] * n
+q.append(0)
+seen[0] = True
+while q:
+    nw = q.popleft()
+    for nx in edges[nw]:
+        if seen[nx]: continue
+        q.appden(nx)
+        seen[nx] = True
+        t1.append((nw+1, nx+1))
+print(t1)

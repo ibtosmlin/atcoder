@@ -14,12 +14,20 @@ def int1(x): return int(x)-1
 def alp(i): return chr(ord('a') + i%26)    # i=0->'a', i=26->'z'
 def end(r=-1): print(r); exit()
 
-w = int(input())
-ret = []
-for i in range(1, 100):
-    ret.append(i)
-    ret.append(i*100)
-    ret.append(i*10000)
+s = list(input())
+cs = Counter(s)
 
-print(len(ret))
-print(*ret)
+l = 0
+s = 0
+
+for i in range(26):
+    c = alp(i)
+    if cs[c] > 1: end('No')
+    if cs[c.upper()] > 1: end('No')
+    s += cs[c]
+    l += cs[c.upper()]
+
+if s > 0 and l > 0:
+    print('Yes')
+else:
+    print('No')
