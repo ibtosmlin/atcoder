@@ -372,6 +372,36 @@
             "二分探索"
         ]
     },
+    "約数列挙": {
+        "prefix": [
+            "Lib_約数列挙"
+        ],
+        "body": [
+            "##############################",
+            "# 約数列挙 O(n**0.5)",
+            "# returns sorted list",
+            "##############################",
+            "def make_divisors(n:int) -> list:",
+            "    lower_divisors, upper_divisors = [], []",
+            "    for i in range(1, int(n**0.5)+1):",
+            "        if n % i != 0: i += 1; continue",
+            "        lower_divisors.append(i)",
+            "        j = n // i",
+            "        if i != j: upper_divisors.append(j)",
+            "    return lower_divisors + upper_divisors[::-1]",
+            "",
+            "#####################",
+            "print(make_divisors(10))",
+            "#####################",
+            ""
+        ],
+        "description": []
+    },
+    "escripiton#": {
+        "prefix": [],
+        "body": [],
+        "description": []
+    },
     "ユニオンファインド": {
         "prefix": [
             "lib_unionfind"
@@ -468,6 +498,47 @@
         "description": [
             "ユニオンファインド"
         ]
+    },
+    "素数判定・出力": {
+        "prefix": [
+            "Lib_prime_素数"
+        ],
+        "body": [
+            "",
+            "##############################",
+            "# 素数判定 O(n**0.5)",
+            "##############################",
+            "def is_prime(n:int) -> bool:",
+            "    if n in {0, 1}: return False",
+            "    if n == 2: return True",
+            "    if n % 2 == 0: return False",
+            "    for i in range(3, int(n**0.5)+1, 2):",
+            "        if n % i == 0: return False",
+            "    return True",
+            "",
+            "#####################",
+            "print(10, is_prime(10))",
+            "print(31, is_prime(31))",
+            "#####################",
+            "",
+            "",
+            "##############################",
+            "# 素数出力 O(n**0.5)",
+            "##############################",
+            "def get_primes(n:int) -> list:",
+            "# n以下の素数列挙",
+            "    n += 1",
+            "    IsPrime = [True] * n",
+            "    IsPrime[0], IsPrime[1] = False, False",
+            "    for p in range(n):",
+            "        if not IsPrime[p]: continue",
+            "        for j in range(p*2, n, p):",
+            "            IsPrime[j] = False",
+            "    ret = [p for p in range(n) if IsPrime[p]]",
+            "    return ret",
+            ""
+        ],
+        "description": []
     },
     "translate": {
         "prefix": [
@@ -696,11 +767,6 @@
             "    print(*r)",
             ""
         ],
-        "description": []
-    },
-    "escripiton#": {
-        "prefix": [],
-        "body": [],
         "description": []
     },
     "転置行列": {
@@ -2642,6 +2708,71 @@
             "  uf.unite(a, b, w)",
             ""
         ]
+    },
+    "素因数分解": {
+        "prefix": [
+            "Lib_素因数分解"
+        ],
+        "body": [
+            "##############################",
+            "# 素因数分解",
+            "# nは10**15くらいまでOK",
+            "# returns dict s.t. key = {prime}   value = {degree}",
+            "##############################",
+            "def prime_factorize(n:int) -> dict:",
+            "    if n == 1: return dict({1: 1})",
+            "    pd = dict()",
+            "    for p in range(2, int(n**0.5)+1):",
+            "        if n % p != 0: p += 1; continue",
+            "        d = 0",
+            "        while n % p == 0:",
+            "            d += 1",
+            "            n //= p",
+            "        pd[p] = d",
+            "    if n != 1: pd[n] = 1",
+            "    return pd",
+            "",
+            "print(prime_factorize(360))  # 72 = 2**3 * 3**2 * 5**1",
+            "                             # {2: 3, 3: 2, 5: 1}",
+            "",
+            "##############################",
+            "# 素因数分解（複数個版）",
+            "# max(A)が大きい場合はNG  10**6くらいまで",
+            "# 最初に素数一覧を作っておく",
+            "##############################",
+            "def prime_factorize(A : list):",
+            "    Max = max(A) + 1",
+            "    IsPrime = [True] * Max",
+            "    MinFactor = [-1] * Max",
+            "    dica = {}",
+            "    IsPrime[0], IsPrime[1] = False, False",
+            "    MinFactor[0], MinFactor[1] = 0, 1",
+            "    for p in range(2, Max):",
+            "        if IsPrime[p]:",
+            "            MinFactor[p] = p",
+            "            for k in range(p*2, Max, p):",
+            "                IsPrime[k] = False",
+            "                if MinFactor[k] == -1:",
+            "                    MinFactor[k] = p",
+            "",
+            "    ret = []",
+            "    for a in A:",
+            "        res = dict()",
+            "        while a != 1:",
+            "            prime = MinFactor[a]",
+            "            exp = 0",
+            "            while MinFactor[a] == prime:",
+            "                exp += 1",
+            "                a //= prime",
+            "            res[prime] = exp",
+            "            if not prime in dica:",
+            "                dica[prime] = 1",
+            "            else:",
+            "                dica[prime] += 1",
+            "        ret.append(res)",
+            "    return ret"
+        ],
+        "description": []
     },
     "n=intinput": {
         "prefix": [
