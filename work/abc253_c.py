@@ -146,13 +146,22 @@ class SortedSet(Generic[T]):
         return ans
 
 ########################################
-n, x = map(int, input().split())
+q = int(input())
+d = defaultdict(int)
+
 ss = SortedSet()
-
-for i in range(1, n+1):
-    ss.add(i)
-
-ret = []
-
-if n % 2 == 1:
-    m = n // 2
+for i in range(q):
+    que = list(map(int, input().split()))
+    if que[0] == 1:
+        x = que[1]
+        ss.add(x)
+        d[x] += 1
+    elif que[0] == 2:
+        x = que[1]
+        c = que[2]
+        d[x] -= c
+        if d[x] <= 0:
+            d[x] == 0
+            ss.discard(x)
+    else:
+        print(ss.lt(10**10)-ss.gt(-1))
