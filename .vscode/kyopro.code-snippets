@@ -815,8 +815,12 @@
             "",
             "    def build(self, start):",
             "        self.dist = [INF] * self.n",
-            "        self.dist[start] = 0",
-            "        next_q = [(0, start)]",
+            "        next_q = []",
+            "        if type(start) is int:",
+            "            start = [start]",
+            "        for st in start:",
+            "            self.dist[st] = 0",
+            "            next_q.append((0, st))",
             "        heapify(next_q)",
             "        while next_q:",
             "            cd, cn = heappop(next_q)",
@@ -1896,6 +1900,7 @@
             "        elif sorttype == 'nodeid':      # ノードの順番",
             "            self._build_sort_by_nodeid()",
             "",
+            "    @property",
             "    def is_dag(self) -> bool:",
             "        return len(self.ts)==self.n",
             "        # True 閉路なしDAG",
@@ -1918,11 +1923,11 @@
             "",
             "print(ts.ts)",
             "print(ts.parents)",
-            "print(ts.is_dag())",
+            "print(ts.is_dag)",
             ""
         ],
         "description": [
-            "トポロジカルソート"
+            "トポロジカルソート topologicalsort"
         ]
     },
     "ループ#": {
@@ -1967,10 +1972,8 @@
             "            x = self.nextp(x)",
             "            if x in seen: break",
             "        p = seen[x]",
-            "",
-            "        self.ini_seq = self.sequence([self.value(x)for pos in seqs[:p]])",
-            "        self.lp_seq = self.sequence([self.value(x)for pos in seqs[p:]])",
-            "",
+            "        self.ini_seq = self.sequence([self.value(pos) for pos in seqs[:p]])",
+            "        self.lp_seq = self.sequence([self.value(pos) for pos in seqs[p:]])",
             "",
             "",
             "    def get_kth(self, k:int)->int:",
@@ -2025,7 +2028,7 @@
             "",
             "",
             "lp = Loop(n, 0, f, g)",
-            "print(lp.getkth(k))",
+            "print(lp.get_kth(k))",
             ""
         ],
         "description": [

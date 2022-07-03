@@ -19,8 +19,12 @@ class dijkstra:
 
     def build(self, start):
         self.dist = [INF] * self.n
-        self.dist[start] = 0
-        next_q = [(0, start)]
+        next_q = []
+        if type(start) is int:
+            start = [start]
+        for st in start:
+            self.dist[st] = 0
+            next_q.append((0, st))
         heapify(next_q)
         while next_q:
             cd, cn = heappop(next_q)

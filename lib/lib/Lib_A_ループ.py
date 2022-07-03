@@ -40,10 +40,8 @@ class Loop():
             x = self.nextp(x)
             if x in seen: break
         p = seen[x]
-
-        self.ini_seq = self.sequence([self.value(x)for pos in seqs[:p]])
-        self.lp_seq = self.sequence([self.value(x)for pos in seqs[p:]])
-
+        self.ini_seq = self.sequence([self.value(pos) for pos in seqs[:p]])
+        self.lp_seq = self.sequence([self.value(pos) for pos in seqs[p:]])
 
 
     def get_kth(self, k:int)->int:
@@ -98,7 +96,7 @@ def g(x):
 
 
 lp = Loop(n, 0, f, g)
-print(lp.getkth(k))
+print(lp.get_kth(k))
 
 #prefix#
 # Lib_Loop_ループ

@@ -1,7 +1,7 @@
 #name#
 # トポロジカルソート
 #description#
-# トポロジカルソート
+# トポロジカルソート topologicalsort
 #body#
 # トポロジカルソート
 # 有向非巡回グラフ（DAG）の各ノードを順序付けして、どのノードもその出力辺の先のノードより前にくるように並べることである。
@@ -51,6 +51,7 @@ class topological_sort:
         elif sorttype == 'nodeid':      # ノードの順番
             self._build_sort_by_nodeid()
 
+    @property
     def is_dag(self) -> bool:
         return len(self.ts)==self.n
         # True 閉路なしDAG
@@ -73,7 +74,7 @@ ts.build()
 
 print(ts.ts)
 print(ts.parents)
-print(ts.is_dag())
+print(ts.is_dag)
 
 #prefix#
 # Lib_G_トポロジカルソート
