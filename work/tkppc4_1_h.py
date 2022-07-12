@@ -15,6 +15,7 @@ def input(): return sys.stdin.readline().rstrip()
 def int1(x): return int(x)-1
 def alp(i): return chr(ord('a') + i%26)    # i=0->'a', i=25->'z'
 def end(r=-1): print(r); exit()
+
 # ダイクストラ法
 # 重み付きグラフ関係により最短経路のリストを作る
 # 有向グラフで優先度付きキューで探索
@@ -29,17 +30,21 @@ class dijkstra:
 
     def build(self, start):
         self.dist = [INF] * self.n
-        self.dist[start] = 0
-        next_q = [(0, start)]
+        next_q = []
+        if type(start) is int:
+            start = [start]
+        for st in start:
+            self.dist[st] = 0
+            next_q.append((0, st))
         heapify(next_q)
         while next_q:
             cd, cn = heappop(next_q)
             if self.dist[cn] < cd: continue
-            for nn, nd in self.edges[cn]:
+            for nn, nd, nc in self.edges[cn]:
                 # 変則的な距離の場合はここを調整 ##
-                nd_ = self.dist[cn] + nd
+                nd_ = (self.dist[cn] + t[cn] + nc - 1) // nc * nc + nd
                 ############################
-                if self.dist[nn] <= nd_: continue
+                if self.dist[nn] < nd_: continue
                 self.dist[nn] = nd_
                 self.prev[nn] = cn
                 heappush(next_q, (nd_, nn))
@@ -61,23 +66,24 @@ class dijkstra:
 ##########################################
 
 INF = float('inf')
-n, m, c = map(int, input().split())
-edge = []
+n, m, k = map(int, input().split())
+t = [0] * n
+for i in range(n-2):
+    t[i+1] = int(input())
+
 edges = [[] for _ in range(n)]
 #リストの作成
-total = 0
 for _ in range(m):
-    a, b, d = map(int, input().split())
+    a, b, c, d = map(int, input().split())
     a, b = a-1, b-1
-    edges[a].append((b,d))
-    edges[b].append((a,d))
-    total += d
-    edge.append[(a, b)] = c
+    edges[a].append((b, c, d))
+    edges[b].append((a, c, d))
+
 
 dij = dijkstra(n, edges)  #クラスのインスタンス化
 dij.build(0)
-
-for i in range(1, n):
-    if dij.get_dist(i) <= x:
-
-dij.get_dist(n-1)
+ret = dij.get_dist(n-1)
+if ret > k:
+    print(-1)
+else:
+    print(ret)

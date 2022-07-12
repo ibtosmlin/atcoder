@@ -76,8 +76,19 @@ k = int(input())
 t = list(map(int1, input().split()))
 dists = dict()
 dij.build(s)
-dists[s] = dij.dist[:]
+dists[s] = [dij.dist[i] for i in t]
 for ti in t:
     dij.build(ti)
-    dists[ti] = dij.dist[:]
+    dists[ti] = [dij.dist[i] for i in t]
 
+dp = [[INF] * k for _ in range(1<<k)]
+#dp[i][j]:   iに今まで行ったことがあって、今tjにいる
+for i, ti in enumerate(t):
+    dp[1<<i][i] = dists[s][i]
+for i in range(1<<k):
+    for fm in range(k):
+        for to in range(k):
+            if i>>to & 1: continue
+            dp[i|(1<<to)][to] = min(dp[i|(1<<to)][to], dp[i][fm] + dists[t[fm]][to])
+
+print(min(dp[-1]))

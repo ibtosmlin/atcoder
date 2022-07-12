@@ -15,6 +15,7 @@ def input(): return sys.stdin.readline().rstrip()
 def int1(x): return int(x)-1
 def alp(i): return chr(ord('a') + i%26)    # i=0->'a', i=25->'z'
 def end(r=-1): print(r); exit()
+
 # ダイクストラ法
 # 重み付きグラフ関係により最短経路のリストを作る
 # 有向グラフで優先度付きキューで探索
@@ -29,8 +30,12 @@ class dijkstra:
 
     def build(self, start):
         self.dist = [INF] * self.n
-        self.dist[start] = 0
-        next_q = [(0, start)]
+        next_q = []
+        if type(start) is int:
+            start = [start]
+        for st in start:
+            self.dist[st] = 0
+            next_q.append((0, st))
         heapify(next_q)
         while next_q:
             cd, cn = heappop(next_q)
@@ -60,24 +65,31 @@ class dijkstra:
 
 ##########################################
 
-INF = float('inf')
-n, m, c = map(int, input().split())
-edge = []
+
+
+n, m, k = map(int, input().split())
 edges = [[] for _ in range(n)]
-#リストの作成
-total = 0
 for _ in range(m):
-    a, b, d = map(int, input().split())
-    a, b = a-1, b-1
-    edges[a].append((b,d))
-    edges[b].append((a,d))
-    total += d
-    edge.append[(a, b)] = c
+    _a, _b, c = map(int, input().split())
+    _a -= 1
+    _b -= 1
+    edges[_a].append((_b, c))
+    edges[_b].append((_a, c))
+flowers = [tuple(map(int, input().split())) for _ in range(n)]
 
-dij = dijkstra(n, edges)  #クラスのインスタンス化
+K = k + 1
+N = n * K
+EDS = [[] for _ in range(N)]
+for fm, eds in enumerate(edges):
+    for to, c in eds:
+        for ki in range(K):
+            EDS[fm * K + ki].append((to * K + ki, c))
+for fm, (x, y) in enumerate(flowers):
+    for ki in range(K):
+        EDS[fm * K + ki].append((fm * K + min(ki + x, k), y))
+
+
+dij = dijkstra(N, EDS)  #クラスのインスタンス化
 dij.build(0)
-
-for i in range(1, n):
-    if dij.get_dist(i) <= x:
-
-dij.get_dist(n-1)
+ret = dij.get_dist(N-1)
+print(-1 if ret == INF else ret)

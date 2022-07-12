@@ -20,3 +20,4 @@ for i in range(n):
     for j in range(4):
         dp[i+1][j+1] = sum(dp[i-j])
 print(dp[-1])
+

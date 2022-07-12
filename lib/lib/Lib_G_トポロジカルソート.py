@@ -15,8 +15,8 @@ class topological_sort:
         self.edges = [[] for _ in range(n)] # 辺
         self.node_zero = []     # ゼロ次のノード
 
-    def add_edge(self, fm:int, to:int) -> None:
-        self.edges[fm].append(to)
+    def add_edge(self, fm:int, to:int, w=1) -> None:
+        self.edges[fm].append((to, w))
         self.in_cnt[to] += 1
 
     def _build_sort_by_appear(self) -> None:
@@ -25,7 +25,7 @@ class topological_sort:
         while q:
             p = q.popleft()
             self.ts.append(p)
-            for nxt in self.edges[p]:
+            for nxt, nxtw in self.edges[p]:
                 self.in_cnt[nxt] -= 1
                 if self.in_cnt[nxt] == 0:
                     q.append(nxt)
@@ -37,7 +37,7 @@ class topological_sort:
         while q:
             p = heappop(q)
             self.ts.append(p)
-            for nxt in self.edges[p]:
+            for nxt, nxtw in self.edges[p]:
                 self.in_cnt[nxt] -= 1
                 if self.in_cnt[nxt] == 0:
                     heappush(q, nxt)
@@ -78,4 +78,5 @@ print(ts.is_dag)
 
 #prefix#
 # Lib_G_トポロジカルソート
+# Lib_G_topologicalsort
 #end#

@@ -4,56 +4,79 @@
 # 強連結成分分解(SCC): グラフgに対するSCCを行う
 #body#
 class SCCGraph:
-    def __init__(self, n:int) -> None:
-        self.n = n                          # 頂点サイズ
-        self.size = None                    # 分解後連結成分数
-        self.label = [None] * n             # それぞれの頂点がどの連結成分に属しているか
-        self.gf = [[] for _ in range(n)]    # 順方向の有向グラフ
-        self.gr = [[] for _ in range(n)]    # 逆方向の有向グラフ
-        self.edges = None                   # 縮約後の辺(隣接リスト)
-        self.groups = None                  # 分解後の成分のトポロジカルソート
+    def __init__(self, N):
+        self.N = N
+        self.edges = []
+        self.ef = [[] for _ in range(N)]
+        self.er = [[] for _ in range(N)]
 
+    def csr(self):
+        self.start = [0]*(self.N+1)
+        self.elist = [0]*len(self.edges)
+        for e in self.edges:
+            self.start[e[0]+1] += 1
+        for i in range(1, self.N+1):
+            self.start[i] += self.start[i-1]
+        counter = self.start[:]
+        for e in self.edges:
+            self.elist[counter[e[0]]] = e[1]
+            counter[e[0]] += 1
 
-    def add_edge(self, fm, to):
-        self.gf[fm].append(to)
-        self.gr[to].append(fm)
+    def add_edge(self, v, w):
+        self.edges.append((v, w))
+        self.ef[v].append(w)
+        self.er[w].append(v)
 
+    def scc_ids(self):
+        self.csr()
+        N = self.N
+        now_ord = group_num = 0
+        visited = []
+        low = [0]*N
+        order = [-1]*N
+        ids = [0]*N
+        parent = [-1]*N
+        stack = []
+        for i in range(N):
+            if order[i] == -1:
+                stack.append(i)
+                stack.append(i)
+                while stack:
+                    v = stack.pop()
+                    if order[v] == -1:
+                        low[v] = order[v] = now_ord
+                        now_ord += 1
+                        visited.append(v)
+                        for i in range(self.start[v], self.start[v+1]):
+                            to = self.elist[i]
+                            if order[to] == -1:
+                                stack.append(to)
+                                stack.append(to)
+                                parent[to] = v
+                            else:
+                                low[v] = min(low[v], order[to])
+                    else:
+                        if low[v] == order[v]:
+                            while True:
+                                u = visited.pop()
+                                order[u] = N
+                                ids[u] = group_num
+                                if u == v:
+                                    break
+                            group_num += 1
+                        if parent[v] != -1:
+                            low[parent[v]] = min(low[parent[v]], low[v])
+        for i, x in enumerate(ids):
+            ids[i] = group_num-1-x
 
-    def build(self):
-        order = []
-        used = [False] * self.n
+        return group_num, ids
 
-        def dfs(s):
-            used[s] = True
-            for t in self.gf[s]:
-                if not used[t]: dfs(t)
-            order.append(s)
-        def rdfs(s, col):
-            self.label[s] = col
-            used[s] = True
-            for t in self.gr[s]:
-                if not used[t]: rdfs(t, col)
-
-        for s in range(n):
-            if not used[s]: dfs(s)
-        used = [False] * self.n
-        self.size = 0
-        for s in reversed(order):
-            if not used[s]:
-                rdfs(s, self.size)
-                self.size += 1
-
-        # 縮約後のグラフを構築
-        self.edges = [set() for _ in range(self.size)]
-        self.groups = [[] for _ in range(self.size)]
-        for s in range(n):
-            lbs = self.label[s]
-            for t in self.gf[s]:
-                lbt = self.label[t]
-                if lbs == lbt: continue
-                self.edges[lbs].add(lbt)
-            self.groups[lbs].append(s)
-
+    def scc(self):
+        group_num, ids = self.scc_ids()
+        groups = [[] for _ in range(group_num)]
+        for i, x in enumerate(ids):
+            groups[x].append(i)
+        return groups
 
 ####################################
 
@@ -65,11 +88,10 @@ for i in range(m):
     _a -= 1; _b -= 1
     scc.add_edge(_a, _b)
 
-scc.build()
-
-print(scc.size)
-for gi in scc.groups:
-    print(len(gi), *gi)
+#print(scc.scc_ids())
+#(3,_[0,_1,_1,_1,_2])
+#print(scc.scc())
+#[[0],_[1,_2,_3],_[4]]
 
 # 強連結成分分解(SCC): グラフgに対するSCCを行う
 # https://hkawabata.github.io/technical-note/note/Algorithm/graph/scc.html

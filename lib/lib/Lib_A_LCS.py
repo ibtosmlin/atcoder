@@ -1,7 +1,7 @@
 #name#
 # LCS最長共通部分列
 #description#
-# LCS最長共通部分列
+# lib_LCS最長共通部分列
 #body#
 #####################################
 # LCS(longest common sequence)
@@ -65,5 +65,5 @@ lcs = LCS(s, t)
 print(''.join(lcs.restore()))
 
 #prefix#
-# Lib_最長共通部分列#
+# Lib_LCS最長共通部分列#
 #end#

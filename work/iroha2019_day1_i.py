@@ -29,20 +29,27 @@ class dijkstra:
 
     def build(self, start):
         self.dist = [INF] * self.n
-        self.dist[start] = 0
-        next_q = [(0, start)]
+        next_q = []
+        if type(start) is int:
+            start = [start]
+        for st in start:
+            self.dist[st] = 0
+            next_q.append((0, st, -1))
         heapify(next_q)
         while next_q:
-            cd, cn = heappop(next_q)
+            cd, cn, cc = heappop(next_q)
             if self.dist[cn] < cd: continue
-            for nn, nd in self.edges[cn]:
+            for nn, nc in self.edges[cn]:
                 # 変則的な距離の場合はここを調整 ##
-                nd_ = self.dist[cn] + nd
+                if cc == -1 or cc == nc:
+                    nd_ = self.dist[cn]
+                else:
+                    nd_ = self.dist[cn] + 1
                 ############################
                 if self.dist[nn] <= nd_: continue
                 self.dist[nn] = nd_
                 self.prev[nn] = cn
-                heappush(next_q, (nd_, nn))
+                heappush(next_q, (nd_, nn, nc))
 
 
     def get_dist(self, goal):
@@ -60,24 +67,18 @@ class dijkstra:
 
 ##########################################
 
-INF = float('inf')
-n, m, c = map(int, input().split())
-edge = []
+n, m, k = map(int, input().split())
 edges = [[] for _ in range(n)]
 #リストの作成
-total = 0
 for _ in range(m):
-    a, b, d = map(int, input().split())
+    a, b, c = map(int, input().split())
     a, b = a-1, b-1
-    edges[a].append((b,d))
-    edges[b].append((a,d))
-    total += d
-    edge.append[(a, b)] = c
+    edges[a].append((b, c))
+    edges[b].append((a, c))
 
 dij = dijkstra(n, edges)  #クラスのインスタンス化
 dij.build(0)
-
-for i in range(1, n):
-    if dij.get_dist(i) <= x:
-
-dij.get_dist(n-1)
+if dij.get_dist(n-1) == INF:
+    print(-1)
+else:
+    print(dij.get_dist(n-1) * k + k)
