@@ -14,10 +14,11 @@ class dijkstra:
     def __init__(self, n, edges):
         self.n = n              # ノード数
         self.edges = edges      # 有向グラフ
-        self.prev = [-1] * n    # 前のノード
         self.start = None       # 始点
+        self.edges_used = [-1] * n  # 最短経路木の親
 
     def build(self, start):
+        INF = float('inf')
         self.dist = [INF] * self.n
         next_q = []
         if type(start) is int:
@@ -35,7 +36,7 @@ class dijkstra:
                 ############################
                 if self.dist[nn] <= nd_: continue
                 self.dist[nn] = nd_
-                self.prev[nn] = cn
+                self.edges_used[nn] = cn
                 heappush(next_q, (nd_, nn))
 
 
@@ -48,13 +49,11 @@ class dijkstra:
         node = goal
         while node is not None:
             path.append(node)
-            node = self.prev[node]
+            node = self.edges_used[node]
         return path[::-1]
-
 
 ##########################################
 
-INF = float('inf')
 n, m, t = map(int, input().split())
 edges = [[] for _ in range(n)]
 edges_R = [[] for _ in range(n)]    #行きと帰りを分けた（有向グラフ）場合

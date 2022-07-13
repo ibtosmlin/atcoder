@@ -16,3 +16,6 @@ alias pyh="source ~/atcoder/tool/h.py.sh"
 
 # atcoder tool settings
 alias setat="source ~/atcoder/tool/settings.sh"
+
+# algo
+alias goalgo="source ~/atcoder/tool/algo.sh"
