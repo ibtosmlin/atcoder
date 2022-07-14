@@ -62,22 +62,29 @@ class dijkstra:
 
 INF = float('inf')
 n, m, c = map(int, input().split())
-edge = []
 edges = [[] for _ in range(n)]
 #リストの作成
 total = 0
+edges2 = []
 for _ in range(m):
     a, b, d = map(int, input().split())
     a, b = a-1, b-1
     edges[a].append((b,d))
     edges[b].append((a,d))
     total += d
-    edge.append[(a, b)] = c
+    edges2.append((a, b, d))
 
 dij = dijkstra(n, edges)  #クラスのインスタンス化
 dij.build(0)
 
-for i in range(1, n):
-    if dij.get_dist(i) <= x:
+xl = sorted(list(set(dij.dist)))
+subt = defaultdict(int)
+for u, v, w in edges2:
+    subt[max(dij.dist[u], dij.dist[v])] += w
 
-dij.get_dist(n-1)
+ret = INF
+for x in xl:
+    total -= subt[x]
+    now = c * x + total
+    ret = min(ret, now)
+print(ret)
