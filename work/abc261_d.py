@@ -17,22 +17,21 @@ def alp(i): return chr(ord('a') + i%26)    # i=0->'a', i=25->'z'
 def end(r=-1): print(r); exit()
 direc = [(1, 0), (0, 1), (-1, 0), (0, -1)] + [(1, 1), (1, -1), (-1, 1), (-1, -1)]
 def isinhw(i, j, h, w): return (0 <= i < h) and (0 <= j < w)
-mod = 100000
-h, w = map(int, input().split())
-dp = [[[[0] * 2 for k in range(2)] for j in range(w)] for i in range(h)]
-for i in range(h):
-    for j in range(w):
-        if i == 0:
-            dp[i][j][1][0] = 1
-        if j == 0:
-            dp[i][j][0][0] = 1
-        if i != 0 and j != 0:
-            dp[i][j][0][0] = (dp[i-1][j][0][0] + dp[i-1][j][0][1])%mod
-            dp[i][j][0][1] = (dp[i-1][j][1][0])%mod
-            dp[i][j][1][0] = (dp[i][j-1][1][0] + dp[i][j-1][1][1])%mod
-            dp[i][j][1][1] = (dp[i][j-1][0][0])%mod
+n, m = map(int, input().split())
+x = list(map(int, input().split()))
+c = [0] * (n+1)
+for _ in range(m):
+    ci, yi = map(int, input().split())
+    c[ci] = yi
 
-ret = 0
-for dpi in dp[-1][-1]:
-    ret += sum(dpi)
-print(ret%mod)
+dp = [-INF] * (n+1)
+dp[0] = 0
+#dp[i][j]   i回目でカウンタがjの最大値
+for i in range(n):
+    ndp = [-INF] * (n+1)
+    for j in range(n):
+        ndp[j+1] = max(ndp[j+1], dp[j] + x[i] + c[j+1])
+        ndp[0] = max(ndp[0], dp[j] + c[0])
+    dp, ndp = ndp, dp
+
+print(max(dp))

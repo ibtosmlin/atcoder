@@ -17,22 +17,16 @@ def alp(i): return chr(ord('a') + i%26)    # i=0->'a', i=25->'z'
 def end(r=-1): print(r); exit()
 direc = [(1, 0), (0, 1), (-1, 0), (0, -1)] + [(1, 1), (1, -1), (-1, 1), (-1, -1)]
 def isinhw(i, j, h, w): return (0 <= i < h) and (0 <= j < w)
-mod = 100000
-h, w = map(int, input().split())
-dp = [[[[0] * 2 for k in range(2)] for j in range(w)] for i in range(h)]
-for i in range(h):
-    for j in range(w):
-        if i == 0:
-            dp[i][j][1][0] = 1
-        if j == 0:
-            dp[i][j][0][0] = 1
-        if i != 0 and j != 0:
-            dp[i][j][0][0] = (dp[i-1][j][0][0] + dp[i-1][j][0][1])%mod
-            dp[i][j][0][1] = (dp[i-1][j][1][0])%mod
-            dp[i][j][1][0] = (dp[i][j-1][1][0] + dp[i][j-1][1][1])%mod
-            dp[i][j][1][1] = (dp[i][j-1][0][0])%mod
-
-ret = 0
-for dpi in dp[-1][-1]:
-    ret += sum(dpi)
-print(ret%mod)
+n = int(input())
+a = [input() for _ in range(n)]
+for i in range(n):
+    for j in range(n):
+        if a[i][j] == 'W' and a[j][i] == 'W':
+            end('incorrect')
+        if a[i][j] == 'L' and a[j][i] == 'L':
+            end('incorrect')
+        if a[i][j] == 'D' and a[j][i] != 'D':
+            end('incorrect')
+        if a[i][j] != 'D' and a[j][i] == 'D':
+            end('incorrect')
+end('correct')

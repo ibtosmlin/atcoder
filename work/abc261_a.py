@@ -17,22 +17,6 @@ def alp(i): return chr(ord('a') + i%26)    # i=0->'a', i=25->'z'
 def end(r=-1): print(r); exit()
 direc = [(1, 0), (0, 1), (-1, 0), (0, -1)] + [(1, 1), (1, -1), (-1, 1), (-1, -1)]
 def isinhw(i, j, h, w): return (0 <= i < h) and (0 <= j < w)
-mod = 100000
-h, w = map(int, input().split())
-dp = [[[[0] * 2 for k in range(2)] for j in range(w)] for i in range(h)]
-for i in range(h):
-    for j in range(w):
-        if i == 0:
-            dp[i][j][1][0] = 1
-        if j == 0:
-            dp[i][j][0][0] = 1
-        if i != 0 and j != 0:
-            dp[i][j][0][0] = (dp[i-1][j][0][0] + dp[i-1][j][0][1])%mod
-            dp[i][j][0][1] = (dp[i-1][j][1][0])%mod
-            dp[i][j][1][0] = (dp[i][j-1][1][0] + dp[i][j-1][1][1])%mod
-            dp[i][j][1][1] = (dp[i][j-1][0][0])%mod
-
-ret = 0
-for dpi in dp[-1][-1]:
-    ret += sum(dpi)
-print(ret%mod)
+l1, r1, l2, r2 = map(int, input().split())
+ret = set(list(range(l1, r1))) & set(list(range(l2, r2)))
+print(len(ret))

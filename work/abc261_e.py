@@ -17,22 +17,20 @@ def alp(i): return chr(ord('a') + i%26)    # i=0->'a', i=25->'z'
 def end(r=-1): print(r); exit()
 direc = [(1, 0), (0, 1), (-1, 0), (0, -1)] + [(1, 1), (1, -1), (-1, 1), (-1, -1)]
 def isinhw(i, j, h, w): return (0 <= i < h) and (0 <= j < w)
-mod = 100000
-h, w = map(int, input().split())
-dp = [[[[0] * 2 for k in range(2)] for j in range(w)] for i in range(h)]
-for i in range(h):
-    for j in range(w):
-        if i == 0:
-            dp[i][j][1][0] = 1
-        if j == 0:
-            dp[i][j][0][0] = 1
-        if i != 0 and j != 0:
-            dp[i][j][0][0] = (dp[i-1][j][0][0] + dp[i-1][j][0][1])%mod
-            dp[i][j][0][1] = (dp[i-1][j][1][0])%mod
-            dp[i][j][1][0] = (dp[i][j-1][1][0] + dp[i][j-1][1][1])%mod
-            dp[i][j][1][1] = (dp[i][j-1][0][0])%mod
-
-ret = 0
-for dpi in dp[-1][-1]:
-    ret += sum(dpi)
-print(ret%mod)
+n, c = map(int, input().split())
+f = [(0, 1) for _ in range(30)]
+for i in range(n):
+    t, a = map(int, input().split())
+    nc = 0
+    for j in range(30):
+        b0, b1 = f[j]
+        ai = (a >> j) & 1
+        if t == 1:
+            f[j] = (b0 & ai, b1 & ai)
+        if t == 2:
+            f[j] = (b0 | ai, b1 | ai)
+        if t == 3:
+            f[j] = (b0 ^ ai, b1 ^ ai)
+        nc += f[j][(c >> j) & 1] << j
+    c = nc
+    print(c)
