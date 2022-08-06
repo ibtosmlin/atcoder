@@ -18,13 +18,35 @@ def end(r=-1): print(r); exit()
 direc = [(1, 0), (0, 1), (-1, 0), (0, -1)] + [(1, 1), (1, -1), (-1, 1), (-1, -1)]
 def isinhw(i, j, h, w): return (0 <= i < h) and (0 <= j < w)
 n = int(input())
-a = [input() for _ in range(n)]
+edges = [[] for _ in range(n)]
+for _ in range(n-1):
+    _a, _b = map(int1, input().split())
+    edges[_a].append(_b)
+    edges[_b].append(_a)
+
+def bfs(x):
+    depth = [-1] * n
+    que = deque([])
+    que.append(x)
+    depth[x] = 0
+    while que:
+        u = que.popleft()
+        for v in edges[u]:
+            if depth[v] != -1:
+                continue
+            depth[v] = depth[u] + 1
+            que.append(v)
+    return depth
+
+d0 = bfs(0)
+dn = bfs(n-1)
+
+F = 0
 for i in range(n):
-    for j in range(n):
-        if a[i][j] == 'W' and a[j][i] != 'L':
-            end('incorrect')
-        if a[i][j] == 'L' and a[j][i] != 'W':
-            end('incorrect')
-        if a[i][j] == 'D' and a[j][i] != 'D':
-            end('incorrect')
-end('correct')
+    if d0[i] <= dn[i]:
+        F += 1
+S = n - F
+if F>S:
+    print('Fennec')
+else:
+    print('Snuke')

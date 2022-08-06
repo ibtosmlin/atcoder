@@ -17,14 +17,10 @@ def alp(i): return chr(ord('a') + i%26)    # i=0->'a', i=25->'z'
 def end(r=-1): print(r); exit()
 direc = [(1, 0), (0, 1), (-1, 0), (0, -1)] + [(1, 1), (1, -1), (-1, 1), (-1, -1)]
 def isinhw(i, j, h, w): return (0 <= i < h) and (0 <= j < w)
-n = int(input())
-a = [input() for _ in range(n)]
-for i in range(n):
-    for j in range(n):
-        if a[i][j] == 'W' and a[j][i] != 'L':
-            end('incorrect')
-        if a[i][j] == 'L' and a[j][i] != 'W':
-            end('incorrect')
-        if a[i][j] == 'D' and a[j][i] != 'D':
-            end('incorrect')
-end('correct')
+a, b, d = map(int, input().split())
+
+import math
+
+x = a * math.cos(math.pi*(d/180)) - b * math.sin(math.pi*(d/180))
+y = a * math.sin(math.pi*(d/180)) + b * math.cos(math.pi*(d/180))
+print(x, y)

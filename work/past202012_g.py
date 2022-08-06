@@ -15,16 +15,26 @@ def input(): return sys.stdin.readline().rstrip()
 def int1(x): return int(x)-1
 def alp(i): return chr(ord('a') + i%26)    # i=0->'a', i=25->'z'
 def end(r=-1): print(r); exit()
-direc = [(1, 0), (0, 1), (-1, 0), (0, -1)] + [(1, 1), (1, -1), (-1, 1), (-1, -1)]
+direc = [(1, 0), (0, 1), (-1, 0), (0, -1)]
 def isinhw(i, j, h, w): return (0 <= i < h) and (0 <= j < w)
-n = int(input())
-a = [input() for _ in range(n)]
-for i in range(n):
-    for j in range(n):
-        if a[i][j] == 'W' and a[j][i] != 'L':
-            end('incorrect')
-        if a[i][j] == 'L' and a[j][i] != 'W':
-            end('incorrect')
-        if a[i][j] == 'D' and a[j][i] != 'D':
-            end('incorrect')
-end('correct')
+h, w = map(int, input().split())
+s = [input() for _ in range(h)]
+st = []
+l = 0
+for i in range(h):
+    for j in range(w):
+        if s[i][j] == "#":
+            st.append((i, j))
+            l += 1
+l -= 1
+
+root = []
+def dfs(x, p=-1, d=0):
+    global root
+    root.append((x, d))
+    for dx, dy in direc:
+        nx = x[0] + dx
+        ny = x[1] + dy
+        if isinhw(nx, ny, h, w) and s[nx][ny] == "#":
+            dfs((nx, ny), x, d+1)
+            

@@ -1,3 +1,2 @@
 con_root="https://atcoder.jp/contests"
-con_id="abc261"
-excon_id="abc***"
+con_id="abc263"

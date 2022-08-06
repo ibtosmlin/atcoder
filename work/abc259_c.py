@@ -17,14 +17,35 @@ def alp(i): return chr(ord('a') + i%26)    # i=0->'a', i=25->'z'
 def end(r=-1): print(r); exit()
 direc = [(1, 0), (0, 1), (-1, 0), (0, -1)] + [(1, 1), (1, -1), (-1, 1), (-1, -1)]
 def isinhw(i, j, h, w): return (0 <= i < h) and (0 <= j < w)
-n = int(input())
-a = [input() for _ in range(n)]
-for i in range(n):
-    for j in range(n):
-        if a[i][j] == 'W' and a[j][i] != 'L':
-            end('incorrect')
-        if a[i][j] == 'L' and a[j][i] != 'W':
-            end('incorrect')
-        if a[i][j] == 'D' and a[j][i] != 'D':
-            end('incorrect')
-end('correct')
+s = input() + 'X'
+t = input() + 'X'
+
+ls = []
+lt = []
+
+p = ''
+cnt = 1
+for si in s:
+    if si == p:
+        cnt += 1
+    else:
+        ls.append((p, cnt))
+        cnt = 1
+        p = si
+p = ''
+cnt = 1
+for si in t:
+    if si == p:
+        cnt += 1
+    else:
+        lt.append((p, cnt))
+        cnt = 1
+        p = si
+
+if len(ls) != len(lt): end('No')
+for lsi, lti in zip(ls, lt):
+    if lsi[0] != lti[0]: end('No')
+    if lsi[1] == 1 and lti[1] > 1: end('No')
+    if lsi[1] > lti[1]: end('No')
+
+end('Yes')

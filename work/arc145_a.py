@@ -18,13 +18,9 @@ def end(r=-1): print(r); exit()
 direc = [(1, 0), (0, 1), (-1, 0), (0, -1)] + [(1, 1), (1, -1), (-1, 1), (-1, -1)]
 def isinhw(i, j, h, w): return (0 <= i < h) and (0 <= j < w)
 n = int(input())
-a = [input() for _ in range(n)]
-for i in range(n):
-    for j in range(n):
-        if a[i][j] == 'W' and a[j][i] != 'L':
-            end('incorrect')
-        if a[i][j] == 'L' and a[j][i] != 'W':
-            end('incorrect')
-        if a[i][j] == 'D' and a[j][i] != 'D':
-            end('incorrect')
-end('correct')
+s = input()
+if s[0] == 'A' and s[-1] == 'B':
+        end('No')
+elif s == "BA":
+        end('No')
+end('Yes')

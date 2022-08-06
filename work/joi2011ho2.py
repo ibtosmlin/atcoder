@@ -17,14 +17,30 @@ def alp(i): return chr(ord('a') + i%26)    # i=0->'a', i=25->'z'
 def end(r=-1): print(r); exit()
 direc = [(1, 0), (0, 1), (-1, 0), (0, -1)] + [(1, 1), (1, -1), (-1, 1), (-1, -1)]
 def isinhw(i, j, h, w): return (0 <= i < h) and (0 <= j < w)
-n = int(input())
-a = [input() for _ in range(n)]
-for i in range(n):
-    for j in range(n):
-        if a[i][j] == 'W' and a[j][i] != 'L':
-            end('incorrect')
-        if a[i][j] == 'L' and a[j][i] != 'W':
-            end('incorrect')
-        if a[i][j] == 'D' and a[j][i] != 'D':
-            end('incorrect')
-end('correct')
+n, k = map(int, input().split())
+
+books = [[] for _ in range(10)]
+for _ in range(n):
+    c, g = map(int, input().split())
+    g -= 1
+    books[g].append(c)
+
+for booki in books:
+    booki.sort(reverse=True)
+
+ps = [[(0, 0)] for _ in range(10)]
+for j, booki in enumerate(books):
+    t = 0
+    add = 0
+    for i, v in enumerate(booki):
+        t += v
+        ps[j].append((i+1, t + i * (i+1)))
+
+dp = [-1] * (k+1)
+dp[0] = 0
+for i, psi in enumerate(ps):
+    for ki in range(k+1)[::-1]:
+        for c, v in psi[::-1]:
+            if ki - c >= 0 and dp[ki-c] >= 0:
+                dp[ki] = max(dp[ki], dp[ki-c] + v)
+print(dp[k])

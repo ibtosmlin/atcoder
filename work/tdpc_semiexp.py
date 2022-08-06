@@ -17,14 +17,19 @@ def alp(i): return chr(ord('a') + i%26)    # i=0->'a', i=25->'z'
 def end(r=-1): print(r); exit()
 direc = [(1, 0), (0, 1), (-1, 0), (0, -1)] + [(1, 1), (1, -1), (-1, 1), (-1, -1)]
 def isinhw(i, j, h, w): return (0 <= i < h) and (0 <= j < w)
-n = int(input())
-a = [input() for _ in range(n)]
-for i in range(n):
-    for j in range(n):
-        if a[i][j] == 'W' and a[j][i] != 'L':
-            end('incorrect')
-        if a[i][j] == 'L' and a[j][i] != 'W':
-            end('incorrect')
-        if a[i][j] == 'D' and a[j][i] != 'D':
-            end('incorrect')
-end('correct')
+n, k = map(int, input().split())
+dp = [[0] *2 for _ in range(n)]
+# dp[i][j] i番目の駅で止まるj = 0 止まらない j = 1
+dp[0][0] = 1
+
+for i in range(1, n):
+    dp[i][1] = dp[i-1][0] + dp[i-1][1]
+    dp[i][0] = dp[i-1][0] + dp[i-1][1]
+    if i >= k:
+    dp[i][0] = dp[i-k]
+
+
+
+print(dp)
+
+print(dp[n-1][0])

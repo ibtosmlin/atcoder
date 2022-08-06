@@ -17,14 +17,20 @@ def alp(i): return chr(ord('a') + i%26)    # i=0->'a', i=25->'z'
 def end(r=-1): print(r); exit()
 direc = [(1, 0), (0, 1), (-1, 0), (0, -1)] + [(1, 1), (1, -1), (-1, 1), (-1, -1)]
 def isinhw(i, j, h, w): return (0 <= i < h) and (0 <= j < w)
+def dpr(n, A, B):
+    dp = [0] * (n+1)
+    dp[0] = 0
+    for a, b in zip(A, B):
+        v = b - a
+        if v <= 0: continue
+        for i in range(n-a+1):
+            dp[i+a] = max(dp[i+a], dp[i] + v)
+    n += max(dp)
+    return n
+
 n = int(input())
-a = [input() for _ in range(n)]
-for i in range(n):
-    for j in range(n):
-        if a[i][j] == 'W' and a[j][i] != 'L':
-            end('incorrect')
-        if a[i][j] == 'L' and a[j][i] != 'W':
-            end('incorrect')
-        if a[i][j] == 'D' and a[j][i] != 'D':
-            end('incorrect')
-end('correct')
+A = tuple(map(int, input().split()))
+B = tuple(map(int, input().split()))
+n = dpr(n, A, B)
+n = dpr(n, B, A)
+print(n)

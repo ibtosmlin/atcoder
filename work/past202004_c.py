@@ -18,13 +18,21 @@ def end(r=-1): print(r); exit()
 direc = [(1, 0), (0, 1), (-1, 0), (0, -1)] + [(1, 1), (1, -1), (-1, 1), (-1, -1)]
 def isinhw(i, j, h, w): return (0 <= i < h) and (0 <= j < w)
 n = int(input())
-a = [input() for _ in range(n)]
-for i in range(n):
-    for j in range(n):
-        if a[i][j] == 'W' and a[j][i] != 'L':
-            end('incorrect')
-        if a[i][j] == 'L' and a[j][i] != 'W':
-            end('incorrect')
-        if a[i][j] == 'D' and a[j][i] != 'D':
-            end('incorrect')
-end('correct')
+g = [list(input()) for _ in range(n)]
+w = 2*n - 1
+
+def isX(i, j):
+    for dj in [-1, 0, 1]:
+        if 0<= j + dj < w and g[i+1][j+dj] == 'X':
+            return True
+    return False
+
+
+for i in range(n-1)[::-1]:
+    for j in range(w):
+        if g[i][j] != '#': continue
+        if isX(i, j):
+            g[i][j] = 'X'
+
+for gi in g:
+    print(''.join(gi))

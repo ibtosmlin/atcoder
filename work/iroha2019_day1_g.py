@@ -17,14 +17,23 @@ def alp(i): return chr(ord('a') + i%26)    # i=0->'a', i=25->'z'
 def end(r=-1): print(r); exit()
 direc = [(1, 0), (0, 1), (-1, 0), (0, -1)] + [(1, 1), (1, -1), (-1, 1), (-1, -1)]
 def isinhw(i, j, h, w): return (0 <= i < h) and (0 <= j < w)
-n = int(input())
-a = [input() for _ in range(n)]
-for i in range(n):
-    for j in range(n):
-        if a[i][j] == 'W' and a[j][i] != 'L':
-            end('incorrect')
-        if a[i][j] == 'L' and a[j][i] != 'W':
-            end('incorrect')
-        if a[i][j] == 'D' and a[j][i] != 'D':
-            end('incorrect')
-end('correct')
+n, m, k = map(int, input().split())
+a = list(map(int, input().split()))
+
+INF = 1<<60
+dp = [[-INF] * k for _ in range(m+1)]
+dp[0][0] = 0
+
+for i, ai in enumerate(a):
+    ndp = [[-INF] * k for _ in range(m+1)]
+    mx = -INF
+    for mi in range(1, m+1):
+        for ki in range(k):
+            mx = max(mx, dp[mi-1][ki] + ai)
+        ndp[mi][0] = mx
+    for mi in range(m+1):
+        for ki in range(1, k):
+            ndp[mi][ki] = max(ndp[mi][ki], dp[mi][ki-1])
+    dp = ndp
+ret = max(dp[m])
+print(-1 if ret < 0 else ret)
