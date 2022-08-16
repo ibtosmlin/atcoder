@@ -90,15 +90,15 @@ class UnionFind:
 ################
 
 n, m, e = map(int, input().split())
-N = n + m + 1
+N = n + 1
 uf = UnionFind(N)
-for i in range(m+1):
-    uf.sizes[n+i] = 0
 
 edall = []
 for _ in range(e):
     u, v = map(int1, input().split())
-    edall.append([u, v])
+    u = min(u, n)
+    v = min(v, n)
+    edall.append((u, v))
 
 q = int(input())
 rmx = []
@@ -112,16 +112,13 @@ for i, (u, v) in enumerate(edall):
     if i in rms: continue
     uf.unite(u, v)
 
-for i in range(n, N):
-    uf.unite(i, N-1)
-
-ret = [uf.size(N-1)]
+ret = [uf.size(N-1)-1]
 for u, v in rmx[::-1]:
     if uf.same(u, v):
         ret.append(ret[-1])
     else:
         uf.unite(u, v)
-        ret.append(uf.size(N-1))
+        ret.append(uf.size(N-1)-1)
 
 ret = ret[:-1]
 for ri in ret[::-1]:
