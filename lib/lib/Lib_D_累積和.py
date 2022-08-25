@@ -33,5 +33,5 @@ class imos:
         return gd[u][v] - gd[u][y] - gd[x][v] + gd[x][y]
 
 #prefix#
-# Lib_累積和
+# Lib_累積和_imos
 #end#

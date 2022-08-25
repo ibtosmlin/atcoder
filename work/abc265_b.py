@@ -17,8 +17,16 @@ def alp(i): return chr(ord('a') + i%26)    # i=0->'a', i=25->'z'
 def end(r=-1): print(r); exit()
 direc = [(1, 0), (0, 1), (-1, 0), (0, -1)] + [(1, 1), (1, -1), (-1, 1), (-1, -1)]
 def isinhw(i, j, h, w): return (0 <= i < h) and (0 <= j < w)
-def dist2(pt1, pt2): return sum([(x1-x2) ** 2 for x1, x2 in zip(pt1, pt2)])
-def distPtoP(pt1, pt2): return dist2(pt1, pt2) ** 0.5
-def distCtoC(c1, c2):
-    pt1, r1 = c1; pt2, r2 = c2; R, r, d = max(r1, r2), min(r1, r2), dist(pt1, pt2)
-    return d-R-r if d > R+r else R-r-d if d < R-r else 0
+n, m, t = map(int, input().split())
+a = list(map(int, input().split()))
+b = [0]*n
+for _ in range(m):
+    x, y = map(int, input().split())
+    b[x-1] = y
+
+for i, (ai, bi) in enumerate(zip(a, b)):
+    nt = t + bi - ai
+    t = nt
+    if nt <= 0:
+        end('No')
+end('Yes')

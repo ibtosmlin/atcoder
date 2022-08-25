@@ -7,7 +7,13 @@ import math
 print(math.sin(math.pi/4))
 print(math.cos(math.pi/4))
 print(math.tan(math.pi/4))
+# 度→radian
+math.radians(180)
+# radian→度
+math.degrees(3.1415)
+
 print(math.gcd(x, y))
+
 #prefix#
 # lib_最大公約数_三角関数
 # import math
@@ -35,6 +41,33 @@ fr = fd.quantize(Decimal('0.1'), rounding=ROUND_HALF_UP)#123.5
 # 再帰関数
 #body#
 @lru_cache(maxsize=None)
+#prefix#
+# lib_再帰関数
+#end#
+
+#name#
+# lib_複素数
+#description#
+# lib_複素数
+#body#
+import cmath
+
+z1 = 5 + 13j
+a, b = 5, 13
+z2 = complex(a, b)
+
+print(z1.real)
+print(z1.img)
+
+
+# 極座標表示
+r, theta = cmath.polar(z1)
+
+print(cmath.rect(1, cmath.pi/2))
+# (6.123233995736766e-17+1j)
+print(z2.conjugate())
+# (5-13j)
+
 #prefix#
 # lib_再帰関数
 #end#

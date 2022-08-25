@@ -66,11 +66,12 @@ class BinaryIndexedTree:
         pos = 0
         for i in range(self.depth, -1, -1):
             k = pos + (1 << i)
-            if k <= self.size and sum_ + self.dat[k] < x:
+            if k <= self.size and sum_ + self.dat[k] <= x:
                 sum_ += self.dat[k]
                 pos += 1 << i
-        # pos = sum(i) < xとなる最大のindex
-        # pos + 1 = sum(i) >= xとなる最小のindex
+        # a0+..+a_pos <= x < a0+a_pos+a_pos+1
+        # pos : sum(i) < xとなる最大のindex
+        # pos + 1 : sum(i) >= xとなる最小のindex
         return pos  #0-indexed
 
 
