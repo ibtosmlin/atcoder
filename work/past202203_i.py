@@ -26,20 +26,15 @@ n = int(input())
 x = [tuple(map(int, input().split())) for _ in range(n)]
 X = [tuple(map(int, input().split())) for _ in range(n)]
 
-def check(i):
-    a, b = x[0]
-    u, v = X[i]
-    
+# for x
+d = defaultdict(list)
+D = defaultdict(list)
 
 
-
-
-
-
-
-
-
-for i in range(n):
-    if check(i):
-        end('Yes')
-end('No')
+for u, v in x:
+    d[u].append(v)
+for u, v in X:
+    D[u].append(v)
+fg = True
+if d.keys() != D.keys():
+    fg = False 

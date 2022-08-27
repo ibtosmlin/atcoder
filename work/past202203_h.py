@@ -29,6 +29,7 @@ class UnionFind:
         self.ranks = [0] * n                    # 木の深さ
         self.sizes = [1] * n                    # グループの要素数
         self.group_count = n                    # グループの数
+        self.group = [[i] for i in range(n)]                    # グループの要素数
 
     def find(self, x):
         """親を出力
@@ -56,6 +57,8 @@ class UnionFind:
                 self.ranks[y] += 1
         self.parents[x] = y
         self.sizes[y] += self.sizes[x]
+        self.group[y] += self.group[x]
+        self.group[x] = None
         self.group_count -= 1
 
     def same(self, x, y) -> bool:
@@ -101,6 +104,6 @@ for _ in range(q):
     if q[0] == 1:
         uf.unite(q[1], q[2])
     else:
-        print(*sorted(uf.members(q[1])))
+        print(*sorted(uf.group[uf.find(q[1])]))
 
 # https://atcoder.jp/contests/atc001/tasks/unionfind_a
