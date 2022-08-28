@@ -19,6 +19,3 @@ alias setat="source ~/atcoder/tool/settings.sh"
 
 # algo
 alias goalgo="source ~/atcoder/tool/algo.sh"
-
-# python console
-alias py = "python3"

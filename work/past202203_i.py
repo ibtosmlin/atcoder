@@ -26,15 +26,25 @@ n = int(input())
 x = [tuple(map(int, input().split())) for _ in range(n)]
 X = [tuple(map(int, input().split())) for _ in range(n)]
 
-# for x
-d = defaultdict(list)
-D = defaultdict(list)
+x.sort()
+X.sort()
+if x == X: end('Yes')
 
-
+m = min(pi[0] for pi in x)
+M = max(pi[0] for pi in X)
+newx = []
 for u, v in x:
-    d[u].append(v)
-for u, v in X:
-    D[u].append(v)
-fg = True
-if d.keys() != D.keys():
-    fg = False 
+    new = m + M - u
+    newx.append((new, v))
+newx.sort()
+if newx == X: end('Yes')
+
+m = min(pi[1] for pi in x)
+M = max(pi[1] for pi in X)
+newx = []
+for u, v in x:
+    new = m + M - v
+    newx.append((u, new))
+newx.sort()
+if newx == X: end('Yes')
+end('No')
