@@ -62,5 +62,5 @@ def rotate(A, reverse = False):
     else:
         return [list(x) for x in zip(*A[::-1])]
 #prefix#
-# rotate_matrix
+# Lib_M_rotate_matrix
 #end#

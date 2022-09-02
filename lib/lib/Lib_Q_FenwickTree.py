@@ -103,5 +103,5 @@ for i in range(12):
     print(i, bit.lower_bound(i))
 
 #prefix#
-# Lib_BIT_Fenwick
+# Lib_Q_BIT_Fenwick
 #end#

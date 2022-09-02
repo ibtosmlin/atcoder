@@ -18,18 +18,42 @@ def end(r=-1): print(r); exit()
 direc = [(1, 0), (0, 1), (-1, 0), (0, -1)] + [(1, 1), (1, -1), (-1, 1), (-1, -1)]
 def isinhw(i, j, h, w): return (0 <= i < h) and (0 <= j < w)
 def dist2(pt1, pt2): return sum([(x1-x2) ** 2 for x1, x2 in zip(pt1, pt2)])
-n = int(input())
-a = list(map(int, input().split()))
-a.reverse()
 
-dp = [0] * n
-re = [0] * (n+1)
-# dp[i] iからスタートしてn-1に異動するときの回数の期待値
+n, m = map(int, input().split())
+edges = [[] for _ in range(n)]
+#リストの作成
+for _ in range(m):
+    a, b = map(int, input().split())
+    a, b = a-1, b-1
+    edges[a].append(b)
 
-for i, ai in enumerate(a):
-    e = (1 + ai + re[i] - re[i-ai]) * modinv(ai, mod1)
-    e %= mod1
-    dp[i+1] = e
-    re[i+1] = re[i] + e
-    re[i+1] %= mod1
-print(dp[-1])
+def bfs(s):
+    seen = [False] * n
+    que = deque()
+    que.append([s])
+    seen[s] = True
+    while que:
+        path = que.popleft()
+        nw = path[-1]
+        for nx in edges[nw]:
+            if nx == s:
+                return path
+            if seen[nx]:
+                continue
+            else:
+                que.append(path + [nx])
+                seen[nx] = True
+    return False
+
+ret = [-1] * 1010
+for i in range(n):
+    nw = bfs(i)
+    if nw == False: continue
+    if len(nw) < len(ret):
+        ret = nw
+
+if ret[0] == -1:
+    end(-1)
+print(len(ret))
+for i in ret:
+    print(i+1)

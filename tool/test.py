@@ -17,25 +17,27 @@ def alp(i): return chr(ord('a') + i%26)    # i=0->'a', i=25->'z'
 def end(r=-1): print(r); exit()
 direc = [(1, 0), (0, 1), (-1, 0), (0, -1)] + [(1, 1), (1, -1), (-1, 1), (-1, -1)]
 def isinhw(i, j, h, w): return (0 <= i < h) and (0 <= j < w)
-n, m, s, t = map(int, input().split())
-edges = [[] for _ in range(n)]
-for _ in range(m):
-    _a, _b = map(int, input().split())
-    edges[_a].append(_b)
-    edges[_b].append(_a)
+def dist2(pt1, pt2): return sum([(x1-x2) ** 2 for x1, x2 in zip(pt1, pt2)])
 
-seen = [-1] * n
-hit = False
-ret = []
-def dfs(x, p=-1, d=0):
-    global hit
-    if x == t: hit = True
-    for nx in edges[x]:
-        if nx == p: continue
-        if seen[nx] != -1: continue
-        seen[nx] = d+1
-        dfs(nx, x, d+1)
-    if hit:
-        ret.append(x)
-dfs(s)
-print(ret)
+class node:
+    def __init__(self, v, nn):
+        self.value = v
+        self.next = nn
+ed = node("nil", None)
+nil = node("nil", ed)
+def pushhead(v):
+    nn = node(v, nil.next)
+    nil.next = nn
+
+def pophead():
+    x = nil.next.value
+    nil.next = nil.next.next
+    return x
+
+q = int(input())
+for _ in range(q):
+    f = list(input().split())
+    if f[0] == '1':
+        print(pophead())
+    else:
+        pushhead(f[1])

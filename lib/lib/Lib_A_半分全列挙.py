@@ -33,5 +33,5 @@ for f in lower:
 print(ret)
 
 #prefix#
-# lib_半分全列挙
+# lib_A_半分全列挙
 #end#

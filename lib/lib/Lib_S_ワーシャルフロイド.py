@@ -75,5 +75,5 @@ WF.build()
 print(WF.path(0, n-1))
 
 #prefix#
-# lib_s_最短経路探索_warshall
+# Lib_S_最短経路探索_warshall
 #end#

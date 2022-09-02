@@ -174,5 +174,5 @@ for i in range(q):
     print(l.lca(u, v))
 
 #prefix#
-# lib_最小共通祖先_LCA
+# lib_G_最小共通祖先_LCA
 #end#

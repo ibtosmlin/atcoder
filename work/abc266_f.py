@@ -97,33 +97,30 @@ class UnionFind:
 
 n = int(input())
 edges = [[] for _ in range(n)]
-edges1 = []
+degree = [0] * n
 for _ in range(n):
     _a, _b = map(int1, input().split())
     edges[_a].append(_b)
     edges[_b].append(_a)
-    edges1.append((_a, _b))
+    degree[_a] += 1
+    degree[_b] += 1
 
-oncycle = [False] * n
-seen = [False] * n
-def dfs(x, p=-1):
-    if seen[x]: return x
-    seen[x] = True
-    for nx in edges[x]:
-        if nx == p: continue
-        r = dfs(nx, x)
-        if r == -1: continue
-        oncycle[x] = True
-        if x == r: return -1
-        return r
-    return -1
-
-dfs(0)
+leaves = [i for i in range(n) if degree[i] == 1]
+oncycle = set(range(n))
+while leaves:
+    x = leaves.pop()
+    oncycle.remove(x)
+    for y in edges[x]:
+        degree[y] -= 1
+        if degree[y] == 1:
+            leaves.append(y)
 
 uf = UnionFind(n)
-for u, v in edges1:
-    if oncycle[u] and oncycle[v]: continue
-    uf.unite(u, v)
+for u in range(n):
+    for v in edges[u]:
+        if u in oncycle and v in oncycle: continue
+        uf.unite(u, v)
+
 q = int(input())
 for _ in range(q):
     u, v = map(int1, input().split())

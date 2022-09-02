@@ -72,5 +72,5 @@ for i in range(n):
     print(''.join(map(str, ret)))
 
 #prefix#
-# matrix-回転と反転
+# Lib_M_matrix-回転と反転
 #end#

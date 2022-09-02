@@ -19,17 +19,22 @@ direc = [(1, 0), (0, 1), (-1, 0), (0, -1)] + [(1, 1), (1, -1), (-1, 1), (-1, -1)
 def isinhw(i, j, h, w): return (0 <= i < h) and (0 <= j < w)
 def dist2(pt1, pt2): return sum([(x1-x2) ** 2 for x1, x2 in zip(pt1, pt2)])
 n = int(input())
-a = list(map(int, input().split()))
-a.reverse()
-
-dp = [0] * n
-re = [0] * (n+1)
-# dp[i] iからスタートしてn-1に異動するときの回数の期待値
-
-for i, ai in enumerate(a):
-    e = (1 + ai + re[i] - re[i-ai]) * modinv(ai, mod1)
-    e %= mod1
-    dp[i+1] = e
-    re[i+1] = re[i] + e
-    re[i+1] %= mod1
-print(dp[-1])
+dp = [[[-1]*2 for __ in range(1001)] for _ in range(1001)]
+dp[0][0][0] = 0
+for i in range(n):
+    l = int(input())
+    ndp = [[[-1]*2 for __ in range(1001)] for _ in range(1001)]
+    for mx in range(1001):
+        for mn in range(1001):
+            x, y = dp[mx][mn]
+            if x != 1:
+                # xが切った場合
+                nmx = max(mx, l)
+                nmn = min(mn, l)
+                ndp[nmx][nmn][0] = l
+                ndp[nmx][nmn][1] = l
+            if y != 1:
+                nmx = max(mx, y+l)
+                ndp[nmx][nmn][0] = y+l
+                ndp[nmx][nmn][1] = y+l
+print(dp)

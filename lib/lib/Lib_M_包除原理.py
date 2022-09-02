@@ -39,5 +39,5 @@ ret = (1 << d) - ret
 print(ret)
 
 #prefix#
-# Lib_包除原理_houjo
+# Lib_M_包除原理_houjo
 #end#

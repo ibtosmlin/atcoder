@@ -69,7 +69,7 @@ class UnionFindWeighted:
         _ = self.find(x)
         return self.weights[x]
 
-    #重みの差
+    #重み
     def diff(self, x, y):
         rx = self.find(x)
         ry = self.find(y)

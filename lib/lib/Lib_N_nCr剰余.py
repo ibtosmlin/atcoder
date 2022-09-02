@@ -195,5 +195,5 @@ print(c.nCr(6,2))   #15mod3->0
 print(c.nCr(6,3))   #20mod3->2
 
 #prefix#
-# Lib_nCr剰余
+# Lib_N_nCr剰余
 #end#

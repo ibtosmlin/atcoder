@@ -60,5 +60,5 @@ a = list(map(int, input().split()))
 ret = inv_numbers(a)
 print(ret)
 #prefix#
-# Lib_転倒数#
+# Lib_A_転倒数
 #end#

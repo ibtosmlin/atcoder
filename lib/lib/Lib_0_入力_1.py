@@ -73,8 +73,8 @@ b = list(map(int, input().split()))
 #description#
 # edges
 #body#
-edges = [[] for _ in range(n)]
-for _ in range(m):
+edges = [[] for _ in range($n)]
+for _ in range($m):
     _a, _b = map(int1, input().split())
     edges[_a].append(_b)
     edges[_b].append(_a)
@@ -88,8 +88,8 @@ for _ in range(m):
 #description#
 # edges(重み付き)
 #body#
-edges = [[] for _ in range(n)]
-for _ in range(m):
+edges = [[] for _ in range($n)]
+for _ in range($m):
     _a, _b, _w = map(int, input().split())
     _a -= 1; _b -= 1
     edges[_a].append((_b, _w))

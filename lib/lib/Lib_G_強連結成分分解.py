@@ -106,5 +106,5 @@ for i in range(m):
 # https://atcoder.jp/contests/practice2/tasks/practice2_g
 
 #prefix#
-# lib_強連結成分分解_SCC
+# lib_G_強連結成分分解_SCC
 #end#

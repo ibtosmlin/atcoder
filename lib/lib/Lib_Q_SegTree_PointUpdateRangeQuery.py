@@ -208,5 +208,5 @@ u = sgt.min_left(4, lambda y: y <= 2)
 print(u)
 
 #prefix#
-# lib_seg木（一点更新・区間集約)
+# lib_Q_seg木（一点更新・区間集約)
 #end#

@@ -91,5 +91,5 @@ for _ in range(q):
 # https://atcoder.jp/contests/atc001/tasks/unionfind_a
 
 #prefix#
-# lib_unionfind
+# lib_D_unionfind
 #end#

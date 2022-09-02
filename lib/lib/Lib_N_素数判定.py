@@ -37,5 +37,5 @@ def get_primes(n:int) -> list:
     return ret
 
 #prefix#
-# Lib_prime_素数
+# Lib_N_prime_素数
 #end#

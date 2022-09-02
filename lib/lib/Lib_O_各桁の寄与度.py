@@ -37,5 +37,5 @@ s = input()
 print(sum_digit(s, 10, mod))
 
 #prefix#
-# Lib_各桁の寄与度
+# Lib_O_各桁の寄与度
 #end#

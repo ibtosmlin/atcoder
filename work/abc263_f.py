@@ -17,10 +17,8 @@ def alp(i): return chr(ord('a') + i%26)    # i=0->'a', i=25->'z'
 def end(r=-1): print(r); exit()
 direc = [(1, 0), (0, 1), (-1, 0), (0, -1)] + [(1, 1), (1, -1), (-1, 1), (-1, -1)]
 def isinhw(i, j, h, w): return (0 <= i < h) and (0 <= j < w)
+def dist2(pt1, pt2): return sum([(x1-x2) ** 2 for x1, x2 in zip(pt1, pt2)])
 n = int(input())
 c = [list(map(int, input().split())) for _ in range(n)]
 
-
-
-for i in range(n)[::-1]:
-    for k in range(1<<i):
+dp = [0] * l

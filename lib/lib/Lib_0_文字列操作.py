@@ -66,3 +66,20 @@ print(myint(s, 9))
 # n進数
 # d進数
 #end#
+
+#name#
+# digital digit
+#description#
+#  -
+# | |
+#  -
+# | |
+#  -
+
+#body#
+led_statuses = ["1110111", "0100100", "1011101", "1101101", "0101110",
+    "1101011", "1111011", "0100111", "1111111", "1101111"]
+led_digit = [int(status, base=2) for status in led_statuses]
+#prefix#
+# digital digit
+#end#

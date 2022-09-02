@@ -61,5 +61,5 @@ def prime_factorize(A : list):
         ret.append(res)
     return ret
 #prefix#
-# Lib_素因数分解
+# Lib_N_素因数分解
 #end#

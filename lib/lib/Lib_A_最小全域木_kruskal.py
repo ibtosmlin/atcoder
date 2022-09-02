@@ -7,30 +7,25 @@
 # つなぐ頂点が同じ連結成分にないことをUnion Find Tree でみる
 #body#
 class UnionFind:
-    def __init__(self, n):                      # 初期化
-        self.n = n                              # 要素数
-        self.parents = [i for i in range(n)]    # 親
-        self.ranks = [0] * n                    # 木の深さ
+    def __init__(self, n):
+        self.n = n
+        self.parents = [i for i in range(n)]
+        self.ranks = [0] * n
 
-    def find(self, x):              # 親を出力
-        if self.parents[x] == x:
-            return x
-        else:
-            p = self.find(self.parents[x])
-            self.parents[x] = p
-            return p
+    def find(self, x):
+        p = self.parents[x]
+        if p == x: return x
+        self.parents[x] = p = self.find(p)
+        return p
 
-    def unite(self, x, y):          # ユニオン
-        x = self.find(x)
-        y = self.find(y)
+    def unite(self, x, y):
+        x = self.find(x); y = self.find(y)
         if x == y: return
-        if self.ranks[x] > self.ranks[y]:
-            x , y = y, x    #yを親にする
-        if self.ranks[x] == self.ranks[y]:
-            self.ranks[y] += 1
+        if self.ranks[x] > self.ranks[y]: x , y = y, x
+        if self.ranks[x] == self.ranks[y]: self.ranks[y] += 1
         self.parents[x] = y
 
-    def same(self, x, y):       #xとyが同じグループかどうか
+    def same(self, x, y):
         return self.find(x) == self.find(y)
 
 
@@ -74,5 +69,5 @@ mst.build()
 print(mst.weight)
 
 #prefix#
-# Lib_最小全域木_MST
+# Lib_A_最小全域木_MST
 #end#

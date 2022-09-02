@@ -77,6 +77,5 @@ print(ts.parents)
 print(ts.is_dag)
 
 #prefix#
-# Lib_G_トポロジカルソート
-# Lib_G_topologicalsort
+# Lib_G_トポロジカルソート_topologicalsort
 #end#

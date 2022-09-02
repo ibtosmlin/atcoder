@@ -53,7 +53,7 @@ tuple(map(int, input().split()))
 #description#
 # int型でmatrixのinput
 #body#
-[list(map(int, input().split())) for _ in range($n)]
+[list(map(int, input().split())) for _ in range($n)
 #prefix#
 # [listmapint
 #end#

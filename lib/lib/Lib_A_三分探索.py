@@ -70,5 +70,5 @@ for i in range(80):
 print(g(low))
 
 #prefix#
-# lib_三分探索
+# lib_A_三分探索
 #end#

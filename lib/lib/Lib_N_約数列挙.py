@@ -21,5 +21,5 @@ print(make_divisors(10))
 #####################
 
 #prefix#
-# Lib_約数列挙
+# Lib_N_約数列挙
 #end#

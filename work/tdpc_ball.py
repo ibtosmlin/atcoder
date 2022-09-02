@@ -19,17 +19,20 @@ direc = [(1, 0), (0, 1), (-1, 0), (0, -1)] + [(1, 1), (1, -1), (-1, 1), (-1, -1)
 def isinhw(i, j, h, w): return (0 <= i < h) and (0 <= j < w)
 def dist2(pt1, pt2): return sum([(x1-x2) ** 2 for x1, x2 in zip(pt1, pt2)])
 n = int(input())
-a = list(map(int, input().split()))
-a.reverse()
-
-dp = [0] * n
-re = [0] * (n+1)
-# dp[i] iからスタートしてn-1に異動するときの回数の期待値
-
-for i, ai in enumerate(a):
-    e = (1 + ai + re[i] - re[i-ai]) * modinv(ai, mod1)
-    e %= mod1
-    dp[i+1] = e
-    re[i+1] = re[i] + e
-    re[i+1] %= mod1
-print(dp[-1])
+x = list(map(int, input().split()))
+x.sort()
+mask = sum((1 << xi for xi in x))
+N = 1 << 16
+dp = [INF] * N
+dp[0] = 0
+for i in range(1, N):
+    mi = i & mask
+    nxtv = 10**9
+    for j in range(16):
+        ret = 0
+        for k in {-1, 0, 1}:
+            if 0<= j+k < 16:
+                ret += dp[mi & ~(1<<(j+k))]
+        nxtv = min(nxtv, ret)
+    dp[i] = nxtv / 3 + 1
+print(dp[N-1])
