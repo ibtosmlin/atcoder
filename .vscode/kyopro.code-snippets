@@ -383,6 +383,24 @@
             "nをd進数表記"
         ]
     },
+    "digital digit": {
+        "prefix": [
+            "digital digit"
+        ],
+        "body": [
+            "led_statuses = [\"1110111\", \"0100100\", \"1011101\", \"1101101\", \"0101110\",",
+            "    \"1101011\", \"1111011\", \"0100111\", \"1111111\", \"1101111\"]",
+            "led_digit = [int(status, base=2) for status in led_statuses]"
+        ],
+        "description": [
+            " -",
+            "| |",
+            " -",
+            "| |",
+            " -",
+            ""
+        ]
+    },
     "LCS最長共通部分列": {
         "prefix": [
             "Lib_LCS最長共通部分列#"
@@ -1706,8 +1724,7 @@
     },
     "トポロジカルソート": {
         "prefix": [
-            "Lib_G_トポロジカルソート",
-            "Lib_G_topologicalsort"
+            "Lib_G_トポロジカルソート_topologicalsort"
         ],
         "body": [
             "# トポロジカルソート",
