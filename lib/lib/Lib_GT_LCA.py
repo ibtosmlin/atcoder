@@ -20,9 +20,6 @@ class lca():
     Methods
     ----------
     set_root :
-
-
-
     """
     def __init__(self, n: int) -> None:
         self.n = n
@@ -160,6 +157,12 @@ class lca():
         return self.distance[u] + self.distance[v] - 2 * self.distance[lca]
 
 
+    def find_kth_parent(self, v, k):
+        for i in range(self.lv):
+            if k & (1 << i):
+                v = self.p[i][v]
+        return v
+
 ########################################
 
 n, q = map(int, input().split())
@@ -174,5 +177,5 @@ for i in range(q):
     print(l.lca(u, v))
 
 #prefix#
-# lib_G_最小共通祖先_LCA
+# lib_GT_最小共通祖先_LCA
 #end#
