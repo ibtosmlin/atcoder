@@ -3,10 +3,7 @@
 #description#
 # 最小共通祖先
 #body#
-from collections import deque
-
-
-class lca():
+class Lca():
     """Lowest Common Ancestor
 
     u, vの共通の親
@@ -27,8 +24,8 @@ class lca():
         self.edges = [[] for _ in range(n)]
         self.lv = n.bit_length()
         self.p = [[None] * n for _ in range(self.lv)]
-        self.depth = [None] * n
-        self.distance = [None] * n
+        self._depth = [None] * n
+        self._distance = [None] * n
         self.is_constructed = False
 
 
@@ -64,16 +61,16 @@ class lca():
         # 深さと親の設定
         q = deque()
         q.append((self.root, 0, 0))
-        self.depth[self.root] = 0
-        self.distance[self.root] = 0
+        self._depth[self.root] = 0
+        self._distance[self.root] = 0
         self.p[0][self.root] = 0
         while q:
             cur, dep, dist = q.popleft()
             for nxt, nd in self.edges[cur]:
                 if self.p[0][nxt]!=None: continue
                 q.append((nxt, dep+1, dist+nd))
-                self.depth[nxt] = dep+1
-                self.distance[nxt] = dist+nd
+                self._depth[nxt] = dep+1
+                self._distance[nxt] = dist+nd
                 self.p[0][nxt] = cur
         # ダブリング
         for i in range(1, self.lv):
@@ -83,8 +80,7 @@ class lca():
 
 
     def la(self, x, h):
-        if not self.is_constructed:
-            self.__construct()
+        if not self.is_constructed: self.__construct()
         for i in range(self.lv)[::-1]:
             if h >= 1 << i:
                 x = self.p[i][x]
@@ -106,10 +102,9 @@ class lca():
             共通祖先のノード
         """
         # u,vの高さを合わせる
-        if not self.is_constructed:
-            self.__construct()
-        if self.depth[u] < self.depth[v]: u, v = v, u
-        u = self.la(u, self.depth[u] - self.depth[v])
+        if not self.is_constructed: self.__construct()
+        if self._depth[u] < self._depth[v]: u, v = v, u
+        u = self.la(u, self._depth[u] - self._depth[v])
         if u == v: return u
         # u, vのギリギリ合わない高さまで昇る
         for i in range(self.lv)[::-1]:
@@ -132,10 +127,9 @@ class lca():
         int
             ノード間の距離
         """
-        if not self.is_constructed:
-            self.__construct()
+        if not self.is_constructed: self.__construct()
         lca = self.lca(u, v)
-        return self.depth[u] + self.depth[v] - 2 * self.depth[lca]
+        return self._depth[u] + self._depth[v] - 2 * self._depth[lca]
 
 
     def distance(self, u, v):
@@ -151,17 +145,10 @@ class lca():
         int
             ノード間の距離
         """
-        if not self.is_constructed:
-            self.__construct()
+        if not self.is_constructed: self.__construct()
         lca = self.lca(u, v)
-        return self.distance[u] + self.distance[v] - 2 * self.distance[lca]
+        return self._distance[u] + self._distance[v] - 2 * self._distance[lca]
 
-
-    def find_kth_parent(self, v, k):
-        for i in range(self.lv):
-            if k & (1 << i):
-                v = self.p[i][v]
-        return v
 
 ########################################
 
