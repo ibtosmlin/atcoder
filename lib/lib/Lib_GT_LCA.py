@@ -3,7 +3,7 @@
 #description#
 # 最小共通祖先
 #body#
-class Lca():
+class Lca:
     """Lowest Common Ancestor
 
     u, vの共通の親
@@ -13,74 +13,53 @@ class Lca():
     ----------
     n : int
         nodeの数
-
-    Methods
-    ----------
-    set_root :
+    G : graph
+    r : root
     """
-    def __init__(self, n: int) -> None:
+    def __init__(self, n: int, G, r:int) -> None:
         self.n = n
-        self.root = None
-        self.edges = [[] for _ in range(n)]
+        self.root = r
+        self.edges = G
         self.lv = n.bit_length()
         self.p = [[None] * n for _ in range(self.lv)]
         self._depth = [None] * n
-        self._distance = [None] * n
-        self.is_constructed = False
+        self._costs = [None] * n
+        self.construct()
 
-
-    def set_root(self, root: int = 0) -> None:
-        """木の根を設定する
-
-        Parameters
-        ----------
-        root : int
-            省略時は 0
-        """
-        self.root = root
-        self.is_constructed = False
-
-
-    def add_edge(self, fm: int, to: int, dist: int=1) -> None:
-        """辺の設定
-
-        Parameters
-        ----------
-        fm : int
-            辺の始点
-        to : [type]
-            辺の終点
-        """
-        self.edges[fm].append((to, dist))
-        self.is_constructed = False
-
-
-    def __construct(self):
+    def construct(self):
         """深さと親の設定とダブリング
         """
         # 深さと親の設定
+        r = self.root
         q = deque()
-        q.append((self.root, 0, 0))
-        self._depth[self.root] = 0
-        self._distance[self.root] = 0
-        self.p[0][self.root] = 0
+        q.append(r)
+        self._depth[r] = 0
+        self._costs[r] = 0
+        self.p[0][r] = r
         while q:
-            cur, dep, dist = q.popleft()
-            for nxt, nd in self.edges[cur]:
-                if self.p[0][nxt]!=None: continue
-                q.append((nxt, dep+1, dist+nd))
-                self._depth[nxt] = dep+1
-                self._distance[nxt] = dist+nd
+            cur = q.popleft()
+            dep = self._depth[cur]
+            dis = self._costs[cur]
+            for nxt in self.edges[cur]:
+                if type(nxt) != int:
+                    nxt, cost = nxt
+                else:
+                    cost = 1
+                if self.p[0][nxt] != None: continue
+                q.append(nxt)
+                self._depth[nxt] = dep + 1
+                self._costs[nxt] = dis + cost
                 self.p[0][nxt] = cur
         # ダブリング
         for i in range(1, self.lv):
             for v in range(self.n):
                 self.p[i][v] = self.p[i-1][self.p[i-1][v]]
-        self.is_constructed = True
 
 
     def la(self, x, h):
-        if not self.is_constructed: self.__construct()
+        """h代前祖先
+
+        """
         for i in range(self.lv)[::-1]:
             if h >= 1 << i:
                 x = self.p[i][x]
@@ -102,7 +81,6 @@ class Lca():
             共通祖先のノード
         """
         # u,vの高さを合わせる
-        if not self.is_constructed: self.__construct()
         if self._depth[u] < self._depth[v]: u, v = v, u
         u = self.la(u, self._depth[u] - self._depth[v])
         if u == v: return u
@@ -114,54 +92,30 @@ class Lca():
         return self.p[0][u]
 
 
-    def nodesdist(self, u, v):
-        """ノード間の距離
-
-        Parameters
-        ----------
-        u, v : node
-            ノード
-
-        Returns
-        -------
-        int
-            ノード間の距離
-        """
-        if not self.is_constructed: self.__construct()
+    def distance(self, u, v):
         lca = self.lca(u, v)
         return self._depth[u] + self._depth[v] - 2 * self._depth[lca]
 
 
-    def distance(self, u, v):
-        """ノード間の経路の長さ
-
-        Parameters
-        ----------
-        u, v : node
-            ノード
-
-        Returns
-        -------
-        int
-            ノード間の距離
-        """
-        if not self.is_constructed: self.__construct()
+    def cost(self, u, v):
         lca = self.lca(u, v)
-        return self._distance[u] + self._distance[v] - 2 * self._distance[lca]
+        return self._costs[u] + self._costs[v] - 2 * self._costs[lca]
 
 
 ########################################
 
-n, q = map(int, input().split())
-l = lca(n)
-l.set_root(0)
-for i, ai in enumerate(list(map(int, input().split()))):
-    l.add_edge(ai, i+1)
+n = int(input())
+edges = [[] for _ in range(n)]
+for _ in range(n-1):
+    _a, _b = map(int1, input().split())
+    edges[_a].append(_b)
+    edges[_b].append(_a)
 
-
-for i in range(q):
+lca = Lca(n, edges, 0)
+q = int(input())
+for _ in range(q):
     u, v = map(int1, input().split())
-    print(l.lca(u, v))
+    print(lca.distance(u, v))
 
 #prefix#
 # lib_GT_最小共通祖先_LCA

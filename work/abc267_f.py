@@ -20,57 +20,35 @@ def isinhw(i, j, h, w): return (0 <= i < h) and (0 <= j < w)
 def dist2(pt1, pt2): return sum([(x1-x2) ** 2 for x1, x2 in zip(pt1, pt2)])
 
 
-class Tree:
-    def __init__(self, n: int) -> None:
-        self.n = n
-        self.root = None
-        self.edges = [[] for _ in range(n)]
-        self.lv = n.bit_length()
-        self.depth = [None] * n
-        self.distance = [None] * n
+def tree_diameter(n, G):
+    root = None
+    lv = n.bit_length()
+    _depth = [None] * n
 
-
-    def add_edge(self, fm: int, to: int, dist: int=1) -> None:
-        """辺の設定
-
-        Parameters
-        ----------
-        fm : int
-            辺の始点
-        to : [type]
-            辺の終点
-        """
-        self.edges[fm].append((to, dist))
-
-
-    def _dfs(self, root):
+    def _dfs(root):
+        _depth = [None] * n
         q = deque()
-        q.append((root, 0, 0))
-        seen = [False] * self.n
-        self.depth[root] = 0
-        self.distance[root] = 0
-        seen[root] = True
-        lastnode = 0
+        q.append(root)
+        _depth[root] = 0
+        last_node = 0
         while q:
-            cur, dep, dist = q.popleft()
-            for nxt, nd in self.edges[cur]:
-                if seen[nxt]: continue
-                q.append((nxt, dep+1, dist+nd))
-                self.depth[nxt] = dep+1
-                self.distance[nxt] = dist+nd
-                seen[nxt] = True
-                lastnode = nxt
-        return lastnode
+            cur = q.popleft()
+            dep = _depth[cur]
+            for nxt in G[cur]:
+                if type(nxt) != int: nxt, _cost = nxt
+                if _depth[nxt] != None: continue
+                q.append(nxt)
+                _depth[nxt] = dep + 1
+                last_node = nxt
+        return last_node, _depth
 
+    u, _ = _dfs(n-1)
+    v, depth = _dfs(u)
+    return u, v, depth
 
-    def diameter(self):
-        u = self._dfs(0)
-        v = self._dfs(u)
-        d = self.depth[v]
-        return u, v, d
+##############################
 
-########################################
-class lca():
+class Lca:
     """Lowest Common Ancestor
 
     u, vの共通の親
@@ -80,75 +58,53 @@ class lca():
     ----------
     n : int
         nodeの数
-
-    Methods
-    ----------
-    set_root :
+    G : graph
+    r : root
     """
-    def __init__(self, n: int) -> None:
+    def __init__(self, n: int, G, r:int) -> None:
         self.n = n
-        self.root = None
-        self.edges = [[] for _ in range(n)]
+        self.root = r
+        self.edges = G
         self.lv = n.bit_length()
         self.p = [[None] * n for _ in range(self.lv)]
-        self.depth = [None] * n
-        self._distance = [None] * n
-        self.is_constructed = False
+        self._depth = [None] * n
+        self._costs = [None] * n
+        self.construct()
 
-
-    def set_root(self, root: int = 0) -> None:
-        """木の根を設定する
-
-        Parameters
-        ----------
-        root : int
-            省略時は 0
-        """
-        self.root = root
-        self.is_constructed = False
-
-
-    def add_edge(self, fm: int, to: int, dist: int=1) -> None:
-        """辺の設定
-
-        Parameters
-        ----------
-        fm : int
-            辺の始点
-        to : [type]
-            辺の終点
-        """
-        self.edges[fm].append((to, dist))
-        self.is_constructed = False
-
-
-    def __construct(self):
+    def construct(self):
         """深さと親の設定とダブリング
         """
         # 深さと親の設定
+        r = self.root
         q = deque()
-        q.append((self.root, 0, 0))
-        self.depth[self.root] = 0
-        self._distance[self.root] = 0
-        self.p[0][self.root] = 0
+        q.append(r)
+        self._depth[r] = 0
+        self._costs[r] = 0
+        self.p[0][r] = r
         while q:
-            cur, dep, dist = q.popleft()
-            for nxt, nd in self.edges[cur]:
-                if self.p[0][nxt]!=None: continue
-                q.append((nxt, dep+1, dist+nd))
-                self.depth[nxt] = dep+1
-                self._distance[nxt] = dist+nd
+            cur = q.popleft()
+            dep = self._depth[cur]
+            dis = self._costs[cur]
+            for nxt in self.edges[cur]:
+                if type(nxt) != int:
+                    nxt, cost = nxt
+                else:
+                    cost = 1
+                if self.p[0][nxt] != None: continue
+                q.append(nxt)
+                self._depth[nxt] = dep + 1
+                self._costs[nxt] = dis + cost
                 self.p[0][nxt] = cur
         # ダブリング
         for i in range(1, self.lv):
             for v in range(self.n):
                 self.p[i][v] = self.p[i-1][self.p[i-1][v]]
-        self.is_constructed = True
 
 
     def la(self, x, h):
-        if not self.is_constructed:
-            self.__construct()
+        """h代前祖先
+
+        """
         for i in range(self.lv)[::-1]:
             if h >= 1 << i:
                 x = self.p[i][x]
@@ -170,10 +126,8 @@ class lca():
             共通祖先のノード
         """
         # u,vの高さを合わせる
-        if not self.is_constructed:
-            self.__construct()
-        if self.depth[u] < self.depth[v]: u, v = v, u
-        u = self.la(u, self.depth[u] - self.depth[v])
+        if self._depth[u] < self._depth[v]: u, v = v, u
+        u = self.la(u, self._depth[u] - self._depth[v])
         if u == v: return u
         # u, vのギリギリ合わない高さまで昇る
         for i in range(self.lv)[::-1]:
@@ -183,78 +137,37 @@ class lca():
         return self.p[0][u]
 
 
-    def nodesdist(self, u, v):
-        """ノード間の距離
-
-        Parameters
-        ----------
-        u, v : node
-            ノード
-
-        Returns
-        -------
-        int
-            ノード間の距離
-        """
-        if not self.is_constructed:
-            self.__construct()
-        lca = self.lca(u, v)
-        return self.depth[u] + self.depth[v] - 2 * self.depth[lca]
-
-
     def distance(self, u, v):
-        """ノード間の経路の長さ
-
-        Parameters
-        ----------
-        u, v : node
-            ノード
-
-        Returns
-        -------
-        int
-            ノード間の距離
-        """
-        if not self.is_constructed:
-            self.__construct()
         lca = self.lca(u, v)
-        return self._distance[u] + self._distance[v] - 2 * self._distance[lca]
+        return self._depth[u] + self._depth[v] - 2 * self._depth[lca]
 
 
-    def find_kth_parent(self, v, k):
-        if not self.is_constructed:
-            self.__construct()
-        for i in range(self.lv):
-            if k & (1 << i):
-                v = self.p[i][v]
-        return v
+    def cost(self, u, v):
+        lca = self.lca(u, v)
+        return self._costs[u] + self._costs[v] - 2 * self._costs[lca]
+
+
+########################################
+
 
 n = int(input())
-td = Tree(n)
-lcu = lca(n)
-lcv = lca(n)
+edges = [[] for _ in range(n)]
+for _ in range(n-1):
+    _a, _b = map(int1, input().split())
+    edges[_a].append(_b)
+    edges[_b].append(_a)
 
-for i in range(n-1):
-    u, v = map(int1, input().split())
-    td.add_edge(u, v)
-    lcu.add_edge(u, v)
-    lcv.add_edge(u, v)
-
-u, v, d = td.diameter()
-lcu.set_root(u)
-lcv.set_root(v)
-
-print(u, v)
+u, v, _ = tree_diameter(n, edges)
+lcu = Lca(n, edges, u)
+lcv = Lca(n, edges, v)
 
 q = int(input())
 for _ in range(q):
-    x, di = map(int, input().split())
+    x, k = map(int, input().split())
     x -= 1
-    if lcu.nodesdist(u, x) >= di:
-        lu = lcu.la(x, di)
-        print(lu)
-    elif lcv.nodesdist(v, x) >= di:
-        lv = lcv.la(x, di)
-        print(lv)
+    if lcu.distance(u, x) >= k:
+        print(lcu.la(x, k) + 1)
+    elif lcv.distance(v, x) >= k:
+        print(lcv.la(x, k) + 1)
     else:
         print(-1)
