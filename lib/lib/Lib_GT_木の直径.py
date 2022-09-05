@@ -9,8 +9,8 @@ class Tree:
         self.root = None
         self.edges = [[] for _ in range(n)]
         self.lv = n.bit_length()
-        self.depth = [None] * n
-        self.distance = [None] * n
+        self._depth = [None] * n
+        self._distance = [None] * n
 
 
     def add_edge(self, fm: int, to: int, dist: int=1) -> None:
@@ -30,17 +30,17 @@ class Tree:
         q = deque()
         q.append((root, 0, 0))
         seen = [False] * self.n
-        self.depth[root] = 0
-        self.distance[root] = 0
+        self._depth[root] = 0
+        self._distance[root] = 0
         seen[root] = True
         lastnode = 0
         while q:
             cur, dep, dist = q.popleft()
             for nxt, nd in self.edges[cur]:
                 if seen[nxt]: continue
-                q.append((nxt, dep+1, dist+nd))
-                self.depth[nxt] = dep+1
-                self.distance[nxt] = dist+nd
+                q.append((nxt, dep + 1, dist + nd))
+                self._depth[nxt] = dep + 1
+                self._distance[nxt] = dist + nd
                 seen[nxt] = True
                 lastnode = nxt
         return lastnode
@@ -49,8 +49,10 @@ class Tree:
     def diameter(self):
         u = self._dfs(0)
         v = self._dfs(u)
-        d = self.depth[v]
-        return u, v, d
+        depth = self._depth[v]
+        distance = self._distance[v]
+        return u, v, depth, distance
+
 
 ########################################
 
