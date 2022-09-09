@@ -31,11 +31,8 @@ class Lca:
         """
         # 深さと親の設定
         r = self.root
-        q = deque()
-        q.append(r)
-        self._depth[r] = 0
-        self._costs[r] = 0
-        self.p[0][r] = r
+        q = deque([r])
+        self._depth[r], self._costs[r], self.p[0][r] = 0, 0, r
         while q:
             cur = q.popleft()
             dep = self._depth[cur]
@@ -47,9 +44,7 @@ class Lca:
                     cost = 1
                 if self.p[0][nxt] != None: continue
                 q.append(nxt)
-                self._depth[nxt] = dep + 1
-                self._costs[nxt] = dis + cost
-                self.p[0][nxt] = cur
+                self._depth[nxt], self._costs[nxt], self.p[0][nxt] = dep + 1, dis + cost, cur
         # ダブリング
         for i in range(1, self.lv):
             for v in range(self.n):
@@ -105,13 +100,13 @@ class Lca:
 ########################################
 
 n = int(input())
-edges = [[] for _ in range(n)]
+G = [[] for _ in range(n)]
 for _ in range(n-1):
-    _a, _b = map(int1, input().split())
-    edges[_a].append(_b)
-    edges[_b].append(_a)
+    a, b = map(int1, input().split())
+    G[a].append(b)
+    G[b].append(a)
 
-lca = Lca(n, edges, 0)
+lca = Lca(n, G, 0)
 q = int(input())
 for _ in range(q):
     u, v = map(int1, input().split())

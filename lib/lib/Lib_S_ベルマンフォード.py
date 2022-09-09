@@ -23,6 +23,7 @@ def bellman_ford(st=0):
     INF = float('INF')
     dist = [INF] * n
     dist[st] = 0
+    prev = [-1] * n
     for _ in range(n):
         update = False
         for v, e in enumerate(G):
@@ -30,9 +31,10 @@ def bellman_ford(st=0):
                 if dist[v] == INF: continue
                 if dist[v] + cost >= dist[t]: continue
                 dist[t] = dist[v] + cost
+                prev[t] = v
                 update = True
                 upi = t
-        if not update: return dist
+        if not update: return dist  # prev
     # 負閉路検出処理
     dist[upi] = -INF
     for _ in range(n):

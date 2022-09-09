@@ -15,15 +15,15 @@ s = (s[0]+1) * (w+2) + (s[1]+1)
 t = (t[0]+1) * (w+2) + (t[1]+1)
 
 wall = 1                                  # 適宜修正
-g = []
-g += [wall] * (w + 2)
+G = []
+G += [wall] * (w + 2)
 for i in range(h):
     g.append(wall)
     gi = input()
     for j, gij in enumerate(gi):
         g.append(wall if gij == "#" else 0)  # 適宜修正
     g.append(wall)
-g += [wall] * (w + 2)
+G += [wall] * (w + 2)
 h, w = h+2, w+2
 
 def bfs(h, w, s, t):
@@ -36,7 +36,7 @@ def bfs(h, w, s, t):
         nd = seen[nw]
         for di in direc:
             nx = nw + di
-            if seen[nx] != -1 or g[nx] == wall: continue
+            if seen[nx] != -1 or G[nx] == wall: continue
             que.append(nx)
             seen[nx] = nd + 1
     return seen

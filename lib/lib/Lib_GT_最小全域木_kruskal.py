@@ -30,9 +30,9 @@ class UnionFind:
 
 
 class Kruskal:
-    def __init__(self, n:int, edges:list)->None:
+    def __init__(self, n:int, G:list)->None:
         self.n = n
-        self.all_edges = edges
+        self.all_edges = G
         self.weight = None
         self.edges = None
         self.edges_nouse = None
@@ -45,13 +45,13 @@ class Kruskal:
         self.nodes = set([])
         self.all_edges.sort()
         uf = UnionFind(self.n)
-        for w, u, v in self.all_edges:
+        for u, v, w in self.all_edges:
             if uf.same(u, v):
-                self.edges_nouse.append((w, u, v))
+                self.edges_nouse.append((u, v, w))
             else:
                 uf.unite(u, v)
                 self.weight += w
-                self.edges.append((w, u, v))
+                self.edges.append((u, v, w))
                 self.nodes |= {u, v}
 
 ################################
@@ -59,15 +59,15 @@ class Kruskal:
 n, m = map(int, input().split())
 
 #辺リストの作成
-edges = []
+G = []
 for i in range(m):
-    a, b, w = map(int, input().split())
-    edges.append((w, a-1, b-1))
+    a, b, w = map(int1, input().split())
+    G.append((a, b, w))
 
-mst = Kruskal(n, edges)
+mst = Kruskal(n, G)
 mst.build()
 print(mst.weight)
 
 #prefix#
-# Lib_A_最小全域木_MST
+# Lib_GT_最小全域木_MST
 #end#

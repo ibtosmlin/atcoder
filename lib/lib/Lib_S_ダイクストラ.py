@@ -11,11 +11,11 @@
 # https://atcoder.jp/contests/abc035/tasks/abc035_d
 # O((E+V)logV)
 class dijkstra:
-    def __init__(self, n, edges):
+    def __init__(self, n, G):
         self.n = n              # ノード数
-        self.edges = edges      # 有向グラフ
+        self.G = G      # 有向グラフ
         self.start = None       # 始点
-        self.edges_used = [-1] * n  # 最短経路木の親
+        self.G_used = [-1] * n  # 最短経路木の親
 
     def build(self, start):
         INF = float('inf')
@@ -30,13 +30,13 @@ class dijkstra:
         while next_q:
             cd, cn = heappop(next_q)
             if self.dist[cn] < cd: continue
-            for nn, nd in self.edges[cn]:
+            for nn, nd in self.G[cn]:
                 # 変則的な距離の場合はここを調整 ##
                 nd_ = self.dist[cn] + nd
                 ############################
                 if self.dist[nn] <= nd_: continue
                 self.dist[nn] = nd_
-                self.edges_used[nn] = cn
+                self.G_used[nn] = cn
                 heappush(next_q, (nd_, nn))
 
 
@@ -49,24 +49,24 @@ class dijkstra:
         node = goal
         while node is not None:
             path.append(node)
-            node = self.edges_used[node]
+            node = self.G_used[node]
         return path[::-1]
 
 ##########################################
 
 n, m, t = map(int, input().split())
-edges = [[] for _ in range(n)]
-edges_R = [[] for _ in range(n)]    #行きと帰りを分けた（有向グラフ）場合
+G = [[] for _ in range(n)]
+G_R = [[] for _ in range(n)]    #行きと帰りを分けた（有向グラフ）場合
 #リストの作成
 for _ in range(m):
     a, b, c = map(int, input().split())
     a, b = a-1, b-1
-    edges[a].append((b,c))
-    edges[b].append((a,c))
-    edges_R[b].append((a,c))        #行きと帰りを分けた（有向グラフ）場合
+    G[a].append((b,c))
+    G[b].append((a,c))
+    G_R[b].append((a,c))        #行きと帰りを分けた（有向グラフ）場合
 
-dij = dijkstra(n, edges)  #クラスのインスタンス化
-dijR = dijkstra(n, edges_R)
+dij = dijkstra(n, G)  #クラスのインスタンス化
+dijR = dijkstra(n, G_R)
 dij.build(0)
 dijR.build(0)
 
