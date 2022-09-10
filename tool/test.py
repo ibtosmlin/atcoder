@@ -18,126 +18,64 @@ def end(r=-1): print(r); exit()
 direc = [(1, 0), (0, 1), (-1, 0), (0, -1)] + [(1, 1), (1, -1), (-1, 1), (-1, -1)]
 def isinhw(i, j, h, w): return (0 <= i < h) and (0 <= j < w)
 def dist2(pt1, pt2): return sum([(x1-x2) ** 2 for x1, x2 in zip(pt1, pt2)])
-#name#
-# LCA
-#description#
-# 最小共通祖先
-#body#
-class Lca:
-    """Lowest Common Ancestor
 
-    u, vの共通の親
-    ダブリング p[i][v] = vの2^i個 親
-
-    Parameters
-    ----------
-    n : int
-        nodeの数
-    G : graph
-    r : root
-    """
-    def __init__(self, n: int, G, r:int) -> None:
-        self.n = n
-        self.root = r
-        self.edges = G
-        self.lv = n.bit_length()
-        self.p = [[None] * n for _ in range(self.lv)]
-        self._depth = [None] * n
-        self._costs = [None] * n
-        self.construct()
-
-    def construct(self):
-        """深さと親の設定とダブリング
-        """
-        # 深さと親の設定
-        r = self.root
-        q = deque()
-        q.append(r)
-        self._depth[r] = 0
-        self._costs[r] = 0
-        self.p[0][r] = r
-        while q:
-            cur = q.popleft()
-            dep = self._depth[cur]
-            dis = self._costs[cur]
-            for nxt in self.edges[cur]:
-                if type(nxt) != int:
-                    nxt, cost = nxt
-                else:
-                    cost = 1
-                if self.p[0][nxt] != None: continue
-                q.append(nxt)
-                self._depth[nxt] = dep + 1
-                self._costs[nxt] = dis + cost
-                self.p[0][nxt] = cur
-        # ダブリング
-        for i in range(1, self.lv):
-            for v in range(self.n):
-                self.p[i][v] = self.p[i-1][self.p[i-1][v]]
+from collections import deque
 
 
-    def la(self, x, h):
-        """h代前祖先
-
-        """
-        for i in range(self.lv)[::-1]:
-            if h >= 1 << i:
-                x = self.p[i][x]
-                h -= 1 << i
-        return x
-
-
-    def lca(self, u, v):
-        """共通祖先
-
-        Parameters
-        ----------
-        u, v : node
-            ノード
-
-        Returns
-        -------
-        int
-            共通祖先のノード
-        """
-        # u,vの高さを合わせる
-        if self._depth[u] < self._depth[v]: u, v = v, u
-        u = self.la(u, self._depth[u] - self._depth[v])
-        if u == v: return u
-        # u, vのギリギリ合わない高さまで昇る
-        for i in range(self.lv)[::-1]:
-            if self.p[i][u] != self.p[i][v]:
-                u = self.p[i][u]
-                v = self.p[i][v]
-        return self.p[0][u]
+def _dfs(n, G, root=0, cost=1):
+    _depth = [None] * n
+    q = deque()
+    q.append(root)
+    _depth[root] = 0
+    farest_dist = 0
+    farest_node = 0
+    _parent = [None] * n
+    while q:
+        cur = q.popleft()
+        dep = _depth[cur]
+        for nxt in G[cur]:
+            if type(nxt) != int: nxt, cost = nxt
+            if _depth[nxt] != None: continue
+            q.append(nxt)
+            newdep = dep + cost
+            _depth[nxt] = newdep
+            _parent[nxt] = cur
+            if newdep > farest_dist:
+                farest_dist = newdep
+                farest_node = nxt
+    return farest_node, farest_dist, _depth, _parent
 
 
-    def distance(self, u, v):
-        lca = self.lca(u, v)
-        return self._depth[u] + self._depth[v] - 2 * self._depth[lca]
+def tree_diameter(n, G, cost=1):
+    u, *_ = _dfs(n, G, 0)
+    v, diam, depth, parent = _dfs(n, G, u)
+    return u, v, diam, depth, parent
 
 
-    def cost(self, u, v):
-        lca = self.lca(u, v)
-        return self._costs[u] + self._costs[v] - 2 * self._costs[lca]
+def tree_heights(n, G, cost=1):
+    u, _, __ = _dfs(n, G, 0)
+    v, _, depthu = _dfs(n, G, u)
+    _, __, depthv = _dfs(n, G, v)
+    return [max(x, y) for x, y in zip(depthu, depthv)]
 
 
-########################################
+##############################
+
 
 n = int(input())
-edges = [[] for _ in range(n)]
-for a in range(n):
-    x = list(map(int, input().split()))
-    for b in x[1:]:
-        edges[a].append(b)
-        edges[b].append(a)
+G = [[] for _ in range(n)]
+for _ in range(n-1):
+    a, b, w = map(int, input().split())
+#    a -= 1; b -= 1
+    G[a].append((b, w))
+    G[b].append((a, w))
 
-lca = Lca(n, edges, 0)
-q = int(input())
-for _ in range(q):
-    u, v = map(int, input().split())
-    print(lca.lca(u, v))
+u, v, x, __, parent = tree_diameter(n, G)
 
-#prefix#
-# lib_GT_最小共通祖先_LCA
-#end#
+path = [v]
+cur = v
+while parent[cur] != None:
+    cur = parent[cur]
+    path.append(cur)
+print(x, len(path))
+print(*path[::-1])

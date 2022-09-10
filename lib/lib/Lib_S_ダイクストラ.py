@@ -15,10 +15,9 @@ class dijkstra:
         self.n = n              # ノード数
         self.G = G      # 有向グラフ
         self.start = None       # 始点
-        self.G_used = [-1] * n  # 最短経路木の親
+        self.G_used = [None] * n  # 最短経路木の親
 
     def build(self, start):
-        INF = float('inf')
         self.dist = [INF] * self.n
         next_q = []
         if type(start) is int:
