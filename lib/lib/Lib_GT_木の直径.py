@@ -38,13 +38,12 @@ def tree_diameter(n, G, cost=1):
 
 def tree_heights(n, G, cost=1):
     u, *_ = _bfs(n, G, 0)
-    v, _, depthu = _bfs(n, G, u)
-    _, __, depthv = _bfs(n, G, v)
+    v, _, depthu, _ = _bfs(n, G, u)
+    _, __, depthv, __ = _bfs(n, G, v)
     return [max(x, y) for x, y in zip(depthu, depthv)]
 
 
 ##############################
-
 
 n = int(input())
 G = [[] for _ in range(n)]
