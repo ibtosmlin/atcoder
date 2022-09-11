@@ -18,28 +18,3 @@ def end(r=-1): print(r); exit()
 direc = [(1, 0), (0, 1), (-1, 0), (0, -1)] + [(1, 1), (1, -1), (-1, 1), (-1, -1)]
 def isinhw(i, j, h, w): return (0 <= i < h) and (0 <= j < w)
 def dist2(pt1, pt2): return sum([(x1-x2) ** 2 for x1, x2 in zip(pt1, pt2)])
-n = int(input())
-G = [[] for _ in range(n)]
-for _ in range(n-1):
-    a, b = map(int1, input().split())
-    G[a].append(b)
-    G[b].append(a)
-
-for gi in G:
-    gi.sort()
-
-path = []
-seen = [False] * n
-
-def dfs(x, p=-1):
-    path.append(x)
-    seen[x] = True
-    fg = True
-    for nx in G[x]:
-        if seen[nx]: continue
-        dfs(nx, x)
-        path.append(x)
-
-dfs(0)
-
-print(*[pi + 1 for pi in path])
