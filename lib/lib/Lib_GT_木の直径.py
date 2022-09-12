@@ -41,6 +41,8 @@ def tree_heights(n, G):
 
 
 def tree_centre(n, G):
+    """木の中心
+    """
     u, v, diam, depth, parent = tree_diameter(n, G)
     hd = diam // 2
     centre = v
@@ -54,7 +56,7 @@ def tree_centre(n, G):
 
 def count_diameter(n, G):
     """cntは中心からの各部分木の(ノード数, 最遠葉)
-    
+
     countは直径の本数
     """
     def dfs(x, p, d, r):

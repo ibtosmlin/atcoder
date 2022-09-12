@@ -1,17 +1,17 @@
 import json
 import os
 from collections import defaultdict
-
+import glob
 
 cwd = os.path.dirname(__file__)
 snippets_file = os.path.join(cwd, '../.vscode/kyopro.code-snippets')
-lib_files = os.path.join(cwd, 'lib')
+lib_files = glob.glob('./lib/lib/Lib_*.py')
 
 # \libの中のファイルをすべて取り込む
 d = defaultdict(dict)
-for file in os.listdir(lib_files):
+for file in lib_files:
     if file == 'Lib_templete.py': continue
-    f = open(os.path.join(lib_files, file), 'r')
+    f = open(file, 'r')
     flist = [fi.replace('\n', "") for fi in f.readlines()]
     now = None
     name = None

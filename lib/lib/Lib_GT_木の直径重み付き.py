@@ -6,8 +6,7 @@
 
 from collections import deque
 
-
-def _bfs(n, G, root=0, cost=1):
+def _bfs(n, G, root=0):
     _depth = [None] * n
     q = deque()
     q.append(root)
@@ -19,24 +18,24 @@ def _bfs(n, G, root=0, cost=1):
         cur = q.popleft()
         dep = _depth[cur]
         for nxt in G[cur]:
-            if type(nxt) != int: nxt, cost = nxt
-            if _depth[nxt] != None: continue
-            q.append(nxt)
+            nx, cost = nxt
+            if _depth[nx] != None: continue
+            q.append(nx)
             newdep = dep + cost
-            _depth[nxt] = newdep
+            _depth[nx] = newdep
             if newdep > farest_dist:
                 farest_dist = newdep
-                farest_node = nxt
+                farest_node = nx
     return farest_node, farest_dist, _depth, _parent
 
 
-def tree_diameter(n, G, cost=1):
+def tree_diameter(n, G):
     u, *_ = _bfs(n, G, 0)
     v, diam, depth, parent = _bfs(n, G, u)
     return u, v, diam, depth, parent
 
 
-def tree_heights(n, G, cost=1):
+def tree_heights(n, G):
     u, *_ = _bfs(n, G, 0)
     v, _, depthu, _ = _bfs(n, G, u)
     _, __, depthv, __ = _bfs(n, G, v)
