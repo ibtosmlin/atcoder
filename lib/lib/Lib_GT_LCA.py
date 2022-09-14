@@ -113,5 +113,5 @@ for _ in range(q):
     print(lca.distance(u, v))
 
 #prefix#
-# lib_GT_最小共通祖先_LCA
+# Lib_GT_最小共通祖先_LCA
 #end#

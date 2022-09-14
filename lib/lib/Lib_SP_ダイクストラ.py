@@ -72,5 +72,5 @@ dijR.build(0)
 dij.get_dist(n-1)
 
 #prefix#
-# Lib_S_最短経路探索_dijkstra
+# Lib_SP_最短経路探索_dijkstra
 #end#

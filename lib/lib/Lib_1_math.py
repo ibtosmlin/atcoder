@@ -1,5 +1,5 @@
 #name#
-# lib_math
+# Lib_math
 #description#
 # mathのライブラリ
 #body#
@@ -13,14 +13,15 @@ math.radians(180)
 math.degrees(3.1415)
 
 print(math.gcd(x, y))
+def lcm(x, y): return x * y // math.gcd(x, y)
 
 #prefix#
-# lib_最大公約数_三角関数
+# Lib_最大公約数_三角関数
 # import math
 #end#
 
 #name#
-# lib_decimal
+# Lib_decimal
 #description#
 # 四捨五入が正しくできるツール
 # Decimal で扱う
@@ -32,23 +33,23 @@ fd = Decimal(str(f))
 fr = fd.quantize(Decimal('0'), rounding=ROUND_HALF_UP)  #123
 fr = fd.quantize(Decimal('0.1'), rounding=ROUND_HALF_UP)#123.5
 #prefix#
-# lib_四捨五入_Decimal
+# Lib_四捨五入_Decimal
 #end#
 
 #name#
-# lib_再帰関数
+# Lib_再帰関数
 #description#
 # 再帰関数
 #body#
 @lru_cache(maxsize=None)
 #prefix#
-# lib_再帰関数
+# Lib_再帰関数
 #end#
 
 #name#
-# lib_複素数
+# Lib_複素数
 #description#
-# lib_複素数
+# Lib_複素数
 #body#
 import cmath
 
@@ -69,5 +70,5 @@ print(z2.conjugate())
 # (5-13j)
 
 #prefix#
-# lib_再帰関数
+# Lib_再帰関数
 #end#

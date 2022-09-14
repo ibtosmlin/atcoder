@@ -1,7 +1,7 @@
 #name#
 # 転倒数
 #description#
-# lib_転倒数
+# Lib_転倒数
 #body#
 # 転倒数
 # 配列中 i<j, ai>ajとなるものの個数

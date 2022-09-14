@@ -67,5 +67,5 @@ else:
     print(-ret[-1])
 
 #prefix#
-# Lib_S_最短経路探索_bellmanford
+# Lib_SP_最短経路探索_bellmanford
 #end#

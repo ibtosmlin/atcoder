@@ -89,5 +89,5 @@ for _ in range(m):
     uf.unite(a, b, w)
 
 #prefix#
-# lib_unionfind_weighted
+# Lib_G_unionfind_weighted
 #end#

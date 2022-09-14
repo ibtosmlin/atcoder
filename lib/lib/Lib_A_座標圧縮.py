@@ -43,5 +43,5 @@ def compress2d(points, spacing=False):
 
 #prefix#
 # compress_zaatsu
-# lib_A_座標圧縮
+# Lib_A_座標圧縮
 #end#

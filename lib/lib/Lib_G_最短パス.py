@@ -44,5 +44,5 @@ for _ in range(n-1):
 
 
 #prefix#
-# lib_G_最短パス
+# Lib_G_最短パス
 #end#

@@ -1,7 +1,7 @@
 #name#
 # LCS最長共通部分列
 #description#
-# lib_LCS最長共通部分列
+# Lib_LCS最長共通部分列
 #body#
 #####################################
 # LCS(longest common sequence)

@@ -9,7 +9,7 @@
 # returns dict s.t. key = {prime}   value = {degree}
 ##############################
 def prime_factorize(n:int) -> dict:
-    if n == 1: return dict({1: 1})
+    if n == 1: return {1: 1}
     pd = dict()
     for p in range(2, int(n**0.5)+1):
         if n % p != 0: p += 1; continue

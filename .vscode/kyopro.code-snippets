@@ -1,104 +1,7 @@
 {
-    "ワーシャルフロイド法": {
-        "prefix": [],
-        "body": [],
-        "description": []
-    },
-    "iscription#": {
-        "prefix": [],
-        "body": [],
-        "description": []
-    },
-    "全頂点間最短路": {
-        "prefix": [],
-        "body": [],
-        "description": []
-    },
-    "d[i][j]は2頂点間i, j間の移動コストを格納, Mは頂点数": {
-        "prefix": [],
-        "body": [],
-        "description": []
-    },
-    "O(N^3)": {
-        "prefix": [
-            "Lib_S_最短経路探索_warshall"
-        ],
-        "body": [
-            "import copy",
-            "",
-            "class warshall_floyd:",
-            "    def __init__(self, n:int) -> None:",
-            "        self.INF = float(\"inf\")",
-            "        self.n = n",
-            "        self.d = [[self.INF] * n for _ in range(n)]",
-            "        #d[u][v] : 辺uvのコスト(存在しないときはinf)",
-            "        for i in range(n):",
-            "            self.d[i][i] = 0 #自身のところに行くコストは０",
-            "",
-            "",
-            "",
-            "    def build(self):",
-            "        n = self.n",
-            "        wf = copy.deepcopy(self.d)",
-            "        for k in range(n):",
-            "            for i in range(n):",
-            "                for j in range(n):",
-            "                    wf[i][j] = min(wf[i][j], wf[i][k] + wf[k][j])",
-            "",
-            "        self.wf = wf #wf[i][j]に頂点i, j間の最短距離を格納",
-            "",
-            "",
-            "    def add_edge(self, fm, to, cost):",
-            "        self.d[fm][to] = cost",
-            "",
-            "",
-            "    # 負値閉路検索",
-            "    @property",
-            "    def is_neg_cycle(self) -> bool:",
-            "        for i in range(self.n):",
-            "            if self.wf[i][i] < 0:",
-            "                return True",
-            "        return False",
-            "",
-            "",
-            "    # 経路復元",
-            "    def path(self, s, g):",
-            "        ret = []",
-            "        if s == g or self.wf[s][g] == self.INF:",
-            "            return ret",
-            "        cur = s",
-            "        while cur!=g:",
-            "            for nxt in range(self.n):",
-            "                if nxt==cur or nxt==s: continue",
-            "                if self.d[cur][nxt] + self.wf[nxt][g] == self.wf[cur][g]:",
-            "                    ret.append((cur, nxt))",
-            "    #                ret.append((nxt, cur))",
-            "                    cur = nxt",
-            "                    break",
-            "        return ret",
-            "",
-            "##############################",
-            "",
-            "n, m = map(int,input().split()) #N:頂点数 m:辺の数",
-            "",
-            "WF = warshall_floyd(n)",
-            "",
-            "for _ in range(m):",
-            "    _u, _v, _w = map(int,input().split())",
-            "    _u -= 1; _v -= 1",
-            "    WF.add_edge(_u, _v, _w)",
-            "    WF.add_edge(_v, _u, _w)",
-            "",
-            "WF.build()",
-            "",
-            "print(WF.path(0, n-1))",
-            ""
-        ],
-        "description": []
-    },
     "Diameter": {
         "prefix": [
-            "lib_GT_木の直径"
+            "Lib_GT_木の直径"
         ],
         "body": [
             "",
@@ -161,7 +64,7 @@
     },
     "三分探索": {
         "prefix": [
-            "lib_A_三分探索"
+            "Lib_A_三分探索"
         ],
         "body": [
             "#######################",
@@ -237,7 +140,7 @@
     },
     "二分探索": {
         "prefix": [
-            "lib_A_二分探索"
+            "Lib_A_二分探索"
         ],
         "body": [
             "def is_ok(x):",
@@ -334,6 +237,103 @@
             "bfs迷路listタイプ"
         ]
     },
+    "ユニオンファインド": {
+        "prefix": [
+            "Lib_G_unionfind"
+        ],
+        "body": [
+            "class UnionFind:",
+            "    def __init__(self, n):                      # 初期化",
+            "        self.n = n                              # 要素数",
+            "        self.parents = [i for i in range(n)]    # 親",
+            "        self.ranks = [0] * n                    # 木の深さ",
+            "        self.sizes = [1] * n                    # グループの要素数",
+            "        self.group_count = n                    # グループの数",
+            "",
+            "    def find(self, x):",
+            "        \"\"\"親を出力",
+            "        Parameters",
+            "        ----------",
+            "        x : int",
+            "            ノード番号",
+            "        \"\"\"",
+            "        if self.parents[x] == x:",
+            "            return x",
+            "        else:",
+            "            p = self.find(self.parents[x])",
+            "            self.parents[x] = p",
+            "            return p",
+            "",
+            "    def unite(self, x, y):",
+            "        \"\"\"ユニオン",
+            "        \"\"\"",
+            "        x = self.find(x)",
+            "        y = self.find(y)",
+            "        if x == y: return",
+            "        if self.ranks[x] > self.ranks[y]:",
+            "            x , y = y, x    #yを親にする",
+            "        if self.ranks[x] == self.ranks[y]:",
+            "                self.ranks[y] += 1",
+            "        self.parents[x] = y",
+            "        self.sizes[y] += self.sizes[x]",
+            "        self.group_count -= 1",
+            "",
+            "    def same(self, x, y) -> bool:",
+            "        \"\"\"xとyが同じグループかどうか",
+            "        \"\"\"",
+            "        return self.find(x) == self.find(y)",
+            "",
+            "    def members(self, x):",
+            "        \"\"\"xと同じグループの要素",
+            "        \"\"\"",
+            "        root = self.find(x)",
+            "        return {i for i in range(self.n) if self.find(i) == root}",
+            "",
+            "    def size(self, x):",
+            "        \"\"\"xのグループの要素数",
+            "        \"\"\"",
+            "        return self.sizes[self.find(x)]",
+            "",
+            "    @property",
+            "    def roots(self):",
+            "        \"\"\"親の要素一覧",
+            "        \"\"\"",
+            "        return {i for i, x in enumerate(self.parents) if i == x}",
+            "",
+            "    @property",
+            "    def all_group_members(self):",
+            "        \"\"\"グループのメンバー一覧",
+            "        \"\"\"",
+            "        group_members = defaultdict(list)",
+            "        for x in range(self.n):",
+            "            group_members[self.find(x)].append(x)",
+            "        return group_members",
+            "",
+            "    def __str__(self):",
+            "        return '\\n'.join(f'{r}: {self.members(r)}' for r in self.roots)",
+            "",
+            "################",
+            "",
+            "n, q = map(int, input().split())",
+            "uf = UnionFind(n)",
+            "for _ in range(q):",
+            "    p, _a, _b = map(int,input().split())",
+            "    _a -= 1; _b -= 1",
+            "    if p == 0:",
+            "        uf.unite(_a, _b)",
+            "    else:",
+            "        if uf.same(_a, _b):",
+            "            print('Yes')",
+            "        else:",
+            "            print('No')",
+            "",
+            "# https://atcoder.jp/contests/atc001/tasks/unionfind_a",
+            ""
+        ],
+        "description": [
+            "ユニオンファインド"
+        ]
+    },
     "素数判定・出力": {
         "prefix": [
             "Lib_N_prime_素数"
@@ -359,6 +359,7 @@
             "",
             "##############################",
             "# 素数出力 O(n**0.5)",
+            "# n <= 10**5",
             "##############################",
             "def get_primes(n:int) -> list:",
             "# n以下の素数列挙",
@@ -653,7 +654,7 @@
             ""
         ],
         "description": [
-            "lib_LCS最長共通部分列"
+            "Lib_LCS最長共通部分列"
         ]
     },
     "行列演算": {
@@ -686,6 +687,100 @@
         ],
         "description": [
             "行列90度回転"
+        ]
+    },
+    "オイラーツアー eulartour 再帰版": {
+        "prefix": [
+            "Lib_GT_オイラーツアー_再帰版_eulartour"
+        ],
+        "body": [
+            "# オイラーツアー eulartour 再帰版",
+            "# 木をDFSしたときの順番で頂点を記録する手法",
+            "# pre-order : 頂点に到着したら記録",
+            "# post-order : 頂点から離れるときに記録",
+            "# - 根付き木のある頂点からの部分木に対するクエリを処理",
+            "# - ある頂点がある頂点の部分木に含まれるかを高速に判定する",
+            "# - 上手くオイラーツアーを作るとパスのコストの総和が取れる",
+            "# n = 5",
+            "# 0",
+            "# |",
+            "# 1",
+            "# |",
+            "# 2",
+            "# |  \\",
+            "# 4  3",
+            "#",
+            "# etnodes = [0,1,2,4,2,3,2,1,0]",
+            "# etdepth = [0,1,2,3,2,3,2,1,0]",
+            "# etdetL = [0,1,2,5,3]",
+            "# etdetR = [9,8,7,6,4]",
+            "",
+            "",
+            "class EulerTour():",
+            "    def __init__(self, n, G):",
+            "        self.n = n",
+            "        self.edges = G",
+            "        self.root = None    # 根",
+            "        self.etnodes = []    # i番目の頂点番号",
+            "        self.etedges = []    # i番目の辺の番号",
+            "        self.etL = [-1] * n  # in time",
+            "        self.etR = [-1] * n  # out time",
+            "        self.depthbynodes = [0] * n",
+            "        self.etdepth = []       # i番目の頂点番号の深さ",
+            "",
+            "",
+            "    def set_euler_tour(self, root):",
+            "        self.root = root        # 根を設定して",
+            "        self._dfs(root)",
+            "        self._set_timestamp()",
+            "",
+            "    def _dfs(self, cur, last=-1):",
+            "        ################## 行きがけ処理",
+            "        depth = 0",
+            "        if last != -1:",
+            "            depth = self.depthbynodes[last] + 1",
+            "        self.depthbynodes[cur] = depth",
+            "        self.etnodes.append(cur)",
+            "        self.etdepth.append(depth)",
+            "",
+            "        for nxt in self.edges[cur]:",
+            "            if nxt == last: continue",
+            "            self._dfs(nxt, cur)",
+            "            ################## 帰りがけ処理",
+            "            self.etnodes.append(cur)",
+            "            self.etdepth.append(depth)",
+            "",
+            "",
+            "    def _set_timestamp(self):",
+            "        for ct, now in enumerate(self.etnodes):",
+            "            if self.etL[now] == -1:",
+            "                self.etL[now] = ct",
+            "            self.etR[now] = ct + 1",
+            "",
+            "",
+            "#########################################",
+            "def int1(x): return int(x)-1",
+            "n = int(input())",
+            "G = [[] for _ in range(n)]",
+            "for _ in range(n-1):",
+            "    a, b = map(int1, input().split())",
+            "    G[a].append(b)",
+            "    G[b].append(a)",
+            "",
+            "T = EulerTour(n, G)",
+            "",
+            "T.set_euler_tour(0)",
+            "print(T.etnodes)",
+            "print(T.etedges)",
+            "print(T.etdepth)",
+            "",
+            "print(T.etL)",
+            "print(T.etR)",
+            "print(T.depthbynodes)",
+            ""
+        ],
+        "description": [
+            "オイラーツアー eulartour 再帰版"
         ]
     },
     "包除原理": {
@@ -796,85 +891,7 @@
             "print(ret)"
         ],
         "description": [
-            "lib_転倒数"
-        ]
-    },
-    "ダイクストラ法": {
-        "prefix": [
-            "Lib_S_最短経路探索_dijkstra"
-        ],
-        "body": [
-            "# ダイクストラ法",
-            "# 重み付きグラフ関係により最短経路のリストを作る",
-            "# 有向グラフで優先度付きキューで探索",
-            "# https://atcoder.jp/contests/abc035/tasks/abc035_d",
-            "# O((E+V)logV)",
-            "class dijkstra:",
-            "    def __init__(self, n, G):",
-            "        self.n = n              # ノード数",
-            "        self.G = G      # 有向グラフ",
-            "        self.start = None       # 始点",
-            "        self.G_used = [None] * n  # 最短経路木の親",
-            "",
-            "    def build(self, start):",
-            "        self.dist = [INF] * self.n",
-            "        next_q = []",
-            "        if type(start) is int:",
-            "            start = [start]",
-            "        for st in start:",
-            "            self.dist[st] = 0",
-            "            next_q.append((0, st))",
-            "        heapify(next_q)",
-            "        while next_q:",
-            "            cd, cn = heappop(next_q)",
-            "            if self.dist[cn] < cd: continue",
-            "            for nn, nd in self.G[cn]:",
-            "                # 変則的な距離の場合はここを調整 ##",
-            "                nd_ = self.dist[cn] + nd",
-            "                ############################",
-            "                if self.dist[nn] <= nd_: continue",
-            "                self.dist[nn] = nd_",
-            "                self.G_used[nn] = cn",
-            "                heappush(next_q, (nd_, nn))",
-            "",
-            "",
-            "    def get_dist(self, goal):",
-            "        return self.dist[goal]",
-            "",
-            "",
-            "    def get_path(self, goal):",
-            "        path = []",
-            "        node = goal",
-            "        while node is not None:",
-            "            path.append(node)",
-            "            node = self.G_used[node]",
-            "        return path[::-1]",
-            "",
-            "##########################################",
-            "",
-            "n, m, t = map(int, input().split())",
-            "G = [[] for _ in range(n)]",
-            "G_R = [[] for _ in range(n)]    #行きと帰りを分けた（有向グラフ）場合",
-            "#リストの作成",
-            "for _ in range(m):",
-            "    a, b, c = map(int, input().split())",
-            "    a, b = a-1, b-1",
-            "    G[a].append((b,c))",
-            "    G[b].append((a,c))",
-            "    G_R[b].append((a,c))        #行きと帰りを分けた（有向グラフ）場合",
-            "",
-            "dij = dijkstra(n, G)  #クラスのインスタンス化",
-            "dijR = dijkstra(n, G_R)",
-            "dij.build(0)",
-            "dijR.build(0)",
-            "",
-            "dij.get_dist(n-1)",
-            ""
-        ],
-        "description": [
-            "ダイクストラ法",
-            "辺の重みが小さいものから、決めていく",
-            ""
+            "Lib_転倒数"
         ]
     },
     "intinput": {
@@ -956,7 +973,7 @@
     },
     "Graph最短パス": {
         "prefix": [
-            "lib_G_最短パス"
+            "Lib_G_最短パス"
         ],
         "body": [
             "",
@@ -1007,7 +1024,7 @@
     "座標圧縮": {
         "prefix": [
             "compress_zaatsu",
-            "lib_A_座標圧縮"
+            "Lib_A_座標圧縮"
         ],
         "body": [
             "def compress(points, reverse=False, spacing=False):",
@@ -1098,7 +1115,7 @@
     },
     "BIT演算subset": {
         "prefix": [
-            "lib_BIT演算全部分集合"
+            "Lib_BIT演算全部分集合"
         ],
         "body": [
             "# 集合Mの部分集合を列挙",
@@ -1181,9 +1198,9 @@
             "削除機能付きheapque"
         ]
     },
-    "lib_図形": {
+    "Lib_図形": {
         "prefix": [
-            "lib_図形(円,三角形)"
+            "Lib_図形(円,三角形)"
         ],
         "body": [
             "def dist2(pt1, pt2): return sum([(x1-x2) ** 2 for x1, x2 in zip(pt1, pt2)])",
@@ -1351,7 +1368,7 @@
     },
     "半分全列挙": {
         "prefix": [
-            "lib_A_半分全列挙"
+            "Lib_A_半分全列挙"
         ],
         "body": [
             "# https://atcoder.jp/contests/abc184/tasks/abc184_f",
@@ -1465,7 +1482,7 @@
     "順列・組み合わせ": {
         "prefix": [
             "itertools",
-            "lib_順列・組み合わせ"
+            "Lib_順列・組み合わせ"
         ],
         "body": [
             "P = list(permutations(range(n), r))   # 順列(nPr)",
@@ -1481,7 +1498,7 @@
     },
     "区間カウント": {
         "prefix": [
-            "lib_区間カウント"
+            "Lib_区間カウント"
         ],
         "body": [
             "def count_intervals(a:list, x)->int:",
@@ -1523,9 +1540,9 @@
             "direc"
         ]
     },
-    "lib_math": {
+    "Lib_math": {
         "prefix": [
-            "lib_最大公約数_三角関数",
+            "Lib_最大公約数_三角関数",
             "import math"
         ],
         "body": [
@@ -1539,15 +1556,16 @@
             "math.degrees(3.1415)",
             "",
             "print(math.gcd(x, y))",
+            "def lcm(x, y): return x * y // math.gcd(x, y)",
             ""
         ],
         "description": [
             "mathのライブラリ"
         ]
     },
-    "lib_decimal": {
+    "Lib_decimal": {
         "prefix": [
-            "lib_四捨五入_Decimal"
+            "Lib_四捨五入_Decimal"
         ],
         "body": [
             "from decimal import Decimal",
@@ -1562,9 +1580,9 @@
             "Decimal で扱う"
         ]
     },
-    "lib_再帰関数": {
+    "Lib_再帰関数": {
         "prefix": [
-            "lib_再帰関数"
+            "Lib_再帰関数"
         ],
         "body": [
             "@lru_cache(maxsize=None)"
@@ -1573,9 +1591,9 @@
             "再帰関数"
         ]
     },
-    "lib_複素数": {
+    "Lib_複素数": {
         "prefix": [
-            "lib_再帰関数"
+            "Lib_再帰関数"
         ],
         "body": [
             "import cmath",
@@ -1598,7 +1616,7 @@
             ""
         ],
         "description": [
-            "lib_複素数"
+            "Lib_複素数"
         ]
     },
     "Binary Indexed Tree": {
@@ -1878,7 +1896,7 @@
     },
     "強連結成分分解": {
         "prefix": [
-            "lib_G_強連結成分分解_SCC"
+            "Lib_G_強連結成分分解_SCC"
         ],
         "body": [
             "class SCCGraph:",
@@ -1986,6 +2004,182 @@
         ],
         "description": [
             "強連結成分分解(SCC): グラフgに対するSCCを行う"
+        ]
+    },
+    "ダイクストラ法": {
+        "prefix": [
+            "Lib_SP_最短経路探索_dijkstra"
+        ],
+        "body": [
+            "# ダイクストラ法",
+            "# 重み付きグラフ関係により最短経路のリストを作る",
+            "# 有向グラフで優先度付きキューで探索",
+            "# https://atcoder.jp/contests/abc035/tasks/abc035_d",
+            "# O((E+V)logV)",
+            "class dijkstra:",
+            "    def __init__(self, n, G):",
+            "        self.n = n              # ノード数",
+            "        self.G = G      # 有向グラフ",
+            "        self.start = None       # 始点",
+            "        self.G_used = [None] * n  # 最短経路木の親",
+            "",
+            "    def build(self, start):",
+            "        self.dist = [INF] * self.n",
+            "        next_q = []",
+            "        if type(start) is int:",
+            "            start = [start]",
+            "        for st in start:",
+            "            self.dist[st] = 0",
+            "            next_q.append((0, st))",
+            "        heapify(next_q)",
+            "        while next_q:",
+            "            cd, cn = heappop(next_q)",
+            "            if self.dist[cn] < cd: continue",
+            "            for nn, nd in self.G[cn]:",
+            "                # 変則的な距離の場合はここを調整 ##",
+            "                nd_ = self.dist[cn] + nd",
+            "                ############################",
+            "                if self.dist[nn] <= nd_: continue",
+            "                self.dist[nn] = nd_",
+            "                self.G_used[nn] = cn",
+            "                heappush(next_q, (nd_, nn))",
+            "",
+            "",
+            "    def get_dist(self, goal):",
+            "        return self.dist[goal]",
+            "",
+            "",
+            "    def get_path(self, goal):",
+            "        path = []",
+            "        node = goal",
+            "        while node is not None:",
+            "            path.append(node)",
+            "            node = self.G_used[node]",
+            "        return path[::-1]",
+            "",
+            "##########################################",
+            "",
+            "n, m, t = map(int, input().split())",
+            "G = [[] for _ in range(n)]",
+            "G_R = [[] for _ in range(n)]    #行きと帰りを分けた（有向グラフ）場合",
+            "#リストの作成",
+            "for _ in range(m):",
+            "    a, b, c = map(int, input().split())",
+            "    a, b = a-1, b-1",
+            "    G[a].append((b,c))",
+            "    G[b].append((a,c))",
+            "    G_R[b].append((a,c))        #行きと帰りを分けた（有向グラフ）場合",
+            "",
+            "dij = dijkstra(n, G)  #クラスのインスタンス化",
+            "dijR = dijkstra(n, G_R)",
+            "dij.build(0)",
+            "dijR.build(0)",
+            "",
+            "dij.get_dist(n-1)",
+            ""
+        ],
+        "description": [
+            "ダイクストラ法",
+            "辺の重みが小さいものから、決めていく",
+            ""
+        ]
+    },
+    "オイラーツアー eulartour 非再帰版": {
+        "prefix": [
+            "Lib_GT_オイラーツアー_非再帰版_eulartour"
+        ],
+        "body": [
+            "# オイラーツアー eulartour 非再帰版",
+            "# 木をDFSしたときの順番で頂点を記録する手法",
+            "# pre-order : 頂点に到着したら記録",
+            "# post-order : 頂点から離れるときに記録",
+            "# - 根付き木のある頂点からの部分木に対するクエリを処理",
+            "# - ある頂点がある頂点の部分木に含まれるかを高速に判定する",
+            "# - 上手くオイラーツアーを作るとパスのコストの総和が取れる",
+            "# n = 5",
+            "# 0",
+            "# |",
+            "# 1",
+            "# |",
+            "# 2",
+            "# |  \\",
+            "# 4  3",
+            "#",
+            "# etnodes = [0,1,2,4,2,3,2,1,0]",
+            "# etdepth = [0,1,2,3,2,3,2,1,0]",
+            "# etdetL = [0,1,2,5,3]",
+            "# etdetR = [9,8,7,6,4]",
+            "",
+            "",
+            "class EulerTour():",
+            "    def __init__(self, n):",
+            "        self.n = n",
+            "        self.edges = [[] for _ in range(n)]",
+            "        self.root = None    # 根",
+            "        self.etnodes = []    # i番目の頂点番号",
+            "        self.etedges = []    # i番目の辺の番号",
+            "        self.etL = [0] * n  # in",
+            "        self.etR = [0] * n  # out",
+            "        self.depthbynodes = [0] * n",
+            "        self.etdepth = []       # i番目の辺の",
+            "",
+            "",
+            "    def add_edge(self, u, v):",
+            "        self.edges[u].append(v)",
+            "        self.edges[v].append(u)",
+            "",
+            "",
+            "    def set_euler_tour(self, root):",
+            "        self.root = root        # 根を設定して",
+            "        pa = [0] * self.n",
+            "        stack = [~root, root]",
+            "        ct = -1",
+            "        de = -1",
+            "        while stack:",
+            "            v = stack.pop()",
+            "            ct += 1",
+            "            self.etedges.append(v)",
+            "            if v >= 0:",
+            "                de += 1",
+            "                self.etnodes.append(v)",
+            "                self.etdepth.append(de)",
+            "                self.depthbynodes[v] = de",
+            "                self.etL[v] = ct",
+            "                p = pa[v]",
+            "                for w in self.edges[v][::-1]:",
+            "                    if w == p: continue",
+            "                    pa[w] = v",
+            "                    stack.append(~w)",
+            "                    stack.append(w)",
+            "            else:",
+            "                de -= 1",
+            "                self.etdepth.append(de)",
+            "                self.etnodes.append(pa[~v])",
+            "                self.etR[~v] = ct",
+            "",
+            "#########################################",
+            "def int1(x): return int(x)-1",
+            "n = int(input())",
+            "G = [[] for _ in range(n)]",
+            "for _ in range(n-1):",
+            "    a, b = map(int1, input().split())",
+            "    G[a].append(b)",
+            "    G[b].append(a)",
+            "",
+            "T = EulerTour(n, G)",
+            "",
+            "T.set_euler_tour(0)",
+            "print(T.etnodes)",
+            "print(T.etedges)",
+            "print(T.etdepth)",
+            "",
+            "print(T.etL)",
+            "print(T.etR)",
+            "print(T.depthbynodes)",
+            ""
+        ],
+        "description": [
+            "オイラーツアー eulartour 非再帰版"
         ]
     },
     "行列回転": {
@@ -2123,6 +2317,79 @@
             ""
         ],
         "description": []
+    },
+    "ベルマンフォード法": {
+        "prefix": [
+            "Lib_SP_最短経路探索_bellmanford"
+        ],
+        "body": [
+            "# ベルマンフォード法",
+            "# 重み付きグラフ関係により最短経路のリストを作る",
+            "# 辺を繰り返しみて、最小化していく",
+            "# |V|回更新するとで収束する/しなければ、負の閉路がある",
+            "",
+            "# https://atcoder.jp/contests/abc061/tasks/abc061_d",
+            "",
+            "def bellman_ford(st=0):",
+            "    \"\"\"",
+            "    n: グラフの頂点数",
+            "    st: 始点",
+            "    G[v] = [(w, cost), ...]: 頂点vからコストcostで到達できる頂点w",
+            "    returns",
+            "    dist or -1 if 閉路あり",
+            "    \"\"\"",
+            "",
+            "    INF = float('INF')",
+            "    dist = [INF] * n",
+            "    dist[st] = 0",
+            "    prev = [-1] * n",
+            "    for _ in range(n):",
+            "        update = False",
+            "        for v, e in enumerate(G):",
+            "            for t, cost in e:",
+            "                if dist[v] == INF: continue",
+            "                if dist[v] + cost >= dist[t]: continue",
+            "                dist[t] = dist[v] + cost",
+            "                prev[t] = v",
+            "                update = True",
+            "                upi = t",
+            "        if not update: return dist  # prev",
+            "    # 負閉路検出処理",
+            "    dist[upi] = -INF",
+            "    for _ in range(n):",
+            "        update = False",
+            "        for v, e in enumerate(G):",
+            "            for t, cost in e:",
+            "                if dist[v] == INF: continue",
+            "                if dist[v] + cost >= dist[t]: continue",
+            "                dist[t] = dist[v] + cost",
+            "                update = True",
+            "                upi = t",
+            "        if not update: return dist",
+            "    return -1",
+            "",
+            "######################################",
+            "",
+            "n, m = map(int, input().split())",
+            "G = [[] for _ in range(n)]",
+            "# 隣接リストの作成",
+            "for _ in range(m):",
+            "    _a, _b, _c = map(int, input().split())",
+            "    _a -= 1; _b -= 1",
+            "    G[_a].append((_b, -_c))",
+            "",
+            "st = 0",
+            "ret = bellman_ford(st)",
+            "if ret == -1:",
+            "    print('inf')",
+            "else:",
+            "    print(-ret[-1])",
+            ""
+        ],
+        "description": [
+            "ベルマンフォード法・負閉路OK",
+            "O(NM)"
+        ]
     },
     "ループ#": {
         "prefix": [
@@ -2430,82 +2697,104 @@
             "nCr剰余"
         ]
     },
-    "ベルマンフォード法": {
+    "ユニオンファインド重み付き": {
         "prefix": [
-            "Lib_S_最短経路探索_bellmanford"
+            "Lib_G_unionfind_weighted"
         ],
-        "body": [
-            "# ベルマンフォード法",
-            "# 重み付きグラフ関係により最短経路のリストを作る",
-            "# 辺を繰り返しみて、最小化していく",
-            "# |V|回更新するとで収束する/しなければ、負の閉路がある",
-            "",
-            "# https://atcoder.jp/contests/abc061/tasks/abc061_d",
-            "",
-            "def bellman_ford(st=0):",
-            "    \"\"\"",
-            "    n: グラフの頂点数",
-            "    st: 始点",
-            "    G[v] = [(w, cost), ...]: 頂点vからコストcostで到達できる頂点w",
-            "    returns",
-            "    dist or -1 if 閉路あり",
-            "    \"\"\"",
-            "",
-            "    INF = float('INF')",
-            "    dist = [INF] * n",
-            "    dist[st] = 0",
-            "    prev = [-1] * n",
-            "    for _ in range(n):",
-            "        update = False",
-            "        for v, e in enumerate(G):",
-            "            for t, cost in e:",
-            "                if dist[v] == INF: continue",
-            "                if dist[v] + cost >= dist[t]: continue",
-            "                dist[t] = dist[v] + cost",
-            "                prev[t] = v",
-            "                update = True",
-            "                upi = t",
-            "        if not update: return dist  # prev",
-            "    # 負閉路検出処理",
-            "    dist[upi] = -INF",
-            "    for _ in range(n):",
-            "        update = False",
-            "        for v, e in enumerate(G):",
-            "            for t, cost in e:",
-            "                if dist[v] == INF: continue",
-            "                if dist[v] + cost >= dist[t]: continue",
-            "                dist[t] = dist[v] + cost",
-            "                update = True",
-            "                upi = t",
-            "        if not update: return dist",
-            "    return -1",
-            "",
-            "######################################",
-            "",
-            "n, m = map(int, input().split())",
-            "G = [[] for _ in range(n)]",
-            "# 隣接リストの作成",
-            "for _ in range(m):",
-            "    _a, _b, _c = map(int, input().split())",
-            "    _a -= 1; _b -= 1",
-            "    G[_a].append((_b, -_c))",
-            "",
-            "st = 0",
-            "ret = bellman_ford(st)",
-            "if ret == -1:",
-            "    print('inf')",
-            "else:",
-            "    print(-ret[-1])",
-            ""
-        ],
+        "body": [],
         "description": [
-            "ベルマンフォード法・負閉路OK",
-            "O(NM)"
+            "ユニオンファインド重み付き",
+            "ass UnionFindWeighted:",
+            "  def __init__(self, n):                      # 初期化",
+            "      self.n = n                              # 要素数",
+            "      self.parents = [i for i in range(n)]    # 親",
+            "      self.ranks = [0] * n                    # 木の深さ",
+            "      self.sizes = [1] * n                    # グループの要素数",
+            "      self.weights = [0] * n                  # 親との重み",
+            "",
+            "  #親を出力",
+            "  def find(self, x):",
+            "      if self.parents[x] == x:",
+            "          return x",
+            "      else:",
+            "          p = self.find(self.parents[x])",
+            "          self.weights[x] += self.weights[self.parents[x]]",
+            "          self.parents[x] = p",
+            "          return p",
+            "",
+            "  # ユニオン",
+            "  def unite(self, x, y, w):",
+            "      # a[x]->a[y]  の差はw  # a[y]=a[x]+w",
+            "      rx = self.find(x)",
+            "      ry = self.find(y)",
+            "      wx = self.weight(x)",
+            "      wy = self.weight(y)",
+            "      if rx == ry: return",
+            "      if self.ranks[rx] > self.ranks[ry]:",
+            "          rx , ry = ry, rx    #ryを親にする",
+            "          wx , wy = wy, wx",
+            "          w *= -1",
+            "      self.parents[rx] = ry",
+            "      self.sizes[ry] += self.sizes[rx]",
+            "      self.weights[rx] = wy - wx - w",
+            "      if self.ranks[rx]==self.ranks[ry]:",
+            "          self.ranks[rx] += 1",
+            "",
+            "  #xとyが同じグループかどうか",
+            "  def same(self, x, y):",
+            "      return self.find(x) == self.find(y)",
+            "",
+            "  #xと同じグループの要素",
+            "  def members(self, x):",
+            "      root = self.find(x)",
+            "      return {i for i in range(self.n) if self.find(i) == root}",
+            "",
+            "  #グループの要素数",
+            "  def size(self, x):",
+            "      root = self.find(x)",
+            "      return self.sizes[root]",
+            "",
+            "  #親の要素一覧",
+            "  def roots(self):",
+            "      return {i for i, x in enumerate(self.parents) if i == x}",
+            "",
+            "  #グループの個数",
+            "  def group_count(self):",
+            "      return len(self.roots())",
+            "",
+            "  #グループのメンバー一覧",
+            "  def all_group_members(self):",
+            "      return {r: self.members(r) for r in self.roots()}",
+            "",
+            "  #重みの差",
+            "  def weight(self, x):",
+            "      _ = self.find(x)",
+            "      return self.weights[x]",
+            "",
+            "  #重み",
+            "  def diff(self, x, y):",
+            "      rx = self.find(x)",
+            "      ry = self.find(y)",
+            "      if rx != ry: return float('inf')",
+            "      return self.weight(y) - self.weight(x)",
+            "",
+            "  def __str__(self):",
+            "      return '\\n'.join('{}: {}'.format(r, self.members(r)) for r in self.roots())",
+            "",
+            "##############",
+            "",
+            " m = map(int, input().split())",
+            " = UnionFindWeighted(n)",
+            "r _ in range(m):",
+            "  a, b, w = map(int,input().split())",
+            "  a -= 1; b -= 1",
+            "  uf.unite(a, b, w)",
+            ""
         ]
     },
     "区間和の最大値": {
         "prefix": [
-            "lib_区間和の最大値"
+            "Lib_区間和の最大値"
         ],
         "body": [
             "",
@@ -2590,100 +2879,6 @@
         ],
         "description": [
             "グラフの葉から枝を刈り取って、ループ部分のみ抽出する"
-        ]
-    },
-    "オイラーツアー": {
-        "prefix": [
-            "Lib_GT_木オイラーツアー_eulartour"
-        ],
-        "body": [
-            "# オイラーツアー eulartour",
-            "# 木をDFSしたときの順番で頂点を記録する手法",
-            "# pre-order : 頂点に到着したら記録",
-            "# post-order : 頂点から離れるときに記録",
-            "# - 根付き木のある頂点からの部分木に対するクエリを処理",
-            "# - ある頂点がある頂点の部分木に含まれるかを高速に判定する",
-            "# - 上手くオイラーツアーを作るとパスのコストの総和が取れる",
-            "# n = 5",
-            "# 0",
-            "# |",
-            "# 1",
-            "# |",
-            "# 2",
-            "# |  \\",
-            "# 4  3",
-            "#",
-            "# etnodes = [0,1,2,4,2,3,2,1,0]",
-            "# etdepth = [0,1,2,3,2,3,2,1,0]",
-            "# etdetL = [0,1,2,5,3]",
-            "# etdetR = [9,8,7,6,4]",
-            "",
-            "",
-            "class EulerTour():",
-            "    def __init__(self, n, G):",
-            "        self.n = n",
-            "        self.edges = G",
-            "        self.root = None    # 根",
-            "        self.etnodes = []    # i番目の頂点番号",
-            "        self.etedges = []    # i番目の辺の番号",
-            "        self.etL = [-1] * n  # in time",
-            "        self.etR = [-1] * n  # out time",
-            "        self.depthbynodes = [0] * n",
-            "        self.etdepth = []       # i番目の頂点番号の深さ",
-            "",
-            "",
-            "    def set_euler_tour(self, root):",
-            "        self.root = root        # 根を設定して",
-            "        self._dfs(root)",
-            "        self._set_timestamp()",
-            "",
-            "    def _dfs(self, cur, last=-1):",
-            "        ################## 行きがけ処理",
-            "        depth = 0",
-            "        if last != -1:",
-            "            depth = self.depthbynodes[last] + 1",
-            "        self.depthbynodes[cur] = depth",
-            "        self.etnodes.append(cur)",
-            "        self.etdepth.append(depth)",
-            "",
-            "        for nxt in self.edges[cur]:",
-            "            if nxt == last: continue",
-            "            self._dfs(nxt, cur)",
-            "            ################## 帰りがけ処理",
-            "            self.etnodes.append(cur)",
-            "            self.etdepth.append(depth)",
-            "",
-            "",
-            "    def _set_timestamp(self):",
-            "        for ct, now in enumerate(self.etnodes):",
-            "            if self.etL[now] == -1:",
-            "                self.etL[now] = ct",
-            "            self.etR[now] = ct + 1",
-            "",
-            "",
-            "#########################################",
-            "def int1(x): return int(x)-1",
-            "n = int(input())",
-            "G = [[] for _ in range(n)]",
-            "for _ in range(n-1):",
-            "    a, b = map(int1, input().split())",
-            "    G[a].append(b)",
-            "    G[b].append(a)",
-            "",
-            "T = EulerTour(n, G)",
-            "",
-            "T.set_euler_tour(0)",
-            "print(T.etnodes)",
-            "print(T.etedges)",
-            "print(T.etdepth)",
-            "",
-            "print(T.etL)",
-            "print(T.etR)",
-            "print(T.depthbynodes)",
-            ""
-        ],
-        "description": [
-            "オイラーツアー eulartour"
         ]
     },
     "Sorted Set": {
@@ -2875,104 +3070,9 @@
             "累積和"
         ]
     },
-    "ユニオンファインド重み付き": {
-        "prefix": [
-            "lib_unionfind_weighted"
-        ],
-        "body": [],
-        "description": [
-            "ユニオンファインド重み付き",
-            "ass UnionFindWeighted:",
-            "  def __init__(self, n):                      # 初期化",
-            "      self.n = n                              # 要素数",
-            "      self.parents = [i for i in range(n)]    # 親",
-            "      self.ranks = [0] * n                    # 木の深さ",
-            "      self.sizes = [1] * n                    # グループの要素数",
-            "      self.weights = [0] * n                  # 親との重み",
-            "",
-            "  #親を出力",
-            "  def find(self, x):",
-            "      if self.parents[x] == x:",
-            "          return x",
-            "      else:",
-            "          p = self.find(self.parents[x])",
-            "          self.weights[x] += self.weights[self.parents[x]]",
-            "          self.parents[x] = p",
-            "          return p",
-            "",
-            "  # ユニオン",
-            "  def unite(self, x, y, w):",
-            "      # a[x]->a[y]  の差はw  # a[y]=a[x]+w",
-            "      rx = self.find(x)",
-            "      ry = self.find(y)",
-            "      wx = self.weight(x)",
-            "      wy = self.weight(y)",
-            "      if rx == ry: return",
-            "      if self.ranks[rx] > self.ranks[ry]:",
-            "          rx , ry = ry, rx    #ryを親にする",
-            "          wx , wy = wy, wx",
-            "          w *= -1",
-            "      self.parents[rx] = ry",
-            "      self.sizes[ry] += self.sizes[rx]",
-            "      self.weights[rx] = wy - wx - w",
-            "      if self.ranks[rx]==self.ranks[ry]:",
-            "          self.ranks[rx] += 1",
-            "",
-            "  #xとyが同じグループかどうか",
-            "  def same(self, x, y):",
-            "      return self.find(x) == self.find(y)",
-            "",
-            "  #xと同じグループの要素",
-            "  def members(self, x):",
-            "      root = self.find(x)",
-            "      return {i for i in range(self.n) if self.find(i) == root}",
-            "",
-            "  #グループの要素数",
-            "  def size(self, x):",
-            "      root = self.find(x)",
-            "      return self.sizes[root]",
-            "",
-            "  #親の要素一覧",
-            "  def roots(self):",
-            "      return {i for i, x in enumerate(self.parents) if i == x}",
-            "",
-            "  #グループの個数",
-            "  def group_count(self):",
-            "      return len(self.roots())",
-            "",
-            "  #グループのメンバー一覧",
-            "  def all_group_members(self):",
-            "      return {r: self.members(r) for r in self.roots()}",
-            "",
-            "  #重みの差",
-            "  def weight(self, x):",
-            "      _ = self.find(x)",
-            "      return self.weights[x]",
-            "",
-            "  #重み",
-            "  def diff(self, x, y):",
-            "      rx = self.find(x)",
-            "      ry = self.find(y)",
-            "      if rx != ry: return float('inf')",
-            "      return self.weight(y) - self.weight(x)",
-            "",
-            "  def __str__(self):",
-            "      return '\\n'.join('{}: {}'.format(r, self.members(r)) for r in self.roots())",
-            "",
-            "##############",
-            "",
-            " m = map(int, input().split())",
-            " = UnionFindWeighted(n)",
-            "r _ in range(m):",
-            "  a, b, w = map(int,input().split())",
-            "  a -= 1; b -= 1",
-            "  uf.unite(a, b, w)",
-            ""
-        ]
-    },
     "LCA": {
         "prefix": [
-            "lib_GT_最小共通祖先_LCA"
+            "Lib_GT_最小共通祖先_LCA"
         ],
         "body": [
             "class Lca:",
@@ -3128,106 +3228,9 @@
             "差分最小値探索"
         ]
     },
-    "ユニオンファインド": {
-        "prefix": [
-            "lib_D_unionfind"
-        ],
-        "body": [
-            "class UnionFind:",
-            "    def __init__(self, n):                      # 初期化",
-            "        self.n = n                              # 要素数",
-            "        self.parents = [i for i in range(n)]    # 親",
-            "        self.ranks = [0] * n                    # 木の深さ",
-            "        self.sizes = [1] * n                    # グループの要素数",
-            "        self.group_count = n                    # グループの数",
-            "",
-            "    def find(self, x):",
-            "        \"\"\"親を出力",
-            "        Parameters",
-            "        ----------",
-            "        x : int",
-            "            ノード番号",
-            "        \"\"\"",
-            "        if self.parents[x] == x:",
-            "            return x",
-            "        else:",
-            "            p = self.find(self.parents[x])",
-            "            self.parents[x] = p",
-            "            return p",
-            "",
-            "    def unite(self, x, y):",
-            "        \"\"\"ユニオン",
-            "        \"\"\"",
-            "        x = self.find(x)",
-            "        y = self.find(y)",
-            "        if x == y: return",
-            "        if self.ranks[x] > self.ranks[y]:",
-            "            x , y = y, x    #yを親にする",
-            "        if self.ranks[x] == self.ranks[y]:",
-            "                self.ranks[y] += 1",
-            "        self.parents[x] = y",
-            "        self.sizes[y] += self.sizes[x]",
-            "        self.group_count -= 1",
-            "",
-            "    def same(self, x, y) -> bool:",
-            "        \"\"\"xとyが同じグループかどうか",
-            "        \"\"\"",
-            "        return self.find(x) == self.find(y)",
-            "",
-            "    def members(self, x):",
-            "        \"\"\"xと同じグループの要素",
-            "        \"\"\"",
-            "        root = self.find(x)",
-            "        return {i for i in range(self.n) if self.find(i) == root}",
-            "",
-            "    def size(self, x):",
-            "        \"\"\"xのグループの要素数",
-            "        \"\"\"",
-            "        return self.sizes[self.find(x)]",
-            "",
-            "    @property",
-            "    def roots(self):",
-            "        \"\"\"親の要素一覧",
-            "        \"\"\"",
-            "        return {i for i, x in enumerate(self.parents) if i == x}",
-            "",
-            "    @property",
-            "    def all_group_members(self):",
-            "        \"\"\"グループのメンバー一覧",
-            "        \"\"\"",
-            "        group_members = defaultdict(list)",
-            "        for x in range(self.n):",
-            "            group_members[self.find(x)].append(x)",
-            "        return group_members",
-            "",
-            "    def __str__(self):",
-            "        return '\\n'.join(f'{r}: {self.members(r)}' for r in self.roots)",
-            "",
-            "################",
-            "",
-            "n, q = map(int, input().split())",
-            "uf = UnionFind(n)",
-            "for _ in range(q):",
-            "    p, _a, _b = map(int,input().split())",
-            "    _a -= 1; _b -= 1",
-            "    if p == 0:",
-            "        uf.unite(_a, _b)",
-            "    else:",
-            "        if uf.same(_a, _b):",
-            "            print('Yes')",
-            "        else:",
-            "            print('No')",
-            "",
-            "# https://atcoder.jp/contests/atc001/tasks/unionfind_a",
-            ""
-        ],
-        "description": [
-            "ユニオンファインド"
-        ]
-    },
     "セグメント木": {
         "prefix": [
-            "lib_Q_seg木（一点更新・区間集約)"
+            "Lib_Q_seg木（一点更新・区間集約)"
         ],
         "body": [
             "class SegmentTree:  # 初期化処理",
@@ -3439,6 +3442,103 @@
             "セグメント木"
         ]
     },
+    "ワーシャルフロイド法": {
+        "prefix": [],
+        "body": [],
+        "description": []
+    },
+    "iscription#": {
+        "prefix": [],
+        "body": [],
+        "description": []
+    },
+    "全頂点間最短路": {
+        "prefix": [],
+        "body": [],
+        "description": []
+    },
+    "d[i][j]は2頂点間i, j間の移動コストを格納, Mは頂点数": {
+        "prefix": [],
+        "body": [],
+        "description": []
+    },
+    "O(N^3)": {
+        "prefix": [
+            "Lib_SP_最短経路探索_warshall"
+        ],
+        "body": [
+            "import copy",
+            "",
+            "class warshall_floyd:",
+            "    def __init__(self, n:int) -> None:",
+            "        self.INF = float(\"inf\")",
+            "        self.n = n",
+            "        self.d = [[self.INF] * n for _ in range(n)]",
+            "        #d[u][v] : 辺uvのコスト(存在しないときはinf)",
+            "        for i in range(n):",
+            "            self.d[i][i] = 0 #自身のところに行くコストは０",
+            "",
+            "",
+            "",
+            "    def build(self):",
+            "        n = self.n",
+            "        wf = copy.deepcopy(self.d)",
+            "        for k in range(n):",
+            "            for i in range(n):",
+            "                for j in range(n):",
+            "                    wf[i][j] = min(wf[i][j], wf[i][k] + wf[k][j])",
+            "",
+            "        self.wf = wf #wf[i][j]に頂点i, j間の最短距離を格納",
+            "",
+            "",
+            "    def add_edge(self, fm, to, cost):",
+            "        self.d[fm][to] = cost",
+            "",
+            "",
+            "    # 負値閉路検索",
+            "    @property",
+            "    def is_neg_cycle(self) -> bool:",
+            "        for i in range(self.n):",
+            "            if self.wf[i][i] < 0:",
+            "                return True",
+            "        return False",
+            "",
+            "",
+            "    # 経路復元",
+            "    def path(self, s, g):",
+            "        ret = []",
+            "        if s == g or self.wf[s][g] == self.INF:",
+            "            return ret",
+            "        cur = s",
+            "        while cur!=g:",
+            "            for nxt in range(self.n):",
+            "                if nxt==cur or nxt==s: continue",
+            "                if self.d[cur][nxt] + self.wf[nxt][g] == self.wf[cur][g]:",
+            "                    ret.append((cur, nxt))",
+            "    #                ret.append((nxt, cur))",
+            "                    cur = nxt",
+            "                    break",
+            "        return ret",
+            "",
+            "##############################",
+            "",
+            "n, m = map(int,input().split()) #N:頂点数 m:辺の数",
+            "",
+            "WF = warshall_floyd(n)",
+            "",
+            "for _ in range(m):",
+            "    _u, _v, _w = map(int,input().split())",
+            "    _u -= 1; _v -= 1",
+            "    WF.add_edge(_u, _v, _w)",
+            "    WF.add_edge(_v, _u, _w)",
+            "",
+            "WF.build()",
+            "",
+            "print(WF.path(0, n-1))",
+            ""
+        ],
+        "description": []
+    },
     "bfs迷路２次元タイプ": {
         "prefix": [
             "Lib_G_迷路2次元タイプ"
@@ -3486,7 +3586,7 @@
             "# returns dict s.t. key = {prime}   value = {degree}",
             "##############################",
             "def prime_factorize(n:int) -> dict:",
-            "    if n == 1: return dict({1: 1})",
+            "    if n == 1: return {1: 1}",
             "    pd = dict()",
             "    for p in range(2, int(n**0.5)+1):",
             "        if n % p != 0: p += 1; continue",

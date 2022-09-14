@@ -1,9 +1,9 @@
 #name#
-# オイラーツアー
+# オイラーツアー eulartour 非再帰版
 #description#
-# オイラーツアー eulartour
+# オイラーツアー eulartour 非再帰版
 #body#
-# オイラーツアー eulartour
+# オイラーツアー eulartour 非再帰版
 # 木をDFSしたときの順番で頂点を記録する手法
 # pre-order : 頂点に到着したら記録
 # post-order : 頂点から離れるときに記録
@@ -26,46 +26,50 @@
 
 
 class EulerTour():
-    def __init__(self, n, G):
+    def __init__(self, n):
         self.n = n
-        self.edges = G
+        self.edges = [[] for _ in range(n)]
         self.root = None    # 根
         self.etnodes = []    # i番目の頂点番号
         self.etedges = []    # i番目の辺の番号
-        self.etL = [-1] * n  # in time
-        self.etR = [-1] * n  # out time
+        self.etL = [0] * n  # in
+        self.etR = [0] * n  # out
         self.depthbynodes = [0] * n
-        self.etdepth = []       # i番目の頂点番号の深さ
+        self.etdepth = []       # i番目の辺の
+
+
+    def add_edge(self, u, v):
+        self.edges[u].append(v)
+        self.edges[v].append(u)
 
 
     def set_euler_tour(self, root):
         self.root = root        # 根を設定して
-        self._dfs(root)
-        self._set_timestamp()
-
-    def _dfs(self, cur, last=-1):
-        ################## 行きがけ処理
-        depth = 0
-        if last != -1:
-            depth = self.depthbynodes[last] + 1
-        self.depthbynodes[cur] = depth
-        self.etnodes.append(cur)
-        self.etdepth.append(depth)
-
-        for nxt in self.edges[cur]:
-            if nxt == last: continue
-            self._dfs(nxt, cur)
-            ################## 帰りがけ処理
-            self.etnodes.append(cur)
-            self.etdepth.append(depth)
-
-
-    def _set_timestamp(self):
-        for ct, now in enumerate(self.etnodes):
-            if self.etL[now] == -1:
-                self.etL[now] = ct
-            self.etR[now] = ct + 1
-
+        pa = [0] * self.n
+        stack = [~root, root]
+        ct = -1
+        de = -1
+        while stack:
+            v = stack.pop()
+            ct += 1
+            self.etedges.append(v)
+            if v >= 0:
+                de += 1
+                self.etnodes.append(v)
+                self.etdepth.append(de)
+                self.depthbynodes[v] = de
+                self.etL[v] = ct
+                p = pa[v]
+                for w in self.edges[v][::-1]:
+                    if w == p: continue
+                    pa[w] = v
+                    stack.append(~w)
+                    stack.append(w)
+            else:
+                de -= 1
+                self.etdepth.append(de)
+                self.etnodes.append(pa[~v])
+                self.etR[~v] = ct
 
 #########################################
 def int1(x): return int(x)-1
@@ -88,5 +92,5 @@ print(T.etR)
 print(T.depthbynodes)
 
 #prefix#
-# Lib_GT_木オイラーツアー_eulartour
+# Lib_GT_オイラーツアー_非再帰版_eulartour
 #end#

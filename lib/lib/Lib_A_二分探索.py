@@ -14,5 +14,5 @@ while abs(ok - ng) > 1:
     else: ng = mid
 print(ok)
 #prefix#
-# lib_A_二分探索
+# Lib_A_二分探索
 #end#

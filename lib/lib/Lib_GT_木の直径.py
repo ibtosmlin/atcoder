@@ -108,5 +108,5 @@ print(count_diameter(n, G))
 
 
 #prefix#
-# lib_GT_木の直径
+# Lib_GT_木の直径
 #end#

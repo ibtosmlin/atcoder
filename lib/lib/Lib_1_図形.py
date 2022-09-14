@@ -1,5 +1,5 @@
 #name#
-# lib_図形
+# Lib_図形
 #description#
 # 図形のライブラリ
 #body#
@@ -21,5 +21,5 @@ def ccw(p1, p2, p3):
 
 
 #prefix#
-# lib_図形(円,三角形)
+# Lib_図形(円,三角形)
 #end#

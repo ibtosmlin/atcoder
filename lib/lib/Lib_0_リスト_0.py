@@ -81,7 +81,7 @@ T = [[1, 2],[3, 4, 5, 6],[7, 8, 9]]
 PT = list(product(*T))
 #prefix#
 # itertools
-# lib_順列・組み合わせ
+# Lib_順列・組み合わせ
 #end#
 
 #name#
@@ -108,7 +108,7 @@ def count_intervals(a:list, x)->int:
 # A=[0, 0, 1, 1, 1, 1, 0, 1, 1, 1]
 # x=1 の区間がいくつあるか ans = 2
 #prefix#
-# lib_区間カウント
+# Lib_区間カウント
 #end#
 
 

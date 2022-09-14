@@ -45,5 +45,5 @@ print(im.get_max - im.get_min + 1)
 
 
 #prefix#
-# lib_区間和の最大値
+# Lib_区間和の最大値
 #end#
