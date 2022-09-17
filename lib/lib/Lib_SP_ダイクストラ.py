@@ -12,13 +12,19 @@
 # O((E+V)logV)
 class dijkstra:
     def __init__(self, n, G):
-        self.n = n              # ノード数
-        self.G = G      # 有向グラフ
-        self.start = None       # 始点
-        self.G_used = [None] * n  # 最短経路木の親
+        self.n = n                  # ノード数
+        self.G = G                  # 有向グラフ
+        self.start = None           # 始点
+        self.G_used = [None] * n    # 最短経路木の親
+        self.dist = [INF] * self.n  # 始点からの距離
+        self.count = [0] * self.n   # 始点からの最短到達パス数
+
 
     def build(self, start):
+        self.start = start
+        self.G_used = [None] * n
         self.dist = [INF] * self.n
+        self.count = [0] * self.n
         next_q = []
         if type(start) is int:
             start = [start]
@@ -33,20 +39,31 @@ class dijkstra:
                 # 変則的な距離の場合はここを調整 ##
                 nd_ = self.dist[cn] + nd
                 ############################
-                if self.dist[nn] <= nd_: continue
+                if self.dist[nn] < nd_: continue
+                if self.dist[nn] == nd_:
+                    self.count[nn] += self.count[cd]
+                    continue
                 self.dist[nn] = nd_
                 self.G_used[nn] = cn
+                self.count[nn] = self.count[cd]
                 heappush(next_q, (nd_, nn))
 
 
     def get_dist(self, goal):
+        # 各ノードへの最短距離
         return self.dist[goal]
 
 
+    def get_count(self, goal):
+        # 各ノードへの最短距離のパス数
+        return self.count[goal]
+
+
     def get_path(self, goal):
+        # 各ノードへの最短パス
         path = []
         node = goal
-        while node is not None:
+        while node != None:
             path.append(node)
             node = self.G_used[node]
         return path[::-1]

@@ -16,7 +16,7 @@ print(math.gcd(x, y))
 def lcm(x, y): return x * y // math.gcd(x, y)
 
 #prefix#
-# Lib_最大公約数_三角関数
+# Lib_math_最大公約数_三角関数
 # import math
 #end#
 
@@ -37,17 +37,7 @@ fr = fd.quantize(Decimal('0.1'), rounding=ROUND_HALF_UP)#123.5
 #end#
 
 #name#
-# Lib_再帰関数
-#description#
-# 再帰関数
-#body#
-@lru_cache(maxsize=None)
-#prefix#
-# Lib_再帰関数
-#end#
-
-#name#
-# Lib_複素数
+# Lib_math_複素数
 #description#
 # Lib_複素数
 #body#
@@ -70,5 +60,37 @@ print(z2.conjugate())
 # (5-13j)
 
 #prefix#
-# Lib_再帰関数
+# Lib_math_複素数
 #end#
+
+
+from functools import cmp_to_key
+def sort_by_function(x):
+    """比較関数を設定してソート
+    """
+    def compare(item1, item2):
+        """ "小さい" -> -1
+            "等しい" -> 0
+            "大きい" -> 1
+        """
+        # 以下はx, yが与えられてy/xで比較する例
+        # y1/x1 < y2/x2
+        # -> y1*x2 < y2*x1
+        x1, y1 = item1
+        x2, y2 = item2
+
+        if y1*x2 < y2*x1:
+            return -1
+        elif y1*x2 > y2*x1:
+            return 1
+        else:
+            return 0
+    x.sort(key=cmp_to_key(compare))
+    return x
+########################################
+a = [[1, 2], [2, 6] , [3, 6], [4, 5], [5, 7]]
+print(a)
+a = sort_by_function(a)
+print(a)
+# [[4, 5], [5, 7], [1, 2], [3, 6], [2, 6]]
+#   1.25    0.714    0.5     0.5    0.333

@@ -763,7 +763,8 @@
             "n = int(input())",
             "G = [[] for _ in range(n)]",
             "for _ in range(n-1):",
-            "    a, b = map(int1, input().split())",
+            "    a, b = map(int, input().split())",
+            "#    a, b = map(int1, input().split())",
             "    G[a].append(b)",
             "    G[b].append(a)",
             "",
@@ -777,6 +778,17 @@
             "print(T.etL)",
             "print(T.etR)",
             "print(T.depthbynodes)",
+            "",
+            "\"\"\"",
+            "8",
+            "0 6",
+            "0 5",
+            "6 4",
+            "5 2",
+            "5 1",
+            "5 7",
+            "2 3",
+            "\"\"\"",
             ""
         ],
         "description": [
@@ -1542,7 +1554,7 @@
     },
     "Lib_math": {
         "prefix": [
-            "Lib_最大公約数_三角関数",
+            "Lib_math_最大公約数_三角関数",
             "import math"
         ],
         "body": [
@@ -1580,20 +1592,9 @@
             "Decimal で扱う"
         ]
     },
-    "Lib_再帰関数": {
+    "Lib_math_複素数": {
         "prefix": [
-            "Lib_再帰関数"
-        ],
-        "body": [
-            "@lru_cache(maxsize=None)"
-        ],
-        "description": [
-            "再帰関数"
-        ]
-    },
-    "Lib_複素数": {
-        "prefix": [
-            "Lib_再帰関数"
+            "Lib_math_複素数"
         ],
         "body": [
             "import cmath",
@@ -2018,13 +2019,19 @@
             "# O((E+V)logV)",
             "class dijkstra:",
             "    def __init__(self, n, G):",
-            "        self.n = n              # ノード数",
-            "        self.G = G      # 有向グラフ",
-            "        self.start = None       # 始点",
-            "        self.G_used = [None] * n  # 最短経路木の親",
+            "        self.n = n                  # ノード数",
+            "        self.G = G                  # 有向グラフ",
+            "        self.start = None           # 始点",
+            "        self.G_used = [None] * n    # 最短経路木の親",
+            "        self.dist = [INF] * self.n  # 始点からの距離",
+            "        self.count = [0] * self.n   # 始点からの最短到達パス数",
+            "",
             "",
             "    def build(self, start):",
+            "        self.start = start",
+            "        self.G_used = [None] * n",
             "        self.dist = [INF] * self.n",
+            "        self.count = [0] * self.n",
             "        next_q = []",
             "        if type(start) is int:",
             "            start = [start]",
@@ -2039,20 +2046,31 @@
             "                # 変則的な距離の場合はここを調整 ##",
             "                nd_ = self.dist[cn] + nd",
             "                ############################",
-            "                if self.dist[nn] <= nd_: continue",
+            "                if self.dist[nn] < nd_: continue",
+            "                if self.dist[nn] == nd_:",
+            "                    self.count[nn] += self.count[cd]",
+            "                    continue",
             "                self.dist[nn] = nd_",
             "                self.G_used[nn] = cn",
+            "                self.count[nn] = self.count[cd]",
             "                heappush(next_q, (nd_, nn))",
             "",
             "",
             "    def get_dist(self, goal):",
+            "        # 各ノードへの最短距離",
             "        return self.dist[goal]",
             "",
             "",
+            "    def get_count(self, goal):",
+            "        # 各ノードへの最短距離のパス数",
+            "        return self.count[goal]",
+            "",
+            "",
             "    def get_path(self, goal):",
+            "        # 各ノードへの最短パス",
             "        path = []",
             "        node = goal",
-            "        while node is not None:",
+            "        while node != None:",
             "            path.append(node)",
             "            node = self.G_used[node]",
             "        return path[::-1]",

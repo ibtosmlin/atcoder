@@ -72,7 +72,8 @@ def int1(x): return int(x)-1
 n = int(input())
 G = [[] for _ in range(n)]
 for _ in range(n-1):
-    a, b = map(int1, input().split())
+    a, b = map(int, input().split())
+#    a, b = map(int1, input().split())
     G[a].append(b)
     G[b].append(a)
 
@@ -86,6 +87,17 @@ print(T.etdepth)
 print(T.etL)
 print(T.etR)
 print(T.depthbynodes)
+
+"""
+8
+0 6
+0 5
+6 4
+5 2
+5 1
+5 7
+2 3
+"""
 
 #prefix#
 # Lib_GT_オイラーツアー_再帰版_eulartour

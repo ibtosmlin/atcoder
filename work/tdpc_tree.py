@@ -18,28 +18,15 @@ def end(r=-1): print(r); exit()
 direc = [(1, 0), (0, 1), (-1, 0), (0, -1)] + [(1, 1), (1, -1), (-1, 1), (-1, -1)]
 def isinhw(i, j, h, w): return (0 <= i < h) and (0 <= j < w)
 def dist2(pt1, pt2): return sum([(x1-x2) ** 2 for x1, x2 in zip(pt1, pt2)])
-n, q = map(int, input().split())
-X = list(map(int, input().split()))
+n = int(input())
 G = [[] for _ in range(n)]
 for _ in range(n-1):
     a, b = map(int1, input().split())
     G[a].append(b)
     G[b].append(a)
 
-subtree = [[] for _ in range(n)]
-
-def bfs(x,p=-1):
-    global subtree
-    subtree[x].append(X[x])
+def dfs(x, p=-1):
+    ret = 1
     for nx in G[x]:
         if nx == p: continue
-        bfs(nx, x)
-        subtree[x] += subtree[nx]
-    subtree[x].sort(reverse=True)
-    subtree[x] = subtree[x][:20]
-
-bfs(0)
-
-for _ in range(q):
-    v, k = map(int1, input().split())
-    print(subtree[v][k])
+        dfs(nx, x)
