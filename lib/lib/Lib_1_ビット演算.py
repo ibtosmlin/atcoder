@@ -1,4 +1,24 @@
 #name#
+
+# BIT演算
+# k桁目 or bitを0にする
+x &= ~(1 << k)
+x &= ~bit
+
+# k桁目 or bitを0にする
+x |= 1 << k
+x |= bit
+
+# k桁目 or bitを反転する
+x ^= 1 << k
+x ^= bit
+
+# 111
+~((~0)<<3)      # 111
+(1 << 3) - 1    # 111
+
+
+
 # BIT演算subset
 #description#
 # 集合Mの部分集合
