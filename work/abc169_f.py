@@ -18,31 +18,20 @@ def end(r=-1): print(r); exit()
 direc = [(1, 0), (0, 1), (-1, 0), (0, -1)] + [(1, 1), (1, -1), (-1, 1), (-1, -1)]
 def isinhw(i, j, h, w): return (0 <= i < h) and (0 <= j < w)
 def dist2(pt1, pt2): return sum([(x1-x2) ** 2 for x1, x2 in zip(pt1, pt2)])
+n, s = map(int, input().split())
+a = list(map(int, input().split()))
 
+# dp[i][j]  iまで使って合計jができる部分集合の個数
 
-INF = float('inf')
-MAX = 16
-n = int(input())
-x = 0
-for xi in list(map(int, input().split())):
-    x += 1 << xi
+dp = [[0] * 3001 for _ in range(n+1)]
+dp[0][0] = 1
 
-dp = [INF] * (1 << MAX)
-dp[0] = 0
-for i in range(1, x+1):
-    ndpv = INF
-    for j in range(MAX):
-        cnt, dpv = 0, 0
-        for k in range(j-1, j+2):
-            if not 0 <= k < MAX:
-                cnt += 1
-            else:
-                toi = i & (~(1 << k))
-                if toi == i:
-                    cnt += 1
-                else:
-                    dpv += dp[toi]
-        if cnt == 3: continue
-        ndpv = min(ndpv, (3 + dpv) / (3 - cnt))
-    dp[i] = ndpv
-print(ndpv)
+for i, ai in enumerate(a):
+    # use
+    for j in range(0, 3001):
+        if j-ai>=0:
+            dp[i+1][j] += dp[i][j-ai]    # use
+        dp[i+1][j] += dp[i][j] * 2    # notuse
+        dp[i+1][j] %= mod1
+
+print(dp[-1][s])

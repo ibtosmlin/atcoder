@@ -15,34 +15,33 @@ def input(): return sys.stdin.readline().rstrip()
 def int1(x): return int(x)-1
 def alp(i): return chr(ord('a') + i%26)    # i=0->'a', i=25->'z'
 def end(r=-1): print(r); exit()
-direc = [(1, 0), (0, 1), (-1, 0), (0, -1)] + [(1, 1), (1, -1), (-1, 1), (-1, -1)]
 def isinhw(i, j, h, w): return (0 <= i < h) and (0 <= j < w)
 def dist2(pt1, pt2): return sum([(x1-x2) ** 2 for x1, x2 in zip(pt1, pt2)])
 
-
-INF = float('inf')
-MAX = 16
 n = int(input())
-x = 0
-for xi in list(map(int, input().split())):
-    x += 1 << xi
+point = [tuple(map(int, input().split())) for _ in range(n)]
+seen = [False] * n
 
-dp = [INF] * (1 << MAX)
-dp[0] = 0
-for i in range(1, x+1):
-    ndpv = INF
-    for j in range(MAX):
-        cnt, dpv = 0, 0
-        for k in range(j-1, j+2):
-            if not 0 <= k < MAX:
-                cnt += 1
-            else:
-                toi = i & (~(1 << k))
-                if toi == i:
-                    cnt += 1
-                else:
-                    dpv += dp[toi]
-        if cnt == 3: continue
-        ndpv = min(ndpv, (3 + dpv) / (3 - cnt))
-    dp[i] = ndpv
-print(ndpv)
+direc = [(-1, -1),(-1, 0),(0,-1),(0,1),(1,0),(1,1)]
+
+def bfs(x):
+    seen[x] = True
+    que = deque([point[x]])
+    while que:
+        u, v = que.popleft()
+        for du, dv in direc:
+            nu = u + du
+            nv = v + dv
+            if (nu, nv) in point:
+                i = point.index((nu, nv))
+                if seen[i] == True: continue
+                que.append((nu, nv))
+                seen[i] = True
+
+ret = 0
+for i in range(n):
+    if seen[i]: continue
+    ret += 1
+    bfs(i)
+
+print(ret)

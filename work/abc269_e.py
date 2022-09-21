@@ -19,30 +19,24 @@ direc = [(1, 0), (0, 1), (-1, 0), (0, -1)] + [(1, 1), (1, -1), (-1, 1), (-1, -1)
 def isinhw(i, j, h, w): return (0 <= i < h) and (0 <= j < w)
 def dist2(pt1, pt2): return sum([(x1-x2) ** 2 for x1, x2 in zip(pt1, pt2)])
 
-
-INF = float('inf')
-MAX = 16
 n = int(input())
-x = 0
-for xi in list(map(int, input().split())):
-    x += 1 << xi
 
-dp = [INF] * (1 << MAX)
-dp[0] = 0
-for i in range(1, x+1):
-    ndpv = INF
-    for j in range(MAX):
-        cnt, dpv = 0, 0
-        for k in range(j-1, j+2):
-            if not 0 <= k < MAX:
-                cnt += 1
-            else:
-                toi = i & (~(1 << k))
-                if toi == i:
-                    cnt += 1
-                else:
-                    dpv += dp[toi]
-        if cnt == 3: continue
-        ndpv = min(ndpv, (3 + dpv) / (3 - cnt))
-    dp[i] = ndpv
-print(ndpv)
+XY = []
+for i in range(2):
+    a = 1
+    b = n
+    while b > a:
+        mid = (a+b) // 2
+        if i == 0:
+            print(f"? {a} {mid} {1} {n}", flush=True)
+        else:
+            print(f"? {1} {n} {a} {mid}", flush=True)
+        ret = int(input())
+        if ret < mid - a + 1:
+            b = mid
+        else:
+            a = mid + 1
+    XY.append(a)
+
+
+print(f"! {XY[0]} {XY[1]}", flush=True)
