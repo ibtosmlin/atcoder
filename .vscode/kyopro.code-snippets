@@ -1125,6 +1125,71 @@
             "356"
         ]
     },
+    "": {
+        "prefix": [],
+        "body": [],
+        "description": []
+    },
+    "BIT演算": {
+        "prefix": [],
+        "body": [],
+        "description": []
+    },
+    "k桁目 or bitを0にする": {
+        "prefix": [],
+        "body": [],
+        "description": []
+    },
+    "&= ~(1 << k)": {
+        "prefix": [],
+        "body": [],
+        "description": []
+    },
+    "&= ~bit": {
+        "prefix": [],
+        "body": [],
+        "description": []
+    },
+    "|= 1 << k": {
+        "prefix": [],
+        "body": [],
+        "description": []
+    },
+    "|= bit": {
+        "prefix": [],
+        "body": [],
+        "description": []
+    },
+    "k桁目 or bitを反転する": {
+        "prefix": [],
+        "body": [],
+        "description": []
+    },
+    "^= 1 << k": {
+        "prefix": [],
+        "body": [],
+        "description": []
+    },
+    "^= bit": {
+        "prefix": [],
+        "body": [],
+        "description": []
+    },
+    "111": {
+        "prefix": [],
+        "body": [],
+        "description": []
+    },
+    "(~0)<<3)      # 111": {
+        "prefix": [],
+        "body": [],
+        "description": []
+    },
+    " << 3) - 1    # 111": {
+        "prefix": [],
+        "body": [],
+        "description": []
+    },
     "BIT演算subset": {
         "prefix": [
             "Lib_BIT演算全部分集合"

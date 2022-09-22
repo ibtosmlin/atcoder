@@ -32,19 +32,20 @@ cd ${cwd}
 if [ $arg = 'd' ]; then
 # download
 #    x-www-browser $url
-    echo "Downloading....."
+    echo "Downloading................"
     mkdir -p $ctaskwd
     cd $ctaskwd
     oj d $url
     cd $cp
     cp $ctemplate $cfname
+    sed -i "1i # $url" $cfname
     code $cfname
     echo "${ctemplate} created in ${cfname}"
 
 
 elif [ $arg = 't' ]; then
 # test
-    echo "Testing........."
+    echo "Testing....................."
     cp $cfname $ctaskfname
     cd $ctaskwd
     oj t -c 'python3 main.py' -S
@@ -52,8 +53,8 @@ elif [ $arg = 't' ]; then
 
 
 elif [ $arg = 'ss' ]; then
-# submitt
-    echo "Submitting......"
+# submit
+    echo "Submitting by Python3......."
     cp $cfname $ctaskfname
     cd $ctaskwd
     echo y | oj s main.py
@@ -61,8 +62,8 @@ elif [ $arg = 'ss' ]; then
 
 
 elif [ $arg = 's' ]; then
-# submitt
-    echo "Submitting......"
+# submit
+    echo "Submitting by Pypy3........."
     fm="$cwd/$filename"
     to="$cp/$taskid/main.py"
     cp $cfname $ctaskfname
