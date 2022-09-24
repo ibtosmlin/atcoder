@@ -18,23 +18,38 @@ def end(r=-1): print(r); exit()
 direc = [(1, 0), (0, 1), (-1, 0), (0, -1)] + [(1, 1), (1, -1), (-1, 1), (-1, -1)]
 def isinhw(i, j, h, w): return (0 <= i < h) and (0 <= j < w)
 def dist2(pt1, pt2): return sum([(x1-x2) ** 2 for x1, x2 in zip(pt1, pt2)])
-
-n = int(input())
-w = []
-for wi in list(input().split()):
-    w.append(set(list(wi)))
-ret = 100
-for i in range(1<<n):
-    used = set()
-    ct = 0
+n, x = map(int, input().split())
+s = [list(input()) for i in range(n)]
+for i in range(n):
     for j in range(n):
-        if i >> j & 1:
-            used |= w[j]
-            ct += 1
-    if len(used) == 26:
-        ret = min(ret, ct)
+        if s[i][j] == '#':
+            s[i][j] = 1
+        else:
+            s[i][j] = 0
 
-if ret == 100:
-    end(-1)
-else:
-    end(ret)
+for _ in range(x):
+    ns = [[None] * n for _ in range(n)]
+    for i in range(n):
+        for j in range(n):
+            cnt = 0
+            for u, v in direc:
+                ni = i + u
+                nj = j + v
+                if not isinhw(n, n, ni, nj): continue
+                cnt += s[i][j]
+            if s[i][j] == 0 and cnt == 3:
+                ns[i][j] = 1
+            elif s[i][j] == 1 and 2 <= cnt <= 3:
+                ns[i][j] = 1
+            else:
+                ns[i][j] = 0
+    s = ns.copy()
+
+for i in range(n):
+    ret = ''
+    for j in range(n):
+        if s[i][j] == 1:
+            ret += '#'
+        else:
+            ret += '.'
+    print(ret)
