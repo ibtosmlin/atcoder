@@ -43,17 +43,19 @@ class Kruskal:
         self.edges = []
         self.edges_nouse = []
         self.nodes = set([])
-        self.all_edges.sort()
+        self.all_edges.sort(key=lambda x: x[-1])
         uf = UnionFind(self.n)
         for u, v, w in self.all_edges:
-            if uf.same(u, v):
-                self.edges_nouse.append((u, v, w))
-            else:
+            if not uf.same(u, v):
                 uf.unite(u, v)
                 self.weight += w
-                self.edges.append((u, v, w))
+                # self.edges.append((u, v, w))
                 self.nodes |= {u, v}
-
+            else:
+                pass
+                # self.edges_nouse.append((u, v, w))
+        if len(self.nodes) == self.n:
+            self.weight = float('inf')
 ################################
 
 n, m = map(int, input().split())

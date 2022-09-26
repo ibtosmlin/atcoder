@@ -1,4 +1,4 @@
-# https://atcoder.jp/contests/arc147/tasks/arc147_b
+# https://atcoder.jp/contests/joi2014ho/tasks/joi2014ho4
 import sys
 from itertools import *
 from operator import itemgetter
@@ -19,43 +19,34 @@ def end(r=-1): print(r); exit()
 direc = [(1, 0), (0, 1), (-1, 0), (0, -1)] + [(1, 1), (1, -1), (-1, 1), (-1, -1)]
 def isinhw(i, j, h, w): return (0 <= i < h) and (0 <= j < w)
 def dist2(pt1, pt2): return sum([(x1-x2) ** 2 for x1, x2 in zip(pt1, pt2)])
-n = int(input())
-p = list(map(int1, input().split()))
 
 
-ret = []
+##########################################
 
-def isok(i):
-    return i%2 == p[i]%2
+n, m, x = map(int, input().split())
+H = [int(input()) for _ in range(n)]
+G = [[] for _ in range(n)]
+for _ in range(m):
+    a, b, c = map(int, input().split())
+    a, b = a-1, b-1
+    G[a].append((b,c))
+    G[b].append((a,c))
 
-def swapA(i):
-    ret.append(("A", i+1))
-    p[i], p[i+1] = p[i+1], p[i]
+dist = [INF] * n
+que = [(0, 0)]
+heapify(que)
+while que:
+    time, x = heappop(que)
+    if dist[x] < time: continue
+    for nx, nd in G[x]:
+        nhx =  + nd
+        ntime = hx + nd
+        ad = max(0, nhx - H[nx])
+        nhx += ad
+        ntime += ad
+        if dist.get((nx, nhx), INF) <= ntime: continue
+        dist[(nx, nhx)] = ntime
+        if nx == 0: continue
+        heappush(que, (ntime, nx, nhx))
 
-def swapB(i):
-    ret.append(("B", i+1))
-    p[i], p[i+2] = p[i+2], p[i]
-
-
-
-for i in range(n):
-    if isok(i): continue
-    j = i - 2
-    while j >= 0 and isok(j):
-        swapB(j)
-        j -= 2
-
-
-for i in range(n):
-    if isok(i): continue
-    swapA(i)
-
-
-for i in range(n)[::-1]:
-    for j in range(i+1):
-        if j+2 < n and p[j] > p[j+2]:
-            swapB(j)
-
-print(len(ret))
-for ri in ret:
-    print(*ri)
+print(dist)

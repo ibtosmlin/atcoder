@@ -1,5 +1,5 @@
 #name#
-# トポロジカルソート
+# トポロジカルソート木
 #description#
 # 木トポロジカルソート topologicalsort
 #body#

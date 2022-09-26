@@ -1,4 +1,4 @@
-# https://atcoder.jp/contests/arc147/tasks/arc147_b
+# https://atcoder.jp/contests/abc270/tasks/abc270_e
 import sys
 from itertools import *
 from operator import itemgetter
@@ -19,43 +19,33 @@ def end(r=-1): print(r); exit()
 direc = [(1, 0), (0, 1), (-1, 0), (0, -1)] + [(1, 1), (1, -1), (-1, 1), (-1, -1)]
 def isinhw(i, j, h, w): return (0 <= i < h) and (0 <= j < w)
 def dist2(pt1, pt2): return sum([(x1-x2) ** 2 for x1, x2 in zip(pt1, pt2)])
-n = int(input())
-p = list(map(int1, input().split()))
 
+n, k = map(int, input().split())
+a = list(map(int, input().split()))
 
-ret = []
+high = max(a) + 1
+low = 0
 
-def isok(i):
-    return i%2 == p[i]%2
+while high - low > 1:
+    mid = (high + low) // 2
+    cnt = 0
+    for ai in a:
+        cnt += min(mid, ai)
+    if cnt <=k:
+        low = mid
+    else:
+        high = mid
 
-def swapA(i):
-    ret.append(("A", i+1))
-    p[i], p[i+1] = p[i+1], p[i]
+cnt = 0
+for i, ai in enumerate(a):
+    cnt += min(low, ai)
+    a[i] -= min(low, ai)
 
-def swapB(i):
-    ret.append(("B", i+1))
-    p[i], p[i+2] = p[i+2], p[i]
-
-
-
+k -= cnt
 for i in range(n):
-    if isok(i): continue
-    j = i - 2
-    while j >= 0 and isok(j):
-        swapB(j)
-        j -= 2
+    if k == 0: break
+    if a[i] == 0: continue
+    a[i] -= 1
+    k -= 1
 
-
-for i in range(n):
-    if isok(i): continue
-    swapA(i)
-
-
-for i in range(n)[::-1]:
-    for j in range(i+1):
-        if j+2 < n and p[j] > p[j+2]:
-            swapB(j)
-
-print(len(ret))
-for ri in ret:
-    print(*ri)
+print(*a)

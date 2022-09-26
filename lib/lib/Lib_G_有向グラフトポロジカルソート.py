@@ -1,5 +1,5 @@
 #name#
-# トポロジカルソート
+# トポロジカルソート 有向グラフ
 #description#
 # トポロジカルソート topologicalsort
 #body#
