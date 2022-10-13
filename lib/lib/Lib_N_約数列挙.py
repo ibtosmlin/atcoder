@@ -20,6 +20,19 @@ def make_divisors(n:int) -> list:
 print(make_divisors(10))
 #####################
 
+
+##############################
+# n!が素数pで何回割れるか O(logn)
+# legendre(n, p)
+##############################
+def legendre(n, p):
+    ret = 0
+    while n > 0:
+        ret += n // p
+        n //= p
+    return ret
+
+    
 #prefix#
 # Lib_N_約数列挙
 #end#

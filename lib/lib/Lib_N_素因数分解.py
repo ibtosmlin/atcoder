@@ -12,7 +12,7 @@ def prime_factorize(n:int) -> dict:
     if n == 1: return {1: 1}
     pd = dict()
     for p in range(2, int(n**0.5)+1):
-        if n % p != 0: p += 1; continue
+        if n % p != 0: continue
         d = 0
         while n % p == 0:
             d += 1
@@ -60,6 +60,18 @@ def prime_factorize(A : list):
                 dica[prime] += 1
         ret.append(res)
     return ret
+
+##############################
+# n!が素数pで何回割れるか O(logn)
+# legendre(n, p)
+##############################
+def legendre(n, p):
+    ret = 0
+    while n > 0:
+        ret += n // p
+        n //= p
+    return ret
+
 #prefix#
 # Lib_N_素因数分解
 #end#

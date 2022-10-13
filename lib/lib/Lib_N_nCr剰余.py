@@ -3,113 +3,44 @@
 #description#
 # nCr剰余
 #body#
-class Combination:
-    """nPr,nCr等の前計算
-
-    Parameters
-    ----------
-    max_n : int, optional
-        nの最大値, by default 1
-    mod : int, optional
-        modの値, by default 10**9+7
-
-    Note:
-    ----------
-    n = 10**6 くらい
-    """
-    def __init__(self, max_n: int=1, mod : int=10**9+7) -> None:
-        self.mod = mod
-        self.max_n = 1
-        self.factorial = [1, 1]
-        self.inverse = [None, 1]
-        self.f_inverse = [1, 1]
-        self.__preprocessing(max_n)
-
-
-    def __preprocessing(self, max_n:int) -> None:
-        fac = self.factorial
-        inv = self.inverse
-        finv = self.f_inverse
-        mod = self.mod
-        fac += [-1] * (max_n - self.max_n)
-        inv += [-1] * (max_n - self.max_n)
-        finv += [-1] * (max_n - self.max_n)
-        for i in range(self.max_n + 1, max_n + 1):
-            fac[i] = fac[i - 1] * i % mod
-            inv[i] = mod - inv[mod % i] * (mod // i) % mod
-            finv[i] = finv[i - 1] * inv[i] % mod
-        self.max_n = max_n
-
-
-    def fac(self, n:int) -> int:
-        """n!
-        """
-        if n < 0:
-            return 0
-        if n > self.max_n: self.__preprocessing(n)
-        return self.factorial[n]
-
-
-    def nCr(self, n:int, r:int) -> int:
-        """nCr
-        n個のものからr個選ぶ
-        """
-        if n < r or n < 0 or r < 0:
-            return 0
-        if n > self.max_n: self.__preprocessing(n)
-        return self.factorial[n] * (self.f_inverse[r] * self.f_inverse[n - r] % self.mod) % self.mod
-
-
-    def nPr(self, n:int, r:int) -> int:
-        """nPr
-        n個のものからr個選んで並べる
-        """
-        if n < r or n < 0 or r < 0:
-            return 0
-        if n > self.max_n: self.__preprocessing(n)
-        return self.factorial[n] * self.f_inverse[n - r] % self.mod
-
-
-    def nHr(self, n:int, r:int) -> int:
-        """nHr = n-1+rCr
-        n種類のものからr個重複を許して選ぶ(一個も選ばれないものがあっても可)
-        (一個も選ばれないものがダメな場合はnをn-rとする・あらかじめ１個づつ選んでおく)
-        """
-        return self.nCr(n-1+r, n-1)
-
-
-mod = 998244353
-cmb = Combination(mod)
-# cmb.nCr(n, j)
 
 
 #####################################
 # nCr % 10**9+7
 #####################################
-mod = 10**9+7               # mod素数
-N = 10**6                   # 出力の制限
-g1 = [1]*(N+1)              # 元テーブル
-g2 = [1]*(N+1)              # 逆元テーブル
-for i in range(2, N + 1 ): # 準備
-    g1[i] = ( g1[i-1] * i ) % mod
-g2[N] = pow(g1[-1], mod-2, mod)
-for i in range(N, 0, -1):
-    g2[i-1] = ( g2[i] * i ) % mod
+mod, lim = 10**9+7, 10**6                   # mod素数, 出力の制限
+g1, g2 = [[1]*(lim+1) for _ in range(2)]    # ！と逆元tbl
+for i in range(2, lim + 1):
+    g1[i] = g1[i-1] * i % mod
+g2[-1] = pow(g1[-1], mod-2, mod)
+for i in range(lim, 0, -1):
+    g2[i-1] = g2[i] * i % mod
 
+def fac(n): return g1[n]
+def facinv(n): return g2[n]
 def nCr(n, r):
+    """nCr
+    n個のものからr個選ぶ
+    """
     if ( r<0 or r>n ):
         return 0
     r = min(r, n-r)
-    return g1[n] * g2[r] * g2[n-r] % mod
+    return fac(n) * facinv(r) * facinv(n-r) % mod
 
 def nPr(n, r):
+    """nPr
+    n個のものからr個選んで並べる
+    """
     if ( r<0 or r>n ):
         return 0
-    return g1[n] * g2[n-r] % mod
+    return fac(n) * facinv(n-r) % mod
 
 def nHr(n, r):
+    """nHr = n-1+rCr
+    n種類のものからr個重複を許して選ぶ(一個も選ばれないものがあっても可)
+    (一個も選ばれないものがダメな場合はnをn-rとする・あらかじめ１個づつ選んでおく)
+    """
     return nCr(n-1+r, n-1)
-
 
 ret = nCr(4, 2)
 

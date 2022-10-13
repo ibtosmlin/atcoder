@@ -97,6 +97,17 @@ def count_primes(n:int):
     return larges[0]
 
 
+##############################
+# n!が素数pで何回割れるか O(logn)
+# legendre(n, p)
+##############################
+def legendre(n, p):
+    ret = 0
+    while n > 0:
+        ret += n // p
+        n //= p
+    return ret
+
 #prefix#
 # Lib_N_prime_素数
 #end#

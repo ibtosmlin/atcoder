@@ -1,3 +1,9 @@
+#name#
+# LIS最長増加部分列
+#description#
+# Lib_LIS最長増加部分列
+#body#
+#####################################
 # 最長増加部分列 dp[k]
 # 今まで見た来たものの中で、単調増加(非減少)な部分列であって、
 # 長さ k であるようなもののうち、その最後の要素の最小値
@@ -5,6 +11,7 @@
 # dp[k] < u となる一番右の列(k)を特定しその次のdp[k+1]を小さければ更新する
 # rem: kに対して単調増加
 from bisect import bisect, bisect_left
+
 
 def LIS(x:list, fg=1):
     n = len(x)
@@ -73,3 +80,7 @@ print(LIS2(a))
 # restore = [1, 2, 5, 9]
 # lis = [1, 2, 3, 9]
 # res = [1, 1, 2, 2, 3, 4, 3]
+
+#prefix#
+# Lib_LIS最長増加部分列
+#end#
