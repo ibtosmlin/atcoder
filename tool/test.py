@@ -1,14 +1,19 @@
-m, n = map(int, input().split())
-
-isok = []
-for i in range(1<<m):
-    fg = True
+INF = float('inf')
+m, n, a = map(int, input().split())
+P = [list(map(int, input().split())) for _ in range(m)]
+dp = [0] * m
+ldp = [INF] * (m+1)
+rdp = [INF] * (m+1)
+for i in range(n):
+    ndp = [INF] * m
     for j in range(m):
-        bitj = i >> j & 1
-        bitjn = i >> (j+1) & 1
-        if bitj == 1 and bitnj == 1:
-            fg = False
-    if fg: isok.append(i)
-
-for biti in isok:
-    for bitj in isok:
+        pij = P[j][i]
+        ndp[j] = min(ndp[j], min(ldp[j], rdp[j]) + pij, dp[j] + pij - a * (i!=0))
+    ldp = [INF] * m
+    rdp = [INF] * m
+    for j in range(m-1):
+        ldp[j+1] = min(ldp[j], ndp[j])
+    for j in range(1, m)[::-1]:
+        rdp[j-1] = min(rdp[j], ndp[j])
+    dp = ndp
+print(min(dp))
