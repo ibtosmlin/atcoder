@@ -1,3 +1,4 @@
+# https://atcoder.jp/contests/abc274/tasks/abc274_a
 import sys
 from itertools import *
 from operator import itemgetter
@@ -18,6 +19,5 @@ def end(r=-1): print(r); exit()
 direc = [(1, 0), (0, 1), (-1, 0), (0, -1)] + [(1, 1), (1, -1), (-1, 1), (-1, -1)]
 def isinhw(i, j, h, w): return (0 <= i < h) and (0 <= j < w)
 def dist2(pt1, pt2): return sum([(x1-x2) ** 2 for x1, x2 in zip(pt1, pt2)])
-m, n = map(int, input().split())
-A = [list(map(int, input().split())) for _ in range(m)]
-
+a, b = map(int, input().split())
+print('{:.3f}'.format(b/a))

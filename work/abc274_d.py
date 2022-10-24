@@ -1,3 +1,4 @@
+# https://atcoder.jp/contests/abc274/tasks/abc274_d
 import sys
 from itertools import *
 from operator import itemgetter
@@ -18,6 +19,38 @@ def end(r=-1): print(r); exit()
 direc = [(1, 0), (0, 1), (-1, 0), (0, -1)] + [(1, 1), (1, -1), (-1, 1), (-1, -1)]
 def isinhw(i, j, h, w): return (0 <= i < h) and (0 <= j < w)
 def dist2(pt1, pt2): return sum([(x1-x2) ** 2 for x1, x2 in zip(pt1, pt2)])
-m, n = map(int, input().split())
-A = [list(map(int, input().split())) for _ in range(m)]
+n, x, y = map(int, input().split())
+a = list(map(int, input().split()))
+xa = a[0:n:2]
+x -= xa[0]
+ya = a[1:n:2]
+xa = xa[1:]
 
+
+dp = set([x])
+l = len(xa)
+for i, xi in enumerate(xa):
+    ndp = set()
+    for u in dp:
+        if abs(u + xi) <= 10 * l:
+            ndp.add(u+xi)
+        if abs(u - xi) <= 10 * l:
+            ndp.add(abs(u-xi))
+    dp = ndp
+
+fg = 0 in dp
+
+dp = set([y])
+l = len(ya)
+for i, xi in enumerate(ya):
+    ndp = set()
+    for u in dp:
+        if abs(u + xi) <= 10 * l:
+            ndp.add(u+xi)
+        if abs(u - xi) <= 10 * l:
+            ndp.add(abs(u-xi))
+    dp = ndp
+
+fg2 = 0 in dp
+ret = fg and fg2
+print('Yes' if ret else 'No')
