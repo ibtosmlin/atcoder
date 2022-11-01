@@ -1,4 +1,4 @@
-# https://atcoder.jp/contests/s8pc-4/tasks/s8pc_4_d
+# https://atcoder.jp/contests/abc228/tasks/abc228_d
 import sys
 from itertools import *
 from operator import itemgetter
@@ -19,3 +19,20 @@ def end(r=-1): print(r); exit()
 direc = [(1, 0), (0, 1), (-1, 0), (0, -1)] + [(1, 1), (1, -1), (-1, 1), (-1, -1)]
 def isinhw(i, j, h, w): return (0 <= i < h) and (0 <= j < w)
 def dist2(pt1, pt2): return sum([(x1-x2) ** 2 for x1, x2 in zip(pt1, pt2)])
+# https://github.com/tatyam-prime/SortedSet/blob/main/SortedSet.py
+########################################
+q = int(input())
+nxt = dict()
+val = dict()
+
+for i in range(q):
+    t, x = map(int, input().split())
+    if t == 1:
+        
+        ss.index(x)
+    else:
+        if x in ss:
+
+    ss.add(p[i])
+    if len(ss) < k: continue
+    print(ss[-k])

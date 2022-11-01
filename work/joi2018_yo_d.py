@@ -1,40 +1,31 @@
-import sys
-from itertools import *
-from operator import itemgetter
-from collections import defaultdict, Counter, deque
-from heapq import heapify, heappop, heappush
-from functools import lru_cache
-sys.setrecursionlimit(10001000)
-INF = float('inf')
-mod = 1000000007; mod1 = 998244353
-PI = 3.141592653589793
-ALPS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
-alps = 'abcdefghijklmnopqrstuvwxyz'
-def modinv(x, mod): return pow(x, mod - 2, mod)
-def input(): return sys.stdin.readline().rstrip()
-def int1(x): return int(x)-1
-def alp(i): return chr(ord('a') + i%26)    # i=0->'a', i=25->'z'
-def end(r=-1): print(r); exit()
-direc = [(1, 0), (0, 1), (-1, 0), (0, -1)] + [(1, 1), (1, -1), (-1, 1), (-1, -1)]
-def isinhw(i, j, h, w): return (0 <= i < h) and (0 <= j < w)
-def dist2(pt1, pt2): return sum([(x1-x2) ** 2 for x1, x2 in zip(pt1, pt2)])
+# https://atcoder.jp/contests/joi2018yo/tasks/joi2018_yo_d
 n = int(input())
-dp = [[[-1]*2 for __ in range(1001)] for _ in range(1001)]
-dp[0][0][0] = 0
+l = [int(input()) for _ in range(n)]
+rl = [0]
+for li in l:
+    rl.append(rl[-1] +li)
+
+mx = rl[-1]
+mn = min(l)
+INF = mx * 2
+
+# dp[i][j]  iで切った場合で、最小がjの最大値の最小値
+dp = [[mx*2] * (mx + 1) for _ in range(n+1)]
+dp[0][mx] = mx
 for i in range(n):
-    l = int(input())
-    ndp = [[[-1]*2 for __ in range(1001)] for _ in range(1001)]
-    for mx in range(1001):
-        for mn in range(1001):
-            x, y = dp[mx][mn]
-            if x != 1:
-                # xが切った場合
-                nmx = max(mx, l)
-                nmn = min(mn, l)
-                ndp[nmx][nmn][0] = l
-                ndp[nmx][nmn][1] = l
-            if y != 1:
-                nmx = max(mx, y+l)
-                ndp[nmx][nmn][0] = y+l
-                ndp[nmx][nmn][1] = y+l
-print(dp)
+    for j in range(mx+1):
+        if dp[i][j] == INF: continue
+        for k in range(i+1, n+1):
+            # kが次の切れ目
+            ll = rl[k] - rl[i]
+            if i != 0:
+                dp[k][min(ll, j)] = min(dp[k][min(ll, j)], max(dp[i][j], ll))
+            else:
+                dp[k][min(ll, j)] = min(dp[k][min(ll, j)], ll)
+
+ret = INF
+for i in range(1, mx+1):
+    mxi = dp[-1][i]
+    if mxi >= mx: continue
+    ret = min(ret, mxi-i)
+print(ret)

@@ -1,4 +1,4 @@
-# https://atcoder.jp/contests/s8pc-4/tasks/s8pc_4_d
+# https://atcoder.jp/contests/code-thanks-festival-2018/tasks/code_thanks_festival_2018_e
 import sys
 from itertools import *
 from operator import itemgetter
@@ -19,3 +19,22 @@ def end(r=-1): print(r); exit()
 direc = [(1, 0), (0, 1), (-1, 0), (0, -1)] + [(1, 1), (1, -1), (-1, 1), (-1, -1)]
 def isinhw(i, j, h, w): return (0 <= i < h) and (0 <= j < w)
 def dist2(pt1, pt2): return sum([(x1-x2) ** 2 for x1, x2 in zip(pt1, pt2)])
+# dp[i][j] := 整数iまで書かれていて、整数iの個数がjである組み合わせ
+t = int(input())
+a = list(map(int, input().split()))
+dp = [[0] * 100000 for _ in range(t+1)]
+dp[0][0] = 1
+for i, ai in enumerate(a):
+    num = i+1
+    for j in range(100000):
+        for k in range(ai+1):
+            if j+k <= 300:
+                dp[i+1][j+k] += dp[i][j]
+                dp[i+1][j+k] %= mod
+    for j in range(1, 100000)[::-1]:
+        dp[i+1][j-1] += dp[i+1][j]
+        dp[i+1][j-1] %= mod
+
+for dpi in dp:
+    print(dpi[1])
+#print(dp)

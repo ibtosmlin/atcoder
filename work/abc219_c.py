@@ -1,4 +1,5 @@
-# https://atcoder.jp/contests/s8pc-4/tasks/s8pc_4_d
+# https://atcoder.jp/contests/abc219/tasks/abc219_c
+import enum
 import sys
 from itertools import *
 from operator import itemgetter
@@ -19,3 +20,17 @@ def end(r=-1): print(r); exit()
 direc = [(1, 0), (0, 1), (-1, 0), (0, -1)] + [(1, 1), (1, -1), (-1, 1), (-1, -1)]
 def isinhw(i, j, h, w): return (0 <= i < h) and (0 <= j < w)
 def dist2(pt1, pt2): return sum([(x1-x2) ** 2 for x1, x2 in zip(pt1, pt2)])
+x = input()
+xdic = {si:i for i, si in enumerate(x)}
+n = int(input())
+ret = []
+for i in range(n):
+    s = input()
+    sl = []
+    for si in s:
+        sl.append(xdic[si])
+    ret.append((sl, s))
+
+ret.sort()
+for reti in ret:
+    print(reti[1])
