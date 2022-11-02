@@ -1,79 +1,83 @@
-import sys
-input = sys.stdin.readline
+# https://atcoder.jp/contests/s8pc-4/tasks/s8pc_4_d
+# 全方位tree
+
 from collections import deque
 
+class Tree():
+    def __init__(self, n):
+        self.n = n
+        self.edges = [[] for _ in range(n)]
+        self.root = None    # 根
+        self.size = [1] * n # 部分木のノード数
+        self.depth = [-1] * self.n
+        self.par = [-1] * self.n
+        self.order = [] # 深さ優先探索の行きがけ順
 
-class ReRooting:
-    def __init__(self, n, G) -> None:
-        self.N = n
-        self.oG = G[:]
-        self.G = [G[i][:] for i in range(n)]
+    def add_edge(self, u, v):
+        self.edges[u].append(v)
+        self.edges[v].append(u)
 
-    def _topological_sort(self, root):
-        P = [-1] * self.N
-        Q = deque([root])
-        R = []
-        while Q:
-            i = deque.popleft(Q)
-            R.append(i)
-            for a in self.G[i]:
-                if a != P[i]:
-                    P[a] = i
-                    self.G[a].remove(i)
-                    deque.append(Q, a)
-        SIZE = [1] * self.N
-        for i in R[1:][::-1]:
-            SIZE[P[i]] += SIZE[i]
-        self.P = P
-        self.R = R
-        self.SIZE = SIZE
+    def set_root(self, root):
+        self.root = root
+        self.depth[root] = 0
+        self.order.append(root)
+        nxt_q = deque([root])
+        while nxt_q:
+            p = nxt_q.pop() # 深さ優先探索
+            for q in self.edges[p]:
+                if self.depth[q] != -1: continue
+                self.par[q] = p
+                self.depth[q] = self.depth[p] + 1
+                self.order.append(q)
+                nxt_q.append(q)
+        for p in self.order[::-1]:
+            for q in self.edges[p]:
+                if self.par[p] == q: continue
+                self.size[p] += self.size[q]
 
-    def build(self, root=0):
-        self._topological_sort(root)
-        N, P, R, G = self.N, self.P, self.R, self.G
-        SIZE = self.SIZE
-
-        ##### Settings
-        unit = 1
-        merge = lambda a, b: a * b % mod
-        adj_bu = lambda a, i: a + 1
-        adj_td = lambda a, i, p: a + 1
-        adj_fin = lambda a, i: a
-        #####
-
-        ME = [unit] * N
-        XX = [0] * N
-        TD = [unit] * N
-        for i in R[1:][::-1]:
-            XX[i] = adj_bu(ME[i], i)
-            p = P[i]
-            ME[p] = merge(ME[p], XX[i])
-        XX[R[root]] = adj_fin(ME[R[root]], R[root])
-
-        for i in R:
-            ac = TD[i]
-            for j in G[i]:
-                TD[j] = ac
-                ac = merge(ac, XX[j])
-            ac = unit
-            for j in G[i][::-1]:
-                TD[j] = adj_td(merge(TD[j], ac), j, i)
-                ac = merge(ac, XX[j])
-                XX[j] = adj_fin(merge(ME[j], TD[j]), j)
-        self.XX = XX
+    def rerooting(self, merge, op, fin, id):
+        dp1 = [id] * self.n
+        dp2 = [id] * self.n
+        for p in self.order[::-1]:
+            t = id
+            for q in self.edges[p]:
+                if self.par[p] == q: continue
+                dp2[q] = t
+                t = merge(t, op(dp1[q], p, q))
+            t = id
+            for q in self.edges[p][::-1]:
+                if self.par[p] == q: continue
+                dp2[q] = merge(t, dp2[q])
+                t = merge(t, op(dp1[q], p, q))
+            dp1[p] = t
+        for q in self.order[1:]:
+            pq = self.par[q]
+            dp2[q] = op(merge(dp2[q], dp2[pq]), q, pq)
+            dp1[q] = merge(dp1[q], dp2[q])
+        return dp1
 
 
-mod = 10**9+7
-
-n, mod = map(int, input().split())
-G = [[] for i in range(n)]
-for i in range(n-1):
-    x, y = map(lambda u: int(u)-1, input().split())
-    G[x].append(y)
-    G[y].append(x)
-
-rr = ReRooting(n, G)
-rr.build()
+n, m = map(int, input().split())
+T = Tree(n)
 
 
-print('\n'.join(map(str, rr.XX)))
+#######################################################
+# a, bはdpの値, uは考察している接点親, vは子
+# dpをmerge
+merge = lambda a, b: a * b % m
+# dpをmerge前にする作業
+op = lambda a, u, v: a + 1
+# dpをmerge後にする作業
+fin = lambda a, u: a
+# mergeの単位元
+id = 1
+#######################################################
+
+for _ in range(n-1):
+    a, b = map(int, input().split())
+    T.add_edge(a-1, b-1)
+
+T.set_root(0)
+dp = T.rerooting(merge, op, fin, id)
+ret = dp
+print("\n".join(map(str, ret)))

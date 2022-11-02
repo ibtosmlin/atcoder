@@ -19,8 +19,9 @@ def bfs(n, G, root=0, cost=1):
         for nxt in G[cur]:
             if type(nxt) != int: nxt, cost = nxt
             if _depth[nxt] != None: continue
+            newdep = dep + cost
             q.append(nxt)
-            _parend[nxt] = cur
+            _parent[nxt] = cur
             _depth[nxt] = newdep
             if newdep > farest_dist:
                 farest_dist = newdep
