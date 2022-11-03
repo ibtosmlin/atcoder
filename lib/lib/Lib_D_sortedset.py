@@ -133,6 +133,9 @@ class SortedSet(Generic[T]):
             ans += len(a)
         return ans
 
+    
+
+
 ########################################
 n, k = map(int, input().split())
 p = list(map(int, input().split()))
