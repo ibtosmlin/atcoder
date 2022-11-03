@@ -160,9 +160,6 @@ class SortedSet(Generic[T]):
         if v: return self.index(v)
         return None
 
-    def kthvalue(self, k):
-        return self[k]
-
 ########################################
 
 #n, k = map(int, input().split())
