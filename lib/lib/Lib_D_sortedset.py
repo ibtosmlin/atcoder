@@ -115,7 +115,7 @@ class SortedSet(Generic[T]):
             x -= len(a)
         raise IndexError
 
-    def index(self, x: T) -> int:
+    def _index(self, x: T) -> int:
         "Count the number of elements < x."
         ans = 0
         for a in self.a:
@@ -124,7 +124,7 @@ class SortedSet(Generic[T]):
             ans += len(a)
         return ans
 
-    def index_right(self, x: T) -> int:
+    def _index_right(self, x: T) -> int:
         "Count the number of elements <= x."
         ans = 0
         for a in self.a:
@@ -133,20 +133,55 @@ class SortedSet(Generic[T]):
             ans += len(a)
         return ans
 
-    
+####################################
+    def remove(self, x):
+        if x in self:
+            self.discard(x)
 
+    def index(self, x):
+        if x in self:
+            return self._index(x)
+        else:
+            return None
+
+    def strictly_left(self, x):
+        return self.lt(x)
+
+    def strictly_left_pos(self, x):
+        v = self.lt(x)
+        if v: return self.index(v)
+        return None
+
+    def strictly_right(self, x):
+        return self.gt(x)
+
+    def strictly_right_pos(self, x):
+        v = self.gt(x)
+        if v: return self.index(v)
+        return None
+
+    def kthvalue(self, k):
+        return self[k]
 
 ########################################
-n, k = map(int, input().split())
-p = list(map(int, input().split()))
+
+#n, k = map(int, input().split())
+#p = list(map(int, input().split()))
+
 ss = SortedSet()
 
-for i in range(n):
-    ss.add(p[i])
-    if len(ss) < k: continue
-    print(ss[-k])
+#for i in range(n):
+#    ss.add(p[i])
+#    if len(ss) < k: continue
+#    print(ss[-k])
 
-
+ss.add(2)
+ss.add(3)
+ss.add(5)
+print(ss.strictly_right_pos(3))
+print(2 in ss)
+ss.remove(2)
+print(2 in ss)
 #prefix#
 # Lib_D_sorted_set
 #end#
