@@ -44,7 +44,7 @@ class BinaryIndexedTree:
             r -= r & -r # 加算すべき位置
         return ret
 
-    def rangesum(self, l, r):
+    def range_sum(self, l, r):
         """閉区間 [l,r] の合計を取得する
 
         Returns
@@ -57,37 +57,52 @@ class BinaryIndexedTree:
             return self.sum(r) - self.sum(l-1)
 
 
-    def get(self, i):
-        return self.rangesum(i, i)
+    def __getitem__(self, i):
+        return self.range_sum(i, i)
 
 
-    def lower_bound(self, x):
-        sum_ = 0
-        pos = 0
+    def right_bound_of_x(self, x):
+        # pos       : sum([0, pos]) < x     となる最大のindex
+        sum_, pos = 0, 0
         for i in range(self.depth, -1, -1):
             k = pos + (1 << i)
             if k <= self.size and sum_ + self.dat[k] <= x:
                 sum_ += self.dat[k]
                 pos += 1 << i
-        # a0+..+a_pos <= x < a0+a_pos+a_pos+1
-        # pos : sum(i) < xとなる最大のindex
-        # pos + 1 : sum(i) >= xとなる最小のindex
-        return pos  #0-indexed
+        return pos
+
+    def right_bound_include_x(self, x):
+        # pos       : sum([0, pos]) <= x     となる最大のindex
+        sum_, pos = 0, 0
+        for i in range(self.depth, -1, -1):
+            k = pos + (1 << i)
+            if k <= self.size and sum_ + self.dat[k] < x:
+                sum_ += self.dat[k]
+                pos += 1 << i
+        return pos
+
+    def left_bound_of_x(self, x):
+        # pos   : x < sum([0, pos])  となる最小のindex
+        return self.right_bound_include_x(x) - 1
+
+    def left_bound_include_x(self, x):
+        # pos   : x <= sum([0, pos])  となる最小のindex
+        return self.right_bound_of_x(x) - 1
 
 
 #### for debug
     def _get_original_sequence(self):
-        ret = [self.get(i) for i in range(self.size)]
+        ret = [self[i] for i in range(self.size)]
         return ret
 
     def _get_aggrigate_sequence(self):
         return [self.sum(i) for i in range(self.size)]
 
     def __str__(self):
-        seq = self.get_original_sequence()
+        seq = self._get_original_sequence()
         ret = 'original :' + ' '.join(map(str, seq))
         ret += '\n'
-        seq = self.get_aggrigate_sequence()
+        seq = self._get_aggrigate_sequence()
         ret += 'aggrigate:' + ' '.join(map(str, seq))
         return ret
 
@@ -99,9 +114,11 @@ n = len(a)
 bit = BinaryIndexedTree(n)
 bit.init(a)
 
-for i in range(12):
-    print(i, bit.lower_bound(i))
+print(bit[1])
+for i in range(36):
+    print(i, bit.right_bound_of_x(i), bit.right_bound_include_x(i), bit.left_bound_of_x(i), bit.left_bound_include_x(i))
 
+print(bit)
 #prefix#
 # Lib_Q_BIT_Fenwick
 #end#
