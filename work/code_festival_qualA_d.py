@@ -1,17 +1,36 @@
-import sys
-from itertools import *
-from operator import itemgetter
-from collections import defaultdict, Counter, deque
-from heapq import heapify, heappop, heappush
-from functools import lru_cache
-sys.setrecursionlimit(10001000)
-INF = float('inf')
-mod = 1000000007; mod1 = 998244353
-PI = 3.141592653589793
-ALPS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
-alps = 'abcdefghijklmnopqrstuvwxyz'
-def modinv(x, mod): return pow(x, mod - 2, mod)
-def input(): return sys.stdin.readline().rstrip()
-def int1(x): return int(x)-1
-def alp(i): return chr(ord('a') + i%26)    # i=0->'a', i=25->'z'
 def end(r=-1): print(r); exit()
+INF = float('inf')
+A, K = input().split()
+K = int(K)
+
+if K == 10: end(0)
+# K文字を使う状態を探す
+used = set()
+l = -1
+for i, ai in enumerate(A):
+    if len(used) == K-1 and not ai in used:
+        l = i
+        break
+    used.add(int(ai))
+
+print(l, used)
+
+dp = [[INF] * 3 for _ in range(len(A)+1)]
+dp[l][0] = 0
+for i in range(l, len(A)):
+    ai = A[i]
+    # 選べる>選ぶ-以下が確定
+
+
+    # 選べる>選ぶ-より大きいが確定
+
+
+    # 選べる>usedからやりくり>選べる
+    for ai in used
+
+    # 選べない>usedからやりくり>選べる
+    for ai in used
+
+
+
+    print(ai)
