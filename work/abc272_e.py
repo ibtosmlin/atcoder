@@ -1,4 +1,4 @@
-# https://atcoder.jp/contests/code-thanks-festival-2018/tasks/code_thanks_festival_2018_e
+# https://atcoder.jp/contests/abc272/tasks/abc272_e
 import sys
 from itertools import *
 from operator import itemgetter
@@ -19,10 +19,18 @@ def end(r=-1): print(r); exit()
 direc = [(1, 0), (0, 1), (-1, 0), (0, -1)] + [(1, 1), (1, -1), (-1, 1), (-1, -1)]
 def isinhw(i, j, h, w): return (0 <= i < h) and (0 <= j < w)
 def dist2(pt1, pt2): return sum([(x1-x2) ** 2 for x1, x2 in zip(pt1, pt2)])
-t = int(input())
+n, m = map(int, input().split())
 a = list(map(int, input().split()))
-dp = [0] * 301
-dp[0] = 1
-# dp[i][j]: iまで全て消した時にj個残っている場合の数
-for ai in a:
-    for i in a:
+ret = [set() for _ in range(m+1)]
+for i, ai in enumerate(a):
+    u = i + 1
+    for mi in range(max(1, max(0,-ai)//u-1), min(m+1, max(0, (n - ai)) // u + 1)):
+        if ai + u*mi > n: break
+        if 0<= ai + u*mi <= n:
+            ret[mi].add(ai + u*mi)
+
+for ri in ret[1:]:
+    for i in range(n+1):
+        if i in ri: continue
+        print(i)
+        break
