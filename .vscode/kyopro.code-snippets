@@ -4363,7 +4363,8 @@
             "n =int(input())"
         ],
         "body": [
-            "n = int(input())"
+            "n = int(input())",
+            "a = list(map(int, input().split()))"
         ],
         "description": [
             "整数nの読み込み"

@@ -4,6 +4,7 @@
 # 整数nの読み込み
 #body#
 n = int(input())
+a = list(map(int, input().split()))
 #prefix#
 # n =int(input())
 #end#
