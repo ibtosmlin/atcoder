@@ -11,4 +11,4 @@ G.add_edges_from([("A", "B"), ("B", "C"), ("B", "F"),("C", "D"), ("C", "E"), ("C
 
 # ネットワークの可視化
 nx.draw(G, with_labels = True)
-plt.show()
+plt.savefig('test')
