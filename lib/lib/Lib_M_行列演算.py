@@ -34,8 +34,21 @@ mb = [list(map(int, input().split())) for _ in range(m)]
 for r in prod(ma, mb):
     print(*r)
 
+def powmat(ma, k, mod = 10**9+7):
+    n = len(ma)
+    ret = [[0]*n for _ in range(n)]
+    for i in range(n):
+        ret[i][i] = 1
+    for _ in range(k):
+        if k & 1:
+            ret = prod(ret, ma, mod)
+        ma = prod(ma, ma, mod)
+        k >>= 1
+        if k == 0: break
+    return ret
+
 #prefix#
-# Lib_行列演算_matrix
+# Lib_M_行列演算_matrix
 #end#
 
 
