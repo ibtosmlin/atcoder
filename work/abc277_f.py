@@ -100,21 +100,24 @@ for mnx in mnmx:
     if pmx > mn: end('No')
     pmx = mx
 
-G = [set() for _ in range(w)]
+
+G = [set() for _ in range(w+h*w)]
 for nai in na:
     if len(nai) <= 1: continue
+    pstack = []
+    stack = []
     for i in range(len(nai)-1):
         valu, u = nai[i]
         valv, v = nai[i+1]
+        stack.append(u)
         if valu < valv:
-            G[u].add(v)
+            for su in stack:
+                G[su].add(valu+w)
+            for su in pstack:
+                G[valu+w].add(su)
+            pstack = stack[:]
+            stack = []
 
-ts = topological_sort(w, G)
+ts = topological_sort(w+h*w, G)
 ts.build()
 print('Yes' if ts.is_dag else 'No')
-
-n = 5
-G = [[1], [], [3], [4], [1]]
-ts = topological_sort(n, G)
-ts.build()
-print(ts.is_dag)
