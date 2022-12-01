@@ -18,12 +18,9 @@ class UnionFind:
         x : int
             ノード番号
         """
-        if self.parents[x] == x:
-            return x
-        else:
-            p = self.find(self.parents[x])
-            self.parents[x] = p
-            return p
+        if self.parents[x] == x: return x
+        self.parents[x] = p = self.find(self.parents[x])
+        return p
 
     def unite(self, x, y):
         """ユニオン
@@ -33,7 +30,7 @@ class UnionFind:
         if x == y: return
         if self.ranks[x] > self.ranks[y]:
             x , y = y, x    #yを親にする
-        if self.ranks[x] == self.ranks[y]:
+        elif self.ranks[x] == self.ranks[y]:
                 self.ranks[y] += 1
         self.parents[x] = y
         self.sizes[y] += self.sizes[x]

@@ -2,57 +2,57 @@
 # 高速フーリエ変換(convolution, FFT)
 #description#
 #body#
+# https://atcoder.jp/contests/practice2/tasks/practice2_f
 # https://atcoder.jp/contests/atc001/tasks/fft_c
+
+mod = 998244353
+g = 3   #primitive root
+ginv = pow(g, mod-2, mod)
+
+W = [pow(g, (mod-1)>>i, mod) for i in range(24)]
+Winv = [pow(ginv, (mod-1)>>i, mod) for i in range(24)]
+
+def fft(k, f):
+    for l in range(1, k+1)[::-1]:
+        d = 1 << l - 1
+        U = [1]
+        for i in range(d):
+            U.append(U[-1]*W[l]%mod)
+        for i in range(1<<k - l):
+            for j in range(d):
+                s = i*2*d + j
+                f[s], f[s+d] = (f[s] + f[s+d])%mod, U[j]*(f[s] - f[s+d])%mod
+
+def ifft(k, f):
+    for l in range(1,k+1):
+        d = 1 << l - 1
+        for i in range(1<<k - l):
+            u = 1
+            for j in range(i*2*d, (i*2+1)*d):
+                f[j+d] *= u
+                f[j],f[j+d] = (f[j]+f[j+d])%mod, (f[j]-f[j+d])%mod
+                u = u * Winv[l] % mod
+
 def convolve(a, b):
-    def fft(f):
-        d = n // 2
-        v = w
-        while d >= 1:
-            u = 1
-            for i in range(d):
-                for j in range(i, n, 2*d):
-                    f[j], f[j+d] = (f[j] + f[j+d]) % p, u * (f[j] - f[j+d]) % p
-                u = u * v % p
-            v = v * v % p
-            d //= 2
+    la, lb = len(a), len(b)
+    le = la + lb - 1
+    k = le.bit_length()
+    n = 1 << k
+    ninv = pow(n,mod-2,mod)
+    a += [0]*(n-la)
+    b += [0]*(n-lb)
+    fft(k,a)
+    fft(k,b)
+    a = [ai * bi % mod for ai, bi in zip(a, b)]
+    ifft(k,a)
+    return [ai * ninv % mod for ai in a[:le]]
 
-    def ifft(f):
-        d = 1
-        while d < n:
-            v = pow(invw, n // (2 * d), p)
-            u = 1
-            for i in range(d):
-                for j in range(i, n, 2*d):
-                    f[j+d] *= u
-                    f[j], f[j+d] = (f[j] + f[j+d]) % p, (f[j] - f[j+d]) % p
-                u = u * v % p
-            d *= 2
 
-    p, g = 1107296257, 5
-    n0, n1 = len(a), len(b)
-    n = 1 << (max(n0, n1) - 1).bit_length() + 1
-    a = a + [0] * (n-n0)
-    b = b + [0] * (n-n1)
-    w = pow(g, (p - 1) // n, p)
-    invw = pow(w, p-2, p)
-    fft(a), fft(b)
-    for i in range(n):
-        a[i] = a[i] * b[i] % p
-    ifft(a)
-    invn = pow(n, p - 2, p)
-    return [a[i] * invn % p for i in range(n0 + n1 - 1)]
+n,m = map(int,input().split())
+A = list(map(int,input().split()))
+B = list(map(int,input().split()))
 
-N = int(input())
-A = []
-B = []
-for _ in range(N):
-    a, b = map(int, input().split())
-    A.append(a)
-    B.append(b)
-
-print(0)
-for xi in convolve(A, B):
-    print(xi)
+print(*convolve(A,B))
 
 #prefix#
 # Lib_C_FFT

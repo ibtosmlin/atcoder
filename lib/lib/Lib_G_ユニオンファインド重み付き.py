@@ -2,6 +2,7 @@
 # ユニオンファインド重み付き
 #description#
 # ユニオンファインド重み付き
+#body#
 class UnionFindWeighted:
     def __init__(self, n):                      # 初期化
         self.n = n                              # 要素数

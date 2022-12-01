@@ -29,13 +29,11 @@ class LCS:
                 else:
                     dp[i+1][j+1] = max(dp[i+1][j], dp[i][j+1])
 
-
-    def length(self):
+    def __len__(self):
         # LCSの長さ
         return self.dp[self.ls][self.lt]
 
-
-    def restore(self):
+    def __str__(self):
         # 復元
         ret = []
         i, j = self.ls, self.lt
@@ -55,14 +53,17 @@ class LCS:
                 j-=1   # DP の遷移を遡る
         ret = ret[::-1]
         if self.Type == str: ret = ''.join(ret)
-        return ret
+        return ''.join(ret)
 
 
 #####################
-s = list(input())
-t = list(input())
+#s = list(input())
+#t = list(input())
+s = '948640'
+t = '540820'
 lcs = LCS(s, t)
-print(''.join(lcs.restore()))
+print(len(lcs))
+print(lcs)
 
 #prefix#
 # Lib_LCS最長共通部分列#

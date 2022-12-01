@@ -15,7 +15,7 @@ class topological_sort:
         self.in_cnt = [0] * n   # 入力
         self.node_zero = []     # ゼロ次のノード
         for i, gi in enumerate(G):
-            for j, w in gi:
+            for j in gi:
                 self.in_cnt[j] += 1
         self.node_zero = [i for i in range(self.n) if self.in_cnt[i] == 0]
 
@@ -26,7 +26,7 @@ class topological_sort:
         while q:
             p = q.popleft()
             self.ts.append(p)
-            for nxt, nxtw in self.G[p]:
+            for nxt in self.G[p]:
                 self.in_cnt[nxt] -= 1
                 if self.in_cnt[nxt] == 0:
                     q.append(nxt)
@@ -70,7 +70,7 @@ for _ in range(m):
     a, b = map(int, input().split())
     a -= 1; b -= 1
     w = 0
-    G[a].append((b, w))
+    G[a].append(b)
 
 ts = topological_sort(n, G)
 
