@@ -1,4 +1,4 @@
-# https://atcoder.jp/contests/math-and-algorithm/tasks/math_and_algorithm_by
+# https://atcoder.jp/contests/math-and-algorithm/tasks/math_and_algorithm_bt
 import sys
 from itertools import *
 from operator import itemgetter
@@ -19,18 +19,18 @@ def end(r=-1): print(r); exit()
 direc = [(1, 0), (0, 1), (-1, 0), (0, -1)] + [(1, 1), (1, -1), (-1, 1), (-1, -1)]
 def isinhw(i, j, h, w): return (0 <= i < h) and (0 <= j < w)
 def dist2(pt1, pt2): return sum([(x1-x2) ** 2 for x1, x2 in zip(pt1, pt2)])
-# a < c**b
-a, b, c = map(int, input().split())
-if c == 1:
-    print('Yes' if a < 1 else 'No')
-    exit()
-else:
-    ret = 0
-    cb = 1
-    while cb <= a:
-        ret += 1
-        cb *= c
-    if ret > b:
-        print('No')
-    else:
-        print('Yes')
+
+l, r = map(int, input().split())
+isprime = [True] * (r-l+1)
+if l == 1:
+    isprime[0] = False
+
+for i in range(2, int(r**0.5)+1):
+    fm = (l + i - 1) // i
+    to = r // i
+    if fm == 1:
+        fm += 1
+    for j in range(fm, to+1):
+        isprime[j * i - l] = False
+
+print(isprime.count(True))

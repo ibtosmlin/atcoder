@@ -82,42 +82,33 @@ class topological_sort:
 h, w = map(int, input().split())
 a = [list(map(int, input().split())) for _ in range(h)]
 # tate
-na = []
 mnmx = []
-mmm = 10**8
-for ai in a:
-    nai = [(aij, j) for j, aij in enumerate(ai) if aij != 0]
-    vals = [aij for aij, _ in nai]
-    if len(vals) == 0: continue
-    mnmx.append(min(vals) * mmm + max(vals))
-    nai.sort()
-    na.append(nai)
+G = [[] for _ in range(w+h*w)]
+for i in range(h):
+    ai = a[i]
+    bi = defaultdict(set)
+    mn, mx = INF, 0
+    for i, aij in enumerate(ai):
+        if aij == 0: continue
+        bi[aij].add(i)
+        mn = min(mn, aij)
+        mx = max(mx, aij)
+    if mx == 0: continue
+    mnmx.append((mn, mx))
+    vals = sorted(list(bi.keys()))
+    cnt = len(vals)
+    if cnt == 1: continue
+    for i in range(cnt-1):
+        k = vals[i]
+        for node in bi[k]:
+            G[node].append(k+w)
+        nk = vals[i+1]
+        for node in bi[nk]:
+            G[k+w].append(node)
 
 mnmx.sort()
-pmx = 0
-for mnx in mnmx:
-    mn, mx = divmod(mnx, mmm)
-    if pmx > mn: end('No')
-    pmx = mx
-
-
-G = [set() for _ in range(w+h*w)]
-for nai in na:
-    if len(nai) <= 1: continue
-    pstack = []
-    stack = []
-    for i in range(len(nai)-1):
-        valu, u = nai[i]
-        valv, v = nai[i+1]
-        stack.append(u)
-        if valu < valv:
-            for su in stack:
-                G[su].add(valu+w)
-            for su in pstack:
-                G[valu+w].add(su)
-            pstack = stack[:]
-            stack = []
-
+for i in range(len(mnmx)-1):
+    if mnmx[i][1] > mnmx[i+1][0]: end('No')
 ts = topological_sort(w+h*w, G)
 ts.build()
 print('Yes' if ts.is_dag else 'No')

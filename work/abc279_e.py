@@ -1,4 +1,4 @@
-# https://atcoder.jp/contests/math-and-algorithm/tasks/math_and_algorithm_by
+# https://atcoder.jp/contests/abc279/tasks/abc279_e
 import sys
 from itertools import *
 from operator import itemgetter
@@ -19,18 +19,21 @@ def end(r=-1): print(r); exit()
 direc = [(1, 0), (0, 1), (-1, 0), (0, -1)] + [(1, 1), (1, -1), (-1, 1), (-1, -1)]
 def isinhw(i, j, h, w): return (0 <= i < h) and (0 <= j < w)
 def dist2(pt1, pt2): return sum([(x1-x2) ** 2 for x1, x2 in zip(pt1, pt2)])
-# a < c**b
-a, b, c = map(int, input().split())
-if c == 1:
-    print('Yes' if a < 1 else 'No')
-    exit()
-else:
-    ret = 0
-    cb = 1
-    while cb <= a:
-        ret += 1
-        cb *= c
-    if ret > b:
-        print('No')
-    else:
-        print('Yes')
+n, m = map(int, input().split())
+a = list(map(int, input().split()))
+B = [[] for _ in range(n+1)]
+now = 1
+for i in range(m):
+    ai = a[i]
+    B[ai], B[ai+1] = B[ai+1], B[ai]
+    B[now].append(i)
+    if ai == now:
+        now = now+1
+    elif ai + 1 == now:
+        now = now-1
+
+ret = [0]*m
+for i, bi in enumerate(B):
+    for mi in bi:
+        ret[mi] = i
+print('\n'.join(map(str, ret)))
