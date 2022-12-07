@@ -31,6 +31,10 @@ class BinaryIndexedTree:
             self.dat[i] += x
             i += i & -i # 更新すべき位置
 
+    def update(self, i, x):
+        x -= self[i]
+        self.add(i, x)
+
     def sum(self, r):
         """
         Returns
