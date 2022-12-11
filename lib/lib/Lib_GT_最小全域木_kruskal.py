@@ -54,7 +54,7 @@ class Kruskal:
             else:
                 pass
                 # self.edges_nouse.append((u, v, w))
-        if len(self.nodes) == self.n:
+        if len(self.nodes) != self.n:
             self.weight = float('inf')
 ################################
 
@@ -63,7 +63,8 @@ n, m = map(int, input().split())
 #辺リストの作成
 G = []
 for i in range(m):
-    a, b, w = map(int1, input().split())
+    a, b, w = map(int, input().split())
+    a -= 1; b -= 1
     G.append((a, b, w))
 
 mst = Kruskal(n, G)
