@@ -1,4 +1,4 @@
-# https://atcoder.jp/contests/tessoku-book/tasks/tessoku_book_cw
+# https://atcoder.jp/contests/tessoku-book/tasks/tessoku_book_bm
 import sys
 from itertools import *
 from operator import itemgetter
@@ -20,12 +20,18 @@ direc = [(1, 0), (0, 1), (-1, 0), (0, -1)] + [(1, 1), (1, -1), (-1, 1), (-1, -1)
 def isinhw(i, j, h, w): return (0 <= i < h) and (0 <= j < w)
 def dist2(pt1, pt2): return sum([(x1-x2) ** 2 for x1, x2 in zip(pt1, pt2)])
 n = int(input())
-bx = [tuple(map(int, input().split())) for _ in range(n)]
-boxs = defaultdict(list)
-for x, y in bx:
-    boxs[x].append(y)
+a = list(map(int, input().split()))
+G = [[] for _ in range(n+1)]
+for i in range(n-1):
+    G[a[i]].append(i+2)
 
-for box in boxs:
-    box.sort()
-
-now = 
+dp = [0] * (n+1)
+def dfs(x, p=-1):
+    ret = 0
+    for c in G[x]:
+        if c == p: continue
+        ret += dfs(c, x) + 1
+    dp[x] = ret
+    return ret
+dfs(1)
+print(*dp[1:])
