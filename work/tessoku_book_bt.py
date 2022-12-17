@@ -1,23 +1,32 @@
-# https://atcoder.jp/contests/tessoku-book/tasks/tessoku_book_bt
 h, w, k = map(int, input().split())
-c = list(input() for _ in range(h))
-d = [[0] * w for _ in range(h)]
+G = [[0] * w for _ in range(h)]
 for i in range(h):
+    s = input()
     for j in range(w):
-        if c[i][j] == '#': d[i][j] = 1
+        if s[j] == '#':
+            G[i][j] = 1
+
+def f(s):
+    bitcount = 0
+    notselrow = []
+    ret = 0
+    for i in range(h):
+        if s >> i & 1 == 0:
+            notselrow.append(i)
+        else:
+            bitcount += 1
+    if bitcount > k: return 0
+    ret += w * bitcount
+    tate = [0] * w
+    for i in notselrow:
+        for j in range(w):
+            tate[i] += G[i][j]
+    tate.sort()
+    for i in range(k-bitcount):
+        tate[i] = len(notselrow)
+    return ret + sum(tate)
 
 ret = 0
 for s in range(1<<h):
-    now = 0
-    other = []
-    for i in range(h):
-        if s >> i & 1:
-            now += 1
-    for j in range(w):
-        now2 = 0
-        for k in range(h):
-            if s >> k & 1 == 0:
-                now2 += d[k][j]
-        other.append(now2)
-    other.sort()
-    other[:k-]
+    ret = max(ret, f(s))
+print(ret)

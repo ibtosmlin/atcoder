@@ -1,162 +1,152 @@
-import sys
-from itertools import *
-from operator import itemgetter
-from collections import defaultdict, Counter, deque
-from heapq import heapify, heappop, heappush
-from functools import lru_cache
-sys.setrecursionlimit(10001000)
-INF = float('inf')
-mod = 1000000007; mod1 = 998244353
-def modinv(x, mod): return pow(x, mod - 2, mod)
-def input(): return sys.stdin.readline().rstrip()
-def int1(x): return int(x)-1
-def end(r=-1): print(r); exit()
-def alp(i): return chr(ord('a') + i%26)    # i=0->'a', i=26->'z'
+# https://github.com/tatyam-prime/SortedSet/blob/main/SortedMultiset.py
+import math
+from bisect import bisect_left, bisect_right, insort
+from typing import Generic, Iterable, Iterator, TypeVar, Union, List
+T = TypeVar('T')
 
-def compress(points, reverse=False, spacing=False):
-    """一次元座標圧縮
+class SortedMultiset(Generic[T]):
+    BUCKET_RATIO = 50
+    REBUILD_RATIO = 170
 
-    Parameters
-    ----------
-    points : list
-         値のリスト [100,300,50,900,200]
+    def _build(self, a=None) -> None:
+        "Evenly divide `a` into buckets."
+        if a is None: a = list(self)
+        size = self.size = len(a)
+        bucket_size = int(math.ceil(math.sqrt(size / self.BUCKET_RATIO)))
+        self.a = [a[size * i // bucket_size : size * (i + 1) // bucket_size] for i in range(bucket_size)]
 
-    Returns
-    -------
-    pos : {50: 0, 100: 1, 200: 2, 300: 3, 900: 4}
-    vals : {0: 50, 1: 100, 2: 200, 3: 300, 4: 900}
-    """
-    pos = {}
-    vals = {}
-    sx = set(points)
-    if spacing:
-        for p in points:
-            sx.add(p+1)
+    def __init__(self, a: Iterable[T] = []) -> None:
+        "Make a new SortedMultiset from iterable. / O(N) if sorted / O(N log N)"
+        a = list(a)
+        if not all(a[i] <= a[i + 1] for i in range(len(a) - 1)):
+            a = sorted(a)
+        self._build(a)
 
-    for i, xi in enumerate(sorted(set(sx), reverse=reverse)):
-        pos[xi] = i
-        vals[i] = xi
-    sx_cmp = [pos[xi] for xi in sx]
-    return pos, vals, sx_cmp
+    def __iter__(self) -> Iterator[T]:
+        for i in self.a:
+            for j in i: yield j
 
+    def __reversed__(self) -> Iterator[T]:
+        for i in reversed(self.a):
+            for j in reversed(i): yield j
 
-# 部分和の計算と要素の更新の両方を効率的に行える
-# 1-indexed
-# sum(r)        :閉区間 [0,r] の合計を取得する
-# [8] a0 + a1  + a2 + a3 + a4 + a5 + a6 + a7
-# [4] a0 + a1  + a2 + a3
-# [2] a0 + a1               [6] a4 + a5
-# [1] a0       [3] a2       [5] a4        [7] a6
+    def __len__(self) -> int:
+        return self.size
 
-#                   [1000]
-#           [0100]
-#   [0010]                [0110]
-# [0001]    [0011]      [0111]      [1111]
-class BinaryIndexedTree:
-    # 初期化処理
-    def __init__(self, size):
-        self.size = size
-        self.dat = [0]*(size+1)
-        self.depth = size.bit_length()
+    def __repr__(self) -> str:
+        return "SortedMultiset" + str(self.a)
 
-    def init(self, a):
-        for i, x in enumerate(a):
-            self.add(i, x)
+    def __str__(self) -> str:
+        s = str(list(self))
+        return "{" + s[1 : len(s) - 1] + "}"
 
-    def add(self, i, x):
-        i += 1
-        while i <= self.size:
-            self.dat[i] += x
-            i += i & -i # 更新すべき位置
+    def _find_bucket(self, x: T) -> List[T]:
+        "Find the bucket which should contain x. self must not be empty."
+        for a in self.a:
+            if x <= a[-1]: return a
+        return a
 
-    def sum(self, r):
-        """
-        Returns
-        -------
-        sum of [0, r]
-        """
-        r += 1
-        ret = 0
-        while r>0:
-            ret += self.dat[r]
-            r -= r & -r # 加算すべき位置
-        return ret
+    def __contains__(self, x: T) -> bool:
+        if self.size == 0: return False
+        a = self._find_bucket(x)
+        i = bisect_left(a, x)
+        return i != len(a) and a[i] == x
 
-    def rangesum(self, l, r):
-        """閉区間 [l,r] の合計を取得する
+    def count(self, x: T) -> int:
+        "Count the number of x."
+        return self.index_right(x) - self.index(x)
 
-        Returns
-        -------
-        sum of [l, r]
-        """
-        if l == 0:
-            return self.sum(r)
-        else:
-            return self.sum(r) - self.sum(l-1)
+    def add(self, x: T) -> None:
+        "Add an element. / O(√N)"
+        if self.size == 0:
+            self.a = [[x]]
+            self.size = 1
+            return
+        a = self._find_bucket(x)
+        insort(a, x)
+        self.size += 1
+        if len(a) > len(self.a) * self.REBUILD_RATIO:
+            self._build()
 
+    def discard(self, x: T) -> bool:
+        "Remove an element and return True if removed. / O(√N)"
+        if self.size == 0: return False
+        a = self._find_bucket(x)
+        i = bisect_left(a, x)
+        if i == len(a) or a[i] != x: return False
+        a.pop(i)
+        self.size -= 1
+        if len(a) == 0: self._build()
+        return True
 
-    def get(self, i):
-        return self.rangesum(i, i)
+    def lt(self, x: T) -> Union[T, None]:
+        "Find the largest element < x, or None if it doesn't exist."
+        for a in reversed(self.a):
+            if a[0] < x:
+                return a[bisect_left(a, x) - 1]
 
+    def le(self, x: T) -> Union[T, None]:
+        "Find the largest element <= x, or None if it doesn't exist."
+        for a in reversed(self.a):
+            if a[0] <= x:
+                return a[bisect_right(a, x) - 1]
 
-    def lower_bound(self, x):
-        sum_ = 0
-        pos = 0
-        for i in range(self.depth, -1, -1):
-            k = pos + (1 << i)
-            if k <= self.size and sum_ + self.dat[k] < x:
-                sum_ += self.dat[k]
-                pos += 1 << i
-        # pos = sum(i) < xとなる最大のindex
-        # pos + 1 = sum(i) >= xとなる最小のindex
-        return pos  #0-indexed
+    def gt(self, x: T) -> Union[T, None]:
+        "Find the smallest element > x, or None if it doesn't exist."
+        for a in self.a:
+            if a[-1] > x:
+                return a[bisect_right(a, x)]
 
+    def ge(self, x: T) -> Union[T, None]:
+        "Find the smallest element >= x, or None if it doesn't exist."
+        for a in self.a:
+            if a[-1] >= x:
+                return a[bisect_left(a, x)]
 
-#### for debug
-    def _get_original_sequence(self):
-        ret = [self.get(i) for i in range(self.size)]
-        return ret
+    def __getitem__(self, x: int) -> T:
+        "Return the x-th element, or IndexError if it doesn't exist."
+        if x < 0: x += self.size
+        if x < 0: raise IndexError
+        for a in self.a:
+            if x < len(a): return a[x]
+            x -= len(a)
+        raise IndexError
 
-    def _get_aggrigate_sequence(self):
-        return [self.sum(i) for i in range(self.size)]
+    def index(self, x: T) -> int:
+        "Count the number of elements < x."
+        ans = 0
+        for a in self.a:
+            if a[-1] >= x:
+                return ans + bisect_left(a, x)
+            ans += len(a)
+        return ans
 
-    def __str__(self):
-        seq = self.get_original_sequence()
-        ret = 'original :' + ' '.join(map(str, seq))
-        ret += '\n'
-        seq = self.get_aggrigate_sequence()
-        ret += 'aggrigate:' + ' '.join(map(str, seq))
-        return ret
+    def index_right(self, x: T) -> int:
+        "Count the number of elements <= x."
+        ans = 0
+        for a in self.a:
+            if a[-1] > x:
+                return ans + bisect_right(a, x)
+            ans += len(a)
+        return ans
 
-########################################
+###############################################
 
-
+sm = SortedMultiset()
 n, q = map(int, input().split())
 s = list(input().split())
-ts = set(s)
-query = []
+for i, si in enumerate(s):
+    sm.add((si, i))
 for _ in range(q):
-    x, t = input().split()
-    x = int1(x)
-    query.append((x, t))
-    ts.add(t)
-
-pos, vals, _ = compress(ts)
-n = len(pos)
-bit = BinaryIndexedTree(n)
-for si in s:
-    bit.add(pos[si], 1)
-
-for k, si in query:
-    fmi = bit.lower_bound(k) + 1
-    toi = pos[si]
-    bit.add(fmi, -1)
-    bit.add(toi, 1)
-
-print(bit._get_original_sequence())
+    f, nm = input().split()
+    f = int(f) - 1
+    item = sm[f]
+    sm.discard(item)
+    sm.add((nm, item[1]))
 
 ret = []
-for i in range(n):
-    for j in range(bit.get(i)):
-        ret.append(vals[j])
-print(*ret)
+for i in range(len(sm)):
+    ret.append(sm[i])
+ret.sort(key= lambda x:x[1])
+for ri in ret:
+    print(ri[0])
