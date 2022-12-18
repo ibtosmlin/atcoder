@@ -91,7 +91,8 @@ for _ in range($m):
 #body#
 G = [[] for _ in range($n)]
 for _ in range($m):
-    a, b, w = map(int1, input().split())
+    a, b, w = map(int, input().split())
+    a -= 1; b -= 1
     G[a].append((b, w))
     G[b].append((a, w))
 

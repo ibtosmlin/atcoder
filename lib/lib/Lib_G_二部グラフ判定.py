@@ -12,63 +12,56 @@ sys.setrecursionlimit(10**9)
 # 頂点集合を2つに分割して各部分の頂点は互いに隣接しないようにできるグラフ
 # ノード2色を塗って、辺の両端は異なるようにできるか
 ######################################
-
-
 ######################################
 # 再帰版
 ######################################
-def is_bipartite(g):
-    # 深さ優先探索
-    def dfs(g,v,c):
-        color[v] = c    # 色を塗る
-        for nv in g[v]: # 次のノードの探索
-            # すでに隣接の色が確定していて同じ色となっている場合終了
-            if color[nv] == c: return False
-            # 未確定の倍は反転させた色を塗って探索した結果を受け取る
-            if color[nv] == 0 and not dfs(g,nv,1-c): return False
-        return True
+# 深さ優先探索
+def is_bipartite(g, v, c):
+    global color
+    color[v] = c    # 色を塗る
+    for nv in g[v]: # 次のノードの探索
+        # すでに隣接の色が確定していて同じ色となっている場合終了
+        if color[nv] == c: return False
+        # 未確定の倍は反転させた色を塗って探索した結果を受け取る
+        if color[nv] == 0 and not is_bipartite(g, nv, -c): return False
+    return True
 
-    color = [0] * n     # 0:未確定 1:黒 -1:白
-    ret = dfs(g, 0, 1)
-    return ret, color
-
-#######################################
 
 ######################################
 # 非再帰版
 ######################################
-def is_bipartite(g):
+def is_bipartite(g, v, c):
+    global color
     # 深さ優先探索
-    color = [0] * n     # 0:未確定 1:黒 -1:白
-    q = [(0, 1)]
+    q = [(0, c)]
     while q:
         v, c = q.pop()
         color[v] = c    # 色を塗る
         for nv in g[v]: # 次のノードの探索
             # すでに隣接の色が確定していて同じ色となっている場合終了
-            if color[nv] == c: return False, color
+            if color[nv] == c: return False
             # 未確定の倍は反転させた色でキューに入れる
             if color[nv] == 0:
-                q.append((nv, 1-c))
-    return True, color
-
+                q.append((nv, -c))
+    return True
 
 #######################################
 
 
 
 n, m = map(int, input().split())
-graph = [[] for _ in range(n)]
+G = [[] for _ in range(n)]
+color = [0] * n     # 0:未確定 1:黒 -1:白
 
 # 隣接リストの作成
-for i in range(M):
+for i in range(m):
     a, b = map(int, input().split())
-    a -= 1
-    b -= 1
-    graph[a].append(b)
-    graph[b].append(a)
+    a -= 1; b -= 1
+    G[a].append(b)
+    G[b].append(a)
 
-print(is_bipartite(graph))
+
+print(is_bipartite(G, 0, 1))
 
 #prefix#
 # Lib_G_二部グラフ_bipartite

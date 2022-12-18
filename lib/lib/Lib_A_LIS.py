@@ -12,56 +12,36 @@
 # rem: kに対して単調増加
 from bisect import bisect, bisect_left
 
+class LIS:
+    """
+    fg: 0:単調非減少, 1:単調増加
+    """
+    def __init__(self, x:list, fg=1):
+        n = len(x)
+        res = [0] * n
+        dp = []
+        for i, xi in enumerate(x):
+            if fg == 0: # 非減少
+                pos = bisect(dp, xi)
+            elif fg == 1: # 単調増加
+                pos = bisect_left(dp, xi)
+            res[i] = pos + 1
+            if len(dp) <= pos:
+                dp.append(xi)
+            else:
+                dp[pos] = xi
+        self.length = len(dp)
+        restore = []
+        nw = self.length
+        for i in range(n)[::-1]:
+            if nw == res[i]:
+                restore.append(x[i])
+                nw -= 1
+        restore.reverse()
+        self.restore = restore
+        self.lis = dp
+        self.res = res
 
-def LIS(x:list, fg=1):
-    n = len(x)
-    res = [0] * n
-    dp = []
-    for i, xi in enumerate(x):
-        # 非減少
-        if fg == 0:
-            pos = bisect(dp, xi)
-        elif fg == 1:
-        # 単調増加
-            pos = bisect_left(dp, xi)
-        res[i] = pos + 1
-        if len(dp) <= pos:
-            dp.append(xi)
-        else:
-            dp[pos] = xi
-    length = len(dp)
-    restore = []
-    nw = length
-    for i in range(n)[::-1]:
-        if nw == res[i]:
-            restore.append(x[i])
-            nw -= 1
-    restore.reverse()
-    return length, restore, dp, res
-
-def LIS2(x:list, fg=1):
-    n = len(x)
-    INF = 2*n + 1
-    res = [0] * n
-    dp = [-INF] + [INF] * (n-1)
-    for i, xi in enumerate(x):
-        # 非減少
-        if fg == 0:
-            pos = bisect(dp, xi)
-        elif fg == 1:
-        # 単調増加
-            pos = bisect_left(dp, xi)
-        res[i] = pos
-        dp[pos] = xi
-    length = bisect_left(dp, INF) - 1
-    restore = []
-    nw = length
-    for i in range(n)[::-1]:
-        if nw == res[i]:
-            restore.append(x[i])
-            nw -= 1
-    restore.reverse()
-    return length, restore, dp, res
 
 
 ####################################
@@ -70,13 +50,12 @@ def LIS2(x:list, fg=1):
 #a = list(map(int, input().split()))
 n = 5
 a = [3, 1, 4, 2, 5, 9, 3]
-
-print(LIS(a))
-print(LIS2(a))
+lis = LIS(a)
+print(LIS(a).length)
 
 # n = 5
 # a = [3, 1, 4, 2, 5, 9, 3]
-# lenght = 4
+# length = 4
 # restore = [1, 2, 5, 9]
 # lis = [1, 2, 3, 9]
 # res = [1, 1, 2, 2, 3, 4, 3]
