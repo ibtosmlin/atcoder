@@ -10,6 +10,7 @@ class UnionFindWeighted:
         self.ranks = [0] * n                    # 木の深さ
         self.sizes = [1] * n                    # グループの要素数
         self.weights = [0] * n                  # 親との重み
+        self.isvalid = [True] * n               # ポテンシャルがプラスの閉路あり
 
     #親を出力
     def find(self, x):
@@ -23,9 +24,15 @@ class UnionFindWeighted:
 
     # ユニオン
     def unite(self, x, y, w):
-        # a[x]->a[y]  の差はw  # a[y]=a[x]+w
         rx = self.find(x)
         ry = self.find(y)
+        if rx == ry:
+            if self.diff(x, y) != w:
+                self.isvalid[rx] = False
+                return "invalid"
+            else:
+                return "pass"
+        # a[x]->a[y]  の差はw  # a[y] = a[x] + w
         wx = self.weight(x)
         wy = self.weight(y)
         if rx == ry: return
@@ -38,6 +45,8 @@ class UnionFindWeighted:
         self.weights[rx] = wy - wx - w
         if self.ranks[rx]==self.ranks[ry]:
             self.ranks[rx] += 1
+        self.isvalid[ry] &= self.isvalid[rx]
+        return "unite"
 
     #xとyが同じグループかどうか
     def same(self, x, y):

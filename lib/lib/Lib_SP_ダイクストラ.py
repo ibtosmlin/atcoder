@@ -12,18 +12,19 @@
 # O((E+V)logV)
 class dijkstra:
     def __init__(self, n, G):
+        self.INF = 10**9
         self.n = n                  # ノード数
         self.G = G                  # 有向グラフ
         self.start = None           # 始点
         self.G_used = [None] * n    # 最短経路木の親
-        self.dist = [INF] * self.n  # 始点からの距離
+        self.dist = [self.INF] * self.n  # 始点からの距離
         self.count = [0] * self.n   # 始点からの最短到達パス数
 
 
     def build(self, start):
         self.start = start
         self.G_used = [None] * n
-        self.dist = [INF] * self.n
+        self.dist = [self.INF] * self.n
         self.count = [0] * self.n
         next_q = []
         if type(start) is int:
@@ -41,11 +42,11 @@ class dijkstra:
                 ############################
                 if self.dist[nn] < nd_: continue
                 if self.dist[nn] == nd_:
-                    self.count[nn] += self.count[cd]
+                    self.count[nn] += self.count[cn]
                     continue
                 self.dist[nn] = nd_
                 self.G_used[nn] = cn
-                self.count[nn] = self.count[cd]
+                self.count[nn] = self.count[cn]
                 heappush(next_q, (nd_, nn))
 
 
