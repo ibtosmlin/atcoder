@@ -47,6 +47,23 @@ class SegmentTree:  # 初期化処理
             self._update(i)
 
 
+    def _update(self, i):
+        # 下の層2つの演算結果の代入(完全二分木における子同士の演算)
+        self._dat[i] = self._f(self._dat[i*2], self._dat[i*2+1])
+
+
+    def __getitem__(self, i):
+        """index = i の値を求める
+        """
+        return self._dat[i + self._size]
+
+
+    def __str__(self):
+        """元のリストの値を表示
+        """
+        return ' '.join(map(str, (self[i] for i in range(self._n))))
+
+
     def update(self, i, x):
         """one point update
         a[i] を xに更新
@@ -59,11 +76,6 @@ class SegmentTree:  # 初期化処理
             # 下の層2つの演算結果の代入(完全二分木における子同士の演算)
             self._update(i)
 
-
-    def get_value(self, i):
-        """index = i の値を求める
-        """
-        return self._dat[i + self._size]
 
 
     def query(self, l, r):
@@ -139,10 +151,6 @@ class SegmentTree:  # 初期化処理
         return 0
 
 
-    def _update(self, i):
-        # 下の層2つの演算結果の代入(完全二分木における子同士の演算)
-        self._dat[i] = self._f(self._dat[i*2], self._dat[i*2+1])
-
 ####################################
 
 # Range Maximum Query
@@ -185,10 +193,10 @@ ie = float('inf')
 
 ####################################
 
-# Range Maximum Query
+# Range Minimum Query
 def op(x, y):
-    return max(x, y)
-ie = -float('inf')
+    return min(x, y)
+ie = float('inf')
 
 
 # n, q = map(int, input().split())
@@ -196,16 +204,18 @@ ie = -float('inf')
 
 a = [1,2,3,2,1,3,3,5,2,1]
 sgt = SegmentTree(a, op, ie)
-# x, v = 3, 55123
-# l, r = 20, 25
-# sgt.update(x, v)
-# sgt.query(l, r)
+x, v = 3, 55123
+l, r = 2, 5
+#sgt.update(x, v)
+#print(sgt.query(l, r))
+# max_right   lを固定してlambdaを満たす最大のr
+# min_left    rを固定してlambdaを満たす最小のl
+for l in range(10):
+    r = sgt.max_right(l, lambda q: q > 2)
+    print(l, r, sgt.query(l, r))
 
 
-u = sgt.min_left(5, lambda y: y <= 2)
-print(u)
-u = sgt.min_left(4, lambda y: y <= 2)
-print(u)
+#print(sgt)
 
 #prefix#
 # Lib_Q_seg木（一点更新・区間集約)

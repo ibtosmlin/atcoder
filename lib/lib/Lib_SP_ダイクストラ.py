@@ -31,6 +31,7 @@ class dijkstra:
             start = [start]
         for st in start:
             self.dist[st] = 0
+            self.count[st] = 1
             next_q.append((0, st))
         heapify(next_q)
         while next_q:
