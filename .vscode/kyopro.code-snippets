@@ -1957,6 +1957,42 @@
             "interactive"
         ]
     },
+    "ダブリング": {
+        "prefix": [
+            "Lib_A_ダブリング_doubbling"
+        ],
+        "body": [
+            "dmx = 30",
+            "n, k = map(int, input().split())",
+            "# f(i)  [0, n] -> [0, n]",
+            "def f(i):",
+            "    return i - sum(map(int, list(str(i))))",
+            "",
+            "dp = [[0] * (n+1) for _ in range(dmx+1)]",
+            "",
+            "for i in range(n+1):",
+            "    dp[0][i] = f(i)",
+            "",
+            "for d in range(0, dmx):",
+            "    for i in range(n+1):",
+            "        dp[d+1][i] = dp[d][dp[d][i]]",
+            "",
+            "def fk(i, k):",
+            "    for d in range(dmx):",
+            "        if k >> d & 1:",
+            "            i = dp[d][i]",
+            "    return i",
+            "",
+            "for i in range(1, n+1):",
+            "    print(fk(i))"
+        ],
+        "description": []
+    },
+    "iscription#": {
+        "prefix": [],
+        "body": [],
+        "description": []
+    },
     "半分全列挙": {
         "prefix": [
             "Lib_A_半分全列挙"
@@ -2772,6 +2808,7 @@
             "            start = [start]",
             "        for st in start:",
             "            self.dist[st] = 0",
+            "            self.count[st] = 1",
             "            next_q.append((0, st))",
             "        heapify(next_q)",
             "        while next_q:",
@@ -4293,11 +4330,6 @@
         ]
     },
     "ワーシャルフロイド法": {
-        "prefix": [],
-        "body": [],
-        "description": []
-    },
-    "iscription#": {
         "prefix": [],
         "body": [],
         "description": []
