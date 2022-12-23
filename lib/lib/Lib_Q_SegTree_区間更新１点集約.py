@@ -84,7 +84,7 @@ for _ in range(q):
     else:
         i = qry[0]
 #        i -= 1
-        print(ruq.query(i))
+        print(ruq[i])
 
 #prefix#
 # Lib_Q_seg木（区間更新・一点集約)

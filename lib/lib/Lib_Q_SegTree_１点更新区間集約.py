@@ -77,6 +77,18 @@ class SegmentTree:  # 初期化処理
             self._update(i)
 
 
+    def add(self, i, x):
+        """one point update
+        a[i] を xを加算
+        """
+        #
+        i += self._size
+        self._dat[i] += x
+        while i > 0:    # 層をのぼりながら値を更新 indexが0になれば終了
+            i >>= 1     # 1つ上の層のインデックス(完全二分木における親)
+            # 下の層2つの演算結果の代入(完全二分木における子同士の演算)
+            self._update(i)
+
 
     def query(self, l, r):
         """半開区間[l, r)にf(a[l], a[l+1])演算
@@ -165,7 +177,7 @@ def op(x, y):
 ie = float('inf')
 
 
-# Range Add Query
+# Range Sum Query
 def op(x, y):
     return x + y
 ie = 0

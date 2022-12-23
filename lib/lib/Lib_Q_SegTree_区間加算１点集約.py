@@ -79,7 +79,7 @@ for _ in range(q):
     else:
         i = qry[0]
 #        i -= 1
-        print(raq.query(i))
+        print(raq[i])
 
 #prefix#
 # Lib_Q_seg木（区間加算・一点集約)

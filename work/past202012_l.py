@@ -21,14 +21,20 @@ n = int(input())
 s = input()
 t = input()
 
-ret = n
-memo = defaultdict(int)
-def dfs(s):
-    global ret
-    ret = min(len(s), ret)
-    for i in range(n-2):
-        if s[i:i+3] == t:
-            dfs(s[:i]+s[i+3:])
-
-dfs(s)
-print((n-ret) // 3)
+dp = [[""] * (n+1) for _ in range(n+1)]
+for l in range(n):
+    dp[l][l+1] = s[l]
+for d in range(1, n+1):
+    for l in range(n):
+        r = l + d
+        if r > n: break
+        dp[l][r] = dp[l][r-1] + dp[r-1][r]
+        length = len(dp[l][r])
+        for k in range(l, r+1):
+            nw = dp[l][k] + dp[k][r]
+            nw = nw.replace(t, '')
+            if length > len(nw):
+                dp[l][r] = nw
+#for dpi in dp:
+#    print(dpi)
+print((n - len(dp[0][n]))//len(t))

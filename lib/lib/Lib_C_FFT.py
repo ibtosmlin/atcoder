@@ -5,7 +5,8 @@
 # https://atcoder.jp/contests/practice2/tasks/practice2_f
 # https://atcoder.jp/contests/atc001/tasks/fft_c
 
-mod = 998244353
+mod =
+
 g = 3   #primitive root
 ginv = pow(g, mod-2, mod)
 

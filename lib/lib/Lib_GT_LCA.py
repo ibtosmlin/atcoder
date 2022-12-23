@@ -3,6 +3,7 @@
 #description#
 # 最小共通祖先
 #body#
+from collections import deque
 class Lca:
     """Lowest Common Ancestor
 
@@ -97,20 +98,37 @@ class Lca:
         return self._costs[u] + self._costs[v] - 2 * self._costs[lca]
 
 
+    def jump(self, u, v, i):
+        """
+        u -> vへのパスのk番目の頂点
+        """
+        c = self.lca(u, v)
+        du = self._depth[u]
+        dv = self._depth[v]
+        dc = self._depth[c]
+
+        path_len = du - dc + dv - dc
+        if path_len < i:
+            return -1
+
+        if du - dc >= i:
+            return self.la(u, i)
+
+        return self.la(v, path_len - i)
+
 ########################################
 
-n = int(input())
+n, q = map(int, input().split())
 G = [[] for _ in range(n)]
 for _ in range(n-1):
-    a, b = map(int1, input().split())
+    a, b = map(int, input().split())
     G[a].append(b)
     G[b].append(a)
 
 lca = Lca(n, G, 0)
-q = int(input())
 for _ in range(q):
-    u, v = map(int1, input().split())
-    print(lca.distance(u, v))
+    u, v, k = map(int, input().split())
+    print(lca.jump(u, v, k))
 
 #prefix#
 # Lib_GT_最小共通祖先_LCA
