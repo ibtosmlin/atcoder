@@ -2,7 +2,7 @@
 # 遅延評価セグメント木
 #description#
 # 遅延評価セグメント木
-#body# takayag
+#body#
 import sys
 def input(): return sys.stdin.readline().rstrip()
 
