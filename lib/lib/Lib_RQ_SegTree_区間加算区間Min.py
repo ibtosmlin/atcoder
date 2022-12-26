@@ -1,7 +1,7 @@
 #name#
-# 遅延評価セグメント木
+# 遅延評価セグメント木区間加算区間Min
 #description#
-# 遅延評価セグメント木
+# 遅延評価セグメント木区間加算区間Min
 #body#
 import sys
 def input(): return sys.stdin.readline().rstrip()
@@ -146,5 +146,5 @@ for _ in range(q):
 print('\n'.join(map(str, ret)))
 
 #prefix#
-# Lib_Q_seg木（区間加算・区間集約)
+# Lib_Seg_区間加算区間Min
 #end#

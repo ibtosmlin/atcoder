@@ -1,7 +1,7 @@
 #name#
-# セグメント木
+# セグメント木区間更新一点集約
 #description#
-# セグメント木
+# セグメント木区間更新一点集約
 #body#
 class SegmentTree:  # 初期化処理
     """RUQ Segment Tree
@@ -87,5 +87,5 @@ for _ in range(q):
         print(ruq[i])
 
 #prefix#
-# Lib_Q_seg木（区間更新・一点集約)
+# Lib_Seg_区間更新一点集約
 #end#

@@ -1,7 +1,7 @@
 #name#
-# セグメント木
+# セグメント木１点更新区間集約
 #description#
-# セグメント木
+# セグメント木１点更新区間集約
 #body#
 class SegmentTree:  # 初期化処理
     """Segment Tree
@@ -230,5 +230,5 @@ for l in range(10):
 #print(sgt)
 
 #prefix#
-# Lib_Q_seg木（一点更新・区間集約)
+# Lib_Seg_一点更新区間集約
 #end#

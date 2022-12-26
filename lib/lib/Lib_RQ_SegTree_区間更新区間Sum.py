@@ -1,7 +1,7 @@
 #name#
-# 遅延評価セグメント木
+# 遅延評価セグメント木区間更新区間Sum
 #description#
-# 遅延評価セグメント木
+# 遅延評価セグメント木区間更新区間Sum
 #body#
 import sys
 def input(): return sys.stdin.readline().rstrip()
@@ -152,5 +152,5 @@ print('\n'.join(map(str, ret)))
 
 
 #prefix#
-# Lib_Q_seg木（区間更新・区間Sum)
+# Lib_Seg_区間更新区間Sum
 #end#

@@ -1,7 +1,7 @@
 #name#
-# セグメント木
+# セグメント木区間加算１点集約
 #description#
-# セグメント木
+# セグメント木区間加算１点集約
 #body#
 class SegmentTree:
     """RAQ Segment Tree
@@ -82,5 +82,5 @@ for _ in range(q):
         print(raq[i])
 
 #prefix#
-# Lib_Q_seg木（区間加算・一点集約)
+# Lib_Seg_区間加算一点集約
 #end#
