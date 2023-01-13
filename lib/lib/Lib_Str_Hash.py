@@ -36,5 +36,5 @@ for _ in range(q):
         print('No')
 
 #prefix#
-# Lib_C_RollingHash
+# Lib_Str_RollingHash
 #end#
