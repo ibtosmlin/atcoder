@@ -76,16 +76,12 @@ class BipartileMatching:
         return res
 
 #################################
-n = int(input())
-BM = BipartileMatching(n, n)
-for i in range(n):
-    u = input()
-    for j, v in enumerate(u):
-        if v == '#':
-            BM.add_edge(i, j)
-
+n, m, e = map(int, input().split())
+BM = BipartileMatching(n, m)
+for i in range(e):
+    x, y = map(int, input().split())
+    BM.add_edge(x, y)
 print(BM.matching)
-
 
 #prefix#
 # Lib_G_二部マッチング_bipartitematching

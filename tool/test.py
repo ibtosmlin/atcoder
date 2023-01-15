@@ -1,22 +1,9 @@
-1.23 =
-1 + 2 / 5 + 3 / 5 / 5
-1 + 0.4 + 0.12
-
-A.C=
-A + C /16
-10 + 12/16
-10 + 3/4
-
-1.25 =
-1.01
-
-2.375
-10.011
-2 + 0
-
- + 0 + 1 + 1
-0.125
-
-
-11:45発  12:03着
-(18分)
+def dist2(pt1, pt2): return sum([(x1-x2) ** 2 for x1, x2 in zip(pt1, pt2)])
+def distPtoP(pt1, pt2): return dist2(pt1, pt2) ** 0.5
+x1, y1, x2, y2 = map(int, input().split())
+pt1 = (x1, y1)
+pt2 = (x2, y2)
+q = int(input())
+for _ in range(q):
+    pt = tuple(map(int, input().split()))
+    d = distPtoP(pt1, pt)
