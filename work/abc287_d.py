@@ -21,19 +21,25 @@ def int1(x): return int(x)-1
 def notisinhw(i, j, h, w): return not ((0 <= i < h) and (0 <= j < w))
 def end(r=-1): print(r); exit()
 s = list(input())
-rs = s[::-1]
 t = list(input())
 T = len(t)
 
-def check(x):
-    sd = s[:x] + rs[:T-x][::-1]
-    ret = True
-    for i in range(T):
-        if sd[i] == '?' or t[i] == '?':
-            continue
-        if sd[i] != t[i]:
-            return False
-    return True
+F = [False] * (T+1)
+F[0] = True
+for i in range(T):
+    if s[i] == '?' or t[i] == '?' or s[i] == t[i]:
+        F[i+1] = True
+        continue
+    break
 
+R = [False] * (T+1)
+R[0] = True
+for i in range(T):
+    if s[-i-1] == '?' or t[-i-1] == '?' or s[-i-1] == t[-i-1]:
+        R[i+1] = True
+        continue
+    break
+R = R[::-1]
 
-if check()
+for f, r in zip(F, R):
+    print('Yes' if f and r else 'No')
