@@ -22,11 +22,46 @@ def notisinhw(i, j, h, w): return not ((0 <= i < h) and (0 <= j < w))
 def end(r=-1): print(r); exit()
 n = int(input())
 k = int(input())
-mtgs = [[i] + list(map(int, input().split())) for i in range(n)]
-
-mtgs.sort(key=itemgetter(1))
-dpl = [0] * n
-ls = [mtgs[i]]
-# 最後にiに参加した場合の最大個数 dpl[i]
+mtgs = []
 for i in range(n):
-    pos, l, r = mtgs[i]
+    l, r = map(int, input().split())
+    r += k
+    mtgs.append((l, r, i))
+
+mtgs.sort(key= lambda x: x[1])
+f = defaultdict(int)
+now = 0
+cnt = 0
+for l, r, _ in mtgs:
+    if l >= now:
+        cnt += 1
+        now = r
+        f[now] = cnt
+
+mtgs.sort(key= lambda x: x[0])
+g = defaultdict(int)
+now = 86400*2
+cnt = 0
+for l, r, _ in mtgs[::-1]:
+    if r <= now:
+        cnt += 1
+        now = l
+        g[now] = cnt
+
+f[0] = 0
+g[86400*2] = 0
+
+fky = list(f.keys())
+gky = list(g.keys())
+fky.sort()
+gky.sort()
+
+from bisect import bisect_left, bisect_right
+mtgs.sort(key= lambda x: x[2])
+
+for l, r, _ in mtgs:
+    x = f[fky[bisect_right(fky, l)]]
+    y = g[gky[bisect_left(gky, r)]]
+    print(x + y)
+#print(f, fky)
+#print(g, gky)
