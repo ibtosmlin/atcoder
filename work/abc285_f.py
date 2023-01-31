@@ -1,179 +1,221 @@
-# https://atcoder.jp/contests/abc285/tasks/abc285_f
-from itertools import *
-from operator import itemgetter
-from collections import defaultdict, Counter, deque
-from heapq import heapify, heappop, heappush
-from functools import lru_cache
-import sys
-sys.setrecursionlimit(10001000)
-INF = float('inf'); INF1 = 10 ** 9
-mod = 1000000007; mod1 = 998244353
-PI = 3.141592653589793
-direc = [(1, 0), (0, 1), (-1, 0), (0, -1)]
-direc8 = [(1, 0), (0, 1), (-1, 0), (0, -1), (1, 1), (1, -1), (-1, 1), (-1, -1)]
-yes = 'Yes'; no = 'No'
-ALPS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
 alps = 'abcdefghijklmnopqrstuvwxyz'
-def alp(i): return chr(ord('a') + i%26)    # i=0->'a', i=25->'z'
-def modinv(x, mod): return pow(x, mod - 2, mod)
-def input(): return sys.stdin.readline().rstrip()
-def int1(x): return int(x)-1
-def notisinhw(i, j, h, w): return not ((0 <= i < h) and (0 <= j < w))
-def end(r=-1): print(r); exit()
-# 部分和の計算と要素の更新の両方を効率的に行える
-# 1-indexed
-# sum(r)        :閉区間 [0,r] の合計を取得する
-# [8] a0 + a1  + a2 + a3 + a4 + a5 + a6 + a7
-# [4] a0 + a1  + a2 + a3
-# [2] a0 + a1               [6] a4 + a5
-# [1] a0       [3] a2       [5] a4        [7] a6
+# https://github.com/tatyam-prime/SortedSet/blob/main/SortedSet.py
+import math
+from bisect import bisect_left, bisect_right
+from typing import Generic, Iterable, Iterator, TypeVar, Union, List
+T = TypeVar('T')
 
-#                   [1000]
-#           [0100]
-#   [0010]                [0110]
-# [0001]    [0011]      [0111]      [1111]
-class BinaryIndexedTree:
-    # 初期化処理
-    def __init__(self, size):
-        self.size = size
-        self.dat = [0]*(size+1)
-        self.depth = size.bit_length()
+class SortedSet(Generic[T]):
+    BUCKET_RATIO = 50
+    REBUILD_RATIO = 170
 
-    def init(self, a):
-        for i, x in enumerate(a):
-            self.add(i, x)
+    def _build(self, a=None) -> None:
+        "Evenly divide `a` into buckets."
+        if a is None: a = list(self)
+        size = self.size = len(a)
+        bucket_size = int(math.ceil(math.sqrt(size / self.BUCKET_RATIO)))
+        self.a = [a[size * i // bucket_size : size * (i + 1) // bucket_size] for i in range(bucket_size)]
 
-    def add(self, i, x):
-        i += 1
-        while i <= self.size:
-            self.dat[i] += x
-            i += i & -i # 更新すべき位置
+    def __init__(self, a: Iterable[T] = []) -> None:
+        "Make a new SortedSet from iterable. / O(N) if sorted and unique / O(N log N)"
+        a = list(a)
+        if not all(a[i] < a[i + 1] for i in range(len(a) - 1)):
+            a = sorted(set(a))
+        self._build(a)
 
-    def update(self, i, x):
-        x -= self[i]
-        self.add(i, x)
+    def __iter__(self) -> Iterator[T]:
+        for i in self.a:
+            for j in i: yield j
 
-    def sum(self, r):
-        """
-        Returns
-        -------
-        sum of [0, r]
-        """
-        r += 1
-        ret = 0
-        while r>0:
-            ret += self.dat[r]
-            r -= r & -r # 加算すべき位置
-        return ret
+    def __reversed__(self) -> Iterator[T]:
+        for i in reversed(self.a):
+            for j in reversed(i): yield j
 
-    def range_sum(self, l, r):
-        """閉区間 [l,r] の合計を取得する
+    def __len__(self) -> int:
+        return self.size
 
-        Returns
-        -------
-        sum of [l, r]
-        """
-        if l == 0:
-            return self.sum(r)
+    def __repr__(self) -> str:
+        return "SortedSet" + str(self.a)
+
+    def __str__(self) -> str:
+        s = str(list(self))
+        return "{" + s[1 : len(s) - 1] + "}"
+
+    def _find_bucket(self, x: T) -> List[T]:
+        "Find the bucket which should contain x. self must not be empty."
+        for a in self.a:
+            if x <= a[-1]: return a
+        return a
+
+    def __contains__(self, x: T) -> bool:
+        if self.size == 0: return False
+        a = self._find_bucket(x)
+        i = bisect_left(a, x)
+        return i != len(a) and a[i] == x
+
+    def add(self, x: T) -> bool:
+        "Add an element and return True if added. / O(√N)"
+        if self.size == 0:
+            self.a = [[x]]
+            self.size = 1
+            return True
+        a = self._find_bucket(x)
+        i = bisect_left(a, x)
+        if i != len(a) and a[i] == x: return False
+        a.insert(i, x)
+        self.size += 1
+        if len(a) > len(self.a) * self.REBUILD_RATIO:
+            self._build()
+        return True
+
+    def discard(self, x: T) -> bool:
+        "Remove an element and return True if removed. / O(√N)"
+        if self.size == 0: return False
+        a = self._find_bucket(x)
+        i = bisect_left(a, x)
+        if i == len(a) or a[i] != x: return False
+        a.pop(i)
+        self.size -= 1
+        if len(a) == 0: self._build()
+        return True
+
+    def lt(self, x: T) -> Union[T, None]:
+        "Find the largest element < x, or None if it doesn't exist."
+        for a in reversed(self.a):
+            if a[0] < x:
+                return a[bisect_left(a, x) - 1]
+
+    def le(self, x: T) -> Union[T, None]:
+        "Find the largest element <= x, or None if it doesn't exist."
+        for a in reversed(self.a):
+            if a[0] <= x:
+                return a[bisect_right(a, x) - 1]
+
+    def gt(self, x: T) -> Union[T, None]:
+        "Find the smallest element > x, or None if it doesn't exist."
+        for a in self.a:
+            if a[-1] > x:
+                return a[bisect_right(a, x)]
+
+    def ge(self, x: T) -> Union[T, None]:
+        "Find the smallest element >= x, or None if it doesn't exist."
+        for a in self.a:
+            if a[-1] >= x:
+                return a[bisect_left(a, x)]
+
+    def __getitem__(self, x: int) -> T:
+        "Return the x-th element, or IndexError if it doesn't exist."
+        if x < 0: x += self.size
+        if x < 0: raise IndexError
+        for a in self.a:
+            if x < len(a): return a[x]
+            x -= len(a)
+        raise IndexError
+
+    def _index(self, x: T) -> int:
+        "Count the number of elements < x."
+        ans = 0
+        for a in self.a:
+            if a[-1] >= x:
+                return ans + bisect_left(a, x)
+            ans += len(a)
+        return ans
+
+    def _index_right(self, x: T) -> int:
+        "Count the number of elements <= x."
+        ans = 0
+        for a in self.a:
+            if a[-1] > x:
+                return ans + bisect_right(a, x)
+            ans += len(a)
+        return ans
+
+####################################
+    def remove(self, x):
+        if x in self:
+            self.discard(x)
+
+    def index(self, x):
+        if x in self:
+            return self._index(x)
         else:
-            return self.sum(r) - self.sum(l-1)
+            return None
 
+    def strictly_left(self, x):
+        return self.lt(x)
 
-    def __getitem__(self, i):
-        return self.range_sum(i, i)
+    def strictly_left_pos(self, x):
+        v = self.lt(x)
+        if v: return self.index(v)
+        return None
 
+    def strictly_right(self, x):
+        return self.gt(x)
 
-    def right_bound_of_x(self, x):
-        # pos       : sum([0, pos]) < x     となる最大のindex
-        sum_, pos = 0, 0
-        for i in range(self.depth, -1, -1):
-            k = pos + (1 << i)
-            if k <= self.size and sum_ + self.dat[k] <= x:
-                sum_ += self.dat[k]
-                pos += 1 << i
-        return pos
-
-    def right_bound_include_x(self, x):
-        # pos       : sum([0, pos]) <= x     となる最大のindex
-        sum_, pos = 0, 0
-        for i in range(self.depth, -1, -1):
-            k = pos + (1 << i)
-            if k <= self.size and sum_ + self.dat[k] < x:
-                sum_ += self.dat[k]
-                pos += 1 << i
-        return pos
-
-    def left_bound_of_x(self, x):
-        # pos   : x < sum([0, pos])  となる最小のindex
-        return self.right_bound_include_x(x) - 1
-
-    def left_bound_include_x(self, x):
-        # pos   : x <= sum([0, pos])  となる最小のindex
-        return self.right_bound_of_x(x) - 1
-
-
-#### for debug
-    def _get_original_sequence(self):
-        ret = [self[i] for i in range(self.size)]
-        return ret
-
-    def _get_aggrigate_sequence(self):
-        return [self.sum(i) for i in range(self.size)]
-
-    def __str__(self):
-        seq = self._get_original_sequence()
-        ret = 'original :' + ' '.join(map(str, seq))
-        ret += '\n'
-        seq = self._get_aggrigate_sequence()
-        ret += 'aggrigate:' + ' '.join(map(str, seq))
-        return ret
+    def strictly_right_pos(self, x):
+        v = self.gt(x)
+        if v: return self.index(v)
+        return None
 
 ########################################
-
 n = int(input())
-isinc = BinaryIndexedTree(n)
-ischr = [BinaryIndexedTree(n) for _ in range(26)]
-s = [ord(si) - ord('a') for si in input()]
+S = ['a'] + list(input()) + ['z']
+inc = SortedSet()
+pos = {si: SortedSet() for si in alps}
 
-for i in range(n-1):
-    if s[i] <= s[i+1]:
-        isinc.update(i, 1)
+for i, si in enumerate(S):
+    if i > 0:
+        if S[i-1] > S[i]:
+            inc.add(i)
+    pos[si].add(i)
 
-def issorted(l, r):
-    return isinc.range_sum(l, r-1) == r - l
+inc.add(2*n)
+for si in alps:
+    pos[si].add(-1)
+    pos[si].add(n*2)
 
-for i in range(n):
-    ischr[s[i]].update(i, 1)
-
-q = int(input())
-for _ in range(q):
-    qu, l, r = input().split()
-    if qu == '1':
-        p = int(l) - 1
-        x = ord(r) - ord('a')
-        px = s[p]
-        s[p] = x
-        if p < n-1:
-            if s[p] <= s[p+1]:
-                isinc.update(p, 1)
-            else:
-                isinc.update(p, 0)
-        if 0 <= p - 1:
-            if s[p-1] <= s[p]:
-                isinc.update(p-1, 1)
-            else:
-                isinc.update(p-1, 0)
-        ischr[px].update(p, 0)
-        ischr[x].update(p, 1)
+def update(x, c):
+    if S[x-1] > c:
+        inc.add(x-1)
     else:
-        l = int(l) - 1
-        r = int(r) - 1
-        if not issorted(l, r):
-            print('No')
-        lc = s[l]
-        rc = s[r]
-        for i in range(lc+1, rc-1):
-            print(s, lc+1, rc+1, i)
-            if ischr[i].range_sum(0, n) != ischr[i].range_sum(l, r):
-                print('No')
-        print('Yes')
+        inc.remove(x-1)
+    if c > S[x+1]:
+        inc.add(x)
+    else:
+        inc.remove(x)
+    pos[S[x]].remove(x)
+    pos[c].add(x)
+    S[x] = c
+
+
+def isinc(l, r):
+    return inc.ge(l) >= r
+
+def iscontain(c, l, r):
+    return pos[c].ge(0) >= l and pos[c].le(n+1) <= r
+
+def check(l, r):
+    if not isinc(l, r):
+        return False
+    cl = ord(S[l]) + 1
+    rl = ord(S[r]) - 1
+    if cl > rl:
+        return True
+    for ct in range(cl, rl+1):
+        if not iscontain(chr(ct), l, r):
+            return False
+    return True
+
+
+
+
+for _ in range(int(input())):
+    que = input().split()
+    if que[0] == '1':
+        _, x, c = que
+        x = int(x)
+        update(x, c)
+    else:
+        _, l, r = que
+        l, r = int(l), int(r)
+        print('Yes' if check(l, r) else 'No')
