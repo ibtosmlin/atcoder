@@ -17,13 +17,12 @@ class dijkstra:
         self.G = G                  # 有向グラフ
         self.start = None           # 始点
         self.G_used = [None] * n    # 最短経路木の親
-        self.dist = [self.INF] * self.n  # 始点からの距離
-        self.count = [0] * self.n   # 始点からの最短到達パス数
-
+        self.dist = [self.INF] * n  # 始点からの距離
+        self.count = [0] * n        # 始点からの最短到達パス数
 
     def build(self, start):
         self.start = start
-        self.G_used = [None] * n
+        self.G_used = [None] * self.n
         self.dist = [self.INF] * self.n
         self.count = [0] * self.n
         next_q = []
@@ -32,23 +31,23 @@ class dijkstra:
         for st in start:
             self.dist[st] = 0
             self.count[st] = 1
-            next_q.append((0, st))
+            next_q.append((st, 0))
         heapify(next_q)
         while next_q:
-            cd, cn = heappop(next_q)
-            if self.dist[cn] < cd: continue
-            for nn, nd in self.G[cn]:
+            x, d = heappop(next_q)
+            if self.dist[x] < d: continue
+            for nx, d_nx_x in self.G[x]:
                 # 変則的な距離の場合はここを調整 ##
-                nd_ = self.dist[cn] + nd
+                nd = self.dist[x] + d_nx_x
                 ############################
-                if self.dist[nn] < nd_: continue
-                if self.dist[nn] == nd_:
-                    self.count[nn] += self.count[cn]
+                if self.dist[nx] < nd: continue
+                if self.dist[nx] == nd:
+                    self.count[nx] += self.count[x]
                     continue
-                self.dist[nn] = nd_
-                self.G_used[nn] = cn
-                self.count[nn] = self.count[cn]
-                heappush(next_q, (nd_, nn))
+                self.dist[nx] = nd
+                self.G_used[nx] = x
+                self.count[nx] = self.count[x]
+                heappush(next_q, (nx, nd))
 
 
     def get_dist(self, goal):
