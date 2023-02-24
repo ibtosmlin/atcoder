@@ -19,3 +19,7 @@ alias setat="source ~/atcoder/tool/settings.sh"
 
 # algo
 alias goalgo="source ~/atcoder/tool/algo.sh"
+
+# oh my posh
+export PATH="/home/ibtosm/.local/bin:$PATH"
+eval "$(oh-my-posh init bash --config ~/.poshthemes/ibtosm.omp.json)"

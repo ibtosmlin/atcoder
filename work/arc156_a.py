@@ -1,4 +1,4 @@
-# https://atcoder.jp/contests/abc287/tasks/abc287_a
+# https://atcoder.jp/contests/arc156/tasks/arc156_a
 from itertools import *
 from operator import itemgetter
 from collections import defaultdict, Counter, deque
@@ -20,15 +20,23 @@ def input(): return sys.stdin.readline().rstrip()
 def int1(x): return int(x)-1
 def notisinhw(i, j, h, w): return not ((0 <= i < h) and (0 <= j < w))
 def end(r=-1): print(r); exit()
-n = int(input())
-ret = 0
-for _ in range(n):
-    s = input()
-    if s == 'For':
-        ret += 1
-if ret > n - ret:
-    print('Yes')
-else:
-    print('No')
-    
-    
+
+def f():
+    n = int(input())
+    s = input()  
+    c = s.count('1')  
+    if c%2: return -1
+    if c >= 4: return c//2
+    if c == 0: return c
+    if '11' not in s: return 1
+    if n == 3:
+        return -1
+    if n == 4 and s == '0110':
+        return 3
+    else:
+        return 2
+
+
+t = int(input())
+for _ in range(t):
+    print(f())
