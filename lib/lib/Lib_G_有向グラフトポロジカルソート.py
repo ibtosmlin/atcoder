@@ -53,11 +53,23 @@ class topological_sort:
         elif sorttype == 'nodeid':      # ノードの順番
             self._build_sort_by_nodeid()
 
+
     @property
     def is_dag(self) -> bool:
         return len(self.ts)==self.n
         # True 閉路なしDAG
         # False 閉路あり
+
+
+    @property
+    def is_unique(self) -> bool:
+        if not self.is_dag: return False
+        for i in range(self.n-1):
+            u, v = self.ts[i:i+2]
+            if not v in self.G[u]: return False
+        return True
+        # True トポロジカルソートの経路が一意
+        # False 複数あり
 
 
 #########################################
