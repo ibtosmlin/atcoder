@@ -1,11 +1,14 @@
 #name#
-
+#description#
+#body#
 # BIT演算
+#body#
+# https://qiita.com/qiita_kuru/items/3a6ab432ffb6ae506758
 # k桁目 or bitを0にする
 x &= ~(1 << k)
 x &= ~bit
 
-# k桁目 or bitを0にする
+# k桁目 or bitを1にする
 x |= 1 << k
 x |= bit
 
@@ -16,6 +19,10 @@ x ^= bit
 # 111
 ~((~0)<<3)      # 111
 (1 << 3) - 1    # 111
+
+#prefix#
+# Lib_BIT演算全部分集合
+#end#
 
 
 

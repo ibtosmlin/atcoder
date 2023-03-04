@@ -2538,7 +2538,9 @@
             "print(5interactive)"
         ],
         "body": [
-            "print(ret, flush=True)"
+            "def req(ret):",
+            "    print(ret, flush=True)",
+            ""
         ],
         "description": [
             "interactive"
@@ -3667,106 +3669,6 @@
             "累積和"
         ]
     },
-    "": {
-        "prefix": [],
-        "body": [],
-        "description": []
-    },
-    "BIT演算": {
-        "prefix": [],
-        "body": [],
-        "description": []
-    },
-    "k桁目 or bitを0にする": {
-        "prefix": [],
-        "body": [],
-        "description": []
-    },
-    "&= ~(1 << k)": {
-        "prefix": [],
-        "body": [],
-        "description": []
-    },
-    "&= ~bit": {
-        "prefix": [],
-        "body": [],
-        "description": []
-    },
-    "|= 1 << k": {
-        "prefix": [],
-        "body": [],
-        "description": []
-    },
-    "|= bit": {
-        "prefix": [],
-        "body": [],
-        "description": []
-    },
-    "k桁目 or bitを反転する": {
-        "prefix": [],
-        "body": [],
-        "description": []
-    },
-    "^= 1 << k": {
-        "prefix": [],
-        "body": [],
-        "description": []
-    },
-    "^= bit": {
-        "prefix": [],
-        "body": [],
-        "description": []
-    },
-    "111": {
-        "prefix": [],
-        "body": [],
-        "description": []
-    },
-    "(~0)<<3)      # 111": {
-        "prefix": [],
-        "body": [],
-        "description": []
-    },
-    " << 3) - 1    # 111": {
-        "prefix": [],
-        "body": [],
-        "description": []
-    },
-    "BIT演算subset": {
-        "prefix": [
-            "Lib_BIT演算全部分集合"
-        ],
-        "body": [
-            "# 集合Mの部分集合を列挙",
-            "def subset(n)->list:",
-            "    v = (-1) & n",
-            "    ret = []",
-            "    while v:",
-            "        ret.append(v)",
-            "        v = (v - 1) & n",
-            "    return ret",
-            "n = int('101', 2)",
-            "print(list(map(bin, subset(n))))",
-            "# ['0b101', '0b100', '0b1']",
-            "",
-            "# サイズKの部分集合を列挙",
-            "def ksubset(n, k)->list:",
-            "    ret = []",
-            "    v = (1 << k) - 1",
-            "    while v < (1 << n):",
-            "        ret.append(v)",
-            "        x = v & -v; y = v + x",
-            "        v = ((v & ~y) // x >> 1) | y",
-            "    return ret",
-            "n, k = 5, 2",
-            "print(list(map(bin, ksubset(n, k))))",
-            "# ['0b11', '0b101', '0b110', '0b1001', '0b1010', '0b1100', '0b10001', '0b10010', '0b10100', '0b11000']",
-            ""
-        ],
-        "description": [
-            "集合Mの部分集合"
-        ]
-    },
     "ベルマンフォード法": {
         "prefix": [
             "Lib_SP_最短経路探索_bellmanford"
@@ -4523,6 +4425,98 @@
         ],
         "description": [
             "巡回セールスマン問題"
+        ]
+    },
+    "部分列の個数": {
+        "prefix": [
+            "Lib_部分列個数_subsetcount#"
+        ],
+        "body": [
+            "# https://atcoder.jp/contests/past202206-open/tasks/past202206_k",
+            "",
+            "class CountSubsets:",
+            "    def __init__(self, S, T, mod) -> None:",
+            "        self.S = S",
+            "        self.T = T",
+            "        self.ls = n = len(S)",
+            "        self.lt = m = len(T)",
+            "        self.dp = [[0]*(m+1) for _ in range(n+1)]",
+            "        self._adj()",
+            "        self.mod = mod",
+            "        self.scS, self.ppS = self._substr_count(self.S)",
+            "        self.scT, self.ppT = self._substr_count(self.T)",
+            "        self.scbothST = self._substr_count_both()",
+            "",
+            "    def _adj(self):",
+            "        mn = min(min(self.S), min(self.T))",
+            "        self.S = [u - mn for u in self.S]",
+            "        self.T = [u - mn for u in self.T]",
+            "        self.Max = max(max(self.S), max(self.T))",
+            "",
+            "    def _pp(self, S):",
+            "        ls = len(S)",
+            "        pps = [[-1] * (self.Max+1) for _ in range(ls+1)]",
+            "        for i, si in enumerate(S):",
+            "            for j in range(self.Max+1):",
+            "                pps[i+1][j] = pps[i][j]",
+            "                if si == j: pps[i+1][j] = i",
+            "        return pps",
+            "",
+            "    def _substr_count(self, S):",
+            "        mod = self.mod",
+            "        pps = self._pp(S)",
+            "        ls = len(S)",
+            "        dp = [0] * (ls+1)",
+            "        dp[0] = 1",
+            "        for i, si in enumerate(S):",
+            "            dp[i+1] = dp[i]",
+            "            if pps[i][si] == -1:",
+            "                dp[i+1] += dp[i]",
+            "            else:",
+            "                dp[i+1] += dp[i] - dp[pps[i][si]]",
+            "            dp[i+1] %= mod",
+            "",
+            "        return dp[ls], pps",
+            "",
+            "    def _substr_count_both(self):",
+            "        S, T = self.S, self.T",
+            "        ls, lt = self.ls, self.lt",
+            "        pps, ppt = self.ppS, self.ppT",
+            "        dp = [[0] * (lt+1) for _ in range(ls+1)]",
+            "        for i in range(ls+1):",
+            "            dp[i][0] = 1",
+            "        for j in range(lt+1):",
+            "            dp[0][j] = 1",
+            "",
+            "        for i, si in enumerate(S):",
+            "            for j, tj in enumerate(T):",
+            "                dp[i+1][j+1] = dp[i][j+1] + dp[i+1][j] - dp[i][j]",
+            "                if si != tj: continue",
+            "                pi, pj = pps[i][si], ppt[j][tj]",
+            "                if pi != -1 and pj != -1:",
+            "                    dp[i+1][j+1] += dp[i][j] - dp[i][pj] - dp[pi][j] + dp[pi][pj]",
+            "                elif pi != -1 and pj == -1:",
+            "                    dp[i+1][j+1] += dp[i][j] - dp[pi][j]",
+            "                elif pi == -1 and pj != -1:",
+            "                    dp[i+1][j+1] += dp[i][j] - dp[i][pj]",
+            "                else:",
+            "                    dp[i+1][j+1] += dp[i][j]",
+            "                dp[i+1][j+1] %= self.mod",
+            "        return dp[ls][lt]",
+            "",
+            "#####################",
+            "",
+            "mod = 998244353",
+            "s = input()",
+            "t = input()",
+            "s = [ord(si)-ord('a') for si in s]",
+            "t = [ord(si)-ord('a') for si in t]",
+            "cs = CountSubsets(s, t, mod)",
+            "print((cs.scS+cs.scT-cs.scbothST - 1)%mod)",
+            ""
+        ],
+        "description": [
+            "Lib_Substrings_count"
         ]
     },
     "強連結成分分解": {
@@ -5606,11 +5600,23 @@
             "        elif sorttype == 'nodeid':      # ノードの順番",
             "            self._build_sort_by_nodeid()",
             "",
+            "",
             "    @property",
             "    def is_dag(self) -> bool:",
             "        return len(self.ts)==self.n",
             "        # True 閉路なしDAG",
             "        # False 閉路あり",
+            "",
+            "",
+            "    @property",
+            "    def is_unique(self) -> bool:",
+            "        if not self.is_dag: return False",
+            "        for i in range(self.n-1):",
+            "            u, v = self.ts[i:i+2]",
+            "            if not v in self.G[u]: return False",
+            "        return True",
+            "        # True トポロジカルソートの経路が一意",
+            "        # False 複数あり",
             "",
             "",
             "#########################################",

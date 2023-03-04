@@ -1,7 +1,3 @@
-ret = 0
-ret += 1 << 5
-ret += 1 << 2
-ret += 1 << 1
-ret += 1
-print(ret)
-print(1<<8)
+month = int(input())
+days = [31,28,31,30,31,30,31,31,30,31,30,31]
+print(days[month-1])

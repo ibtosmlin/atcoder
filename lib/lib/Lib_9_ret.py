@@ -53,7 +53,9 @@ print('\n'.join(map(str, ret)))
 #description#
 # interactive
 #body#
-print(ret, flush=True)
+def req(ret):
+    print(ret, flush=True)
+
 #prefix#
 # print(5interactive)
 #end#

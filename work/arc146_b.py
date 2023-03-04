@@ -1,4 +1,4 @@
-# https://atcoder.jp/contests/abc041/tasks/abc041_d
+# https://atcoder.jp/contests/arc146/tasks/arc146_b
 from itertools import *
 from operator import itemgetter
 from collections import defaultdict, Counter, deque
@@ -20,20 +20,22 @@ def input(): return sys.stdin.readline().rstrip()
 def int1(x): return int(x)-1
 def notisinhw(i, j, h, w): return not ((0 <= i < h) and (0 <= j < w))
 def end(r=-1): print(r); exit()
-n, m = map(int, input().split())
-cond = [tuple(map(int1, input().split())) for _ in range(m)]
+n, m, k = map(int, input().split())
+a = list(map(int, input().split()))
 
-def isng(u, v):
-
-
-
-dp = [[0] * (1<<n) for _ in range(n)]
-dp[0][0] = 1
-
-for i in range(1<<n):
-    for j in range(n):
-        if i >> j & 1: continue
-        for k in range(n):
-            if i >> k & 1:
-
+for i in range(30):
+    d = 30 - i
+    x = 1 << d
+    a.sort(reverse=True)
+    ne = [max(0,x - ai) for ai in a[:k]]
+    need = sum(ne)
+    print(d, a, ne, need)
+    if need <= m:
+        m -= need
+        ret = x + min(m//k, x - 1)
+        break
+    else:
+        for i in range(n):
+            a[i] &= ~x
+print(ret)
 
