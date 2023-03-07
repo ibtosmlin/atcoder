@@ -11,6 +11,9 @@ class UnionFind:
         self.sizes = [1] * n                    # グループの要素数
         self.group_count = n                    # グループの数
 
+
+
+
     def find(self, x):
         """親を出力
         Parameters
@@ -36,6 +39,7 @@ class UnionFind:
         self.sizes[y] += self.sizes[x]
         self.group_count -= 1
 
+    ##########################################333
     def same(self, x, y) -> bool:
         """xとyが同じグループかどうか
         """
@@ -45,27 +49,24 @@ class UnionFind:
         """xと同じグループの要素
         """
         root = self.find(x)
-        return {i for i in range(self.n) if self.find(i) == root}
+        return [i for i in range(self.n) if self.find(i) == root]
 
     def size(self, x):
         """xのグループの要素数
         """
         return self.sizes[self.find(x)]
 
-    @property
-    def roots(self):
-        """親の要素一覧
+    def get_roots(self):
+        """親のリスト取得
         """
-        return {i for i, x in enumerate(self.parents) if i == x}
+        self.roots = [i for i, x in enumerate(self.parents) if i == x]
 
-    @property
-    def all_group_members(self):
-        """グループのメンバー一覧
+    def get_all_group_members(self):
+        """親ごとのグループのメンバー一覧取得
         """
-        group_members = defaultdict(list)
-        for x in range(self.n):
-            group_members[self.find(x)].append(x)
-        return group_members
+        self.get_roots()
+        self.group_members = {x: self.members(x) for x in self.roots}
+
 
     def __str__(self):
         return '\n'.join(f'{r}: {self.members(r)}' for r in self.roots)
