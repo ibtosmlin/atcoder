@@ -34,7 +34,7 @@ class UnionFind:
         if self.ranks[x] > self.ranks[y]:
             x , y = y, x    #yを親にする
         elif self.ranks[x] == self.ranks[y]:
-                self.ranks[y] += 1
+            self.ranks[y] += 1
         self.parents[x] = y
         self.sizes[y] += self.sizes[x]
         self.group_count -= 1
@@ -76,12 +76,12 @@ class UnionFind:
 n, q = map(int, input().split())
 uf = UnionFind(n)
 for _ in range(q):
-    p, _a, _b = map(int,input().split())
-    _a -= 1; _b -= 1
+    p, a, b = map(int,input().split())
+    a -= 1; b -= 1
     if p == 0:
-        uf.unite(_a, _b)
+        uf.unite(a, b)
     else:
-        if uf.same(_a, _b):
+        if uf.same(a, b):
             print('Yes')
         else:
             print('No')
