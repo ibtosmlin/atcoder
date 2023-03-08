@@ -48,14 +48,17 @@ a, b = 5, 13
 z2 = complex(a, b)
 
 print(z1.real)
-print(z1.img)
+print(z1.imag)
 
 
 # 極座標表示
 r, theta = cmath.polar(z1)
 
+# 90度回転
 print(cmath.rect(1, cmath.pi/2))
 # (6.123233995736766e-17+1j)
+
+# 共役数
 print(z2.conjugate())
 # (5-13j)
 

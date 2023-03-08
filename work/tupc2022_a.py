@@ -1,4 +1,4 @@
-# https://atcoder.jp/contests/tessoku-book/tasks/math_and_algorithm_am
+# https://atcoder.jp/contests/tupc2022/tasks/tupc2022_a
 from itertools import *
 from operator import itemgetter
 from collections import defaultdict, Counter, deque
@@ -20,22 +20,10 @@ def input(): return sys.stdin.readline().rstrip()
 def int1(x): return int(x)-1
 def notisinhw(i, j, h, w): return not ((0 <= i < h) and (0 <= j < w))
 def end(r=-1): print(r); exit()
-n, m = map(int, input().split())
-G = [[] for _ in range(n)]
-for _ in range(m):
-    a, b = map(int1, input().split())
-    G[a].append(b)
-    G[b].append(a)
+n, k = map(int, input().split())
+p = [0] + list(map(int, input().split()))
 
-dp = [-1] * n
-que = deque()
-dp[0] = 0
-que.append(0)
-while que:
-    x = que.popleft()
-    for nx in G[x]:
-        if dp[nx] != -1: continue
-        dp[nx] = dp[x] + 1
-        que.append(nx)
-for dpi in dp:
-    print(dpi)
+for i in range(k, n+1):
+    if p[i] != i:
+        end('No')
+end(yes)

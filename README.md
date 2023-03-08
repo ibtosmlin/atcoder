@@ -30,10 +30,10 @@ con_id="abc234"
 ```
 - コンテスト中
 ```sh
-$ a.py [command]
-$ b.py [command]
+$ pya [command]
+$ pyb [command]
 ...
-$ h.py [command]
+$ pyf [command]
 ```
 
 ## Requirements
