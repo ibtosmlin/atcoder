@@ -3,8 +3,39 @@
 #description#
 # Lib_Substrings_count
 #body#
-# https://atcoder.jp/contests/past202206-open/tasks/past202206_k
 
+def count_subsets(S, mod=10**9+7):
+    """
+    部分列（連続でない）の個数を数える
+    空集合を含める
+    """
+    if type(S) == str:
+        S = [ord(si)-ord('a') for si in S]
+    ls = len(S)
+    maxs = max(S)
+    pps = [[-1] * (maxs+1) for _ in range(ls+1)]
+    for i, si in enumerate(S):
+        for j in range(maxs+1):
+            pps[i+1][j] = pps[i][j]
+            if si == j: pps[i+1][j] = i
+
+    dp = [0] * (ls+1)
+    dp[0] = 1
+    for i, si in enumerate(S):
+        dp[i+1] = dp[i]
+        if pps[i][si] == -1:
+            dp[i+1] += dp[i]
+        else:
+            dp[i+1] += dp[i] - dp[pps[i][si]]
+        dp[i+1] %= mod
+
+    return dp[ls]
+
+
+#####################
+
+
+# https://atcoder.jp/contests/past202206-open/tasks/past202206_k
 class CountSubsets:
     def __init__(self, S, T, mod) -> None:
         self.S = S
@@ -88,3 +119,4 @@ print((cs.scS+cs.scT-cs.scbothST - 1)%mod)
 #prefix#
 # Lib_部分列個数_subsetcount#
 #end#
+
