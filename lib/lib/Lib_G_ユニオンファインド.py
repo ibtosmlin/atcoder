@@ -12,8 +12,6 @@ class UnionFind:
         self.group_count = n                    # グループの数
 
 
-
-
     def find(self, x):
         """親を出力
         Parameters
@@ -39,7 +37,6 @@ class UnionFind:
         self.sizes[y] += self.sizes[x]
         self.group_count -= 1
 
-    ##########################################333
     def same(self, x, y) -> bool:
         """xとyが同じグループかどうか
         """
@@ -58,14 +55,18 @@ class UnionFind:
 
     def get_roots(self):
         """親のリスト取得
+           親ごとのグループのメンバー一覧取得
         """
-        self.roots = [i for i, x in enumerate(self.parents) if i == x]
-
-    def get_all_group_members(self):
-        """親ごとのグループのメンバー一覧取得
-        """
-        self.get_roots()
-        self.group_members = {x: self.members(x) for x in self.roots}
+        _dum = [[] for _ in range(self.n)]
+        self.roots = []
+        self.group_members = dict()
+        for x in range(self.n):
+            r = self.find(x)
+            if r == x:
+                self.roots.append(r)
+            _dum[r].append(x)
+        for r in self.roots:
+            self.group_members[r] = _dum[r]
 
 
     def __str__(self):
