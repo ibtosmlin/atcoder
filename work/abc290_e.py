@@ -23,7 +23,8 @@ def end(r=-1): print(r); exit()
 n = int(input())
 a = list(map(int, input().split()))
 
-ret = 0
-for i in range(n):
-    ret += n - i - 1
-
+# (i, j) が異なる場合その寄与は
+# f(i, j) = min(i+1, N-j)
+# f(i, j) = i+1 -->   N-i+1
+x = float('-3.0')
+print(x.is_integer())
