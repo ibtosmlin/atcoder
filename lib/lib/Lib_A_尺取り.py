@@ -127,5 +127,5 @@ for i, ai in enumerate(A):
 print(*ret)
 
 #prefix#
-# Lib_尺取り#
+# Lib_A_尺取り
 #end#

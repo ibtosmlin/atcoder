@@ -8,7 +8,7 @@
 # n <= 40 だと半分で全列挙したものをそれぞれ計算してマージ処理する
 
 n, t = map(int, input().split())
-v = list(map(int, input().split()))
+vs = list(map(int, input().split()))
 
 def get_list(vl):
     ret = [0]
@@ -20,8 +20,8 @@ def get_list(vl):
             ret.append(x)
     return sorted(ret)
 
-lower = get_list(v[:n//2])
-upper = get_list(v[n//2:])
+lower = get_list(vs[:n//2])
+upper = get_list(vs[n//2:])
 
 ret = 0
 up = len(upper) - 1
