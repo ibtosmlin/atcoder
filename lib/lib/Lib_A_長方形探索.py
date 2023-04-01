@@ -60,31 +60,33 @@ G = [list(map(int, input().split())) for _ in range(h)]
 print(max_rect(h, w, G, 1))
 
 #####################################
-# ヒストグラムの最大長方形面積
-from collections import deque
-def max_hist(A):
-    mx = 0
-    stack = deque([])
-    A.append(0)
-    for j, h in enumerate(A):
-        if not stack:
-            stack.append((j, h))
-        else:
-            if stack[-1][1] < h:
-                stack.append((j, h))
-            elif stack[-1][1] > h:
-                while stack and stack[-1][1] > h:
-                    prev =stack.pop()
-                    w2 = j - prev[0]
-                    h2 = prev[1]
-                    mx = max(mx, h2*w2)
-                stack.append((prev[0], h))
-    return mx
+# 左で自分より小さいものがあるindexを高速で計算
+def left_min_position(A, min_value=0):
+    ret = []
+    stack = []
+    stack.append([min_value, -1])
+    for i, ai in enumerate(A):
+        while stack[-1][0] >= ai:   #
+            stack.pop()
+        ret.append(stack[-1][1])
+        stack.append([ai, i])
+    return ret
+
+def right_min_position(A, min_value=0):
+# 左で自分より小さいものがあるindexを高速で計算
+    n = len(A)
+    return [n - pi - 1 for pi in reversed(left_min_position(A[::-1]))]
+
 
 n = int(input())
 A = list(map(int, input().split()))
-print(max_hist(A))
+l = left_min_position(A)
+r = right_min_position(A)
 
+mx = 0
+for li, ri, ai in zip(l, r, A):
+    mx = max(mx, ai*(ri-li-1))
+print(mx)
 
 #prefix#
 # Lib_A_長方形探索_最大正方形_最大長方形

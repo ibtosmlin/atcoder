@@ -1,150 +1,212 @@
-###########################
-# lca  オイラーツアーとセグ木で
-###########################
 
-class EulerTour():
-    def __init__(self, n):
+#############################################
+# 木の上で範囲クエリするもの
+# https://atcoder.jp/contests/abc294/tasks/abc294_g
+
+class SegmentTree:
+    def __init__(self, init, f, ie):
+        # initがリストなら初期化, 整数ならinit個の配列
+        self._f = f
+        self._ie = ie
+        if type(init) == int:
+            init = [ie] * init
+        self._n = len(init)
+        self._log = (self._n - 1).bit_length()
+        self._size = 1 << self._log
+        self._dat = [ie] * self._size + init + [ie] * (self._size - len(init))
+        for i in range(self._size-1, 0, -1): self._update(i)
+
+    def _update(self, i):
+        self._dat[i] = self._f(self._dat[i<<1], self._dat[(i<<1)+1])
+
+    def __getitem__(self, i):
+        return self._dat[i + self._size]
+
+    def __str__(self):
+        return ' '.join(map(str, (self[i] for i in range(self._n))))
+
+    def update(self, i, x):
+        # one point update  a[i] を xに更新
+        i += self._size
+        self._dat[i] = x
+        while i:
+            i >>= 1
+            self._update(i)
+
+    def add(self, i, x):
+        # one point update a[i] に xを加算
+        i += self._size
+        self._dat[i] += x
+        while i:
+            i >>= 1
+            self._update(i)
+
+    def query(self, l, r):
+        # 半開区間[l, r)にf(a[l], a[l+1])演算
+        l += self._size
+        r += self._size
+        lret, rret = self._ie, self._ie
+        while l < r:
+            if l & 1:
+                lret = self._f(lret, self._dat[l])
+                l += 1
+            if r & 1:
+                r -= 1
+                rret = self._f(self._dat[r], rret)
+            l >>= 1
+            r >>= 1
+        return self._f(lret, rret)
+
+
+
+class EulerTour:
+    def __init__(self, n, G, node_cost=None):
         self.n = n
-        self.edges = [[] for _ in range(n)]
-        self.root = None    # 根
-        self.etnodes = []    # i番目の頂点番号
-        self.etedges = []    # i番目の辺の番号
-        self.etL = [0] * n  # in
-        self.etR = [0] * n  # out
-        self.depthbynodes = [0] * n
-        self.etdepth = []       # i番目の辺の
+        self.G = G
+        self.root = None        # 根
+        self.Depth = [0] * n    # 頂点iの深さ
+        if node_cost:
+            self.Ncost = node_cost
+        else:
+            self.Ncost = [0] * n       # 頂点iの値
+        self.Ecost = [0] * n       # 辺iのコスト
+        self.TimeIn = [0] * n   # 頂点iに到達する時間
+        self.TimeOut = [0] * n  # 頂点iから抜け出す時間
+        self.ETNodes = []       # ツアー順i番目の頂点番号
+        self.ETDepth = []       # ツアー順i番目の深さ番号
+        self.ETNodesCost = []   # ツアー順i番目の頂点のコスト
+        self.ETEdgesCost = []   # ツアー順i番目の辺のコスト
 
 
-    def add_edge(self, u, v):
-        self.edges[u].append(v)
-        self.edges[v].append(u)
-
-
-    def set_euler_tour(self, root):
+    def set_euler_tour(self, root=0):
         self.root = root        # 根を設定して
         pa = [0] * self.n
         stack = [~root, root]
-        ct = -1
-        de = -1
+        ct = -1; de = -1
+        _ETedges = []
         while stack:
             v = stack.pop()
             ct += 1
-            self.etedges.append(v)
+            _ETedges.append(v)
             if v >= 0:
+                self.TimeIn[v] = ct
                 de += 1
-                self.etnodes.append(v)
-                self.etdepth.append(de)
-                self.etL[v] = ct
-                self.depthbynodes[v] = de
+                self.ETNodes.append(v)
+                self.ETDepth.append(de)
+                self.Depth[v] = de
                 p = pa[v]
-                for w in self.edges[v][::-1]:
+                for w, cost in self.G[v][::-1]:
                     if w == p: continue
+                    self.Ecost[w] = cost
                     pa[w] = v
-                    stack.append(~w)
-                    stack.append(w)
+                    stack.extend([~w, w])
+                self.ETNodesCost.append(self.Ncost[v])
+                self.ETEdgesCost.append(self.Ecost[v])
             else:
+                self.TimeOut[~v] = ct
                 de -= 1
-                if de<0:
-                    self.etdepth.append(self.n)
+                if de < 0:
+                    self.ETDepth.append(self.n)
                 else:
-                    self.etdepth.append(de)
-                self.etnodes.append(pa[~v])
-                self.etR[~v] = ct
+                    self.ETDepth.append(de)
+                self.ETNodes.append(pa[~v])
+                self.ETNodesCost.append(-self.Ncost[~v])
+                self.ETEdgesCost.append(-self.Ecost[~v])
+        self.sgt_depth = SegmentTree(self.ETDepth, lambda x, y: min(x, y), float('inf'))
+        self._ETedges = _ETedges
+        self.set_query()
 
-#############################################
-class SegmentTree:
-    # 初期化処理
-    # f     : SegmentTreeにのせるモノイド
-    # idele : fに対する単位元
-    def __init__(self, size, f=lambda x,y : min(x, y), idele=float('inf')):
-        self.size = 2**(size-1).bit_length()    # 簡単のため要素数nを2冪にする
-        self.idele = idele                      # 単位元
-        self.f = f                              # モノイド
-        self.dat = [(self.idele, -1)]*(self.size*2)   # 要素を単位元で初期化
+    def set_query(self):
+        ####################### 要修正
+        self.sgt_nodes = SegmentTree(self.ETNodesCost, lambda x, y: x + y, 0)
+        self.sgt_edges = SegmentTree(self.ETEdgesCost, lambda x, y: x + y, 0)
 
-
-## one point
-    def update(self, i, x):
-        i += self.size  # 1番下の層におけるインデックス
-        self.dat[i] = (x, i)
-        while i > 0:    # 層をのぼりながら値を更新 indexが0になれば終了
-            i >>= 1     # 1つ上の層のインデックス(完全二分木における親)
-            # 下の層2つの演算結果の代入(完全二分木における子同士の演算)
-            self.dat[i] = self.f(self.dat[i*2], self.dat[i*2+1])
-
-
-## range
-    def query(self, l, r):
-        l += self.size  # 1番下の層におけるインデックス
-        r += self.size  # 1番下の層におけるインデックス
-        lres, rres = (self.idele, -1), (self.idele, -1) # 左側の答えと右側の答えを初期化
-        while l < r:    # lとrが重なるまで上記の判定を用いて演算を実行
-            # 左が子同士の右側(lが奇数)(lの末桁=1)ならば、dat[l]を加算
-            if l & 1:
-                lres = self.f(lres, self.dat[l])
-                l += 1
-            # 右が子同士の右側(rが奇数)(rの末桁=1)ならば、dat[r-1]を加算
-            if r & 1:
-                r -= 1
-                rres = self.f(self.dat[r], rres) # モノイドでは可換律は保証されていないので演算の方向に注意
-            l >>= 1
-            r >>= 1
-        res = self.f(lres, rres)
-        return res
-
-
-    def init(self, a):
-        for i, x in enumerate(a):
-            # 1番下の層におけるインデックス
-            self.dat[i + self.size] = (x, i)
-        for i in range(self.size-1, -1, -1):
-            self.dat[i] = self.f(self.dat[i*2], self.dat[i*2+1])
-
-###########################################
-
-class LCA:
-    def __init__(self, edges) -> None:
-        ET = EulerTour(len(edges))
-        ET.edges = edges
-        ET.set_euler_tour(0)
-        self.order = ET.etL      # ETの順番
-        self.etnodes = ET.etnodes # i番目のnode
-        self.depthbynodes = ET.depthbynodes
-        self.sgt = SegmentTree(len(ET.etdepth))
-        self.sgt.init(ET.etdepth)
 
     def lca(self, a:int, b:int):
-        l = self.order[a]
-        r = self.order[b]
-        if l>r: l, r = r, l
-        r += 1
-        x = self.sgt.query(l, r)[1]
-        return self.etnodes[x]
-
-    def dist(self, a:int, b:int):
-        depth = self.depthbynodes
-        lca = self.lca(a, b)
-        return depth[a] + depth[b] - 2*depth[lca]
-
-
+        l = min(self.TimeIn[a], self.TimeIn[b])
+        r = max(self.TimeOut[a], self.TimeOut[b])
+        if l > r: l, r = r, l
+        mindepth = self.sgt_depth.query(l, r)
+        while r - l > 1:
+            mid = (l+r) // 2
+            if self.sgt_depth.query(l, mid)==mindepth:
+                r = mid
+            else:
+                l = mid
+        return self.ETNodes[l]
 
 
+    def uv_edge_dist(self, u:int, v:int):
+        depth = self.Depth
+        lca = self.lca(u, v)
+        return depth[u] + depth[v] - 2 * depth[lca]
 
-############################################
+    def root_edge_cost(self, u:int):
+        l, r = 0, self.TimeIn[u]+1
+        return self.sgt_edges.query(l, r)
+
+    def uv_edge_cost(self, u:int, v:int):
+        lca = self.lca(u, v)
+        rtou = self.root_edge_cost(u)
+        rtov = self.root_edge_cost(v)
+        rtolca = self.root_edge_cost(lca)
+        return rtou + rtov - 2 * rtolca
+
+    def update_edge_cost(self, u, v, w):
+        if self.TimeIn[u] > self.TimeIn[v]: u, v = v, u
+        self.sgt_edges.update(self.TimeIn[v], w)
+        self.sgt_edges.update(self.TimeOut[v], -w)
+        self.ETEdgesCost[self.TimeIn[v]] = w
+        self.ETEdgesCost[self.TimeOut[v]] = -w
+
+    def add_edge_cost(self, u, v, w):
+        if self.TimeIn[u] > self.TimeIn[v]: u, v = v, u
+        self.sgt_edges.add(self.TimeIn[v], w)
+        self.sgt_edges.add(self.TimeOut[v], -w)
+        self.ETEdgesCost[self.TimeIn[v]] += w
+        self.ETEdgesCost[self.TimeOut[v]] -= w
+
+
+    def __str__(self):
+        ret = ""
+        ret += "[ NODE] " + " ".join(map(lambda x: str(x).rjust(4), range(self.n))) + "\n"
+        ret += "[   IN] " + " ".join(map(lambda x: str(x).rjust(4), self.TimeIn)) + "\n"
+        ret += "[  OUT] " + " ".join(map(lambda x: str(x).rjust(4), self.TimeOut)) + "\n"
+        ret += "[DEPTH] " + " ".join(map(lambda x: str(x).rjust(4), self.Depth)) + "\n"
+        ret += "[NCOST] " + " ".join(map(lambda x: str(x).rjust(4), self.Ncost)) + "\n"
+        ret += "[ECOST] " + " ".join(map(lambda x: str(x).rjust(4), self.Ecost)) + "\n" * 2
+        if not self.ETNodes: return ret
+        ret += "[ TIME] " + " ".join(map(lambda x: str(x).rjust(4), range(len(self.ETNodes)))) + "\n"
+        ret += "[ NODE] " + " ".join(map(lambda x: str(x).rjust(4), self.ETNodes)) + "\n"
+        ret += "[DEPTH] " + " ".join(map(lambda x: str(x).rjust(4), self.ETDepth)) + "\n"
+        ret += "[NCOST] " + " ".join(map(lambda x: str(x).rjust(4), self.ETNodesCost)) + "\n"
+        ret += "[ECOST] " + " ".join(map(lambda x: str(x).rjust(4), self.ETEdgesCost)) + "\n"
+        return ret
+
+###########################################
 n = int(input())
-g = [[] for _ in range(n)]
-for _ in range(n-1):
+G = [[] for _ in range(n)]
+edges = []
+for i in range(n-1):
     a, b, w = map(int, input().split())
     a -= 1
     b -= 1
+    G[a].append((b, w))
+    G[b].append((a, w))
+    edges.append([a, b, w])
 
-
-
-lca = LCA(g)
+et = EulerTour(n, G)
+et.set_euler_tour(0)
 
 q = int(input())
-for i in range(q):
-    a, b = map(int, input().split())
-    a -= 1
-    b -= 1
-    print(lca.dist(a, b))
+for _ in range(q):
+    f, x, y = map(int, input().split())
+    if f == 1:
+        i = x - 1
+        u, v, _ = edges[i]
+        et.update_edge_cost(u, v, y)
+    else:
+        u = x-1
+        v = y-1
+        print(et.uv_edge_cost(u, v))
+

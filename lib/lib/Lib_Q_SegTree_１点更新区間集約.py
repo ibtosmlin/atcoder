@@ -79,7 +79,7 @@ class SegmentTree:  # 初期化処理
 
     def add(self, i, x):
         """one point update
-        a[i] を xを加算
+        a[i] に xを加算
         """
         #
         i += self._size
