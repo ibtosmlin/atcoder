@@ -1,3 +1,4 @@
+# https://atcoder.jp/contests/abc022/tasks/abc022_d
 from itertools import *
 from operator import itemgetter
 from collections import defaultdict, Counter, deque
@@ -21,3 +22,10 @@ def yes(): print('Yes')
 def no(): print('No')
 def end(r=-1): print(r); exit()
 def fstr(x): return f'{x:.10f}'
+n = int(input())
+pt0 = [list(map(int, input().split())) for _ in range(n)]
+pt1 = [list(map(int, input().split())) for _ in range(n)]
+
+pt0.sort()
+pt1.sort()
+print(pt0[-1], pt1[-1])
