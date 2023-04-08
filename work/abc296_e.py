@@ -1,83 +1,97 @@
 # https://atcoder.jp/contests/abc296/tasks/abc296_e
 
-# トポロジカルソート
-# 有向非巡回グラフ（DAG）の各ノードを順序付けして、どのノードもその出力辺の先のノードより前にくるように並べることである。
-# 有向非巡回グラフは必ずトポロジカルソートすることができる。
-from heapq import *
-class topological_sort:
-    def __init__(self, n:int, G) -> None:
-        self.n = n
-        self.ts = []            # トポロジカルソート
-        self.parents = [-1] * n # 親 -1は根
-        self.G = G              # 辺
-        self.in_cnt = [0] * n   # 入力
-        self.node_zero = []     # ゼロ次のノード
-        for i, gi in enumerate(G):
-            for j in gi:
-                self.in_cnt[j] += 1
-        self.node_zero = [i for i in range(self.n) if self.in_cnt[i] == 0]
+class SCCGraph:
+    def __init__(self, N):
+        self.N = N
+        self.edges = []
+        self.ef = [[] for _ in range(N)]
+        self.er = [[] for _ in range(N)]
 
+    def csr(self):
+        self.start = [0]*(self.N+1)
+        self.elist = [0]*len(self.edges)
+        for e in self.edges:
+            self.start[e[0]+1] += 1
+        for i in range(1, self.N+1):
+            self.start[i] += self.start[i-1]
+        counter = self.start[:]
+        for e in self.edges:
+            self.elist[counter[e[0]]] = e[1]
+            counter[e[0]] += 1
 
-    def _build_sort_by_appear(self) -> None:
-        q = self.node_zero[:]
-        q = deque(q)
-        while q:
-            p = q.popleft()
-            self.ts.append(p)
-            for nxt in self.G[p]:
-                self.in_cnt[nxt] -= 1
-                if self.in_cnt[nxt] == 0:
-                    q.append(nxt)
-                    self.parents[nxt] = p
+    def add_edge(self, v, w):
+        self.edges.append((v, w))
+        self.ef[v].append(w)
+        self.er[w].append(v)
 
+    def scc_ids(self):
+        self.csr()
+        N = self.N
+        now_ord = group_num = 0
+        visited = []
+        low = [0]*N
+        order = [-1]*N
+        ids = [0]*N
+        parent = [-1]*N
+        stack = []
+        for i in range(N):
+            if order[i] == -1:
+                stack.append(i)
+                stack.append(i)
+                while stack:
+                    v = stack.pop()
+                    if order[v] == -1:
+                        low[v] = order[v] = now_ord
+                        now_ord += 1
+                        visited.append(v)
+                        for i in range(self.start[v], self.start[v+1]):
+                            to = self.elist[i]
+                            if order[to] == -1:
+                                stack.append(to)
+                                stack.append(to)
+                                parent[to] = v
+                            else:
+                                low[v] = min(low[v], order[to])
+                    else:
+                        if low[v] == order[v]:
+                            while True:
+                                u = visited.pop()
+                                order[u] = N
+                                ids[u] = group_num
+                                if u == v:
+                                    break
+                            group_num += 1
+                        if parent[v] != -1:
+                            low[parent[v]] = min(low[parent[v]], low[v])
+        for i, x in enumerate(ids):
+            ids[i] = group_num-1-x
 
-    def _build_sort_by_nodeid(self) -> None:
-        q = self.node_zero[:]
-        heapify(q)
-        while q:
-            p = heappop(q)
-            self.ts.append(p)
-            for nxt, nxtw in self.G[p]:
-                self.in_cnt[nxt] -= 1
-                if self.in_cnt[nxt] == 0:
-                    heappush(q, nxt)
-                    self.parents[nxt] = p
+        return group_num, ids
 
+    def scc(self):
+        group_num, ids = self.scc_ids()
+        groups = [[] for _ in range(group_num)]
+        for i, x in enumerate(ids):
+            groups[x].append(i)
+        return groups
 
-    def build(self, sorttype='appear'):
-        self.ts = []            # トポロジカルソート
-        if sorttype == 'appear':        # 出たとこ順番
-            self._build_sort_by_appear()
-        elif sorttype == 'nodeid':      # ノードの順番
-            self._build_sort_by_nodeid()
+####################################
+n = int(input())
+a = list(map(lambda x:int(x)-1, input().split()))
+scc = SCCGraph(n)
 
+ret = 0
+for i, ai in enumerate(a):
+    scc.add_edge(i, ai)
+    if i == ai:
+        ret += 1
 
-    @property
-    def is_dag(self) -> bool:
-        return len(self.ts)==self.n
-        # True 閉路なしDAG
-        # False 閉路あり
+for c in scc.scc():
+    if len(c) >= 2:
+        ret += len(c)
 
-
-    @property
-    def is_unique(self) -> bool:
-        if not self.is_dag: return False
-        for i in range(self.n-1):
-            u, v = self.ts[i:i+2]
-            if not v in self.G[u]: return False
-        return True
-        # True トポロジカルソートの経路が一意
-        # False 複数あり
+print(ret)
 
 
 #########################################
-from collections import deque
-n = int(input())
-a = list(map(lambda x:int(x)-1, input().split()))
-G = [[] for _ in range(n)]
 
-for i, ai in enumerate(a):
-    G[i].append(ai)
-ts = topological_sort(n, G)
-ts.build()
-print(n-len(ts.ts))

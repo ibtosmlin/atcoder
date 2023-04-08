@@ -7,12 +7,11 @@ class SCCGraph:
     def __init__(self, N):
         self.N = N
         self.edges = []
-        self.ef = [[] for _ in range(N)]
-        self.er = [[] for _ in range(N)]
+        self.ef, self.er = [[] for _ in range(N)], [[] for _ in range(N)]
 
     def csr(self):
-        self.start = [0]*(self.N+1)
-        self.elist = [0]*len(self.edges)
+        self.start = [0] * (self.N+1)
+        self.elist = [0] * len(self.edges)
         for e in self.edges:
             self.start[e[0]+1] += 1
         for i in range(1, self.N+1):
@@ -32,15 +31,10 @@ class SCCGraph:
         N = self.N
         now_ord = group_num = 0
         visited = []
-        low = [0]*N
-        order = [-1]*N
-        ids = [0]*N
-        parent = [-1]*N
-        stack = []
+        low, order, ids, parent, stack = [0]*N, [-1]*N, [0]*N, [-1]*N, []
         for i in range(N):
             if order[i] == -1:
-                stack.append(i)
-                stack.append(i)
+                stack.append(i); stack.append(i)
                 while stack:
                     v = stack.pop()
                     if order[v] == -1:
@@ -50,8 +44,7 @@ class SCCGraph:
                         for i in range(self.start[v], self.start[v+1]):
                             to = self.elist[i]
                             if order[to] == -1:
-                                stack.append(to)
-                                stack.append(to)
+                                stack.append(to); stack.append(to)
                                 parent[to] = v
                             else:
                                 low[v] = min(low[v], order[to])
@@ -61,8 +54,7 @@ class SCCGraph:
                                 u = visited.pop()
                                 order[u] = N
                                 ids[u] = group_num
-                                if u == v:
-                                    break
+                                if u == v: break
                             group_num += 1
                         if parent[v] != -1:
                             low[parent[v]] = min(low[parent[v]], low[v])

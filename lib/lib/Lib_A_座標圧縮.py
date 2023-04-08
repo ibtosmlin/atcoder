@@ -9,7 +9,7 @@ class Compress:
     Parameters
     ----------
     points : list
-         値のリスト [100,300,50,900,200]
+    値のリスト [100,300,50,900,200]
 
     Returns
     -------
@@ -67,7 +67,7 @@ class Compress2d:
 
     def xvalue(self, i):
         return self.xc.value(i)
-    
+
     def yvalue(self, i):
         return self.yc.value(i)
 
