@@ -1,4 +1,4 @@
-# https://kazun-kyopro.hatenablog.com/entry/ARC/148/C
+# https://atcoder.jp/contests/past202209-open/tasks/past202209_f
 from itertools import *
 from operator import itemgetter
 from collections import defaultdict, Counter, deque
@@ -22,18 +22,27 @@ def yes(): print('Yes')
 def no(): print('No')
 def end(r=-1): print(r); exit()
 def fstr(x): return f'{x:.10f}'
-n, q = map(int, input().split())
-P = [-1] + list(map(int1, input().split()))
-C = [1] * n
-for pi in P:
-    if pi != -1:
-        C[pi] += 1
+n = int(input())
+A = list(map(int, input().split()))
+X = []
+for _ in range(n):
+    c = int(input())
+    cl = set(map(int, input().split()))
+    X.append(cl)
 
+q = int(input())
 for _ in range(q):
-    open = set(list(map(int1, input().split()))[1:])
-    ret = 0
-    for i in open:
-        ret += C[i]
-        if P[i] in open:
-            ret -= 2
+    d = int(input())
+    yl = set(map(int, input().split()))
+    ret = -1
+    mvl = -1
+    for i, (a, x) in enumerate(zip(A, X)):
+        if len(x & yl) > 0: continue
+        if a > mvl:
+            mvl = a
+            ret = i+1
     print(ret)
+
+
+
+

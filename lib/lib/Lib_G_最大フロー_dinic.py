@@ -5,10 +5,15 @@
 #body#
 
 # 最大流問題
+# 始点sと終点tが区別された有向グラフ
+# 各辺(u,v)には容量c(u,v)が設定されており、超えないフローが流れます。
+# 始点sから終点tへの最大流を求める。
+#
 # Dinic's algorithm
 # 幅優先探索で水を流す向きをざっと決める．
 # 深さ優先探索で決められた向きで流せる経路を探し，水を流す．
 # 流せなくなったら1に戻る.
+# O(∣V∣**2・∣E∣)
 # https://onlinejudge.u-aizu.ac.jp/courses/library/5/GRL/all/GRL_6_A
 from collections import deque
 class Dinic:

@@ -24,16 +24,11 @@ def end(r=-1): print(r); exit()
 def fstr(x): return f'{x:.10f}'
 n, q = map(int, input().split())
 P = [-1] + list(map(int1, input().split()))
-C = [1] * n
-for pi in P:
-    if pi != -1:
-        C[pi] += 1
 
 for _ in range(q):
-    open = set(list(map(int1, input().split()))[1:])
+    open = list(map(int1, input().split()))[1:]
     ret = 0
     for i in open:
-        ret += C[i]
-        if P[i] in open:
-            ret -= 2
+        if i in open or P[i] not in open:
+            ret += 1
     print(ret)

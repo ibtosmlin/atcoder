@@ -4,6 +4,12 @@
 # WaveletMatrix: 数列のある範囲での値の頻度やインデックスを求める
 #body#
 
+#name#
+# Wavelet Matrix
+#description#
+# WaveletMatrix: 数列のある範囲での値の頻度やインデックスを求める
+#body#
+
 class WaveletMatrix:
     """
     https://judge.yosupo.jp/problem/range_kth_smallest
@@ -285,6 +291,7 @@ input = lambda: sys.stdin.readline().rstrip()
 
 # n, q = map(int, input().split())
 # a = list(map(int, input().split()))
+# wm = WaveletMatrix(a)
 # wm = WaveletMatrixCompressed(a)
 # for _ in range(q):
 #     l, r, k = map(int, input().split())
@@ -309,3 +316,4 @@ for _ in range(q):
 #prefix#
 # Lib_D_WaveletMatrix
 #end#
+

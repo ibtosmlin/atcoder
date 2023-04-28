@@ -1,4 +1,4 @@
-# https://kazun-kyopro.hatenablog.com/entry/ARC/148/C
+# https://atcoder.jp/contests/arc155/tasks/arc155_a
 from itertools import *
 from operator import itemgetter
 from collections import defaultdict, Counter, deque
@@ -22,18 +22,21 @@ def yes(): print('Yes')
 def no(): print('No')
 def end(r=-1): print(r); exit()
 def fstr(x): return f'{x:.10f}'
-n, q = map(int, input().split())
-P = [-1] + list(map(int1, input().split()))
-C = [1] * n
-for pi in P:
-    if pi != -1:
-        C[pi] += 1
 
-for _ in range(q):
-    open = set(list(map(int1, input().split()))[1:])
-    ret = 0
-    for i in open:
-        ret += C[i]
-        if P[i] in open:
-            ret -= 2
-    print(ret)
+def solv():
+    n, k = map(int, input().split())
+    s = input()
+    k %= 2*n
+    if k == 0: k = 2*n
+    if k <= n:
+        sd = s[:k][::-1]
+    else:
+        sd = s[::-1]
+        sd = s[-k+n:][::-1] + sd
+    return (sd + s)[::-1] == (sd+s) and (s + sd)[::-1] == (s+sd)
+
+
+
+t = int(input())
+for _ in range(t):
+    print('Yes' if solv() else 'No')

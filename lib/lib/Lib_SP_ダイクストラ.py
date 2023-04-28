@@ -10,6 +10,7 @@
 # 有向グラフで優先度付きキューで探索
 # https://atcoder.jp/contests/abc035/tasks/abc035_d
 # O((E+V)logV)
+from heapq import heapify, heappop, heappush
 class dijkstra:
     def __init__(self, n, G):
         self.INF = 10**9
@@ -31,10 +32,10 @@ class dijkstra:
         for st in start:
             self.dist[st] = 0
             self.count[st] = 1
-            next_q.append((st, 0))
+            next_q.append((0, st))
         heapify(next_q)
         while next_q:
-            x, d = heappop(next_q)
+            d, x = heappop(next_q)
             if self.dist[x] < d: continue
             for nx, d_nx_x in self.G[x]:
                 # 変則的な距離の場合はここを調整 ##
@@ -47,7 +48,7 @@ class dijkstra:
                 self.dist[nx] = nd
                 self.G_used[nx] = x
                 self.count[nx] = self.count[x]
-                heappush(next_q, (nx, nd))
+                heappush(next_q, (nd, nx))
 
 
     def get_dist(self, goal):
@@ -87,7 +88,7 @@ dijR = dijkstra(n, G_R)
 dij.build(0)
 dijR.build(0)
 
-dij.get_dist(n-1)
+print(dij.get_dist(n-1))
 
 #prefix#
 # Lib_SP_最短経路探索_dijkstra

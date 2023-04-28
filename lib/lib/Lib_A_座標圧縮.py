@@ -3,6 +3,7 @@
 #description#
 # 座標圧縮
 #body#
+from bisect import bisect_left
 class Compress:
     """一次元座標圧縮
 
@@ -21,29 +22,32 @@ class Compress:
         pos, vals, sx = {}, {}, set(points)
         if spacing: #スペースを作る場合
             for p in points: sx.add(p+1)
+            sx.add(-1)
+            sx.add(10**10)
 
         for i, xi in enumerate(sorted(set(sx), reverse=reverse)):
             pos[xi], vals[i] = i, xi
         self.pos, self.vals = pos, vals
         self.original_list, self.list = points, [pos[xi] for xi in points]
+        self.valuesequence = sorted(self.pos.keys())
 
     def __contains__(self, original_value):
         return original_value in self.pos.keys()
 
-
     def index(self, original_value):
         # 元value -> 新index
-        if original_value in self: return self.pos[original_value]
-        return None
-
+        # if original_value in self.pos: return self.pos[original_value]
+        # return None
+        return bisect_left(self.valuesequence, original_value)
 
     def value(self, index):
         # 新index -> 元value
         if index in self.vals: return self.vals(index)
         return None
 
-##########################################################################3
+# c = Compress([100,300,50,900,200], spacing=True)
 
+##########################################################################3
 
 class Compress2d:
     """二次元座標圧縮
@@ -58,9 +62,7 @@ class Compress2d:
 
     def index(self, original_point):
         x, y = original_point
-        if not x in self.xc: return None
-        if not y in self.yc: return None
-        return tuple(self.xc.index(x), self.yc.index(y))
+        return self.xc.index(x), self.yc.index(y)
 
     def value(self, i, j):
         return tuple(self.xc.value(i), self.yc.value(j))
@@ -71,8 +73,10 @@ class Compress2d:
     def yvalue(self, i):
         return self.yc.value(i)
 
-
+# c = Compress2d([(1,1),(2,4),(5,3)], spacing=True)
+# print(c.xc.valuesequence)
+# print(c.yc.valuesequence)
+# print(c.list)
 #prefix#
-# compress_zaatsu
-# Lib_A_座標圧縮
+# Lib_A_座標圧縮_compress_zaatsu
 #end#

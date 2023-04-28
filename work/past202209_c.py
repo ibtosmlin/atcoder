@@ -1,4 +1,4 @@
-# https://kazun-kyopro.hatenablog.com/entry/ARC/148/C
+# https://atcoder.jp/contests/past202209-open/tasks/past202209_c
 from itertools import *
 from operator import itemgetter
 from collections import defaultdict, Counter, deque
@@ -21,19 +21,21 @@ def notisinhw(i, j, h, w): return not ((0 <= i < h) and (0 <= j < w))
 def yes(): print('Yes')
 def no(): print('No')
 def end(r=-1): print(r); exit()
-def fstr(x): return f'{x:.10f}'
-n, q = map(int, input().split())
-P = [-1] + list(map(int1, input().split()))
-C = [1] * n
-for pi in P:
-    if pi != -1:
-        C[pi] += 1
+def fstr(x): return f'{x:.6f}'
 
-for _ in range(q):
-    open = set(list(map(int1, input().split()))[1:])
-    ret = 0
-    for i in open:
-        ret += C[i]
-        if P[i] in open:
-            ret -= 2
-    print(ret)
+from itertools import product
+P = [list(map(int, input().split())) for _ in range(3)]
+pd = product(range(6), repeat=3)
+ret = [0] * 19
+for pdi in pd:
+    sm = 0
+    pb = 1
+    for i in range(3):
+        sm += pdi[i]
+        pb *= P[i][pdi[i]]
+    ret[sm+3] += pb
+
+for pb in ret[1:]:
+    print(fstr(pb/1000000))
+
+
