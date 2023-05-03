@@ -9,64 +9,51 @@ class SCCGraph:
         self.edges = []
         self.ef, self.er = [[] for _ in range(N)], [[] for _ in range(N)]
 
-    def csr(self):
-        self.start = [0] * (self.N+1)
-        self.elist = [0] * len(self.edges)
-        for e in self.edges:
-            self.start[e[0]+1] += 1
-        for i in range(1, self.N+1):
-            self.start[i] += self.start[i-1]
-        counter = self.start[:]
-        for e in self.edges:
-            self.elist[counter[e[0]]] = e[1]
-            counter[e[0]] += 1
-
     def add_edge(self, v, w):
         self.edges.append((v, w))
         self.ef[v].append(w)
         self.er[w].append(v)
 
-    def scc_ids(self):
-        self.csr()
+    def scc_group(self):
         N = self.N
-        now_ord = group_num = 0
-        visited = []
-        low, order, ids, parent, stack = [0]*N, [-1]*N, [0]*N, [-1]*N, []
-        for i in range(N):
-            if order[i] == -1:
-                stack.append(i); stack.append(i)
-                while stack:
-                    v = stack.pop()
-                    if order[v] == -1:
-                        low[v] = order[v] = now_ord
-                        now_ord += 1
-                        visited.append(v)
-                        for i in range(self.start[v], self.start[v+1]):
-                            to = self.elist[i]
-                            if order[to] == -1:
-                                stack.append(to); stack.append(to)
-                                parent[to] = v
-                            else:
-                                low[v] = min(low[v], order[to])
-                    else:
-                        if low[v] == order[v]:
-                            while True:
-                                u = visited.pop()
-                                order[u] = N
-                                ids[u] = group_num
-                                if u == v: break
-                            group_num += 1
-                        if parent[v] != -1:
-                            low[parent[v]] = min(low[parent[v]], low[v])
-        for i, x in enumerate(ids):
-            ids[i] = group_num-1-x
-
-        return group_num, ids
+        group = [None] * N
+        visited = [False] * N
+        order = []
+        for x in range(N):
+            if visited[x]: continue
+            stack = [x]
+            visited[x] = True
+            while stack:
+                y = stack.pop()
+                movable = False
+                for ny in self.ef[y]:
+                    if visited[ny]: continue
+                    movable = True
+                    visited[ny] = True
+                    stack.append(y)
+                    stack.append(ny)
+                    break
+                if not movable: order.append(y)
+        visited = [False] * N
+        count = 0
+        for x in order[::-1]:
+            if visited[x]: continue
+            stack = [x]
+            group[x] = count
+            while stack:
+                y = stack.pop()
+                visited[y] = 1
+                for ny in self.er[y]:
+                    if visited[ny]: continue
+                    group[ny] = count
+                    stack.append(ny)
+            count += 1
+        return count, group
 
     def scc(self):
-        group_num, ids = self.scc_ids()
-        groups = [[] for _ in range(group_num)]
-        for i, x in enumerate(ids):
+        count, group = self.scc_group()
+        groups = [[] for _ in range(count)]
+        for i, x in enumerate(group):
             groups[x].append(i)
         return groups
 
@@ -77,12 +64,17 @@ scc = SCCGraph(n)
 
 for i in range(m):
     _a, _b = map(int, input().split())
-    _a -= 1; _b -= 1
+#    _a -= 1; _b -= 1
     scc.add_edge(_a, _b)
 
-#print(scc.scc_ids())
+_, gr = scc.scc_group()
+for _ in range(int(input())):
+    u, v = map(int, input().split())
+    print(int(gr[u] == gr[v]))
+
+# print(scc.scc_group())
 #(3,_[0,_1,_1,_1,_2])
-#print(scc.scc())
+# print(scc.scc())
 #[[0],_[1,_2,_3],_[4]]
 
 # 強連結成分分解(SCC): グラフgに対するSCCを行う

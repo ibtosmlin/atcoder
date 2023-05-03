@@ -22,14 +22,14 @@ def cycle(n, G):
     return oncycle
 
 
-n = int(input())
+n, m = map(int, input().split())
 G = [[] for _ in range(n)]
 for _ in range(m):
-    a, b = map(int1, input().split())
+    a, b = map(int, input().split())
     G[a].append(b)
     G[b].append(a)
 
-cycle(n, G)
+print(cycle(n, G))
 
 #prefix#
 # Lib_G_cycle
