@@ -93,5 +93,5 @@ print(ts.parents)
 print(ts.is_dag)
 
 #prefix#
-# Lib_G_トポロジカルソート_topologicalsort
+# Lib_GD_トポロジカルソート_topologicalsort
 #end#

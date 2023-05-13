@@ -1,12 +1,11 @@
 #name#
 # Graph最短パス
 #description#
-# Graph最短パス
+# Graph最遠パス
 #body#
 
+# root から始めて一番遠いところにあるノードを見つける
 from collections import deque
-
-
 def bfs(n, G, root=0, cost=1):
     _depth = [None] * n
     q = deque()
@@ -27,8 +26,6 @@ def bfs(n, G, root=0, cost=1):
                 farest_dist = newdep
                 farest_node = nxt
     return farest_node, farest_dist, _depth
-
-
 
 
 ##############################

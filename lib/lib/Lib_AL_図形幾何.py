@@ -11,7 +11,7 @@ PI = math.pi
 
 ######################################################################
 class Point:
-    def __init__(self, x, y):
+    def __init__(self, x=0, y=0):
         self.x = x
         self.y = y
 
@@ -28,8 +28,24 @@ class Point:
         return Point(self.x / const, self.y / const)
 
     @property
+    def norm2(self):
+        return self.x **2 + self.y **2
+
+    @property
     def abs(self):
-        return (self.x **2 + self.y **2)**0.5
+        return self.norm2 ** 0.5
+
+    @property
+    def radian(self):
+        return math.atan2(self.y, self.x)
+
+    @property
+    def quadrant(self):
+        if self.x == 0 and self.y == 0: return 0
+        if self.x > 0 and self.y >= 0: return 1
+        if self.x <= 0 and self.y > 0: return 2
+        if self.x < 0 and self.y <=0: return 3
+        return 4
 
     def dot(self, other):
         return self.x * other.x + self.y * other.y
@@ -50,17 +66,28 @@ class Point:
     def dist(self, other):
         return self.dist2(other) ** 0.5
 
-    @property
-    def radian(self):
-        return math.atan3(self.y, self.x)
+    def __lt__(self, other):
+        seq = self.quadrant
+        otq = other.quadrant
+        det = self.det(other)
+        if seq != otq:
+            return seq < otq
+        if det == 0:
+            return self.norm2 < other.norm2
+        else:
+            return det > 0
 
-    def rotate_radian(self, R):
-        cos, sin = math.cos(R), math.sin(R)
+    def rotate_radian(self, rad):
+        cos, sin = math.cos(rad), math.sin(rad)
         return Point(self.x * cos - self.y * sin, self.x * sin + self.y * cos)
 
-    def rotate_degree(self, R):
-        R = math.radians(R)  # Rが度数の場合
-        return self.rotate_radian(R)
+    def rotate_degree(self, rad):
+        rad = math.radians(rad)  # radが度数の場合
+        return self.rotate_radian(rad)
+
+    @property
+    def orthogonal(self):
+        return Point(- self.y, self.x)
 
     def counter_clockwise(self, other1, other2):
     # https://onlinejudge.u-aizu.ac.jp/courses/library/4/CGL/1/CGL_1_C
@@ -83,10 +110,6 @@ class Point:
     def value(self):
         return self.x, self.y
 
-####################
-# x, y = map(int, input().split())
-# p = Point(x, y)
-####################
 
 ######################################################################
 class Line:
@@ -103,8 +126,7 @@ class Line:
     def midperpendicular(self):
     # 垂直二等分線
     # 中点から中点＋直交ベクトルまでの線分とする
-        orthogonal_vec = Point(self.vector.y, -self.vecotor.x)
-        return Line(self.mid_point, self.mid_point + orthogonal_vec)
+        return Line(self.mid_point, self.mid_point + self.vector.orthogonal)
 
     def is_parallel(self, other):
     #https://onlinejudge.u-aizu.ac.jp/courses/library/4/CGL/2/CGL_2_A
@@ -195,13 +217,8 @@ class Line:
     def contains(self, p: Point):
         return self.p0.counter_clockwise(self.p1, p) == 0
 
-####################
-# x, y, u, v = map(int, input().split())
-# l = Line(Point(x, y), Point(u, v))
-####################
 
 ######################################################################
-
 class Polygon:
     def __init__(self, pts: list):
         self.N = len(pts)
@@ -335,12 +352,7 @@ class Polygon:
             return INCLUDE
         return NOT_INCLUDE
 
-####################
-# pol = Polygon([tuple(map(int, input().split())) for _ in range(n)])
-####################
-
 ######################################################################
-
 class Circle:
     def __init__(self, p: tuple, r: float):
         self.center = Point(p[0], p[1])
@@ -353,6 +365,9 @@ class Circle:
     @property
     def area(self):
         return PI * self.radius * self.radius
+
+    def area_sector(self, rad):
+        return self.radius * self.radius * rad / 2
 
     def contain_point(self, p:Point):
         return (p - self.center).abs - self.radius < -EPS
@@ -400,17 +415,46 @@ class Circle:
     def cross_point_circle(self, other):
         # https://onlinejudge.u-aizu.ac.jp/courses/library/4/CGL/7/CGL_7_E
         # 円同士の交点
+        isintersect = self.is_intersect(other)
+        if isintersect == 0 or isintersect == 4: return (None, None)
         d = other.center - self.center
         rr0 = d.abs ** 2
         rr1 = self.radius ** 2
         rr2 = other.radius ** 2
         cv = rr0 + rr1 - rr2
         sv = (4*rr0*rr1 - cv**2)**0.5
-        p1 = Point(cv * d.x - sv * d.y, cv * d.y + sv * d.x) / (2 * rr0)
+        p1 = (d * cv + d.orthogonal * sv) / (2 * rr0)
         p1 = self.center + p1
-        p2 = Point(cv * d.x + sv * d.y, cv * d.y - sv * d.x) / (2 * rr0)
+        p2 = (d * cv - d.orthogonal * sv) / (2 * rr0)
         p2 = self.center + p2
         return (p1, p2)
+
+    def sector_area(self, p1: Point, p2: Point):
+        # 円弧の面積
+        rad = abs((p1-self.center).radian - (p2-self.center).radian)
+        mrad = min(rad, 2*PI - rad)
+        Mrad = max(rad, 2*PI - rad)
+        return self.area_sector(mrad), self.area_sector(Mrad)
+
+    def cross_area_line(self, l:Line):
+        # 円を直線で切った部分の面積
+        tri = Triangle([self.center.value, l.p0.value, l.p1.value]).area
+        sector = self.sector_area(l.p0, l.p1)
+        return (sector[0] - tri, sector[1] + tri)
+
+    def cross_area_circle(self, other):
+        # https://onlinejudge.u-aizu.ac.jp/courses/library/4/CGL/7/CGL_7_I
+        # ２つ円の共通部分の面積
+        isintersect = self.is_intersect(other)
+        if isintersect >= 3: return 0
+        if isintersect < 2: return min(self.area, other.area)
+        dd = (self.center - other.center).norm2
+        p1 = self.radius ** 2 - other.radius ** 2 + dd
+        p2 = other.radius ** 2 - self.radius ** 2 + dd
+        S1 = self.radius * self.radius * math.atan2((4 * dd * self.radius ** 2 - p1 ** 2) ** 0.5, p1)
+        S2 = other.radius * other.radius * math.atan2((4 * dd * other.radius ** 2 - p2 ** 2) ** 0.5, p2)
+        S0 = (4 * dd * self.radius * self.radius - p1 ** 2) ** 0.5 / 2
+        return S1 + S2 - S0
 
     def tangent_point(self, p:Point):
         # https://onlinejudge.u-aizu.ac.jp/courses/library/4/CGL/7/CGL_7_F
@@ -438,10 +482,9 @@ class Circle:
                 retext.append(self.center + d * (self.radius * cv / rr0))
             else:
                 sv **= 0.5
-                retext.append(self.center + Point(cv*d.x - sv*d.y, sv*d.x + cv*d.y) * self.radius / rr0)
-                retext.append(self.center + Point(cv*d.x + sv*d.y, -sv*d.x + cv*d.y) * self.radius / rr0)
+                retext.append(self.center + (d * cv + d.orthogonal * sv) * self.radius / rr0)
+                retext.append(self.center + (d * cv - d.orthogonal * sv) * self.radius / rr0)
         return retext
-
 
     def common_tanget_inner(self, other):
         # https://onlinejudge.u-aizu.ac.jp/courses/library/4/CGL/7/CGL_7_G
@@ -457,18 +500,12 @@ class Circle:
                 retext.append(self.center + d * (self.radius * cv / rr0))
             else:
                 sv **= 0.5
-                retext.append(self.center + Point(cv*d.x - sv*d.y, sv*d.x + cv*d.y) * self.radius / rr0)
-                retext.append(self.center + Point(cv*d.x + sv*d.y, -sv*d.x + cv*d.y) * self.radius / rr0)
+                retext.append(self.center + (d * cv + d.orthogonal * sv) * self.radius / rr0)
+                retext.append(self.center + (d * cv - d.orthogonal * sv) * self.radius / rr0)
         return retext
 
 
-####################
-# x, y, r = map(int, input().split())
-# C0 = Circle((x, y), r)
-####################
-
 ######################################################################
-
 class Triangle(Polygon):
     def __init__(self, pts):
         assert len(pts) == 3, "Not 3 points"
@@ -506,9 +543,29 @@ class Triangle(Polygon):
         r = Point(x, y).dist(self.points[0])
         return Circle((x, y), r)
 
+######################################################################
+
+# x, y = map(int, input().split())
+# p = Point(x, y)
+# x, y, u, v = map(int, input().split())
+# l = Line(Point(x, y), Point(u, v))
+# poly = Polygon([tuple(map(int, input().split())) for _ in range(m)])
+# x, y, r = map(int, input().split())
+# cir = Circle((x, y), r)
+# tri = Polygon([tuple(map(int, input().split())) for _ in range(3)])
+
 ####################
-# T = Polygon([tuple(map(int, input().split())) for _ in range(3)])
+x, y, r = map(int, input().split())
+C0 = Circle((x, y), r)
 ####################
+x, y, r = map(int, input().split())
+C1 = Circle((x, y), r)
+ret = []
+for x in C0.common_tanget_inner(C1) + C0.common_tanget_outer(C1):
+    ret.append(x.value)
+ret.sort()
+for u, v in ret:
+    print(f'{u:.10f} {v:.10f}')
 
 ######################################################################
 

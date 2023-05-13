@@ -79,5 +79,5 @@ for _ in range(m):
 print(mf.min_cost_flow(0, n-1, f))
 
 #prefix#
-# Lib_G_最小費用流_mincostflow
+# Lib_GD_最小費用流_mincostflow
 #end#

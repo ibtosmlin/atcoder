@@ -3,6 +3,8 @@
 #description#
 # 削除機能付きheapque
 #body#
+from heapq import heappush, heappop
+from collections import defaultdict
 class DeletableMaxMinHeapQ():
     def __init__(self):
         self.Hma = []
@@ -41,6 +43,27 @@ class DeletableMaxMinHeapQ():
         self.HC[x] -= 1
     def __contains__(self, x):
         return 1 if x in self.HC and self.HC[x] else 0
+
+hq = DeletableMaxMinHeapQ()
+n, q = map(int, input().split())
+a = list(map(int, input().split()))
+for ai in a:
+    hq.heappush(ai)
+
+for _ in range(q):
+    query = list(map(int, input().split()))
+    if query[0] == 0:
+        hq.heappush(query[1])
+    elif query[0] == 1:
+        x = hq.heappopmin()
+        print(x)
+    else:
+        x = hq.heappopmax()
+        print(x)
+
+
+# https://judge.yosupo.jp/problem/double_ended_priority_queue
+
 ############
 
 #prefix#

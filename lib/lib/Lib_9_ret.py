@@ -59,3 +59,14 @@ def req(ret):
 #prefix#
 # print(5interactive)
 #end#
+
+#name#
+# output6
+#description#
+# rounded
+#body#
+def fstr(x): return f'{x:.10f}'
+
+#prefix#
+# print(6roundeds)
+#end#

@@ -90,5 +90,5 @@ for _ in range(int(input())):
 # https://atcoder.jp/contests/practice2/tasks/practice2_g
 
 #prefix#
-# Lib_G_強連結成分分解_SCC
+# Lib_GD_強連結成分分解_SCC
 #end#

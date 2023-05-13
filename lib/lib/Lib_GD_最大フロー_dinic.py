@@ -87,5 +87,5 @@ for _ in range(m):
 print(mf.max_flow(0, n-1))
 
 #prefix#
-# Lib_G_最大フロー_maximumflow_dinic
+# Lib_GD_最大フロー_maximumflow_dinic
 #end#
