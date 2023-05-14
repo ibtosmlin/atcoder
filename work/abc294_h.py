@@ -22,4 +22,3 @@ def yes(): print('Yes')
 def no(): print('No')
 def end(r=-1): print(r); exit()
 
-lib

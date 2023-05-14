@@ -17,8 +17,11 @@ alias pyh="source ~/atcoder/tool/h.py.sh"
 # atcoder tool settings
 alias setat="source ~/atcoder/tool/settings.sh"
 
-# algo
-alias goalgo="source ~/atcoder/tool/algo.sh"
+# test
+alias test="source ~/atcoder/tool/algo.sh"
+
+# graph
+alias graph="source ~/atcoder/tool/graph.sh"
 
 # oh my posh
 export PATH="/home/ibtosm/.local/bin:$PATH"
