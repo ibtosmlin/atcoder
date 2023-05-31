@@ -1,0 +1,1 @@
+input();print('in' if input().replace('.','')=='|*|' else 'out')

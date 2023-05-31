@@ -1,4 +1,4 @@
-# https://atcoder.jp/contests/arc139/tasks/arc139_b
+# https://atcoder.jp/contests/abc298/tasks/abc298_e
 from itertools import *
 from operator import itemgetter
 from collections import defaultdict, Counter, deque
@@ -21,36 +21,21 @@ def notisinhw(i, j, h, w): return not ((0 <= i < h) and (0 <= j < w))
 def yes(): print('Yes')
 def no(): print('No')
 def end(r=-1): print(r); exit()
-t = int(input())
-def solv():
-    n, a, b, x, y, z = map(int, input().split())
-    if n == 0: return 0
-    y = min(y, a*x)
-    z = min(z, b*x)
-    if y*b > z*a:
-        y, z, a, b = z, y, b, a
-    ret = float('inf')
-    if n // a < a-1:
-        for ca in range(n//a+1):
-            l, cost = n, 0
-            cost += ca * y
-            l -= ca * a
-            cb = l // b
-            cost += cb * z
-            l -= cb * b
-            cost += l * x
-            ret = min(ret, cost)
-    else:
-        for cb in range(a):
-            l, cost = n, 0
-            cost += cb * z
-            l -= cb * b
-            ca = l // a
-            cost += ca * y
-            l -= ca * a
-            cost += l * x
-            ret = min(ret, cost)
-    return ret
 
-for _ in range(t):
-    print(solv())
+n, a, b, p, q = map(int, input().split())
+invp = modinv(p, mod1)
+invq = modinv(q, mod1)
+dp = [[[0] * 2 for _ in range(n+1)] for __ in range(n+1)]
+dp[a][b][0] = 1
+for i in range(n):
+    for j in range(n):
+        for d in range(1, p+1):
+            dp[min(i+d, n)][j][1] = (dp[min(i+d, n)][j][1] + invp * dp[i][j][0]) % mod1
+        for d in range(1, q+1):
+            dp[i][min(j+d, n)][0] = (dp[i][min(j+d, n)][0] + invq * dp[i][j][1]) % mod1
+
+ret = 0
+for j in range(n):
+    ret += dp[n][j][1]
+    ret %= mod1
+print(ret)

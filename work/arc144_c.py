@@ -1,4 +1,4 @@
-# https://atcoder.jp/contests/arc139/tasks/arc139_b
+# https://atcoder.jp/contests/arc144/tasks/arc144_c
 from itertools import *
 from operator import itemgetter
 from collections import defaultdict, Counter, deque
@@ -21,36 +21,9 @@ def notisinhw(i, j, h, w): return not ((0 <= i < h) and (0 <= j < w))
 def yes(): print('Yes')
 def no(): print('No')
 def end(r=-1): print(r); exit()
-t = int(input())
-def solv():
-    n, a, b, x, y, z = map(int, input().split())
-    if n == 0: return 0
-    y = min(y, a*x)
-    z = min(z, b*x)
-    if y*b > z*a:
-        y, z, a, b = z, y, b, a
-    ret = float('inf')
-    if n // a < a-1:
-        for ca in range(n//a+1):
-            l, cost = n, 0
-            cost += ca * y
-            l -= ca * a
-            cb = l // b
-            cost += cb * z
-            l -= cb * b
-            cost += l * x
-            ret = min(ret, cost)
-    else:
-        for cb in range(a):
-            l, cost = n, 0
-            cost += cb * z
-            l -= cb * b
-            ca = l // a
-            cost += ca * y
-            l -= ca * a
-            cost += l * x
-            ret = min(ret, cost)
-    return ret
+n, k = map(int, input().split())
+if 2*k > n: end(-1)
+ret = list(range(1+k, n+1))
+ret += list(range(1, k+1))
+print(*ret)
 
-for _ in range(t):
-    print(solv())
