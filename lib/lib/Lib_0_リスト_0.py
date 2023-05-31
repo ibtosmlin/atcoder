@@ -26,7 +26,6 @@ sort(key=itemgetter($index))
 d = defaultdict($int)
 #prefix#
 # defaultdict
-# d=defaultdict
 #end#
 
 #name#
@@ -65,7 +64,7 @@ print(a)
 # [[4, 5], [5, 7], [1, 2], [3, 6], [2, 6]]
 #   1.25    0.714    0.5     0.5    0.333
 #prefix#
-# sort_by_function
+# Lib_sort_by_function
 #end#
 
 #name#

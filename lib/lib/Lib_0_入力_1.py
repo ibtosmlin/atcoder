@@ -40,16 +40,6 @@ n, m = map(int, input().split())
 #end#
 
 #name#
-# n,k=map(int, input().split())
-#description#
-# 整数n, kの読み込み
-#body#
-n, k = map(int, input().split())
-#prefix#
-# n, k=map
-#end#
-
-#name#
 # a=list(map(int, input().split()))
 #description#
 # リストの読み込み
@@ -76,7 +66,8 @@ b = list(map(int, input().split()))
 #body#
 G = [[] for _ in range($n)]
 for _ in range($m):
-    a, b = map(int1, input().split())
+    a, b = map(int, input().split())
+    a -= 1; b -= 1
     G[a].append(b)
     G[b].append(a)
 

@@ -84,7 +84,7 @@ class EulerTour:
 
     def set_euler_tour(self, root=0):
         self.root = root        # 根を設定して
-        pa = [0] * self.n
+        pa = [-1] * self.n
         stack = [~root, root]
         ct = -1; de = -1
         _ETedges = []
@@ -119,11 +119,7 @@ class EulerTour:
         self.sgt_depth = SegmentTree(self.ETDepth, lambda x, y: min(x, y), float('inf'))
         self._ETedges = _ETedges
         self.set_query()
-
-    def set_query(self):
-        ####################### 要修正
-        self.sgt_nodes = SegmentTree(self.ETNodesCost, lambda x, y: x + y, 0)
-        self.sgt_edges = SegmentTree(self.ETEdgesCost, lambda x, y: x + y, 0)
+        self.parent = pa
 
 
     def lca(self, a:int, b:int):
@@ -156,21 +152,6 @@ class EulerTour:
         rtolca = self.root_edge_cost(lca)
         return rtou + rtov - 2 * rtolca
 
-    def update_edge_cost(self, u, v, w):
-        if self.TimeIn[u] > self.TimeIn[v]: u, v = v, u
-        self.sgt_edges.update(self.TimeIn[v], w)
-        self.sgt_edges.update(self.TimeOut[v], -w)
-        self.ETEdgesCost[self.TimeIn[v]] = w
-        self.ETEdgesCost[self.TimeOut[v]] = -w
-
-    def add_edge_cost(self, u, v, w):
-        if self.TimeIn[u] > self.TimeIn[v]: u, v = v, u
-        self.sgt_edges.add(self.TimeIn[v], w)
-        self.sgt_edges.add(self.TimeOut[v], -w)
-        self.ETEdgesCost[self.TimeIn[v]] += w
-        self.ETEdgesCost[self.TimeOut[v]] -= w
-
-
     def __str__(self):
         ret = ""
         ret += "[ NODE] " + " ".join(map(lambda x: str(x).rjust(4), range(self.n))) + "\n"
@@ -186,6 +167,26 @@ class EulerTour:
         ret += "[NCOST] " + " ".join(map(lambda x: str(x).rjust(4), self.ETNodesCost)) + "\n"
         ret += "[ECOST] " + " ".join(map(lambda x: str(x).rjust(4), self.ETEdgesCost)) + "\n"
         return ret
+
+
+    def update_edge_cost(self, u, v, w):
+        if self.TimeIn[u] > self.TimeIn[v]: u, v = v, u
+        self.sgt_edges.update(self.TimeIn[v], w)
+        self.sgt_edges.update(self.TimeOut[v], -w)
+        self.ETEdgesCost[self.TimeIn[v]] = w
+        self.ETEdgesCost[self.TimeOut[v]] = -w
+
+    def add_edge_cost(self, u, v, w):
+        if self.TimeIn[u] > self.TimeIn[v]: u, v = v, u
+        self.sgt_edges.add(self.TimeIn[v], w)
+        self.sgt_edges.add(self.TimeOut[v], -w)
+        self.ETEdgesCost[self.TimeIn[v]] += w
+        self.ETEdgesCost[self.TimeOut[v]] -= w
+
+    def set_query(self):
+        ####################### 要修正
+        self.sgt_nodes = SegmentTree(self.ETNodesCost, lambda x, y: x + y, 0)
+        self.sgt_edges = SegmentTree(self.ETEdgesCost, lambda x, y: x + y, 0)
 
 ###########################################
 n = int(input())
@@ -216,5 +217,5 @@ for _ in range(q):
 
 
 #prefix#
-# Lib_GT_木の上の経路範囲クエリ_RangeQuery
+# Lib_GT_木上の辺の一点更新区間加算クエリ_RangeQuery
 #end#

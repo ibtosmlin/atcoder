@@ -26,3 +26,6 @@ alias graph="source ~/atcoder/tool/graph.sh"
 # oh my posh
 export PATH="/home/ibtosm/.local/bin:$PATH"
 eval "$(oh-my-posh init bash --config ~/.poshthemes/ibtosm.omp.json)"
+
+# python alias
+alias py="python3"

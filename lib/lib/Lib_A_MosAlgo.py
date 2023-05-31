@@ -4,6 +4,9 @@
 # Mo'sAlgorythm#
 #body#
 
+# A:リスト n = 10**5
+# Q: l, r q = 10**5
+
 class _Mo:
     def __init__(self, N:int):
         self.N=N

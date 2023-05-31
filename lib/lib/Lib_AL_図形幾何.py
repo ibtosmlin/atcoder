@@ -544,6 +544,32 @@ class Triangle(Polygon):
         return Circle((x, y), r)
 
 ######################################################################
+def closestPair(points):
+    """
+    最近点対 (分割統治法)
+    """
+    def _closest_Pair(points):
+        n=len(points)
+        if n <= 1:
+            return MAX
+        m = n//2
+        x = points[m].x
+        d = min(_closest_Pair(points[:m]), _closest_Pair(points[m:]))
+        points.sort(key=lambda p:p.y)
+        L=[]
+        for i in range(n):
+            if abs(points[i].x - x) < d:
+                for j in range(len(L)):
+                    if points[i].y-L[-j-1].y >= d:
+                        break
+                    d = min(d, points[i].dist(L[-j-1]))
+                L.append(points[i])
+        return d
+    points.sort(key=lambda p: p.x)
+    return _closest_Pair(points)
+
+
+######################################################################
 
 # x, y = map(int, input().split())
 # p = Point(x, y)
@@ -554,18 +580,11 @@ class Triangle(Polygon):
 # cir = Circle((x, y), r)
 # tri = Polygon([tuple(map(int, input().split())) for _ in range(3)])
 
-####################
-x, y, r = map(int, input().split())
-C0 = Circle((x, y), r)
-####################
-x, y, r = map(int, input().split())
-C1 = Circle((x, y), r)
-ret = []
-for x in C0.common_tanget_inner(C1) + C0.common_tanget_outer(C1):
-    ret.append(x.value)
-ret.sort()
-for u, v in ret:
-    print(f'{u:.10f} {v:.10f}')
+P = []
+for _ in range(int(input())):
+    x,y=map(float,input().split())
+    P.append(Point(x,y))
+print('{:.10f}'.format(closestPair(P)))
 
 ######################################################################
 

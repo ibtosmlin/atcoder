@@ -59,6 +59,12 @@ class Compress2d:
         self.yc = Compress(sy, spacing=spacing)
         self.original_list = points
         self.list = list(zip(self.xc.list, self.yc.list))
+        self.n = len(self.xc.valuesequence)
+        self.m = len(self.yc.valuesequence)
+        if len(points[0]) == 3:
+            self.pointvalues = {self.index((x, y)): v for x, y, v in points}
+        else:
+            self.pointvalues = {self.index((x, y)): 0 for x, y in points}
 
     def index(self, original_point):
         x, y = original_point

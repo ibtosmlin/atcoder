@@ -3,6 +3,30 @@
 #body#
 # BIT演算
 #body#
+
+class bit:
+    def __init__(self, x=0):
+        self.x = x
+
+    def __bool__(self):
+        return self.x != 0
+
+    def __int__(self):
+        return self.x
+
+    def __str__(self):
+        return f'{self.x} bin'
+
+    @property
+    def len(self):
+        return self.x.bit_length()
+
+    @property
+    def bin(self, l=32):
+        return bin(self.x)
+
+
+
 # https://qiita.com/qiita_kuru/items/3a6ab432ffb6ae506758
 # k桁目 or bitを0にする
 x &= ~(1 << k)
@@ -56,5 +80,5 @@ print(list(map(bin, ksubset(n, k))))
 # ['0b11', '0b101', '0b110', '0b1001', '0b1010', '0b1100', '0b10001', '0b10010', '0b10100', '0b11000']
 
 #prefix#
-# Lib_BIT演算全部分集合
+# Lib_BIT
 #end#
