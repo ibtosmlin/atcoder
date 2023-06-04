@@ -13,9 +13,9 @@ reverse=True
 #description#
 # itemgetterソート
 #body#
-sort(key=itemgetter($index))
+sort(key=lambda x: x[1])
 #prefix#
-# sort(key=itemgetter
+# sort(key=l
 #end#
 
 #name#
@@ -23,9 +23,9 @@ sort(key=itemgetter($index))
 #description#
 # デフォルトディクショナリ
 #body#
-d = defaultdict($int)
+dd = defaultdict($int)
 #prefix#
-# defaultdict
+# dd=defaultdict
 #end#
 
 #name#
@@ -109,8 +109,6 @@ def count_intervals(a:list, x)->int:
 #prefix#
 # Lib_区間カウント
 #end#
-
-
 
 #name#
 # direc

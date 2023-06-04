@@ -1,4 +1,14 @@
 #name#
+# intinput
+#description#
+# 整数nの読み込み
+#body#
+int(input())
+#prefix#
+# int(input())
+#end#
+
+#name#
 # n=intinput
 #description#
 # 整数nの読み込み

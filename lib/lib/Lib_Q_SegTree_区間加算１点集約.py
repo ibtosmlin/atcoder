@@ -82,5 +82,5 @@ for _ in range(q):
         print(raq[i])
 
 #prefix#
-# Lib_Seg_区間加算一点集約
+# Lib_Q_Seg_区間加算一点集約
 #end#

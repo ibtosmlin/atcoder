@@ -87,5 +87,5 @@ for _ in range(q):
         print(ruq[i])
 
 #prefix#
-# Lib_Seg_区間更新一点集約
+# Lib_Q_Seg_区間更新一点集約
 #end#

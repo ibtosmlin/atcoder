@@ -164,71 +164,56 @@ class SegmentTree:  # 初期化処理
 
 
 ####################################
+class RMaxQSegmentTree(SegmentTree):
+    def __init__(self, init):
+        super().__init__(init, max, -float('inf'))
 
-# Range Maximum Query
-def op(x, y):
-    return max(x, y)
-ie = -float('inf')
+class RMinimumQSegmentTree(SegmentTree):
+    def __init__(self, init):
+        super().__init__(init, min, float('inf'))
 
+class RSumQSegmentTree(SegmentTree):
+    def __init__(self, init):
+        super().__init__(init, lambda x, y: x + y, 0)
 
-# Range Minimum Query
-def op(x, y):
-    return min(x, y)
-ie = float('inf')
+class RProdQSegmentTree(SegmentTree):
+    def __init__(self, init):
+        super().__init__(init, lambda x, y: x * y, 1)
 
+class RXorQSegmentTree(SegmentTree):
+    def __init__(self, init):
+        super().__init__(init, lambda x, y: x ^ y, 0)
 
-# Range Sum Query
-def op(x, y):
-    return x + y
-ie = 0
-
-
-# Range Product Query
-def op(x, y):
-    return x * y
-ie = 1
-
-
-# Range Xor Query
-def op(x, y):
-    return x ^ y
-ie = 0
-
-
-# Range GCD Query
+# GCD query
 from math import gcd
+ie = float('inf')
 def op(x, y):
     if x == ie: return y
     if y == ie: return x
     return gcd(x, y)
-ie = float('inf')
+
+sgt = SegmentTree(a, op, ie)
 
 ####################################
-
-# Range Minimum Query
-def op(x, y):
-    return min(x, y)
-ie = float('inf')
 
 
 # n, q = map(int, input().split())
 # a = list(map(int, input().split()))
 
 a = [1,2,3,2,1,3,3,5,2,1]
-sgt = SegmentTree(a, op, ie)
+# sgt = SegmentTree(a, op, ie)
 x, v = 3, 55123
 l, r = 2, 5
-#sgt.update(x, v)
-#print(sgt.query(l, r))
+sgt.update(x, v)
+print(sgt.query(l, r))
 # max_right   lを固定してlambdaを満たす最大のr
 # min_left    rを固定してlambdaを満たす最小のl
 for l in range(10):
     r = sgt.max_right(l, lambda q: q > 2)
     print(l, r, sgt.query(l, r))
 
-
 #print(sgt)
 
 #prefix#
-# Lib_Seg_一点更新区間集約
+# Lib_Q_Seg_一点更新区間集約
 #end#
