@@ -1,4 +1,4 @@
-# https://atcoder.jp/contests/abc268/tasks/abc268_e
+# https://atcoder.jp/contests/abc075/tasks/abc075_c
 from itertools import *
 from operator import itemgetter
 from collections import defaultdict, Counter, deque
@@ -22,14 +22,29 @@ def yes(): print('Yes')
 def no(): print('No')
 def end(r=-1): print(r); exit()
 
-n = int(input())
-p = list(map(int, input().split()))
-q = [0] * n
-ret = 0
-l = [0] * (n+1)
-for i, pi in enumerate(p):
-    q[(pi-i)%n] += 1
-    q[(pi-i+n//2)%n] -= 1
-    ret += abs(i - pi)%n
+n, m = map(int, input().split())
+G = [[] for _ in range(n)]
 
-print(q)
+for i in range(m):
+    a, b = map(int, input().split())
+    a -= 1; b -= 1
+    G[a].append((b, i))
+    G[b].append((a, i))
+
+
+def dfs(x, i):
+    global seen
+    seen.add(x)
+    for nx, j in G[x]:
+        if nx in seen: continue
+        if i == j: continue
+        dfs(nx, i)
+
+
+ret = 0
+for i in range(m):
+    seen = set()
+    dfs(0,i)
+    if len(seen) != n:
+        ret += 1
+print(ret)

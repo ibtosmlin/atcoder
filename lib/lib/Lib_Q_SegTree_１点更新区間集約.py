@@ -186,7 +186,7 @@ class RXorQSegmentTree(SegmentTree):
 
 # GCD query
 from math import gcd
-ie = float('inf')
+ie = 0
 def op(x, y):
     if x == ie: return y
     if y == ie: return x

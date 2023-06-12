@@ -2774,7 +2774,7 @@
             "",
             "# GCD query",
             "from math import gcd",
-            "ie = float('inf')",
+            "ie = 0",
             "def op(x, y):",
             "    if x == ie: return y",
             "    if y == ie: return x",
@@ -4076,10 +4076,10 @@
     },
     "sort(key=itemgetter": {
         "prefix": [
-            "sort(key=itemgetter"
+            "sort(key=l"
         ],
         "body": [
-            "sort(key=itemgetter($index))"
+            "sort(key=lambda x: x[1])"
         ],
         "description": [
             "itemgetterソート"
@@ -4087,10 +4087,10 @@
     },
     "defaultdict": {
         "prefix": [
-            "defaultdict"
+            "dd=defaultdict"
         ],
         "body": [
-            "d = defaultdict($int)"
+            "dd = defaultdict($int)"
         ],
         "description": [
             "デフォルトディクショナリ"
@@ -5612,6 +5612,9 @@
             "# トポロジカルソート",
             "# 有向非巡回グラフ（DAG）の各ノードを順序付けして、どのノードもその出力辺の先のノードより前にくるように並べることである。",
             "# 有向非巡回グラフは必ずトポロジカルソートすることができる。",
+            "",
+            "from collections import deque",
+            "",
             "class topological_sort:",
             "    def __init__(self, n:int, G) -> None:",
             "        self.n = n",
@@ -5679,7 +5682,6 @@
             "",
             "",
             "#########################################",
-            "from collections import deque",
             "# n, m = map(int, input().split())",
             "n = int(input())",
             "G = [[] for _ in range(n)]",
@@ -5697,6 +5699,7 @@
             "print(ts.ts)",
             "print(ts.parents)",
             "print(ts.is_dag)",
+            "print(ts.is_unique)",
             ""
         ],
         "description": [

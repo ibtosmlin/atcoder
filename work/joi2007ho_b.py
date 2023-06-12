@@ -1,4 +1,4 @@
-# https://atcoder.jp/contests/abc268/tasks/abc268_e
+# https://atcoder.jp/contests/joi2007ho/tasks/joi2007ho_b
 from itertools import *
 from operator import itemgetter
 from collections import defaultdict, Counter, deque
@@ -21,15 +21,32 @@ def notisinhw(i, j, h, w): return not ((0 <= i < h) and (0 <= j < w))
 def yes(): print('Yes')
 def no(): print('No')
 def end(r=-1): print(r); exit()
+n, k = map(int, input().split())
 
-n = int(input())
-p = list(map(int, input().split()))
-q = [0] * n
-ret = 0
-l = [0] * (n+1)
-for i, pi in enumerate(p):
-    q[(pi-i)%n] += 1
-    q[(pi-i+n//2)%n] -= 1
-    ret += abs(i - pi)%n
+bit = [0] * (n+2)
+fg = 0
+for _ in range(k):
+    x = int(input())
+    if x == 0:
+        fg = 1
+    bit[x] += 1
+for i in range(1, n+2):
+    bit[i] += bit[i-1]
 
-print(q)
+def isok(d, fg):
+    for l in range(1, n+1-d):
+        cnt = d - (bit[l+d] - bit[l])
+        if cnt <= fg:
+            return True
+    return False
+
+ok = 0
+ng = n+1
+while ng-ok > 1:
+    mid = (ng+ok) // 2
+    if isok(mid, fg):
+        ok = mid
+    else:
+        ng = mid
+
+print(ok)

@@ -1,4 +1,4 @@
-# https://atcoder.jp/contests/abc268/tasks/abc268_e
+# https://atcoder.jp/contests/abc300/tasks/abc300_e
 from itertools import *
 from operator import itemgetter
 from collections import defaultdict, Counter, deque
@@ -22,14 +22,16 @@ def yes(): print('Yes')
 def no(): print('No')
 def end(r=-1): print(r); exit()
 
-n = int(input())
-p = list(map(int, input().split()))
-q = [0] * n
-ret = 0
-l = [0] * (n+1)
-for i, pi in enumerate(p):
-    q[(pi-i)%n] += 1
-    q[(pi-i+n//2)%n] -= 1
-    ret += abs(i - pi)%n
+p = modinv(5, mod1)
 
-print(q)
+@lru_cache(10**6)
+def solv(x):
+    if x == 1: return 1
+    ret =0
+    for i in [2,3,4,5,6]:
+        if x % i: continue
+        ret += solv(x//i) * p
+    return ret % mod1
+
+n = int(input())
+print(solv(n))

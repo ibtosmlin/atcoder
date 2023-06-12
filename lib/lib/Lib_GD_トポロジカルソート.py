@@ -6,6 +6,9 @@
 # トポロジカルソート
 # 有向非巡回グラフ（DAG）の各ノードを順序付けして、どのノードもその出力辺の先のノードより前にくるように並べることである。
 # 有向非巡回グラフは必ずトポロジカルソートすることができる。
+
+from collections import deque
+
 class topological_sort:
     def __init__(self, n:int, G) -> None:
         self.n = n
@@ -73,7 +76,6 @@ class topological_sort:
 
 
 #########################################
-from collections import deque
 # n, m = map(int, input().split())
 n = int(input())
 G = [[] for _ in range(n)]
@@ -91,6 +93,7 @@ ts.build()
 print(ts.ts)
 print(ts.parents)
 print(ts.is_dag)
+print(ts.is_unique)
 
 #prefix#
 # Lib_GD_トポロジカルソート_topologicalsort
