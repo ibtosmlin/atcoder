@@ -1,1 +1,2 @@
-lib_se
+n = int(input())
+n %= 5

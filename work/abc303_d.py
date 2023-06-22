@@ -1,3 +1,4 @@
+# https://atcoder.jp/contests/abc303/tasks/abc303_d
 from itertools import *
 from operator import itemgetter
 from collections import defaultdict, Counter, deque
@@ -17,3 +18,22 @@ def notisinhw(i, j, h, w): return not ((0 <= i < h) and (0 <= j < w))
 def yes(): print('Yes')
 def no(): print('No')
 def end(r=-1): print(r); exit()
+x, y, z = map(int, input().split())
+s = input()
+n = len(s)
+dp = [[INF1] * 2 for _ in range(n+1)]
+dp[0][0] = 0
+
+for i, si in enumerate(s):
+    if si == 'A':
+        dp[i+1][0] = min(dp[i+1][0], dp[i][0] + y)
+        dp[i+1][1] = min(dp[i+1][1], dp[i][0] + z + x)
+        dp[i+1][0] = min(dp[i+1][0], dp[i][1] + z + y)
+        dp[i+1][1] = min(dp[i+1][1], dp[i][1] + x)
+    else:
+        dp[i+1][0] = min(dp[i+1][0], dp[i][0] + x)
+        dp[i+1][1] = min(dp[i+1][1], dp[i][0] + z + y)
+        dp[i+1][0] = min(dp[i+1][0], dp[i][1] + z + x)
+        dp[i+1][1] = min(dp[i+1][1], dp[i][1] + y)
+
+print(min(dp[-1]))

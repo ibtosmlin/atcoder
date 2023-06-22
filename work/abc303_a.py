@@ -1,3 +1,4 @@
+# https://atcoder.jp/contests/abc303/tasks/abc303_a
 from itertools import *
 from operator import itemgetter
 from collections import defaultdict, Counter, deque
@@ -17,3 +18,21 @@ def notisinhw(i, j, h, w): return not ((0 <= i < h) and (0 <= j < w))
 def yes(): print('Yes')
 def no(): print('No')
 def end(r=-1): print(r); exit()
+n = int(input())
+s = input()
+t = input()
+
+def isok(u, v):
+    if u == v: return True
+    if u == '1' and v == 'l': return True
+    if u == '0' and v == 'o': return True
+    if v == '1' and u == 'l': return True
+    if v == '0' and u == 'o': return True
+    return False
+
+
+for i in range(n):
+    if isok(s[i], t[i]): continue
+    print('No')
+    exit()
+print('Yes')

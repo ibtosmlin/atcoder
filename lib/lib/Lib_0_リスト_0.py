@@ -124,3 +124,13 @@ for dh, dw in direc:
 #prefix#
 # direc
 #end#
+
+#name#
+# memo
+#description#
+# memo
+#body#
+from functools import lru_cache
+#prefix#
+# memo_lru_chache
+#end#

@@ -1,7 +1,23 @@
-#name#
-# Sorted Multi Set
-#description#
-#body#
+# https://atcoder.jp/contests/abc306/tasks/abc306_e
+from itertools import *
+from operator import itemgetter
+from collections import defaultdict, Counter, deque
+from heapq import heapify, heappop, heappush
+import sys
+sys.setrecursionlimit(10001000)
+INF1 = float('inf'); INF = 10 ** 9
+mod = 1000000007; mod1 = 998244353
+PI = 3.141592653589793
+ALPS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+alps = 'abcdefghijklmnopqrstuvwxyz'
+def alp(i): return chr(ord('a') + i%26)    # i=0->'a', i=25->'z'
+def modinv(x, mod): return pow(x, mod - 2, mod)
+def input(): return sys.stdin.readline().rstrip()
+def int1(x): return int(x)-1
+def notisinhw(i, j, h, w): return not ((0 <= i < h) and (0 <= j < w))
+def yes(): print('Yes')
+def no(): print('No')
+def end(r=-1): print(r); exit()
 # https://github.com/tatyam-prime/SortedSet/blob/main/SortedMultiset.py
 import math
 from bisect import bisect_left, bisect_right, insort
@@ -109,7 +125,6 @@ class SortedMultiset(Generic[T]):
 
     def __getitem__(self, x: int) -> T:
         "Return the x-th element, or IndexError if it doesn't exist."
-        "sm[-1]も可能"
         if x < 0: x += self.size
         if x < 0: raise IndexError
         for a in self.a:
@@ -137,31 +152,35 @@ class SortedMultiset(Generic[T]):
 
 ###############################################
 
-sm = SortedMultiset()
+n, k, q = map(int, input().split())
 
-q = int(input())
+sm = SortedMultiset([0] * n)
+A = [0] * n
+totoal = 0
+minkth = 0
+kthx = 0
 
 for _ in range(q):
-    query = tuple(map(int, input().split()))
+    i, x = map(int, input().split())
+    i -= 1
+    px = A[i]
+    sm.dicard(px)
 
-    if query[0] == 2:
-        x, k = query[1:]
-        id = sm.index_right(x) - k
-        if id < 0:
-            print(-1)
-        else:
-            print(sm[id])
-    elif query[0] == 3:
-        x, k = query[1:]
-        id = sm.index(x) + k - 1
-        if id >= len(sm):
-            print(-1)
-        else:
-            print(sm[id])
+
+
+    if v >= usm[0]:
+        usm.discard(v)
+        lsm.add(w)
+        u0 = lsm[n-k]
+        lsm.discard(u0)
+        usm.add(u0)
+        ret += u0-v
     else:
-        sm.add(query[1])
+        lsm.discard(v)
+        usm.add(w)
+        ul = usm[0]
+        usm.discard(ul)
+        lsm.add(ul)
+        ret += w - ul
 
-
-#prefix#
-# Lib_D_sorted_multi_set
-#end#
+    print(ret)

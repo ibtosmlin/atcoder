@@ -570,6 +570,17 @@
             "int型で複数数値のinput"
         ]
     },
+    "mapint1": {
+        "prefix": [
+            "mapintinput1"
+        ],
+        "body": [
+            "map(lambda x: int(x)-1, input().split())"
+        ],
+        "description": [
+            "int型で複数数値の0-index input"
+        ]
+    },
     "listmapint": {
         "prefix": [
             "listmapintinput"
@@ -1081,6 +1092,75 @@
         ],
         "description": [
             "行列90度回転"
+        ]
+    },
+    "DFS非再帰": {
+        "prefix": [
+            "Lib_G_DFS_非再帰"
+        ],
+        "body": [
+            "",
+            "# 深さ優先探索",
+            "# 隣接リスト",
+            "# 行きかけ、帰りがけ処理",
+            "",
+            "",
+            "def dfs(G:list, st:int, goal=None):",
+            "    # 深さ優先探索（行きがけTrue、帰りがけFalse）",
+            "    n = len(G)",
+            "    stack = []",
+            "    seen = [False] * n",
+            "    level = [-1] * n    # 階層",
+            "    parent = [-1] * n   # 親node",
+            "    dp = [-1] * n       # dp 適宜設定",
+            "    # スタートの設定",
+            "    stack.append((False, st))",
+            "    stack.append((True, st))",
+            "    seen[st] = True",
+            "    level[st] = 0",
+            "",
+            "    while stack:",
+            "        fg, cur = stack.pop()",
+            "        if fg:",
+            "        #行き掛け",
+            "            seen[cur] = True",
+            "            for nxt in G[cur]:",
+            "                if seen[nxt]: continue",
+            "                # 行きがけ処理",
+            "                parent[nxt] = cur",
+            "                level[nxt] = cur + 1",
+            "                stack.append((False, nxt))",
+            "                stack.append((True, nxt))",
+            "        ############",
+            "        else:",
+            "        #帰り掛け",
+            "            isok = True",
+            "            # dp[cur] = 1                     # ex.部分木のノード数",
+            "            for child in G[cur]:",
+            "                if parent[cur] == child: continue",
+            "                if dp[child] == 1:",
+            "                    isok = False",
+            "                # dp[cur] += dp[child]          # ex.部分木のノード数",
+            "            dp[cur] = int(isok)",
+            "            if cur == goal: return dp",
+            "        ############",
+            "    return dp",
+            "",
+            "##########################################",
+            "n = int(input())",
+            "G = [[] for _ in range(n)]",
+            "for _ in range(n-1):",
+            "    a, b = map(int, input().split())",
+            "    # a -= 1; b -= 1",
+            "    G[a].append(b)",
+            "    G[b].append(a)",
+            "",
+            "dp = dfs(G, 0)",
+            "print(sum(dp))",
+            ""
+        ],
+        "description": [
+            "DFS非再帰"
         ]
     },
     "ダブリング": {
@@ -2021,6 +2101,7 @@
             "",
             "    def __getitem__(self, x: int) -> T:",
             "        \"Return the x-th element, or IndexError if it doesn't exist.\"",
+            "        \"sm[-1]も可能\"",
             "        if x < 0: x += self.size",
             "        if x < 0: raise IndexError",
             "        for a in self.a:",
@@ -2461,6 +2542,7 @@
             "",
             "    def __getitem__(self, x: int) -> T:",
             "        \"Return the x-th element, or IndexError if it doesn't exist.\"",
+            "        \"sm[-1]も可能\"",
             "        if x < 0: x += self.size",
             "        if x < 0: raise IndexError",
             "        for a in self.a:",
@@ -4195,6 +4277,17 @@
         ],
         "description": [
             "direc"
+        ]
+    },
+    "memo": {
+        "prefix": [
+            "memo_lru_chache"
+        ],
+        "body": [
+            "from functools import lru_cache"
+        ],
+        "description": [
+            "memo"
         ]
     },
     "Mo'sAlgorythm#": {
@@ -6676,25 +6769,6 @@
         ],
         "body": [
             "",
-            "# https://atcoder.jp/contests/abc160/tasks/abc160_f",
-            "# 全方位tree",
-            "",
-            "#####################################",
-            "# nCr % 10**9+7",
-            "#####################################",
-            "mod, lim = 10**9+7, 10**6                   # mod素数, 出力の制限",
-            "g1, g2 = [[1]*(lim+1) for _ in range(2)]    # ！と逆元tbl",
-            "for i in range(2, lim + 1):",
-            "    g1[i] = g1[i-1] * i % mod",
-            "g2[-1] = pow(g1[-1], mod-2, mod)",
-            "for i in range(lim, 0, -1):",
-            "    g2[i-1] = g2[i] * i % mod",
-            "",
-            "def fac(n): return g1[n]",
-            "def facinv(n): return g2[n]",
-            "#####################################",
-            "",
-            "",
             "from collections import deque",
             "",
             "class Tree():",
@@ -6749,38 +6823,70 @@
             "            dp2[q] = op(merge(dp2[q], dp2[pq]), q, pq)",
             "            dp1[q] = merge(dp1[q], dp2[q])",
             "        for q in self.order:",
-            "            dp1[q] = fin(dp1[q])",
+            "            pq = self.par[q]",
+            "            dp1[q] = fin(dp1[q], pq)",
             "",
             "        return dp1",
             "",
             "n = int(input())",
             "T = Tree(n)",
+            "cost = dict()",
+            "for _ in range(n-1):",
+            "    a, b = map(int, input().split())",
+            "    a -= 1; b -= 1",
+            "    T.add_edge(a, b)",
+            "    cost[(a, b)] = 0",
+            "    cost[(b, a)] = 0",
+            "",
             "#######################################################",
-            "# a, bはdpの値, uは考察している接点親, vは子",
+            "# https://atcoder.jp/contests/abc160/tasks/abc160_f",
+            "#####################################",
+            "mod, lim = 10**9+7, 10**6                   # mod素数, 出力の制限",
+            "g1, g2 = [[1]*(lim+1) for _ in range(2)]    # ！と逆元tbl",
+            "for i in range(2, lim + 1):",
+            "    g1[i] = g1[i-1] * i % mod",
+            "g2[-1] = pow(g1[-1], mod-2, mod)",
+            "for i in range(lim, 0, -1):",
+            "    g2[i-1] = g2[i] * i % mod",
+            "",
+            "def fac(n): return g1[n]",
+            "def facinv(n): return g2[n]",
+            "#####################################",
+            "# a, bはdpの値, pは考察している接点親, qは子",
             "# dpをmerge",
             "merge = lambda a, b: (a[0] * b[0] * facinv(a[1]) * facinv(b[1]) * fac(a[1]+b[1]) % mod, a[1] + b[1])",
             "# dpをmerge前にする作業",
-            "op = lambda a, u, v: (a[0], a[1] + 1)",
+            "op = lambda a, p, q: (a[0], a[1] + 1)",
             "# dpをmerge後にする作業",
-            "fin = lambda a, u: (a[0] * fac(a[1]) % mod, a[1])",
+            "fin = lambda a, p: (a[0] * fac(a[1]) % mod, a[1])",
             "# mergeの単位元",
             "id = (1, 0)",
+            "",
             "#######################################################",
-            "# a, bはdpの値, uは考察している接点親, vは子",
+            "# https://atcoder.jp/contests/s8pc-4/tasks/s8pc_4_d",
+            "# a, bはdpの値, pは考察している接点親, qは子",
             "# dpをmerge",
             "merge = lambda a, b: a + b",
+            "# dpをmerge前にする作業",
+            "op = lambda a, p, q: a / (len(T.edges[q])-1) + 1 if a != 0 else 1",
             "# dpをmerge後にする作業",
-            "op = lambda a, u, v: a / (len(T.edges[v])-1) + 1 if a != 0 else 1",
+            "fin = lambda a, p: a / len(T.edges[p])",
+            "# mergeの単位元",
+            "id = 0",
+            "",
+            "#######################################################",
+            "# https://atcoder.jp/contests/abc222/tasks/abc222_f",
+            "# a, bはdpの値, pは考察している接点親, qは子",
+            "# dpをmerge",
+            "merge = lambda a, b: max(a, b)",
+            "# dpをmerge前にする作業",
+            "D = list(map(int, input().split()))",
+            "op = lambda a, p, q: max(a, D[v]) + cost[(p, q)]",
             "# dpをmerge後にする作業",
-            "fin = lambda a, u: a / len(T.edges[u])",
+            "fin = lambda a, p: a",
             "# mergeの単位元",
             "id = 0",
             "#######################################################",
-            "",
-            "",
-            "for _ in range(n-1):",
-            "    a, b = map(int, input().split())",
-            "    T.add_edge(a-1, b-1)",
             "",
             "T.set_root(0)",
             "dp = T.rerooting(merge, op, fin, id)",
@@ -6789,7 +6895,8 @@
             ""
         ],
         "description": [
-            "全方位木DP"
+            "全方位木DP",
+            "https://algo-logic.info/tree-dp/"
         ]
     },
     "nCr": {

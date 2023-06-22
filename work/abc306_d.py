@@ -1,3 +1,4 @@
+# https://atcoder.jp/contests/abc306/tasks/abc306_d
 from itertools import *
 from operator import itemgetter
 from collections import defaultdict, Counter, deque
@@ -17,3 +18,19 @@ def notisinhw(i, j, h, w): return not ((0 <= i < h) and (0 <= j < w))
 def yes(): print('Yes')
 def no(): print('No')
 def end(r=-1): print(r); exit()
+n = int(input())
+dp = [0] * 2
+# 元気、壊す、死ぬ
+
+for _ in range(n):
+    x, y = map(int, input().split())
+    ndp = [-INF, -INF]
+    if x == 0:
+        ndp[0] = max(dp[0] + y, dp[0], dp[1] + y)
+        ndp[1] = dp[1]
+    else:
+        ndp[0] = dp[0]
+        ndp[1] = max(dp[0] + y, dp[1])
+    dp = ndp
+
+print(max(dp))

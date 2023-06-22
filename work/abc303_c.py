@@ -1,3 +1,4 @@
+# https://atcoder.jp/contests/abc303/tasks/abc303_c
 from itertools import *
 from operator import itemgetter
 from collections import defaultdict, Counter, deque
@@ -17,3 +18,30 @@ def notisinhw(i, j, h, w): return not ((0 <= i < h) and (0 <= j < w))
 def yes(): print('Yes')
 def no(): print('No')
 def end(r=-1): print(r); exit()
+direc = [(1, 0), (-1, 0), (0, 1), (0, -1)]
+
+n, m, h, k = map(int, input().split())
+s = input()
+pt = set(tuple(map(int, input().split())) for _ in range(m))
+x, y = 0, 0
+move = 0
+for si in s:
+    move += 1
+    if si == 'R':
+        x += 1
+    elif si == 'L':
+        x -= 1
+    elif si == 'U':
+        y += 1
+    else:
+        y -= 1
+    h -= 1
+    if h < 0:
+        no()
+        exit()
+    if (x, y) in pt:
+        if h < k:
+            h = k
+            pt.remove((x, y))
+yes()
+exit()

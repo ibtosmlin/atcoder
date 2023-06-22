@@ -1,3 +1,4 @@
+# https://atcoder.jp/contests/abc306/tasks/abc306_a
 from itertools import *
 from operator import itemgetter
 from collections import defaultdict, Counter, deque
@@ -17,3 +18,12 @@ def notisinhw(i, j, h, w): return not ((0 <= i < h) and (0 <= j < w))
 def yes(): print('Yes')
 def no(): print('No')
 def end(r=-1): print(r); exit()
+n = int(input())
+s = input()
+
+t = []
+for si in s:
+    t.append(si)
+    t.append(si)
+
+print(''.join(t))

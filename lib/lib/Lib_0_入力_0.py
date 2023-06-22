@@ -29,6 +29,16 @@ map(int, input().split())
 #end#
 
 #name#
+# mapint1
+#description#
+# int型で複数数値の0-index input
+#body#
+map(lambda x: int(x)-1, input().split())
+#prefix#
+# mapintinput1
+#end#
+
+#name#
 # listmapint
 #description#
 # int型でlistのinput

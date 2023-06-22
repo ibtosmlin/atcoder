@@ -108,6 +108,7 @@ class SortedSet(Generic[T]):
 
     def __getitem__(self, x: int) -> T:
         "Return the x-th element, or IndexError if it doesn't exist."
+        "sm[-1]も可能"
         if x < 0: x += self.size
         if x < 0: raise IndexError
         for a in self.a:
