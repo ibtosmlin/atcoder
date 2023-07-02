@@ -7,6 +7,7 @@
 
 #####################################
 # nCr % 10**9+7
+# http://zakii.la.coocan.jp/enumeration/10_balls_boxes.htm
 #####################################
 mod, lim = 10**9+7, 10**6                   # mod素数, 出力の制限
 g1, g2 = [[1]*(lim+1) for _ in range(2)]    # ！と逆元tbl
@@ -27,23 +28,11 @@ def nCr(n, r):
     r = min(r, n-r)
     return fac(n) * facinv(r) * facinv(n-r) % mod
 
-def nPr(n, r):
-    """nPr
-    n個のものからr個選んで並べる
-    """
-    if ( r<0 or r>n ):
-        return 0
-    return fac(n) * facinv(n-r) % mod
-
-def nHr(n, r):
-    """nHr = n-1+rCr
-    n種類のものからr個重複を許して選ぶ(一個も選ばれないものがあっても可)
-    (一個も選ばれないものがダメな場合はnをn-rとする・あらかじめ１個づつ選んでおく)
-    """
-    return nCr(n-1+r, n-1)
-
 ret = nCr(4, 2)
 
+#####################################
+nは大きいが固定で,rは小さい場合
+#####################################
 class Combination:
     """nCrの前計算
 

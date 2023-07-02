@@ -71,36 +71,24 @@ print(z2.conjugate())
 #description#
 # Lib_sort_by_function
 #body#
-from functools import cmp_to_key
-def sort_by_function(x):
-    """比較関数を設定してソート
-    """
-    def compare(item1, item2):
-        """ "小さい" -> -1
-            "等しい" -> 0
-            "大きい" -> 1
-        """
-        # 以下はx, yが与えられてy/xで比較する例
-        # y1/x1 < y2/x2
-        # -> y1*x2 < y2*x1
-        x1, y1 = item1
-        x2, y2 = item2
 
-        if y1*x2 < y2*x1:
-            return -1
-        elif y1*x2 > y2*x1:
-            return 1
-        else:
-            return 0
-    x.sort(key=cmp_to_key(compare))
-    return x
-########################################
-a = [[1, 2], [2, 6] , [3, 6], [4, 5], [5, 7]]
-print(a)
-a = sort_by_function(a)
-print(a)
-# [[4, 5], [5, 7], [1, 2], [3, 6], [2, 6]]
-#   1.25    0.714    0.5     0.5    0.333
+# https://atcoder.jp/contests/abc308/tasks/abc308_c
+
+class ordobj:
+    def __init__(self, x):
+        self.a, self.b, self.i = x
+
+    def __lt__(self, other):
+        if self.a * (other.a+other.b) < other.a * (self.a+self.b):
+            return True
+        if self.i > other.i:
+            return True
+        return False
+
+    def __repr__(self):
+        return f'{self.a} {self.b} {self.i}'
+
+
 #prefix#
 # Lib_sort_by_function
 #end#

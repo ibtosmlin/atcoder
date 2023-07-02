@@ -1,41 +1,33 @@
-import sys
-from itertools import *
-from operator import itemgetter
-from collections import defaultdict, Counter, deque
-from heapq import heapify, heappop, heappush
-from functools import lru_cache
-sys.setrecursionlimit(10001000)
-INF = float('inf')
-mod = 1000000007; mod1 = 998244353
-PI = 3.141592653589793
-def modinv(x, mod): return pow(x, mod - 2, mod)
-def input(): return sys.stdin.readline().rstrip()
-def int1(x): return int(x)-1
-def alp(i): return chr(ord('a') + i%26)    # i=0->'a', i=26->'z'
-def end(r=-1): print(r); exit()
+# https://atcoder.jp/contests/abc249/tasks/abc249_e
+from collections import defaultdict
+
+def diff(k):
+    return k - len(str(k)) - 1
+
 n, p = map(int, input().split())
-point = [0] * 3010
-for i in range(3010):
-    point[i] = i - len(str(i)) - 1
 
-# dp[i][j]:Sはi文字使用して,変換後Tはj文字となっている文字列の数
-dp = [[0] * 3010 for _ in range(3010)]
-dps = [[0] * 3010 for _ in range(3010)]
-
+dp = [defaultdict(int) for _ in range(n+1)]
+# dp[i][j]  i文字まで決めて、T-Sの差がjの場合の数
 dp[0][0] = 1
+
+# i文字まで決まっていて残りn-i文字が全て-1として
+# jがn-i+1 以上だったら計算する必要なし
+
 for i in range(n):
-    dps[0][1] = dp[0][0]
+    for j, c in dp[i].items():
+        for k in range(1, n-i+1):
+        # kは1文字からn-i文字まで
+            ni = i+k
+            nj = j+diff(k)
+            # nj = min(j+diff(k), n-i+1)
+            dp[ni][nj] += c * (26 if i == 0 else 25) % p
+            dp[ni][nj] %= p
 
-for _ in range(n):
-    if _ == 0:
-        use = 26
-    else:
-        use = 25
-    for i in range(3010):
-        for j in range(3010):
-            for k in range(3010-i):
-                if j+point[k] >= 3010: continue
-                dp[i+k][j+point[k]] += dp[i][j] * use
-                dp[i+k][j+point[k]] %= p
+ret = 0
+for k, v in dp[-1].items():
+    if k > 0:
+        ret += v
+        ret % p
+print(ret)
+print(dp)
 
-print(dp[n])

@@ -1,3 +1,4 @@
+# https://atcoder.jp/contests/abc308/tasks/abc308_a
 from itertools import *
 from collections import defaultdict, Counter, deque
 from heapq import heapify, heappop, heappush
@@ -14,3 +15,15 @@ def int1(x): return int(x)-1
 def notisinhw(i, j, h, w): return not ((0 <= i < h) and (0 <= j < w))
 def printyes(ret:bool): print('Yes' if ret else 'No')
 def end(r=-1): exit(print(r))
+s = list(map(int, input().split()))
+
+for i in range(7):
+    if s[i+1] < s[i]:
+        end('No')
+for i in range(8):
+    if s[i] < 100 or s[i] >= 676:
+        end('No')
+    if s[i] % 25:
+        end('No')
+
+print('Yes')
