@@ -1,3 +1,4 @@
+# https://atcoder.jp/contests/abc309/tasks/abc309_d
 from itertools import *
 from collections import defaultdict, Counter, deque
 from heapq import heapify, heappop, heappush
@@ -19,3 +20,27 @@ def sqrt(x):
 def yes(): print('Yes')
 def no(): print('No')
 def end(r=-1): exit(print(r))
+
+n1, n2, m = map(int, input().split())
+G = [[] for _ in range(n1+n2)]
+for _ in range(m):
+    a, b = map(int, input().split())
+    a -= 1; b -= 1
+    G[a].append(b)
+    G[b].append(a)
+
+
+
+def bfs(x):
+    seen = [-1] * (n1+n2)
+    que = deque([x])
+    seen[x] = 0
+    while que:
+        y = que.popleft()
+        for ny in G[y]:
+            if seen[ny] != -1: continue
+            seen[ny] = seen[y] + 1
+            que.append(ny)
+    return max(seen)
+
+print(1+bfs(0) + bfs(n1+n2-1))

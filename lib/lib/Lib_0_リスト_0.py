@@ -131,6 +131,7 @@ for dh, dw in direc:
 # memo
 #body#
 from functools import lru_cache
+@lru_chache()
 #prefix#
 # memo_lru_chache
 #end#

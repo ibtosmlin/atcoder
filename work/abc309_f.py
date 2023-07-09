@@ -1,3 +1,4 @@
+# https://atcoder.jp/contests/abc309/tasks/abc309_f
 from itertools import *
 from collections import defaultdict, Counter, deque
 from heapq import heapify, heappop, heappush
@@ -19,3 +20,8 @@ def sqrt(x):
 def yes(): print('Yes')
 def no(): print('No')
 def end(r=-1): exit(print(r))
+n = int(input())
+boxs = []
+for _ in range(n):
+    boxs.append(sorted(map(int, input().split())))
+print(boxs)

@@ -221,9 +221,10 @@ class Line:
 ######################################################################
 class Polygon:
     def __init__(self, pts: list):
+        # pts = [Point(x, y) for x, y in listoftuple]
         self.N = len(pts)
-        self.points = [Point(x, y) for x, y in pts]
-        self.pts = pts
+        self.points = pts
+        self.pts = [p.value for p in pts]
 
     @property
     def value(self):
@@ -288,7 +289,7 @@ class Polygon:
             while len(qs) > t and qs[-1].det3(qs[-2], p) > EPS:
                 qs.pop()
             qs.append(p)
-        return Polygon([pi.value for pi in qs[:-1]])
+        return Polygon(qs[:-1])
 
     @property
     def diameter(self):
@@ -321,8 +322,8 @@ class Polygon:
             cv0, cv1 = l.p0.det3(l.p1, p0), l.p0.det3(l.p1, p1)
             if cv0 * cv1 < EPS:
                 v = l.cross_point(Line(p0, p1))
-                if v is not None: q.append(v.value)
-            if cv1 > -EPS: q.append(p1.value)
+                if v is not None: q.append(v)
+            if cv1 > -EPS: q.append(p1)
         return Polygon(q)
 
     def contains(self, p: Point):
@@ -354,8 +355,8 @@ class Polygon:
 
 ######################################################################
 class Circle:
-    def __init__(self, p: tuple, r: float):
-        self.center = Point(p[0], p[1])
+    def __init__(self, p: Point, r: float):
+        self.center = p
         self.radius = r
 
     @property
@@ -438,7 +439,7 @@ class Circle:
 
     def cross_area_line(self, l:Line):
         # 円を直線で切った部分の面積
-        tri = Triangle([self.center.value, l.p0.value, l.p1.value]).area
+        tri = Triangle([self.center, l.p0, l.p1]).area
         sector = self.sector_area(l.p0, l.p1)
         return (sector[0] - tri, sector[1] + tri)
 
@@ -461,7 +462,7 @@ class Circle:
         # 円と点の接点
         if self.contain_point(p): return None
         r = ((self.center - p).abs ** 2 - self.radius ** 2) ** 0.5
-        dummycircle = Circle(p.value, r)
+        dummycircle = Circle(p, r)
         return self.cross_point_circle(dummycircle)
 
     def tangent_line(self, p:Point):
@@ -524,7 +525,7 @@ class Triangle(Polygon):
         for ci, ddi in zip(self.points, dd):
             c = c + ci * ddi
         c = c / dsum
-        return Circle(c.value, r)
+        return Circle(c, r)
 
     @property
     def circle_circumscribed(self):
@@ -540,8 +541,9 @@ class Triangle(Polygon):
         if det < -EPS:
             x *= -1; y *= -1; det *= -1
         x /= det; y /= det
-        r = Point(x, y).dist(self.points[0])
-        return Circle((x, y), r)
+        c = Point(x, y)
+        r = c.dist(self.points[0])
+        return Circle(c, r)
 
 ######################################################################
 def closestPair(points):
@@ -575,9 +577,9 @@ def closestPair(points):
 # p = Point(x, y)
 # x, y, u, v = map(int, input().split())
 # l = Line(Point(x, y), Point(u, v))
-# poly = Polygon([tuple(map(int, input().split())) for _ in range(m)])
+# poly = Polygon([Point(tuple(map(int, input().split()))) for _ in range(m)])
 # x, y, r = map(int, input().split())
-# cir = Circle((x, y), r)
+# cir = Circle(Point(x, y), r)
 # tri = Polygon([tuple(map(int, input().split())) for _ in range(3)])
 
 P = []

@@ -1,3 +1,4 @@
+# https://atcoder.jp/contests/abc309/tasks/abc309_a
 from itertools import *
 from collections import defaultdict, Counter, deque
 from heapq import heapify, heappop, heappush
@@ -19,3 +20,10 @@ def sqrt(x):
 def yes(): print('Yes')
 def no(): print('No')
 def end(r=-1): exit(print(r))
+
+a, b = map(int, input().split())
+
+if b-a == 1 and a%3!=0:
+    print('Yes')
+else:
+    print('No')

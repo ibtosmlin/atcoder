@@ -9,16 +9,6 @@ print(ret)
 #end#
 
 #name#
-# output
-#description#
-# print(Yes/No)
-#body#
-print('Yes' if ret else 'No')
-#prefix#
-# print(1Yes/No)
-#end#
-
-#name#
 # output2
 #description#
 # print(INF)

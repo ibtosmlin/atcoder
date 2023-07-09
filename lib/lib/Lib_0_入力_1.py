@@ -1,22 +1,23 @@
 #name#
-# intinput
+# n=intinput
 #description#
 # 整数nの読み込み
 #body#
-int(input())
+n = int(input())
 #prefix#
-# int(input())
+# nin
 #end#
 
+
 #name#
-# n=intinput
+# nainput
 #description#
 # 整数nの読み込み
 #body#
 n = int(input())
 a = list(map(int, input().split()))
 #prefix#
-# n =int(input())
+# nain
 #end#
 
 #name#
@@ -26,7 +27,7 @@ a = list(map(int, input().split()))
 #body#
 s = list(input())
 #prefix#
-# s =list(input())
+# sin
 #end#
 
 #name#

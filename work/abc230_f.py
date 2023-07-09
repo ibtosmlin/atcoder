@@ -1,3 +1,4 @@
+# https://atcoder.jp/contests/abc230/tasks/abc230_f
 from itertools import *
 from collections import defaultdict, Counter, deque
 from heapq import heapify, heappop, heappush
@@ -12,10 +13,25 @@ def modinv(x, mod): return pow(x, mod - 2, mod)
 def input(): return sys.stdin.readline().rstrip()
 def int1(x): return int(x)-1
 def notisinhw(i, j, h, w): return not ((0 <= i < h) and (0 <= j < w))
-def sqrt(x):
-    r = int(x**0.5) - 3
-    while (r+1)*(r+1) <= x: r += 1
-    return r
-def yes(): print('Yes')
-def no(): print('No')
+def printyes(ret:bool): print('Yes' if ret else 'No')
 def end(r=-1): exit(print(r))
+n = int(input())
+a = list(map(int, input().split()))
+dp = {0: 1}
+
+for i, ai in enumerate(a):
+    ndp = defaultdict(int)
+    t = 0
+    for k, v in dp.items():
+        t = t + v % mod1
+        ndp[k+ai] += v
+        ndp[k+ai] %= mod1
+    if i:
+        ndp[ai] += t
+        ndp[ai] % mod1
+    dp = ndp
+
+ret = 0
+for v in dp.values():
+    ret +=v
+print(ret)

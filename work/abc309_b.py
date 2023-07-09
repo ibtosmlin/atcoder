@@ -1,3 +1,4 @@
+# https://atcoder.jp/contests/abc309/tasks/abc309_b
 from itertools import *
 from collections import defaultdict, Counter, deque
 from heapq import heapify, heappop, heappush
@@ -19,3 +20,27 @@ def sqrt(x):
 def yes(): print('Yes')
 def no(): print('No')
 def end(r=-1): exit(print(r))
+n = int(input())
+A = []
+for _ in range(n):
+    x = list(input())
+    A.append(x)
+
+B = [[-1] * n for _ in range(n)]
+for i in range(n):
+    for j in range(n):
+        if i == 0 and j == 0:
+            B[i][j] = A[i+1][j]
+        elif i == 0:
+            B[i][j] = A[i][j-1]
+        elif j == n-1:
+            B[i][j] = A[i-1][j]
+        elif i == n-1:
+            B[i][j] = A[i][j+1]
+        elif j == 0:
+            B[i][j] = A[i+1][j]
+        else:
+            B[i][j] = A[i][j]
+for bi in B:
+    print(''.join(bi))
+

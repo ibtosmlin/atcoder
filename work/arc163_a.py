@@ -1,3 +1,4 @@
+# https://atcoder.jp/contests/arc163/tasks/arc163_a
 from itertools import *
 from collections import defaultdict, Counter, deque
 from heapq import heapify, heappop, heappush
@@ -12,10 +13,19 @@ def modinv(x, mod): return pow(x, mod - 2, mod)
 def input(): return sys.stdin.readline().rstrip()
 def int1(x): return int(x)-1
 def notisinhw(i, j, h, w): return not ((0 <= i < h) and (0 <= j < w))
-def sqrt(x):
-    r = int(x**0.5) - 3
-    while (r+1)*(r+1) <= x: r += 1
-    return r
-def yes(): print('Yes')
-def no(): print('No')
+def printyes(ret:bool): print('Yes' if ret else 'No')
 def end(r=-1): exit(print(r))
+
+def solv():
+    n = int(input())
+    s = input()
+    for i in range(1, n):
+        if s[:i] < s[i:]:
+            printyes(True)
+            return
+    printyes(False)
+    return
+
+t = int(input())
+for _ in range(t):
+    solv()

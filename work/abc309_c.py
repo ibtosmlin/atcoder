@@ -1,3 +1,4 @@
+# https://atcoder.jp/contests/abc309/tasks/abc309_c
 from itertools import *
 from collections import defaultdict, Counter, deque
 from heapq import heapify, heappop, heappush
@@ -19,3 +20,28 @@ def sqrt(x):
 def yes(): print('Yes')
 def no(): print('No')
 def end(r=-1): exit(print(r))
+n, k = map(int, input().split())
+
+med = []
+for i in range(n):
+    a, b = map(int, input().split())
+    med.append([a, b])
+
+med.sort()
+med.append([med[-1][0]+1, 0])
+
+n = len(med)-1
+for i in range(n)[::-1]:
+    med[i][1] += med[i+1][1]
+
+
+for i, (a, b) in enumerate(med):
+    if b > k: continue
+    if b <= k:
+        if i == 0:
+            print(1)
+            exit()
+        else:
+            print(med[i-1][0] + 1)
+            exit()
+

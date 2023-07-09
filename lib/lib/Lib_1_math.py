@@ -26,6 +26,8 @@ def lcm(x, y): return x * y // math.gcd(x, y)
 # 四捨五入が正しくできるツール
 # Decimal で扱う
 #body#
+
+pypyで使っちゃダメ！！！！！
 from decimal import Decimal
 x, y, r = map(Decimal, input().split())
 f = 123.456
