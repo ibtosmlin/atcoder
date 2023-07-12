@@ -1,23 +1,48 @@
 # https://atcoder.jp/contests/abc243/tasks/abc243_f
-from itertools import *
-from collections import defaultdict, Counter, deque
-from heapq import heapify, heappop, heappush
-import sys; sys.setrecursionlimit(10001000)
-INF1 = float('inf'); INF = 10 ** 9
-mod = 1000000007; mod1 = 998244353
-PI = 3.141592653589793
-ALPS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'; alps = 'abcdefghijklmnopqrstuvwxyz'
-def alp(i, base='a'): return chr(ord(base) + i%26)    # i=0->'a', i=25->'z'
-def alpind(a, base='a'): return ord(a)-ord(base)
-def modinv(x, mod): return pow(x, mod - 2, mod)
-def input(): return sys.stdin.readline().rstrip()
-def int1(x): return int(x)-1
-def notisinhw(i, j, h, w): return not ((0 <= i < h) and (0 <= j < w))
-def printyes(ret:bool): print('Yes' if ret else 'No')
-def end(r=-1): exit(print(r))
-n, m, k = map(int, input().split())
-W = [int(input()) for _ in range(n)]
-x = modinv(sum(W), mod1)
-P = [wi*x for wi in W]
+mod = 998244353
+lim = 100                   # mod素数, 出力の制限
+g1, g2 = [[1]*(lim+1) for _ in range(2)]    # ！と逆元tbl
+for i in range(2, lim + 1):
+    g1[i] = g1[i-1] * i % mod
+g2[-1] = pow(g1[-1], mod-2, mod)
+for i in range(lim, 0, -1):
+    g2[i-1] = g2[i] * i % mod
 
-dp = [[0] * n for ]
+def fac(n): return g1[n]
+def facinv(n): return g2[n]
+def nCr(n, r):
+    """nCr
+    n個のものからr個選ぶ
+    """
+    if ( r<0 or r>n ):
+        return 0
+    r = min(r, n-r)
+    return fac(n) * facinv(r) * facinv(n-r) % mod
+
+def modinv(x, mod): return pow(x, mod - 2, mod)
+
+N, M, K = map(int, input().split())
+W = [int(input()) for _ in range(N)]
+invW = modinv(sum(W), mod)
+W = [wi*invW for wi in W]
+
+dp = [[[0] * (K+1) for j in range(M+1)] for i in range(N+1)]
+# dp[i][j][k]: i番目の商品まであるとして、j種類の商品を獲得して、k回のくじを引いた場合の数
+dp[0][0][0] = 1
+
+
+for i in range(N):
+    for j in range(M+1):
+        for k in range(K+1):
+            # 使わない場合
+            dp[i+1][j][k] += dp[i][j][k]
+            dp[i+1][j][k] %= mod
+            # 使う場合
+            if j == M: continue
+            for d in range(1, K+1):
+                if k+d <= K:
+                    dp[i+1][j+1][k+d] += dp[i][j][k] * pow(W[i], d, mod) * facinv(d)
+                    dp[i+1][j+1][k+d] %= mod
+
+
+print(dp[N][M][K]*fac(K)%mod)

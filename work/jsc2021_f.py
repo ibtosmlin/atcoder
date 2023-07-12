@@ -1,26 +1,4 @@
-# https://atcoder.jp/contests/abc309/tasks/abc309_f
-from itertools import *
-from collections import defaultdict, Counter, deque
-from heapq import heapify, heappop, heappush
-import sys; sys.setrecursionlimit(10001000)
-INF1 = float('inf'); INF = 10 ** 9
-mod = 1000000007; mod1 = 998244353
-PI = 3.141592653589793
-ALPS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'; alps = 'abcdefghijklmnopqrstuvwxyz'
-def alp(i, base='a'): return chr(ord(base) + i%26)    # i=0->'a', i=25->'z'
-def alpind(a, base='a'): return ord(a)-ord(base)
-def modinv(x, mod): return pow(x, mod - 2, mod)
-def input(): return sys.stdin.readline().rstrip()
-def int1(x): return int(x)-1
-def notisinhw(i, j, h, w): return not ((0 <= i < h) and (0 <= j < w))
-def sqrt(x):
-    r = int(x**0.5) - 3
-    while (r+1)*(r+1) <= x: r += 1
-    return r
-def yes(): print('Yes')
-def no(): print('No')
-def end(r=-1): exit(print(r))
-
+# https://atcoder.jp/contests/jsc2021/tasks/jsc2021_f
 class SegmentTree:  # 初期化処理
     """Segment Tree
     一点更新・区間集約
@@ -202,31 +180,55 @@ class RXorQSegmentTree(SegmentTree):
     def __init__(self, init):
         super().__init__(init, lambda x, y: x ^ y, 0)
 
+# GCD query
+from math import gcd
+class RGDCQSegmentTree(SegmentTree):
+    def __init__(self, init):
+        f = lambda x, y: y if x == 0 else x if y == 0 else gcd(x, y)
+        super().__init__(init, f, 0)
+
 ####################################
 
-n = int(input())
-boxs = defaultdict(list)
-ys = set()
-for _ in range(n):
-    xyz = sorted(map(int, input().split()))
-    ys.add(xyz[1])
-    boxs[xyz[0]].append(xyz[1:])
 
-x = sorted(boxs.keys())
-yzs = {y:i+1 for i, y in enumerate(sorted(ys))}
-rmq = RMinimumQSegmentTree(n+1)
+n, m, q = map(int, input().split())
+ques = []
+vals = set([0])
 
-for xi in x:
-    for y, z in boxs[xi]:
-        yz = yzs[y]
-        u = rmq.query(0, yz)
-        if 0 < u < z:
-            end('Yes')
-    for y, z in boxs[xi]:
-        yz = yzs[y]
-        u = rmq.query(yz, yz+1)
-        rmq.update(yz, min(u, z))
+for _ in range(q):
+    t, i, v = map(int, input().split())
+    i -= 1
+    ques.append([t, i, v])
+    vals.add(v)
 
-end('No')
+D = {v: i for i, v in enumerate(sorted(vals))}
+N = len(D)
 
+A = [0] * n
+Ac = RSumQSegmentTree(N)
+Ac.update(D[0], n)
+As = RSumQSegmentTree(N)
+B = [0] * m
+Bc = RSumQSegmentTree(N)
+Bc.update(D[0], m)
+Bs = RSumQSegmentTree(N)
 
+ret = 0
+
+def ope(X, Xc, Xs, Yc, Ys, i, v):
+    global ret
+    p = D[v]
+    pv, X[i] = X[i], v
+    pp = D[pv]
+    ret -= Yc.query(0, pp) * pv + Ys.query(pp, N)
+    ret += Yc.query(0, p) * v + Ys.query(p, N)
+    Xc.add(pp, -1)
+    Xc.add(p, 1)
+    Xs.add(pp, -pv)
+    Xs.add(p, v)
+
+for t, i, v in ques:
+    if t == 1:
+        ope(A, Ac, As, Bc, Bs, i, v)
+    else:
+        ope(B, Bc, Bs, Ac, As, i, v)
+    print(ret)

@@ -1168,29 +1168,32 @@
             "Lib_A_ダブリング_doubbling"
         ],
         "body": [
-            "dmx = 30",
+            "",
+            "# https://atcoder.jp/contests/abc167/tasks/abc167_d",
+            "",
+            "maxdeg = 100",
             "n, k = map(int, input().split())",
-            "# f(i)  [0, n] -> [0, n]",
+            "A = list(map(lambda x: int(x)-1, input().split()))",
+            "",
             "def f(i):",
-            "    return i - sum(map(int, list(str(i))))",
+            "    # 1回の遷移",
+            "    return A[i]",
             "",
-            "dp = [[0] * (n+1) for _ in range(dmx+1)]",
-            "",
-            "for i in range(n+1):",
+            "dp = [[0] * n for _ in range(maxdeg)]",
+            "for i in range(n):",
             "    dp[0][i] = f(i)",
             "",
-            "for d in range(0, dmx):",
-            "    for i in range(n+1):",
-            "        dp[d+1][i] = dp[d][dp[d][i]]",
+            "for t in range(1, maxdeg):",
+            "    for i in range(n):",
+            "        dp[t][i] = dp[t-1][dp[t-1][i]]",
             "",
             "def fk(i, k):",
-            "    for d in range(dmx):",
-            "        if k >> d & 1:",
-            "            i = dp[d][i]",
+            "    for d in range(maxdeg):",
+            "        if k >> d & 1: i = dp[d][i]",
             "    return i",
             "",
-            "for i in range(1, n+1):",
-            "    print(fk(i, k))"
+            "print(fk(0, k)+1)",
+            ""
         ],
         "description": []
     },
@@ -3112,9 +3115,10 @@
             "######################################################################",
             "class Polygon:",
             "    def __init__(self, pts: list):",
+            "        # pts = [Point(x, y) for x, y in listoftuple]",
             "        self.N = len(pts)",
-            "        self.points = [Point(x, y) for x, y in pts]",
-            "        self.pts = pts",
+            "        self.points = pts",
+            "        self.pts = [p.value for p in pts]",
             "",
             "    @property",
             "    def value(self):",
@@ -3179,7 +3183,7 @@
             "            while len(qs) > t and qs[-1].det3(qs[-2], p) > EPS:",
             "                qs.pop()",
             "            qs.append(p)",
-            "        return Polygon([pi.value for pi in qs[:-1]])",
+            "        return Polygon(qs[:-1])",
             "",
             "    @property",
             "    def diameter(self):",
@@ -3212,8 +3216,8 @@
             "            cv0, cv1 = l.p0.det3(l.p1, p0), l.p0.det3(l.p1, p1)",
             "            if cv0 * cv1 < EPS:",
             "                v = l.cross_point(Line(p0, p1))",
-            "                if v is not None: q.append(v.value)",
-            "            if cv1 > -EPS: q.append(p1.value)",
+            "                if v is not None: q.append(v)",
+            "            if cv1 > -EPS: q.append(p1)",
             "        return Polygon(q)",
             "",
             "    def contains(self, p: Point):",
@@ -3245,8 +3249,8 @@
             "",
             "######################################################################",
             "class Circle:",
-            "    def __init__(self, p: tuple, r: float):",
-            "        self.center = Point(p[0], p[1])",
+            "    def __init__(self, p: Point, r: float):",
+            "        self.center = p",
             "        self.radius = r",
             "",
             "    @property",
@@ -3329,7 +3333,7 @@
             "",
             "    def cross_area_line(self, l:Line):",
             "        # 円を直線で切った部分の面積",
-            "        tri = Triangle([self.center.value, l.p0.value, l.p1.value]).area",
+            "        tri = Triangle([self.center, l.p0, l.p1]).area",
             "        sector = self.sector_area(l.p0, l.p1)",
             "        return (sector[0] - tri, sector[1] + tri)",
             "",
@@ -3352,7 +3356,7 @@
             "        # 円と点の接点",
             "        if self.contain_point(p): return None",
             "        r = ((self.center - p).abs ** 2 - self.radius ** 2) ** 0.5",
-            "        dummycircle = Circle(p.value, r)",
+            "        dummycircle = Circle(p, r)",
             "        return self.cross_point_circle(dummycircle)",
             "",
             "    def tangent_line(self, p:Point):",
@@ -3415,7 +3419,7 @@
             "        for ci, ddi in zip(self.points, dd):",
             "            c = c + ci * ddi",
             "        c = c / dsum",
-            "        return Circle(c.value, r)",
+            "        return Circle(c, r)",
             "",
             "    @property",
             "    def circle_circumscribed(self):",
@@ -3431,8 +3435,9 @@
             "        if det < -EPS:",
             "            x *= -1; y *= -1; det *= -1",
             "        x /= det; y /= det",
-            "        r = Point(x, y).dist(self.points[0])",
-            "        return Circle((x, y), r)",
+            "        c = Point(x, y)",
+            "        r = c.dist(self.points[0])",
+            "        return Circle(c, r)",
             "",
             "######################################################################",
             "def closestPair(points):",
@@ -3466,9 +3471,9 @@
             "# p = Point(x, y)",
             "# x, y, u, v = map(int, input().split())",
             "# l = Line(Point(x, y), Point(u, v))",
-            "# poly = Polygon([tuple(map(int, input().split())) for _ in range(m)])",
+            "# poly = Polygon([Point(tuple(map(int, input().split()))) for _ in range(m)])",
             "# x, y, r = map(int, input().split())",
-            "# cir = Circle((x, y), r)",
+            "# cir = Circle(Point(x, y), r)",
             "# tri = Polygon([tuple(map(int, input().split())) for _ in range(3)])",
             "",
             "P = []",
@@ -3539,17 +3544,6 @@
         ],
         "description": [
             "print(ret)"
-        ]
-    },
-    "output": {
-        "prefix": [
-            "print(1Yes/No)"
-        ],
-        "body": [
-            "print('Yes' if ret else 'No')"
-        ],
-        "description": [
-            "print(Yes/No)"
         ]
     },
     "output2": {
@@ -4284,7 +4278,8 @@
             "memo_lru_chache"
         ],
         "body": [
-            "from functools import lru_cache"
+            "from functools import lru_cache",
+            "@lru_chache()"
         ],
         "description": [
             "memo"
@@ -4673,6 +4668,8 @@
             "Lib_四捨五入_Decimal"
         ],
         "body": [
+            "",
+            "pypyで使っちゃダメ！！！！！",
             "from decimal import Decimal",
             "x, y, r = map(Decimal, input().split())",
             "f = 123.456",

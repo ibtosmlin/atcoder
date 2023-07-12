@@ -9,7 +9,6 @@ D = list(map(int, input().split()))
 LD = sorted(zip(L, D))
 
 Q = []
-
 ret = sum(P)
 i = 0
 for p in P:
