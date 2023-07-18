@@ -1,4 +1,9 @@
-import sys
+# A:リスト n = 10**5
+# Q: l, r, q = 10**5
+# O(NQ−−√)が間に合う条件である*3
+# 区間伸縮の計算がO(1) またはそれに近い
+# クエリがオフラインで与えられる(先読みができる)
+# 配列の要素が不変である
 
 class _Mo:
     def __init__(self, N:int):
@@ -38,8 +43,6 @@ class _Mo:
             ret[i] = self.get_state()
         return ret
 
-from collections import defaultdict
-
 N,Q=map(int,input().split())
 A=list(map(int,input().split()))
 
@@ -50,21 +53,36 @@ class Mo(_Mo):
         self.count = [0] * (max(A)+1)
     def get_state(self):
         return self.value
+    # https://atcoder.jp/contests/abc293/tasks/abc293_g
     def add_left(self, i):
         a = A[i]
         x = self.count[a]
         self.count[a] += 1
-#        self.value += (x+1)*x*(x-1) // 6 - x*(x-1)*(x-2) // 6
         self.value += x*(x-1) // 2
     def remove_left(self, i):
         a = A[i]
         x = self.count[a]
         self.count[a] -= 1
-#        self.value += (x-1)*(x-2)*(x-3) // 6 - x*(x-1)*(x-2) // 6
         self.value -= (x-1)*(x-2)//2
+
+    # https://atcoder.jp/contests/abc293/tasks/abc293_g
+    # def add_left(self, i):
+    #     a = A[i]
+    #     x = self.count[a]
+    #     self.count[a] += 1
+    #     self.value += x*(x-1) // 2
+    # def remove_left(self, i):
+    #     a = A[i]
+    #     x = self.count[a]
+    #     self.count[a] -= 1
+    #     self.value -= (x-1)*(x-2)//2
 
     add_right = add_left
     remove_right = remove_left
+
+
+#        self.value += (x+1)*x*(x-1) // 6 - x*(x-1)*(x-2) // 6
+#        self.value += (x-1)*(x-2)*(x-3) // 6 - x*(x-1)*(x-2) // 6
 
 
 mo = Mo(N)
@@ -74,3 +92,4 @@ for _ in range(Q):
 ans = mo.solve()
 
 print("\n".join(map(str,ans)))
+

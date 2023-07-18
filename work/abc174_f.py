@@ -1,9 +1,3 @@
-#name#
-# Mo'sAlgorythm#
-#description#
-# Mo'sAlgorythm#
-#body#
-
 # A:リスト n = 10**5
 # Q: l, r, q = 10**5
 # O(NQ−−√)が間に合う条件である*3
@@ -49,8 +43,7 @@ class _Mo:
             ret[i] = self.get_state()
         return ret
 
-# N,Q=map(int,input().split())
-N=int(input())
+N,Q=map(int,input().split())
 A=list(map(int,input().split()))
 
 class Mo(_Mo):
@@ -84,24 +77,25 @@ class Mo(_Mo):
     #     x = self.count[a]
     #     if x == 0: self.value -= 1
 
-# https://atcoder.jp/contests/abc242/tasks/abc242_g
-    # def add_left(self, i):
-    #     a = A[i]
-    #     x = self.count[a]
-    #     self.count[a] += 1
-    #     self.value += (x+1) // 2 - x // 2
-    # def remove_left(self, i):
-    #     a = A[i]
-    #     x = self.count[a]
-    #     self.count[a] -= 1
-    #     self.value -= x // 2 - (x-1) // 2
+    # https://atcoder.jp/contests/abc174/tasks/abc174_f
+    def add_left(self, i):
+        a = A[i]
+        self.count[a] += 1
+        x = self.count[a]
+        if x == 1: self.value += 1
+    def remove_left(self, i):
+        a = A[i]
+        self.count[a] -= 1
+        x = self.count[a]
+        if x == 0: self.value -= 1
+
 
     add_right = add_left
     remove_right = remove_left
 
 
+
 mo = Mo(N)
-Q=int(input())
 for _ in range(Q):
     l,r=map(int,input().split())
     mo.add_query(l-1,r)
@@ -109,7 +103,3 @@ ans = mo.solve()
 
 print("\n".join(map(str,ans)))
 
-
-#prefix#
-# Lib_Mos_モアルゴリズム
-#end#

@@ -41,7 +41,7 @@ for i, ai in enumerate(a):
         a[i] = -1
 
 im = Imos(a)
-print(im.get_max - im.get_min + 1)
+print(im.get_max)
 
 
 #prefix#
