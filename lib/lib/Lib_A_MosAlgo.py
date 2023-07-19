@@ -12,77 +12,88 @@
 # 配列の要素が不変である
 
 class _Mo:
-    def __init__(self, N:int):
+    def __init__(self, N:int, Q:int):
         self.N=N
-        self.query = []
-        self.Q = 0
+        self.Q = Q
         self.shift = 20
-    def add_query(self, l:int, r:int): # [l,r)
-        self.query.append((l,r))
-        self.Q += 1
+        self.BSIZE = int(Q**0.5)  # bucket size
+        self.data = [0] * Q
+        self.query = [[] for _ in range(self.N//self.BSIZE+1)]
+
+    def add_query(self, l:int, r:int, i:int):
+        """
+        半開区間 [l,r)
+        """
+        sft=self.shift
+        h=l//self.BSIZE
+        self.data[i]=(l<<sft)|r
+        self.query[h].append(((r if h&1 else -r)<<sft)+i)
     def solve(self):
-        assert max(self.N, self.Q)<(1<<self.shift)
-        block_size = self.N // (min(self.N, int(len(self.query)**0.5+0.5)))
-        query = [None] * self.Q
-        for i,(l,r) in enumerate(self.query):
-            L = l // block_size
-            query[i] = (L<<(2*self.shift))+((r if L&1 else -r)<<self.shift) + i
-        query.sort()
+        mask=(1<<self.shift)-1
+        assert max(self.N, self.Q)<=mask
         L=R=0
         ret = [0]*self.Q
-        mask=(1<<self.shift)-1
-        for q in query:
-            i = q&mask
-            l,r=self.query[i]
-            while l<L:
-                L-=1;
-                self.add_left(L)
-            while L<l:
-                self.remove_left(L)
-                L+=1
-            while R<r:
-                self.add_right(R)
-                R+=1
-            while r<R:
-                R-=1
-                self.remove_right(R)
-            ret[i] = self.get_state()
+        for bucket in self.query:
+            bucket.sort()
+            for lri in bucket:
+                i = lri&mask
+                l,r=divmod(self.data[i],1<<self.shift)
+                while L>l:
+                    L-=1
+                    self.add_left(L)
+                    # print('add_left', l, r)
+                while R<r:
+                    self.add_right(R)
+                    R+=1
+                    # print('add_right', l, r)
+                while L<l:
+                    self.remove_left(L)
+                    L+=1
+                    # print('remove_left', l, r)
+                while R>r:
+                    R-=1
+                    self.remove_right(R)
+                    # print('remove_right', l, r)
+                ret[i] = self.get_state()
         return ret
 
-# N,Q=map(int,input().split())
-N=int(input())
+N,Q=map(int,input().split())
+# N=int(input())
 A=list(map(int,input().split()))
 
 class Mo(_Mo):
-    def __init__(self, N):
-        super().__init__(N)
+    def __init__(self, N, Q):
+        super().__init__(N, Q)
         self.value = 0
         self.count = [0] * (max(A)+1)
     def get_state(self):
         return self.value
     # https://atcoder.jp/contests/abc293/tasks/abc293_g
-    # def add_left(self, i):
-    #     a = A[i]
-    #     x = self.count[a]
-    #     self.count[a] += 1
-    #     self.value += x*(x-1) // 2
-    # def remove_left(self, i):
-    #     a = A[i]
-    #     x = self.count[a]
-    #     self.count[a] -= 1
-    #     self.value -= (x-1)*(x-2)//2
+    def add_left(self, i):
+        a = A[i]
+        x = self.count[a]
+        self.count[a] += 1
+        self.value += x*(x-1) // 2
+    def remove_left(self, i):
+        a = A[i]
+        x = self.count[a]
+        self.count[a] -= 1
+        self.value -= (x-1)*(x-2)//2
 
     # https://atcoder.jp/contests/abc174/tasks/abc174_f
     # def add_left(self, i):
     #     a = A[i]
-    #     self.count[a] += 1
-    #     x = self.count[a]
-    #     if x == 1: self.value += 1
+    #     if a in self.count:
+    #         self.count[a] += 1
+    #     else:
+    #         self.count[a] = 1
+    #     if self.count[a] == 1:
+    #         self.value += 1
     # def remove_left(self, i):
     #     a = A[i]
     #     self.count[a] -= 1
-    #     x = self.count[a]
-    #     if x == 0: self.value -= 1
+    #     if self.count[a] == 0:
+    #         self.value -= 1
 
 # https://atcoder.jp/contests/abc242/tasks/abc242_g
     # def add_left(self, i):
@@ -100,11 +111,11 @@ class Mo(_Mo):
     remove_right = remove_left
 
 
-mo = Mo(N)
-Q=int(input())
-for _ in range(Q):
+mo = Mo(N, Q)
+# Q=int(input())
+for i in range(Q):
     l,r=map(int,input().split())
-    mo.add_query(l-1,r)
+    mo.add_query(l-1,r, i)
 ans = mo.solve()
 
 print("\n".join(map(str,ans)))
