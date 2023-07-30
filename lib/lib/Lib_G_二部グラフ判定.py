@@ -30,10 +30,10 @@ def is_bipartite(g, v, c):
 ######################################
 # 非再帰版
 ######################################
-def is_bipartite(g, v, c):
+def is_bipartite(g, st, c):
     global color
     # 深さ優先探索
-    q = [(0, c)]
+    q = [(st, c)]
     while q:
         v, c = q.pop()
         color[v] = c    # 色を塗る
