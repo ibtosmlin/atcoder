@@ -7,7 +7,9 @@ from bisect import bisect_left, bisect_right
 
 class RangeSearchQuery:
     """
-    二次元点のリストで葉にを指定してその要素番号を出力する
+    二次元点のリストで範囲を指定して、含まれる要素番号を出力する
+    ２次元の平面上の点の集合に対し、与えられた領域に含まれる点を列挙してください。
+    ただし、与えられた点の集合に対して、点の追加・削除は行われません。
     """
     def __init__(self, points):
         self.n = len(points)

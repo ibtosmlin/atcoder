@@ -16,16 +16,16 @@ class _Mo:
         self.N=N
         self.Q = Q
         self.shift = 20
-        self.BSIZE = int(Q**0.5)  # bucket size
+        self.M = int(Q**0.5)+1  # bucket num
         self.data = [0] * Q
-        self.query = [[] for _ in range(self.N//self.BSIZE+1)]
+        self.query = [[] for _ in range(self.M)]
 
     def add_query(self, l:int, r:int, i:int):
         """
         半開区間 [l,r)
         """
         sft=self.shift
-        h=l//self.BSIZE
+        h=l*self.M//self.N
         self.data[i]=(l<<sft)|r
         self.query[h].append(((r if h&1 else -r)<<sft)+i)
     def solve(self):
@@ -41,19 +41,15 @@ class _Mo:
                 while L>l:
                     L-=1
                     self.add_left(L)
-                    # print('add_left', l, r)
                 while R<r:
                     self.add_right(R)
                     R+=1
-                    # print('add_right', l, r)
                 while L<l:
                     self.remove_left(L)
                     L+=1
-                    # print('remove_left', l, r)
                 while R>r:
                     R-=1
                     self.remove_right(R)
-                    # print('remove_right', l, r)
                 ret[i] = self.get_state()
         return ret
 

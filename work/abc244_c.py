@@ -1,25 +1,11 @@
-import sys
-from itertools import *
-from operator import itemgetter
-from collections import defaultdict, Counter, deque
-from heapq import heapify, heappop, heappush
-from functools import lru_cache
-sys.setrecursionlimit(10001000)
-INF = float('inf')
-mod = 1000000007; mod1 = 998244353
-PI = 3.141592653589793
-def modinv(x, mod): return pow(x, mod - 2, mod)
-def input(): return sys.stdin.readline().rstrip()
-def int1(x): return int(x)-1
-def end(r=-1): print(r); exit()
-def alp(i): return chr(ord('a') + i%26)    # i=0->'a', i=26->'z'
-
+# https://atcoder.jp/contests/newjudge-2308-algorithm/tasks/abc244_c
 n = int(input())
-l = set(range(1, 2*n+2))
-while True:
-    x = min(l)
-    l.remove(x)
-    print(x, flush=True)
-    x = int(input())
-    if not x in l: exit()
-    l.remove(x)
+n = 2*n+1
+seen = [False] * (n+1)
+now = 1
+while now <= n:
+    if not seen[now]:
+        print(now, flush=True)
+        seen[now] = True
+        seen[int(input())] = True
+    now += 1

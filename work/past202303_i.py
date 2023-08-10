@@ -1,4 +1,4 @@
-# https://atcoder.jp/contests/newjudge-2308-algorithm/tasks/abc273_b
+# https://atcoder.jp/contests/past202303-open/tasks/past202303_i
 from itertools import *
 from collections import defaultdict, Counter, deque
 from heapq import heapify, heappop, heappush
@@ -20,11 +20,34 @@ def sqrt(x):
 def yes(): print('Yes')
 def no(): print('No')
 def end(r=-1): exit(print(r))
-x, k = map(int, input().split())
-now = 1
-for i in range(k):
-    u, v = divmod(x, 10**(i+1))
-    if v // (10**i) >= 5:
-        u += 1
-    x = u * (10**(i+1))
-print(x)
+hands = []
+n = int(input())
+x = list(input())
+sx = []
+for i in range(5):
+    for j in range(i):
+        for k in range(j):
+            sx.append([alpind(x[i]), alpind(x[j]), alpind(x[k])])
+
+for i in range(n):
+    s = input()
+    for j in range(4):
+        for k in range(j):
+            uset = [alpind(s[j]), alpind(s[k])]
+            for sxi in sx:
+                c = Counter(uset+sxi)
+                m = 30
+                r = 0
+                for ky, v in c.items():
+                    if r <= v:
+                        if m > ky:
+                            m = ky
+                            r = v
+                heappush(hands, (-r, m, i))
+
+x = heappop(hands)
+print(x[-1]+1)
+
+# 5C3 = 20
+# 4C2 = 6
+# 20 * 6

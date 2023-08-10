@@ -4,8 +4,10 @@
 #body#
 # https://atcoder.jp/contests/practice2/tasks/practice2_f
 # https://atcoder.jp/contests/atc001/tasks/fft_c
+# Σa_i * x^i * Σb_j * x^j  = Σ(Σa_i*b_j) * x ^t  t = i + jとなる場合の
+# Σa_i*b_j の列を求める
 
-mod =
+mod = 998244353
 
 g = 3   #primitive root
 ginv = pow(g, mod-2, mod)

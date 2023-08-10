@@ -1,4 +1,4 @@
-# https://atcoder.jp/contests/newjudge-2308-algorithm/tasks/abc273_b
+# https://atcoder.jp/contests/newjudge-2308-algorithm/tasks/abc260_f
 from itertools import *
 from collections import defaultdict, Counter, deque
 from heapq import heapify, heappop, heappush
@@ -20,11 +20,27 @@ def sqrt(x):
 def yes(): print('Yes')
 def no(): print('No')
 def end(r=-1): exit(print(r))
-x, k = map(int, input().split())
-now = 1
-for i in range(k):
-    u, v = divmod(x, 10**(i+1))
-    if v // (10**i) >= 5:
-        u += 1
-    x = u * (10**(i+1))
-print(x)
+s, t, m = map(int, input().split())
+G = [[] for _ in range(s)]
+for _ in range(m):
+    a, b = map(int, input().split())
+    a -= 1; b -= 1
+    G[a].append(b-s)
+for gi in G:
+    gi.sort()
+
+
+X = defaultdict(int)
+for a in range(s):
+    l = len(G[a])
+    for i in range(l):
+        u = G[a][i]
+        for j in range(i+1, l):
+            v = G[a][j]
+            if u * s + v in X:
+                b = X[u * s + v]
+                print(a+1, b+1, u+1+s, v+1+s)
+                exit()
+            else:
+                X[u*s+v] = a
+print(-1)

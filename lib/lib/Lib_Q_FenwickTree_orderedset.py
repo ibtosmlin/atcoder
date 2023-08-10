@@ -102,16 +102,18 @@ class OrderedSet:
         self.vals = [self.LINF] + vals + [self.RINF]
         self.valtoid = {v: i for i, v in enumerate(self.vals)}
         self.BIT = BinaryIndexedTree(len(self.vals))
+        self.size = 0
 
     def __contains__(self, v):
         if not v in self.valtoid: return False
         return self.BIT[self.valtoid[v]] >= 1
 
     def __len__(self):
-        return self.BIT.sum(self.valtoid[self.RINF])
+        return self.size
 
     def add(self, v):
-        if v in self.valtoid:
+        if v in self.valtoid and not v in self:
+            self.size += 1
             self.BIT.update(self.valtoid[v], 1)
             return True
         else:
@@ -120,23 +122,24 @@ class OrderedSet:
     def discard(self, v):
         if v in self:
             self.BIT.add(self.valtoid[v], -1)
+            self.size -= 1
             return True
         else:
             return False
 
     def count(self, v):
-        if v not in self: return -1
+        if v not in self.valtoid: return -1
         return self.BIT[self.valtoid[v]]
 
     def index(self, v):
-        if v not in self: return -1
+        if v not in self.valtoid: return -1
         return self.BIT.sum(self.valtoid[v]-1)
 
     def left_index(self, v):
         return self.index(v)
 
     def right_index(self, v):
-        if v not in self: return -1
+        if v not in self.valtoid: return -1
         return self.index(v) + self.count(v)
 
     def kth_value(self, k):
@@ -147,8 +150,15 @@ class OrderedSet:
         k = self.left_index(v) - 1
         return self.kth_value(k)
 
+    def next_value_include_self(self, v):
+        "v以上の値"
+        if self.count(v) > 0: return v
+        return self.next_value(v)
+
     def next_value(self, v):
-        k = self.left_index(v) + 1
+        "vより大きい値"
+        k = self.right_index(v)
+        if k == self.size: return self.RINF
         return self.kth_value(k)
 
     def __str__(self):
@@ -175,15 +185,16 @@ class OrderedMultiSet(OrderedSet):
     def add(self, v):
         if v in self.valtoid:
             self.BIT.add(self.valtoid[v], 1)
+            self.size +=1
             return True
         else:
             return False
 
 
 ##################################################
-A = [3,100,100100100,100100]
+A = [1,2,3,100,100100100,100100, 200200200]
 os = OrderedMultiSet(A)
-os = OrderedSet(A)
+#os = OrderedSet(A)
 
 os.add(3)
 os.add(100)
@@ -194,12 +205,17 @@ os.add(100100100)
 print(os.vals)
 print(os)
 
-for ai in A:
-    print(ai, os.index(ai), os.next_value(ai), os.prev_value(ai))
-
 for i in range(len(os)):
-    print(i, os.BIT.left_bound_of_x(i), os.BIT.left_bound_include_x(i), os.BIT.right_bound_of_x(i), os.BIT.right_bound_include_x(i))
     print(os.kth_value(i))
+
+for ai in A:
+    x = os.index(ai)
+    y = os.left_index(ai)
+    z = os.right_index(ai)
+    pv = os.prev_value(ai)
+    nv = os.next_value(ai)
+    niv = os.next_value_include_self(ai)
+    print(ai, y, z, pv, nv, niv)
 
 
 #print(os.kthvalue(0))

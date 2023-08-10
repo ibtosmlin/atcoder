@@ -1,29 +1,26 @@
-import sys
+# https://atcoder.jp/contests/newjudge-2308-algorithm/tasks/abc264_b
 from itertools import *
-from operator import itemgetter
 from collections import defaultdict, Counter, deque
 from heapq import heapify, heappop, heappush
-from functools import lru_cache
-sys.setrecursionlimit(10001000)
-INF = float('inf')
+import sys; sys.setrecursionlimit(10001000)
+INF1 = float('inf'); INF = 10 ** 9
 mod = 1000000007; mod1 = 998244353
 PI = 3.141592653589793
-ALPS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
-alps = 'abcdefghijklmnopqrstuvwxyz'
+ALPS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'; alps = 'abcdefghijklmnopqrstuvwxyz'
+def alp(i, base='a'): return chr(ord(base) + i%26)    # i=0->'a', i=25->'z'
+def alpind(a, base='a'): return ord(a)-ord(base)
 def modinv(x, mod): return pow(x, mod - 2, mod)
 def input(): return sys.stdin.readline().rstrip()
 def int1(x): return int(x)-1
-def alp(i): return chr(ord('a') + i%26)    # i=0->'a', i=25->'z'
-def end(r=-1): print(r); exit()
-direc = [(1, 0), (0, 1), (-1, 0), (0, -1)] + [(1, 1), (1, -1), (-1, 1), (-1, -1)]
-def isinhw(i, j, h, w): return (0 <= i < h) and (0 <= j < w)
-r, c = map(int, input().split())
-
-r -= 8
-c -= 8
-d = max(abs(r), abs(c))
-
-if d%2:
-    print('black')
-else:
-    print('white')
+def notisinhw(i, j, h, w): return not ((0 <= i < h) and (0 <= j < w))
+def sqrt(x):
+    r = int(x**0.5) - 3
+    while (r+1)*(r+1) <= x: r += 1
+    return r
+def yes(): print('Yes')
+def no(): print('No')
+def end(r=-1): exit(print(r))
+x, k = map(int, input().split())
+for i in range(k):
+    y = x // pow(10, i+1)
+    print(y)

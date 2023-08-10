@@ -1,3 +1,4 @@
+# https://atcoder.jp/contests/language-test-202301/tasks/abc086_a
 from itertools import *
 from collections import defaultdict, Counter, deque
 from heapq import heapify, heappop, heappush
@@ -18,3 +19,8 @@ def sqrt(x):
     while (r+1)*(r+1) <= x: r += 1
     return r
 def end(r=-1): exit(print(r))
+a, b = map(int, input().split())
+if a*b%2:
+    print('Odd')
+else:
+    print('Even')
