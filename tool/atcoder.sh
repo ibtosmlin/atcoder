@@ -48,7 +48,8 @@ elif [ $arg = 't' ]; then
     echo "Testing....................."
     cp $cfname $ctaskfname
     cd $ctaskwd
-    oj t -c 'python3 main.py' -S
+    # oj t -c 'python3 main.py' -S
+    oj t -c 'pypy3 main.py' -S
     cd $cp
 
 
@@ -57,7 +58,8 @@ elif [ $arg = 'ss' ]; then
     echo "Submitting by Python3......."
     cp $cfname $ctaskfname
     cd $ctaskwd
-    echo y | oj s main.py
+    # echo y | oj s main.py
+    oj s --language 5055 --no-guess main.py --yes
     cd $cp
 
 
@@ -68,7 +70,8 @@ elif [ $arg = 's' ]; then
     to="$cp/$taskid/main.py"
     cp $cfname $ctaskfname
     cd $ctaskwd
-    echo y | oj s --guess-python-interpreter pypy main.py
+    # echo y | oj s --guess-python-interpreter pypy main.py
+    oj s --language 5078 --no-guess main.py --yes
     cd $cp
 
 

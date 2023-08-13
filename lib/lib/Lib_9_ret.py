@@ -3,7 +3,7 @@
 #description#
 # print(ret)
 #body#
-print(ret)
+print($ret)
 #prefix#
 # print(0ret)
 #end#
@@ -11,35 +11,36 @@ print(ret)
 #name#
 # output2
 #description#
-# print(INF)
+# print(INF⇒-1)
 #body#
-print(-1 if ret == INF else ret)
+print(-1 if $ret == INF else $ret)
 #prefix#
-# print(2INF)
+# print(2INF⇒-1)
 #end#
 
 #name#
 # output3
 #description#
-# print(joinret)
+# print(3'\n'.join(map)
 #body#
-print('\n'.join(ret))
+print('\n'.join(map(str, ret)))
 #prefix#
-# print(3joinret)
+# print(3'\n'.join(map(str)
 #end#
 
 #name#
 # output4
 #description#
-# print(join(map(str(ret)
+# print("".join)
 #body#
-print('\n'.join(map(str, ret)))
+print(''.join(ret))
 #prefix#
-# print(4join(map(str(ret)
+# print(4''.join(ret))
 #end#
 
+
 #name#
-# output5
+# output interactive
 #description#
 # interactive
 #body#
@@ -47,16 +48,36 @@ def req(ret):
     print(ret, flush=True)
 
 #prefix#
-# print(5interactive)
+# print(6interactive)
 #end#
 
 #name#
-# output6
+# output7
 #description#
 # rounded
 #body#
 def fstr(x): return f'{x:.10f}'
 
 #prefix#
-# print(6roundeds)
+# print(7roundeds)
+#end#
+
+#name#
+# outputY
+#description#
+# outputY
+#body#
+'Yes
+#prefix#
+# 'Yes'
+#end#
+
+#name#
+# outputN
+#description#
+# outputN
+#body#
+'No
+#prefix#
+# 'No'
 #end#

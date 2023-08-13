@@ -19,59 +19,11 @@ sort(key=lambda x: x[1])
 #end#
 
 #name#
-# defaultdict
-#description#
-# デフォルトディクショナリ
-#body#
-dd = defaultdict($int)
-#prefix#
-# dd=defaultdict
-#end#
-
-#name#
-# sort_by_function
-#description#
-# 比較関数使って並べ替え
-#body#
-from functools import cmp_to_key
-def sort_by_function(x):
-    """比較関数を設定してソート
-    """
-    def compare(item1, item2):
-        """ "小さい" -> -1
-            "等しい" -> 0
-            "大きい" -> 1
-        """
-        # 以下はx, yが与えられてy/xで比較する例
-        # y1/x1 < y2/x2
-        # -> y1*x2 < y2*x1
-        x1, y1 = item1
-        x2, y2 = item2
-
-        if y1*x2 < y2*x1:
-            return -1
-        elif y1*x2 > y2*x1:
-            return 1
-        else:
-            return 0
-    x.sort(key=cmp_to_key(compare))
-    return x
-########################################
-a = [[1, 2], [2, 6] , [3, 6], [4, 5], [5, 7]]
-print(a)
-a = sort_by_function(a)
-print(a)
-# [[4, 5], [5, 7], [1, 2], [3, 6], [2, 6]]
-#   1.25    0.714    0.5     0.5    0.333
-#prefix#
-# Lib_sort_by_function
-#end#
-
-#name#
 # 順列・組み合わせ
 #description#
 # 順列・組み合わせ
 #body#
+from itertools import *
 P = list(permutations(range(n), r))   # 順列(nPr)
 C = list(combinations(range(n), r))   # 組み合わせ(nCr)
 CR = list(combinations_with_replacement(range(n), r))  # 重複も許容した組み合わせ(nHr=n+r-1Cr)
@@ -118,20 +70,8 @@ def count_intervals(a:list, x)->int:
 direc = {(1, 0), (-1, 0), (0, 1), (0, -1)}
 direc = {(1, 0), (-1, 0), (0, 1), (0, -1), (1, 1), (1, -1) (-1, 1), (-1, -1)}
 
-for dh, dw in direc:
-    nh, nw = ch + dh, cw + dw
-    if not (0 <= nh < h and 0 <= nw < w): continue
-#prefix#
-# direc
-#end#
+def notisinhw(i, j, h, w): return not ((0 <= i < h) and (0 <= j < w))
 
-#name#
-# memo
-#description#
-# memo
-#body#
-from functools import lru_cache
-@lru_chache()
 #prefix#
-# memo_lru_chache
+# direc_isinhw
 #end#

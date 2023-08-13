@@ -93,5 +93,19 @@ class OrderedObj:
 
 
 #prefix#
-# Lib_sort_by_function
+# Lib_sort_by_function比較
+#end#
+
+
+#name#
+# Lib_sqroot
+#description#
+# Lib_sqroot
+#body#
+def sqrt(x):
+    r = int(x**0.5) - 3
+    while (r+1)*(r+1) <= x: r += 1
+    return r
+#prefix#
+# Lib_sqroot
 #end#

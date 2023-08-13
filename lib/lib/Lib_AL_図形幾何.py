@@ -44,7 +44,7 @@ class Point:
         if self.x == 0 and self.y == 0: return 0
         if self.x > 0 and self.y >= 0: return 1
         if self.x <= 0 and self.y > 0: return 2
-        if self.x < 0 and self.y <=0: return 3
+        if self.x < 0 and self.y <= 0: return 3
         return 4
 
     def dot(self, other):

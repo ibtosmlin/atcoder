@@ -297,6 +297,37 @@
             "グラフの橋・関節をO(n)で検出"
         ]
     },
+    "偏角ソート": {
+        "prefix": [
+            "Lib_AL_偏角ソート"
+        ],
+        "body": [
+            "from functools import cmp_to_key",
+            "def degree_sort(points):",
+            "    def quadrant(x, y):",
+            "        if x == 0 and y == 0: return 0",
+            "        if x >= 0 and y >= 0: return 1",
+            "        if x <= 0 and y >= 0: return 2",
+            "        if x <= 0 and y <= 0: return 3",
+            "        if x >= 0 and y <= 0: return 4",
+            "",
+            "    def points_cmp(p, q):",
+            "        p_qua = quadrant(*p)",
+            "        q_que = quadrant(*q)",
+            "        if p_qua == q_que:",
+            "            px, py = p",
+            "            qx, qy = q",
+            "            op = px * qy - py * qx",
+            "            return -1 if op > 0 else 1 if op < 0 else 0",
+            "        else:",
+            "            return -1 if p_qua < q_que else 1",
+            "    return sorted(points, key = cmp_to_key(points_cmp))",
+            "########################################"
+        ],
+        "description": [
+            "偏角ソート"
+        ]
+    },
     "半分全列挙": {
         "prefix": [
             "Lib_A_半分全列挙"
@@ -762,6 +793,51 @@
             "Graph二部グラフ"
         ]
     },
+    "memo": {
+        "prefix": [
+            "memo_lru_chache"
+        ],
+        "body": [
+            "from functools import lru_cache",
+            "@lru_chache(1000000)"
+        ],
+        "description": [
+            "memo"
+        ]
+    },
+    "collectionslib": {
+        "prefix": [
+            "from collections"
+        ],
+        "body": [
+            "from collections import defaultdict, Counter, deque"
+        ],
+        "description": [
+            "collectionslib"
+        ]
+    },
+    "heapqlib": {
+        "prefix": [
+            "from heapq"
+        ],
+        "body": [
+            "from heapq import heapify, heappop, heappush"
+        ],
+        "description": [
+            "heapqlib"
+        ]
+    },
+    "priorityqlib": {
+        "prefix": [
+            "priorityque"
+        ],
+        "body": [
+            "from heapq import heapify, heappop, heappush"
+        ],
+        "description": [
+            "priorityqlib"
+        ]
+    },
     "差分最小値探索": {
         "prefix": [
             "Lib_差分最小値探索"
@@ -851,8 +927,10 @@
         "body": [
             "# https://atcoder.jp/contests/practice2/tasks/practice2_f",
             "# https://atcoder.jp/contests/atc001/tasks/fft_c",
+            "# Σa_i * x^i * Σb_j * x^j  = Σ(Σa_i*b_j) * x ^t  t = i + jとなる場合の",
+            "# Σa_i*b_j の列を求める",
             "",
-            "mod =",
+            "mod = 998244353",
             "",
             "g = 3   #primitive root",
             "ginv = pow(g, mod-2, mod)",
@@ -1631,7 +1709,9 @@
             "",
             "class RangeSearchQuery:",
             "    \"\"\"",
-            "    二次元点のリストで葉にを指定してその要素番号を出力する",
+            "    二次元点のリストで範囲を指定して、含まれる要素番号を出力する",
+            "    ２次元の平面上の点の集合に対し、与えられた領域に含まれる点を列挙してください。",
+            "    ただし、与えられた点の集合に対して、点の追加・削除は行われません。",
             "    \"\"\"",
             "    def __init__(self, points):",
             "        self.n = len(points)",
@@ -3169,7 +3249,7 @@
             "        if self.x == 0 and self.y == 0: return 0",
             "        if self.x > 0 and self.y >= 0: return 1",
             "        if self.x <= 0 and self.y > 0: return 2",
-            "        if self.x < 0 and self.y <=0: return 3",
+            "        if self.x < 0 and self.y <= 0: return 3",
             "        return 4",
             "",
             "    def dot(self, other):",
@@ -3771,7 +3851,7 @@
             "print(0ret)"
         ],
         "body": [
-            "print(ret)"
+            "print($ret)"
         ],
         "description": [
             "print(ret)"
@@ -3779,40 +3859,40 @@
     },
     "output2": {
         "prefix": [
-            "print(2INF)"
+            "print(2INF⇒-1)"
         ],
         "body": [
-            "print(-1 if ret == INF else ret)"
+            "print(-1 if $ret == INF else $ret)"
         ],
         "description": [
-            "print(INF)"
+            "print(INF⇒-1)"
         ]
     },
     "output3": {
         "prefix": [
-            "print(3joinret)"
-        ],
-        "body": [
-            "print('\\n'.join(ret))"
-        ],
-        "description": [
-            "print(joinret)"
-        ]
-    },
-    "output4": {
-        "prefix": [
-            "print(4join(map(str(ret)"
+            "print(3'\\n'.join(map(str)"
         ],
         "body": [
             "print('\\n'.join(map(str, ret)))"
         ],
         "description": [
-            "print(join(map(str(ret)"
+            "print(3'\\n'.join(map)"
         ]
     },
-    "output5": {
+    "output4": {
         "prefix": [
-            "print(5interactive)"
+            "print(4''.join(ret))"
+        ],
+        "body": [
+            "print(''.join(ret))"
+        ],
+        "description": [
+            "print(\"\".join)"
+        ]
+    },
+    "output interactive": {
+        "prefix": [
+            "print(6interactive)"
         ],
         "body": [
             "def req(ret):",
@@ -3823,9 +3903,9 @@
             "interactive"
         ]
     },
-    "output6": {
+    "output7": {
         "prefix": [
-            "print(6roundeds)"
+            "print(7roundeds)"
         ],
         "body": [
             "def fstr(x): return f'{x:.10f}'",
@@ -3833,6 +3913,28 @@
         ],
         "description": [
             "rounded"
+        ]
+    },
+    "outputY": {
+        "prefix": [
+            "'Yes'"
+        ],
+        "body": [
+            "'Yes"
+        ],
+        "description": [
+            "outputY"
+        ]
+    },
+    "outputN": {
+        "prefix": [
+            "'No'"
+        ],
+        "body": [
+            "'No"
+        ],
+        "description": [
+            "outputN"
         ]
     },
     "Graph二部マッチング": {
@@ -4392,63 +4494,13 @@
             "itemgetterソート"
         ]
     },
-    "defaultdict": {
-        "prefix": [
-            "dd=defaultdict"
-        ],
-        "body": [
-            "dd = defaultdict($int)"
-        ],
-        "description": [
-            "デフォルトディクショナリ"
-        ]
-    },
-    "sort_by_function": {
-        "prefix": [
-            "Lib_sort_by_function"
-        ],
-        "body": [
-            "from functools import cmp_to_key",
-            "def sort_by_function(x):",
-            "    \"\"\"比較関数を設定してソート",
-            "    \"\"\"",
-            "    def compare(item1, item2):",
-            "        \"\"\" \"小さい\" -> -1",
-            "            \"等しい\" -> 0",
-            "            \"大きい\" -> 1",
-            "        \"\"\"",
-            "        # 以下はx, yが与えられてy/xで比較する例",
-            "        # y1/x1 < y2/x2",
-            "        # -> y1*x2 < y2*x1",
-            "        x1, y1 = item1",
-            "        x2, y2 = item2",
-            "",
-            "        if y1*x2 < y2*x1:",
-            "            return -1",
-            "        elif y1*x2 > y2*x1:",
-            "            return 1",
-            "        else:",
-            "            return 0",
-            "    x.sort(key=cmp_to_key(compare))",
-            "    return x",
-            "########################################",
-            "a = [[1, 2], [2, 6] , [3, 6], [4, 5], [5, 7]]",
-            "print(a)",
-            "a = sort_by_function(a)",
-            "print(a)",
-            "# [[4, 5], [5, 7], [1, 2], [3, 6], [2, 6]]",
-            "#   1.25    0.714    0.5     0.5    0.333"
-        ],
-        "description": [
-            "比較関数使って並べ替え"
-        ]
-    },
     "順列・組み合わせ": {
         "prefix": [
             "itertools",
             "Lib_順列・組み合わせ"
         ],
         "body": [
+            "from itertools import *",
             "P = list(permutations(range(n), r))   # 順列(nPr)",
             "C = list(combinations(range(n), r))   # 組み合わせ(nCr)",
             "CR = list(combinations_with_replacement(range(n), r))  # 重複も許容した組み合わせ(nHr=n+r-1Cr)",
@@ -4490,30 +4542,17 @@
     },
     "direc": {
         "prefix": [
-            "direc"
+            "direc_isinhw"
         ],
         "body": [
             "direc = {(1, 0), (-1, 0), (0, 1), (0, -1)}",
             "direc = {(1, 0), (-1, 0), (0, 1), (0, -1), (1, 1), (1, -1) (-1, 1), (-1, -1)}",
             "",
-            "for dh, dw in direc:",
-            "    nh, nw = ch + dh, cw + dw",
-            "    if not (0 <= nh < h and 0 <= nw < w): continue"
+            "def notisinhw(i, j, h, w): return not ((0 <= i < h) and (0 <= j < w))",
+            ""
         ],
         "description": [
             "direc"
-        ]
-    },
-    "memo": {
-        "prefix": [
-            "memo_lru_chache"
-        ],
-        "body": [
-            "from functools import lru_cache",
-            "@lru_chache()"
-        ],
-        "description": [
-            "memo"
         ]
     },
     "Mo'sAlgorythm#": {
@@ -4982,7 +5021,7 @@
     },
     "Lib_sort_by_function": {
         "prefix": [
-            "Lib_sort_by_function"
+            "Lib_sort_by_function比較"
         ],
         "body": [
             "",
@@ -5007,6 +5046,20 @@
         ],
         "description": [
             "Lib_sort_by_function"
+        ]
+    },
+    "Lib_sqroot": {
+        "prefix": [
+            "Lib_sqroot"
+        ],
+        "body": [
+            "def sqrt(x):",
+            "    r = int(x**0.5) - 3",
+            "    while (r+1)*(r+1) <= x: r += 1",
+            "    return r"
+        ],
+        "description": [
+            "Lib_sqroot"
         ]
     },
     "LCA": {
@@ -6885,6 +6938,52 @@
         ],
         "description": [
             "削除機能付きheapque"
+        ]
+    },
+    "modval1": {
+        "prefix": [
+            "mod = 1000000007"
+        ],
+        "body": [
+            "mod = 1000000007"
+        ],
+        "description": [
+            "modval"
+        ]
+    },
+    "modval2": {
+        "prefix": [
+            "mod = 998244353"
+        ],
+        "body": [
+            "mod = 998244353"
+        ],
+        "description": [
+            "modval"
+        ]
+    },
+    "pival": {
+        "prefix": [
+            "pi_π円周率"
+        ],
+        "body": [
+            "PI = 3.141592653589793"
+        ],
+        "description": [
+            "pival"
+        ]
+    },
+    "alphabet": {
+        "prefix": [
+            "alphabet"
+        ],
+        "body": [
+            "ALPS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'; alps = 'abcdefghijklmnopqrstuvwxyz'",
+            "def alp(i, base='a'): return chr(ord(base) + i%26)    # i=0->'a', i=25->'z'",
+            "def alpind(a, base='a'): return ord(a)-ord(base)"
+        ],
+        "description": [
+            "alphabet"
         ]
     },
     "セグメント木区間加算１点集約": {

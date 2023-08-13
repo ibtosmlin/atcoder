@@ -67,7 +67,7 @@ class Bit:
             v = (v - 1) & self.x
         return ret
 
-    def kcountset(self, k)->list:
+    def kcountsubset(self, k)->list:
         """x以下の部分集合でビットがk個のものを列挙
         """
         ret = []
@@ -80,7 +80,7 @@ class Bit:
 
 
 
-x = Bit(5)
+x = Bit(7)
 print(x)
 print(x.onkthbit(0))
 print(x.offkthbit(0))
@@ -95,7 +95,7 @@ print(x.isbitk(4))
 for b in x.subset():
     print(b)
 print("--")
-for b in x.ksubset(2):
+for b in x.kcountsubset(2):
     print(b)
 
 
