@@ -8,52 +8,38 @@
 #body#
 class UnionFind:
     def __init__(self, n):
-        self.n = n
-        self.parents = [i for i in range(n)]
-        self.ranks = [0] * n
-
+        self.n, self.parents, self.ranks = n, [i for i in range(n)], [0] * n
     def find(self, x):
         p = self.parents[x]
         if p == x: return x
-        self.parents[x] = p = self.find(p)
-        return p
-
+        self.parents[x] = p = self.find(p); return p
     def unite(self, x, y):
         x = self.find(x); y = self.find(y)
         if x == y: return
         if self.ranks[x] > self.ranks[y]: x , y = y, x
         if self.ranks[x] == self.ranks[y]: self.ranks[y] += 1
         self.parents[x] = y
-
-    def same(self, x, y):
-        return self.find(x) == self.find(y)
+    def same(self, x, y): return self.find(x) == self.find(y)
 
 
 class Kruskal:
     def __init__(self, n:int, G:list)->None:
         self.n = n
         self.all_edges = G
-        self.weight = None
-        self.edges = None
-        self.edges_nouse = None
-        self.nodes = None
+        self.edges = [False] * len(G)
+        self.weight = 0
+        self.nodes = set([])
+        self.build()
 
     def build(self)->None:
-        self.weight = 0
-        self.edges = []
-        self.edges_nouse = []
-        self.nodes = set([])
-        self.all_edges.sort(key=lambda x: x[-1])
         uf = UnionFind(self.n)
-        for u, v, w in self.all_edges:
+        for u, v, w, i in sorted([(a, b, w, i) for i, (a, b, w) in enumerate(self.all_edges)], key=lambda x: x[2]):
             if not uf.same(u, v):
                 uf.unite(u, v)
                 self.weight += w
-                # self.edges.append((u, v, w))
                 self.nodes |= {u, v}
-            else:
-                pass
-                # self.edges_nouse.append((u, v, w))
+                self.edges[i] = True
+
         if len(self.nodes) != self.n:
             self.weight = float('inf')
 ################################
@@ -68,7 +54,6 @@ for i in range(m):
     G.append((a, b, w))
 
 mst = Kruskal(n, G)
-mst.build()
 print(mst.weight)
 
 #prefix#
