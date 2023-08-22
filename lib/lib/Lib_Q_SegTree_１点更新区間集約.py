@@ -150,6 +150,7 @@ class SegmentTree:  # 初期化処理
         r += self._size
         sm = self._ie
         while True:
+            r -= 1
             while r > 1 and r % 2 == 1: r >>= 1
             if not isOk(self._f(self._dat[r], sm)):
                 while r < self._size:
