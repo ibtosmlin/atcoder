@@ -35,7 +35,7 @@ s = list(input())
 #description#
 # 整数a, bの読み込み
 #body#
-a, b = map(int, input().split())
+a, b = map(int1, input().split())
 #prefix#
 # a, b=map
 #end#
@@ -77,8 +77,7 @@ b = list(map(int, input().split()))
 #body#
 G = [[] for _ in range($n)]
 for _ in range($m):
-    a, b = map(int, input().split())
-    a -= 1; b -= 1
+    a, b = map(int1, input().split())
     G[a].append(b)
     G[b].append(a)
 
@@ -93,8 +92,7 @@ for _ in range($m):
 #body#
 G = [[] for _ in range($n)]
 for _ in range($m):
-    a, b, w = map(int, input().split())
-    a -= 1; b -= 1
+    a, b, w = map(int1, input().split())
     G[a].append((b, w))
     G[b].append((a, w))
 

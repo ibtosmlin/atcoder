@@ -21,6 +21,8 @@ class RollingHash:
         # returns hashvalue of [l, r)
         return (self.h[r] - self.h[l] * self.pw[r-l]) % self.mod
 
+
+
 q = int(input())
 s = input()
 RHS = RollingHash(s)
