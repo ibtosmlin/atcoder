@@ -19,19 +19,19 @@ class dijkstra:
         self.start = None           # 始点
         self.G_used = [None] * n    # 最短経路木の親
         self.dist = [self.INF] * n  # 始点からの距離
-        self.count = [0] * n        # 始点からの最短到達パス数
+        # self.count = [0] * n        # 始点からの最短到達パス数
 
     def build(self, start):
         self.start = start
         self.G_used = [None] * self.n
         self.dist = [self.INF] * self.n
-        self.count = [0] * self.n
+        # self.count = [0] * self.n
         next_q = []
         if type(start) is int:
             start = [start]
         for st in start:
             self.dist[st] = 0
-            self.count[st] = 1
+            # self.count[st] = 1
             next_q.append((0, st))
         heapify(next_q)
         while next_q:
@@ -43,11 +43,11 @@ class dijkstra:
                 ############################
                 if self.dist[nx] < nd: continue
                 if self.dist[nx] == nd:
-                    self.count[nx] += self.count[x]
+                    # self.count[nx] += self.count[x]
                     continue
                 self.dist[nx] = nd
                 self.G_used[nx] = x
-                self.count[nx] = self.count[x]
+                # self.count[nx] = self.count[x]
                 heappush(next_q, (nd, nx))
 
 
@@ -89,6 +89,29 @@ dij.build(0)
 dijR.build(0)
 
 print(dij.get_dist(n-1))
+
+
+
+####################################
+"G = [[INF] * n for _ in range(n)] 版"
+
+from heapq import heappop, heappush
+def dijkstra(n, G, start):
+    INF = 10 ** 20
+    dist = [INF] * n
+    dist[start] = 0
+    que = [(0, start)]
+    while que:
+        d, x = heappop(que)
+        if d != dist[x]: continue
+        for nx in range(n):
+            if x == nx: continue
+            nd = d + G[x][nx]
+            if nd >= dist[nx]: continue
+            dist[nx] = nd
+            heappush(que, (nd, nx))
+    return dist
+
 
 #prefix#
 # Lib_SP_最短経路探索_dijkstra

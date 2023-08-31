@@ -1,33 +1,46 @@
 # https://atcoder.jp/contests/abc249/tasks/abc249_e
-from collections import defaultdict
+import sys; input: lambda _: sys.stdin.readline().rstrip()
+sys.setrecursionlimit(10001000); import pypyjit; pypyjit.set_param('max_unroll_recursion=-1')
+def int1(x): return int(x)-1
 
-def diff(k):
-    return k - len(str(k)) - 1
+def f(x):
+    ret = 1
+    while x:
+        x //= 10
+        ret += 1
+    return ret
 
 n, p = map(int, input().split())
+lbs = [0, 1, 10, 100, 1000, 10000]
 
-dp = [defaultdict(int) for _ in range(n+1)]
-# dp[i][j]  i文字まで決めて、T-Sの差がjの場合の数
-dp[0][0] = 1
+# dp[i][j]:ブロックごとにi文字目まで決めて、j文字で書ける場合の数
+dp = [[0] * (n+1) for _ in range(n+1)]
+for w in range(1, n+1):
+    if f(w) <= n:
+        dp[w][f(w)] = 26
+rdp = [[0] * (n+1) for _ in range(n+1)]
 
-# i文字まで決まっていて残りn-i文字が全て-1として
-# jがn-i+1 以上だったら計算する必要なし
+for i in range(1, n+1):
+    for j in range(1, n+1):
+        # for w in range(1, i):
+        #     pj = j-f(w)
+        #     if pj < 0: continue
+        #     dp[i][j] += dp[i-w][j-f(w)] * 25
+        #     dp[i][j] %= p
+        for k in range(1, 5):
+            fk = k + 1
+            pj = j - fk
+            if pj < 0: continue
+            lb = lbs[k]
+            ub = min(lb * 10, i)
+            if lb >= ub: continue
+            # for w in range(lb, ub):
+            #     dp[i][j] += dp[i-w][pj] * 25
+            dp[i][j] += (rdp[i-lb][pj] - rdp[i-ub][pj]) * 25
+            dp[i][j] %= p
 
-for i in range(n):
-    for j, c in dp[i].items():
-        for k in range(1, n-i+1):
-        # kは1文字からn-i文字まで
-            ni = i+k
-            nj = j+diff(k)
-            # nj = min(j+diff(k), n-i+1)
-            dp[ni][nj] += c * (26 if i == 0 else 25) % p
-            dp[ni][nj] %= p
+        rdp[i][j] = rdp[i-1][j] + dp[i][j]
+        rdp[i][j] %= p
 
-ret = 0
-for k, v in dp[-1].items():
-    if k > 0:
-        ret += v
-        ret % p
-print(ret)
-print(dp)
-
+print(sum(dp[-1][:-1])%p)
+#for dpi in dp: print(dpi[:10])

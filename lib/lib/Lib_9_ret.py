@@ -63,21 +63,12 @@ def fstr(x): return f'{x:.10f}'
 #end#
 
 #name#
-# outputY
+# outputYesNo
 #description#
-# outputY
+# outputYesNo
 #body#
-'Yes
+print('Yes' if $ret else 'No')
 #prefix#
-# 'Yes'
+# print(5yesno)
 #end#
 
-#name#
-# outputN
-#description#
-# outputN
-#body#
-'No
-#prefix#
-# 'No'
-#end#

@@ -1,6 +1,6 @@
 #name#
+# BIT演算
 #description#
-#body#
 # BIT演算
 #body#
 
