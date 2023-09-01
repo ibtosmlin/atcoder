@@ -4,7 +4,7 @@ body {
     margin: 0px;
     padding: 0px;
     color: #c58026; /*全体の文字色*/
-    font-family:"ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic Pro", "メイリオ", Meiryo, Osaka, "ＭＳ Ｐゴシック", "MS PGothic", sans-serif;	/*フォント種類*/
+    font-family: "Kosugi Maru", sans-serif;
     font-size: 16px;        /*文字サイズ*/
     line-height: 2;         /*行間*/
     background: #f9f3ec;  /*背景色*/

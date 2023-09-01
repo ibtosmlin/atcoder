@@ -9,16 +9,16 @@
 # nCr % 10**9+7
 # http://zakii.la.coocan.jp/enumeration/10_balls_boxes.htm
 #####################################
-mod, lim = 10**9+7, 10**6                   # mod素数, 出力の制限
-g1, g2 = [[1]*(lim+1) for _ in range(2)]    # ！と逆元tbl
-for i in range(2, lim + 1):
-    g1[i] = g1[i-1] * i % mod
-g2[-1] = pow(g1[-1], mod-2, mod)
-for i in range(lim, 0, -1):
-    g2[i-1] = g2[i] * i % mod
 
-def fac(n): return g1[n]
-def facinv(n): return g2[n]
+mod = 998244353
+maxn = 10**6
+fac, facinv = [1]*(maxn+1), [1]*(maxn+1)
+for i in range(2, maxn + 1):
+    fac[i] = fac[i-1] * i % mod
+facinv[-1] = pow(fac[-1], mod-2, mod)
+for i in range(maxn, 0, -1):
+    facinv[i-1] = facinv[i] * i % mod
+
 def nCr(n, r):
     """nCr
     n個のものからr個選ぶ
@@ -26,7 +26,8 @@ def nCr(n, r):
     if ( r<0 or r>n ):
         return 0
     r = min(r, n-r)
-    return fac(n) * facinv(r) * facinv(n-r) % mod
+    return fac[n] * facinv[r] * facinv[n-r] % mod
+
 
 ret = nCr(4, 2)
 
