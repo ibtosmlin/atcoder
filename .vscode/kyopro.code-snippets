@@ -3908,26 +3908,15 @@
             "rounded"
         ]
     },
-    "outputY": {
+    "outputYesNo": {
         "prefix": [
-            "'Yes'"
+            "print(5yesno)"
         ],
         "body": [
-            "'Yes"
+            "print('Yes' if $ret else 'No')"
         ],
         "description": [
-            "outputY"
-        ]
-    },
-    "outputN": {
-        "prefix": [
-            "'No'"
-        ],
-        "body": [
-            "'No"
-        ],
-        "description": [
-            "outputN"
+            "outputYesNo"
         ]
     },
     "Graph二部マッチング": {
@@ -5587,6 +5576,119 @@
         ],
         "description": [
             "累積和"
+        ]
+    },
+    "BIT演算": {
+        "prefix": [
+            "Lib_BIT演算"
+        ],
+        "body": [
+            "",
+            "class Bit:",
+            "    def __init__(self, x=0):",
+            "        self.x = int(x)",
+            "",
+            "    def __bool__(self):",
+            "        return self.x != 0",
+            "",
+            "    def __int__(self):",
+            "        return self.x",
+            "",
+            "    def __str__(self):",
+            "        return f'int: {self.x} bin: {self.bin()}'",
+            "",
+            "    @property",
+            "    def len(self):",
+            "        return self.x.bit_length()",
+            "",
+            "    @property",
+            "    def bitcount(self):",
+            "        return bin(self.x).count('1')",
+            "",
+            "    def bin(self, l=32):",
+            "        return ('0' * l + bin(self.x)[2:])[-l:]",
+            "",
+            "    def getkthbit(self, k):",
+            "        \"\"\"kビット目を取得",
+            "        \"\"\"",
+            "        return Bit(self.x & (1 << k))",
+            "",
+            "    def isbitk(self, k):",
+            "        return self.getkthbit(k).__bool__()",
+            "",
+            "    def onkthbit(self, k):",
+            "        \"\"\"kビット目を１にした値",
+            "        \"\"\"",
+            "        return Bit(self.x | (1 << k))",
+            "",
+            "    def offkthbit(self, k):",
+            "        \"\"\"kビット目を０にした値",
+            "        \"\"\"",
+            "        return Bit(self.x & ~(1 << k))",
+            "",
+            "    def invertkthbit(self, k):",
+            "        \"\"\"kビット目を反転させた値",
+            "        \"\"\"",
+            "        return Bit(self.x ^ (1 << k))",
+            "",
+            "    def invert(self):",
+            "        \"\"\"全ビット目を反転させた値",
+            "        \"\"\"",
+            "        return Bit(~self.x)",
+            "",
+            "",
+            "    def subset(self)->list:",
+            "        \"\"\"集合xの部分集合を列挙",
+            "        \"\"\"",
+            "        v = (-1) & self.x",
+            "        ret = []",
+            "        while v:",
+            "            ret.append(Bit(v))",
+            "            v = (v - 1) & self.x",
+            "        return ret",
+            "",
+            "    def kcountsubset(self, k)->list:",
+            "        \"\"\"x以下の部分集合でビットがk個のものを列挙",
+            "        \"\"\"",
+            "        ret = []",
+            "        v = (1 << k) - 1",
+            "        while v < self.x:",
+            "            ret.append(Bit(v))",
+            "            x = v & -v; y = v + x",
+            "            v = ((v & ~y) // x >> 1) | y",
+            "        return ret",
+            "",
+            "",
+            "",
+            "x = Bit(7)",
+            "print(x)",
+            "print(x.onkthbit(0))",
+            "print(x.offkthbit(0))",
+            "print(x.invertkthbit(0))",
+            "print(x.invert())",
+            "print(x.isbitk(0))",
+            "print(x.isbitk(1))",
+            "print(x.isbitk(2))",
+            "print(x.isbitk(3))",
+            "print(x.isbitk(4))",
+            "",
+            "for b in x.subset():",
+            "    print(b)",
+            "print(\"--\")",
+            "for b in x.kcountsubset(2):",
+            "    print(b)",
+            "",
+            "",
+            "# https://qiita.com/qiita_kuru/items/3a6ab432ffb6ae506758",
+            "",
+            "# 111",
+            "~((~0)<<3)      # 111",
+            "(1 << 3) - 1    # 111",
+            "",
+            ""
+        ],
+        "description": [
+            "BIT演算"
         ]
     },
     "ベルマンフォード法": {
@@ -7545,6 +7647,42 @@
             "https://algo-logic.info/tree-dp/"
         ]
     },
+    "BITset": {
+        "prefix": [
+            "Lib_BITSET"
+        ],
+        "body": [
+            "",
+            "def popcount64(n):",
+            "    c=(n&0x5555555555555555)+((n>>1)&0x5555555555555555)",
+            "    c=(c&0x3333333333333333)+((c>>2)&0x3333333333333333)",
+            "    c=(c&0x0f0f0f0f0f0f0f0f)+((c>>4)&0x0f0f0f0f0f0f0f0f)",
+            "    c=(c&0x00ff00ff00ff00ff)+((c>>8)&0x00ff00ff00ff00ff)",
+            "    c=(c&0x0000ffff0000ffff)+((c>>16)&0x0000ffff0000ffff)",
+            "    c=(c&0x00000000ffffffff)+((c>>32)&0x00000000ffffffff)",
+            "    return c",
+            "",
+            "def bitset(s, b, m):",
+            "    \"\"\"",
+            "        sをbビットずつ下からm個に区切る",
+            "    \"\"\"",
+            "    s = list(map(int, s))",
+            "    ret = [0] * m",
+            "    s = [0] * (b*m - len(s)) + s",
+            "    for i in range(m):",
+            "        bit = 0",
+            "        for j in range(b):",
+            "            bit |= s[i * b + j] << j",
+            "        ret[i] = bit",
+            "    return ret",
+            "",
+            "# https://atcoder.jp/contests/abc258/tasks/abc258_g",
+            ""
+        ],
+        "description": [
+            "BITset"
+        ]
+    },
     "nCr": {
         "prefix": [
             "Lib_N_nCr剰余"
@@ -7556,16 +7694,16 @@
             "# nCr % 10**9+7",
             "# http://zakii.la.coocan.jp/enumeration/10_balls_boxes.htm",
             "#####################################",
-            "mod, lim = 10**9+7, 10**6                   # mod素数, 出力の制限",
-            "g1, g2 = [[1]*(lim+1) for _ in range(2)]    # ！と逆元tbl",
-            "for i in range(2, lim + 1):",
-            "    g1[i] = g1[i-1] * i % mod",
-            "g2[-1] = pow(g1[-1], mod-2, mod)",
-            "for i in range(lim, 0, -1):",
-            "    g2[i-1] = g2[i] * i % mod",
             "",
-            "def fac(n): return g1[n]",
-            "def facinv(n): return g2[n]",
+            "mod = 998244353",
+            "maxn = 10**6",
+            "fac, facinv = [1]*(maxn+1), [1]*(maxn+1)",
+            "for i in range(2, maxn + 1):",
+            "    fac[i] = fac[i-1] * i % mod",
+            "facinv[-1] = pow(fac[-1], mod-2, mod)",
+            "for i in range(maxn, 0, -1):",
+            "    facinv[i-1] = facinv[i] * i % mod",
+            "",
             "def nCr(n, r):",
             "    \"\"\"nCr",
             "    n個のものからr個選ぶ",
@@ -7573,7 +7711,8 @@
             "    if ( r<0 or r>n ):",
             "        return 0",
             "    r = min(r, n-r)",
-            "    return fac(n) * facinv(r) * facinv(n-r) % mod",
+            "    return fac[n] * facinv[r] * facinv[n-r] % mod",
+            "",
             "",
             "ret = nCr(4, 2)",
             "",
