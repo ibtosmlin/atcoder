@@ -10,7 +10,7 @@ lib_files = glob.glob('./lib/lib/Lib_*.py')
 # \libの中のファイルをすべて取り込む
 d = defaultdict(dict)
 for file in lib_files:
-    if file == 'Lib_templete.py': continue
+    if 'Lib_templete.py' in file: continue
     f = open(file, 'r')
     flist = [fi.replace('\n', "") for fi in f.readlines()]
     now = None

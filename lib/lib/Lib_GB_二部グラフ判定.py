@@ -1,7 +1,7 @@
 #name#
-# Graph二部グラフ
+# 二部グラフ判定
 #description#
-# Graph二部グラフ
+# 隣接リストから二部グラフかどうか判定
 #body#
 
 import sys
@@ -47,8 +47,6 @@ def is_bipartite(g, st, c):
 
 #######################################
 
-
-
 n, m = map(int, input().split())
 G = [[] for _ in range(n)]
 color = [0] * n     # 0:未確定 1:黒 -1:白
@@ -60,9 +58,8 @@ for i in range(m):
     G[a].append(b)
     G[b].append(a)
 
-
 print(is_bipartite(G, 0, 1))
 
 #prefix#
-# Lib_G_二部グラフ_bipartite
+# Lib_G_二部グラフ判定_bipartite
 #end#

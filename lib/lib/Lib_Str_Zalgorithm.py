@@ -1,3 +1,8 @@
+#title#
+# Zアルゴリズム
+#subtitle#
+# z_altp: SとS[i:]の接頭辞が一致する長さのリスト
+
 #name#
 # Zアルゴリズム
 #description#

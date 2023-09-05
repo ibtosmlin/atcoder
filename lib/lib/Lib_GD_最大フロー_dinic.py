@@ -1,7 +1,7 @@
 #name#
-# Graph最大フロー
+# 最大フロー
 #description#
-# Graph最大フロー
+# 最大フローO(∣V∣**2・∣E∣)Dinic
 #body#
 
 # 最大流問題
@@ -29,25 +29,22 @@ class Dinic:
         # cap: 容量, to/fm:行き先, rev:相方の辺
         forward = [cap, to, len(self.g[to])]
         backward = [0, fm, len(self.g[fm])]
-        self.g[fm].append(forward)
-        self.g[to].append(backward)
+        self.g[fm].append(forward); self.g[to].append(backward)
 
     # sからの最短距離を計算
-    def bfs(self, s:int):
+    def _bfs(self, s:int):
         depth = [-1] * self.n
-        depth[s] = 0
-        q = deque([s])
-        while q:
-            v = q.popleft()
-            for cap, to, rev in self.g[v]:
-                if cap == 0: continue
-                if depth[to] >= 0:continue
+        depth[s] = 0; que = deque([s])
+        while que:
+            v = que.popleft()
+            for cap, to, _rev in self.g[v]:
+                if cap == 0 or depth[to] >= 0: continue
                 depth[to] = depth[v] + 1
-                q.append(to)
+                que.append(to)
         self.depth = depth
 
     # 増加パスをdfsで探す
-    def dfs(self, v:int, t:int, flow:int):
+    def _dfs(self, v:int, t:int, flow:int):
         if v == t: return flow
         g_v = self.g[v]
         for i in range(self.progress[v], len(g_v)):
@@ -55,7 +52,7 @@ class Dinic:
             cap, to, rev = g = g_v[i]
             if cap == 0: continue
             if self.depth[v] >= self.depth[to]: continue
-            d = self.dfs(to, t, min(flow, cap))
+            d = self._dfs(to, t, min(flow, cap))
             if d == 0: continue
             g[0] -= d
             self.g[to][rev][0] += d
@@ -65,15 +62,13 @@ class Dinic:
     def max_flow(self, s, t):
         flow = 0
         while True:
-            self.bfs(s)
+            self._bfs(s)
             if self.depth[t] < 0: return flow
             self.progress = [0] * self.n
-            current_flow = self.dfs(s, t, self.inf)
+            current_flow = self._dfs(s, t, self.inf)
             while current_flow > 0:
                 flow += current_flow
-                current_flow = self.dfs(s, t, self.inf)
-
-
+                current_flow = self._dfs(s, t, self.inf)
 
 
 #############

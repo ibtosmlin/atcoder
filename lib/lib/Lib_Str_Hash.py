@@ -1,3 +1,8 @@
+#title#
+# ローリングハッシュ
+#subtitle#
+# RollingHash: 文字列が一致しているか判定する
+
 #name#
 # ローリングハッシュ
 #description#
