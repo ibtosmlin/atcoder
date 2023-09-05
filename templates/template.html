@@ -13,19 +13,20 @@
         <h1>競技プログラミングライブラリ</h1>
         <nav id="menubar">
             <ul>
-            <li><a href="#input">input</a></li>
-            <li><a href="#company">Company</a></li>
-            <li><a href="#service">Service</a></li>
-            <li><a href="#contact">Contact</a></li>
+                {% for x in segments%}
+                <li><a href="#{{x[0]}}">{{x[1]}}</a></li>
+                {% endfor %}
             </ul>
             </nav>
     </header>
     <main>
-        <section id="input"><h2>input</h2></section>
+        {% for x in segments%}
+        <section id="{{x[0]}}"><h2>{{x[1]}}</h2></section>
             <ul>
                 <li>
                     aiueo
                 </li>
             </ul>
-    </main>
+        {% endfor %}
+</main>
 </html>

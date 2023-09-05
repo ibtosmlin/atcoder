@@ -1,13 +1,16 @@
+#title#
+# レーベンシュタイン距離
+#subtitle#
+# Levenshtein: 削除・挿入・変更により文字列を一致させる最小の手順回数
+
 #name#
 # レーベンシュタイン距離
 #description#
 # Lib_レーベンシュタイン距離
 #body#
 #####################################
-# レーベンシュタイン距離
-# 文字列の近似度
-# 文字削除・挿入・変更により文字列を一致させる
-# 最小の手順回数
+# レーベンシュタイン距離 文字列の近似度
+# 文字削除・挿入・変更により文字列を一致させる最小の手順回数
 #####################################
 # https://algo-method.com/tasks/315
 # https://onlinejudge.u-aizu.ac.jp/courses/library/7/DPL/1/DPL_1_E
@@ -69,5 +72,5 @@ ldiff = Levenshtein(s, t)
 print(ldiff.length)
 
 #prefix#
-# Lib_A_レーベンシュタイン距離_Levenshtein_distance#
+# Lib_Str_レーベンシュタイン距離_Levenshtein_distance#
 #end#

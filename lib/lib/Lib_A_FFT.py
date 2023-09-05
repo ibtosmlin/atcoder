@@ -58,5 +58,5 @@ B = list(map(int,input().split()))
 print(*convolve(A,B))
 
 #prefix#
-# Lib_C_FFT
+# Lib_A_FFT_convolution
 #end#
