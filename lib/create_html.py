@@ -30,12 +30,9 @@ for filepath in sorted(lib_files):
             if now == 'subtitle': subtitle.append(fstr)
     d[y].append((x, title, subtitle))
 
-print(d)
-
-
 #テンプレート読み込み
 env = Environment(loader=FileSystemLoader('./templates', encoding='utf8'))
-template = env.get_template('template.txt')
+template = env.get_template('template.html')
 
 #レンダリングしてhtml出力
 rendered_html = template.render(d)
