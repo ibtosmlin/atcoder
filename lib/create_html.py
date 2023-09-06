@@ -10,22 +10,21 @@ lib_files = glob.glob('./lib/lib/Lib_*.py')
 
 rdata = defaultdict(list)
 
-rdata['segments'] = [('A', '一般アルゴリズム'),
-                    ('D', 'データ構造'),
-                    ('GB', '二部グラフ'),
-                    ('GD', '有向グラフ'),
-                    ('GT', '木'),
-                    ('G', 'グラフ'),
-                    ('N', '整数'),
-                    ('M', '行列'),
-                    ('Q', 'クエリ'),
-                    ('SP', '最短距離'),
-                     ('Str', '文字列'),
-                     ('AL', '幾何'),
-                     ('O', 'その他'),
-                     ]
+rdata['segments'] = [['A', '一般アルゴリズム'],
+                    ['D', 'データ構造'],
+                    ['Q', 'クエリ'],
+                    ['G', 'グラフ'],
+                    ['GB', '二部グラフ'],
+                    ['GD', '有向グラフ'],
+                    ['GT', '木'],
+                    ['SP', '最短距離'],
+                    ['N', '整数'],
+                    ['M', '行列'],
+                    ['Str', '文字列'],
+                    ['AL', '幾何'],
+                    ['O', 'その他']]
 
-
+contents = defaultdict(list)
 for filepath in sorted(lib_files):
     if 'Lib_templete.py' in filepath: continue
     x = os.path.basename(filepath)
@@ -44,7 +43,10 @@ for filepath in sorted(lib_files):
         if fstr:
             if now == 'title':title.append(fstr)
             if now == 'subtitle': subtitle.append(fstr)
-    rdata[y].append((x, title, subtitle))
+    contents[y].append({'fname':x, 'title':title, 'subtitle':subtitle})
+
+for s in rdata['segments']:
+    s.append(contents[s[0]])
 
 #テンプレート読み込み
 env = Environment(loader=FileSystemLoader('./templates', encoding='utf8'))
@@ -56,3 +58,4 @@ with open(html_file, 'w') as f:
     f.write(rendered_html)
 
 print(rendered_html)
+

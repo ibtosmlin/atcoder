@@ -9,24 +9,20 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <header>
-        <h1>競技プログラミングライブラリ</h1>
-        <nav id="menubar">
-            <ul>
-                {% for x in segments%}
-                <li><a href="#{{x[0]}}">{{x[1]}}</a></li>
-                {% endfor %}
-            </ul>
-            </nav>
-    </header>
-    <main>
-        {% for x in segments%}
-        <section id="{{x[0]}}"><h2>{{x[1]}}</h2></section>
-            <ul>
-                <li>
-                    aiueo
-                </li>
-            </ul>
-        {% endfor %}
+<header>
+    <h1>競技プログラミングライブラリ</h1>
+    <nav id="menubar">
+        <ul>
+            {% for x in segments%}
+            <li><a href="#{{x[0]}}">{{x[1]}}</a></li>
+            {% endfor %}
+        </ul>
+        </nav>
+</header>
+<main>
+    {% for x in segments%}
+    <section id="{{x[0]}}"><h2>{{x[1]}}</h2></section>
+        {% for xi in x[2] %}<ul>{{xi.title}}{{xi.fname}}</ul>{% endfor %}
+    {% endfor %}
 </main>
 </html>
