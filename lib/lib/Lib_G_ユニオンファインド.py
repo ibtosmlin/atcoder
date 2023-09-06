@@ -1,8 +1,14 @@
+#title#
+# ユニオンファインド
+#subtitle#
+# UnionFind: 連結成分分解
+
 #name#
 # ユニオンファインド
 #description#
 # ユニオンファインド
 #body#
+
 class UnionFind:
     def __init__(self, n):                      # 初期化
         self.n = n                              # 要素数
@@ -53,21 +59,16 @@ class UnionFind:
         """
         return self.sizes[self.find(x)]
 
-    def get_roots(self):
+    def get_groups(self):
         """親のリスト取得
-           親ごとのグループのメンバー一覧取得
+            親ごとのグループのメンバー一覧取得
         """
-        _dum = [[] for _ in range(self.n)]
-        self.roots = []
-        self.group_members = dict()
-        for x in range(self.n):
-            r = self.find(x)
-            if r == x:
-                self.roots.append(r)
-            _dum[r].append(x)
-        for r in self.roots:
-            self.group_members[r] = _dum[r]
-
+        leader_buf = [self.find(i) for i in range(self.n)]
+        result = [[] for _ in range(self.n)]
+        for i in range(self.n):
+            result[leader_buf[i]].append(i)
+        self.groups = result
+        return result
 
     def __str__(self):
         return '\n'.join(f'{r}: {self.members(r)}' for r in self.roots)
