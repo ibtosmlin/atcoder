@@ -22,7 +22,9 @@
 <main>
     {% for x in segments%}
     <section id="{{x[0]}}"><h2>{{x[1]}}</h2></section>
-        {% for xi in x[2] %}<ul>{{xi.title}}{{xi.fname}}</ul>{% endfor %}
+        {% for xi in x[2] %}<ul>{{xi.fname}}
+            {% for xij in xi.title %}<li>{{xij}}</li>{% endfor %}
+        </ul>{% endfor %}
     {% endfor %}
 </main>
 </html>
