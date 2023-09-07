@@ -5,34 +5,36 @@ int1: lambda x: int(x) - 1
 
 
 from atcoder.maxflow import MFGraph
+
 #############
 n, m = map(int, input().split())
 mf = MFGraph(n*m+2)
 s = n*m
-g = n*m + 1
+t = s + 1
 G = [list(input()) for _ in range(n)]
 direc = {(1, 0), (0, 1), (-1, 0), (0, -1)}
-def notisinhw(i, j, h, w): return not ((0 <= i < h) and (0 <= j < w))
+def isinhw(i, j, h, w): return ((0 <= i < h) and (0 <= j < w))
 
 for i in range(n):
     for j in range(m):
+        x = i*m + j
         if G[i][j] == "#": continue
-        if (i*m + j) % 2:
-            mf.add_edge(s, i*m + j, 1)
+        if (i+j)%2 == 0:
+            mf.add_edge(s, x, 1)
+            for di, dj in direc:
+                ni = i+di; nj = j+dj
+                nx = ni * m + nj
+                if isinhw(ni, nj, n, m) and G[ni][nj] == ".":
+                    mf.add_edge(x, nx, 1)
         else:
-            mf.add_edge(i*m + j, g, 1)
-        for di, dj in direc:
-            ni = i+di
-            nj = j+dj
-            # i*m + j <> ni*m+j
-            if (i*m + j) % 2:
-                if not notisinhw(ni, nj, n, m) and G[ni][nj] == ".":
-                    mf.add_edge(i*m + j, ni*m+nj, 1)
+            mf.add_edge(x, t, 1)
 
 
-print(mf.flow(s, g))
+print(mf.flow(s, t))
 for e in mf.edges():
     if e.flow == 0: continue
+    if e.src == s: continue
+    if e.dst == t: continue
     fi, fj = divmod(e.src, m)
     ti, tj = divmod(e.dst, m)
     if e.dst == e.src + 1:
