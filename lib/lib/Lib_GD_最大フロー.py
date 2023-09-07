@@ -1,7 +1,7 @@
 #title#
 # 最大フロー
 #subtitle#
-# MFGraph: 各辺(u,v)には容量capが設定し、始点sから終点tへの最大流を求める
+# MFGraph: 各辺(u,v)には容量capが設定、始点sから終点tへの最大流を求める
 # O(∣V∣**2・∣E∣), O(∣V+E∣・E**0.5 辺が全て1の時)
 
 #name#
