@@ -1,5 +1,5 @@
 @charset "utf-8";
-html,body {height: 100%;}
+html,body {height: 100%; width: 100%}
 body {
     margin: 10px;
     padding: 10px;
@@ -8,8 +8,10 @@ body {
     font-size: 16px;        /*文字サイズ*/
     line-height: 1.5;         /*行間*/
     background: #f9f3ec;  /*背景色*/
-    -webkit-text-size-adjust: none;
 }
+
+header {width: 100%}
+footer {width: 100%; top: 100vh; position: sticky}
 
 #pagetop {
     position: fixed;
