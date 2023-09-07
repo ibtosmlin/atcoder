@@ -23,9 +23,9 @@ body {
     width: 65px;
     height: 65px;
     justify-content: center;
-    background: rgb(255 166 80);
+    background: rgb(20, 14, 8);
     transition: opacity .6s ease;
-    color: #FFF;
+    color: #d81111;
     align-items: center;
     text-decoration: none;
     font-size: 32px;

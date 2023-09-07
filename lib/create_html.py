@@ -58,5 +58,3 @@ with open(html_file, 'w') as f:
     f.write(rendered_html)
 
 print(rendered_html)
-
-print(s)
