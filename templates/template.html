@@ -22,12 +22,12 @@
 <main>
     {% for x in segments%}
     <section id="{{x[0]}}"><h2>{{x[1]}}</h2></section>
-        {% for xi in x[2] %}<ul>{{xi.fname}}
+        {% for xi in x[2] %}<ul><a href="https://github.com/ibtosmlin/atcoder/blob/main/lib/lib/{{xi.fname}}" target="_blank">{{xi.fname}}</a>
             {% for xij in xi.title %}<li>{{xij}}</li>{% endfor %}
         </ul>{% endfor %}
     {% endfor %}
 
-<a href="https://github.com/ibtosmlin/atcoder/blob/main/lib/lib/Lib_GD_%E6%9C%80%E5%A4%A7%E3%83%95%E3%83%AD%E3%83%BC_dinic.py" target="_blank">test</a>
+
 
 </main>
 </html>
