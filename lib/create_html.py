@@ -59,3 +59,4 @@ with open(html_file, 'w') as f:
 
 print(rendered_html)
 
+print(s)
