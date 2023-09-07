@@ -18,6 +18,8 @@
 # https://onlinejudge.u-aizu.ac.jp/courses/library/5/GRL/all/GRL_6_B
 # https://atcoder.jp/contests/practice2/tasks/practice2_d
 
+# https://github.com/not522/ac-library-python/blob/master/atcoder/mincostflow.py
+# https://github.com/atcoder/ac-library/blob/master/document_ja/mincostflow.md
 # Edge
 # __init__(n)
 # add_edge(src, dst, cap, cost)

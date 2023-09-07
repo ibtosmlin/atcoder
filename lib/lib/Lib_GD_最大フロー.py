@@ -22,7 +22,8 @@
 # O(∣V∣**2・∣E∣), O(∣V+E∣・E**0.5 辺が全て1の時)
 # https://onlinejudge.u-aizu.ac.jp/courses/library/5/GRL/all/GRL_6_A
 
-
+# https://github.com/not522/ac-library-python/blob/master/atcoder/maxflow.py
+# https://github.com/atcoder/ac-library/blob/master/document_ja/maxflow.md
 # Edge
 # __init__(n)
 # add_edge(src, dst, cap)

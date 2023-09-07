@@ -1,3 +1,9 @@
+#title#
+# 座標圧縮
+#subtitle#
+# Compress: 座標圧縮して元の配列をID化
+# Compress2D: 2次元版
+
 #name#
 # 座標圧縮
 #description#
@@ -47,7 +53,40 @@ class Compress:
 
 # c = Compress([100,300,50,900,200], spacing=True)
 
-##########################################################################3
+#prefix#
+# Lib_A_座標圧縮_compress_zaatsu
+#end#
+
+
+#name#
+# 座標圧縮二次元
+#description#
+# 座標圧縮二次元
+#body#
+from bisect import bisect_left
+class Compress:
+    def __init__(self, points, spacing=False, reverse=False):
+        pos, vals, sx = {}, {}, set(points)
+        if spacing: #スペースを作る場合
+            for p in points: sx.add(p+1)
+            sx.add(-1)
+            sx.add(10**10)
+
+        for i, xi in enumerate(sorted(set(sx), reverse=reverse)):
+            pos[xi], vals[i] = i, xi
+        self.pos, self.vals = pos, vals
+        self.original_list, self.list = points, [pos[xi] for xi in points]
+        self.valuesequence = sorted(self.pos.keys())
+
+    def __contains__(self, original_value):
+        return original_value in self.pos.keys()
+
+    def index(self, original_value):
+        return bisect_left(self.valuesequence, original_value)
+
+    def value(self, index):
+        if index in self.vals: return self.vals(index)
+        return None
 
 class Compress2d:
     """二次元座標圧縮
@@ -84,5 +123,5 @@ class Compress2d:
 # print(c.yc.valuesequence)
 # print(c.list)
 #prefix#
-# Lib_A_座標圧縮_compress_zaatsu
+# Lib_A_座標圧縮2D_compress_zaatsu
 #end#

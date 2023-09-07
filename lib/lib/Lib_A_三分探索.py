@@ -8,8 +8,7 @@
 # 三分探索/黄金分割探索
 #######################
 
-def f(x):
-    return x**2
+def f(x): return x**2
 
 d = 0.000000001
 low, high = 0, 1000
@@ -25,7 +24,8 @@ while abs(f(low) - f(high)) > d:
         low = l_
     else:
         high = h_
-print(f(low))
+print(f'{f(low):.10f}')
+
 
 
 

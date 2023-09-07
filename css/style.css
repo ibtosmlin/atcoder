@@ -6,7 +6,7 @@ body {
     color: #c58026; /*全体の文字色*/
     font-family: "Kosugi Maru", sans-serif;
     font-size: 16px;        /*文字サイズ*/
-    line-height: 1;         /*行間*/
+    line-height: 1.5;         /*行間*/
     background: #f9f3ec;  /*背景色*/
     -webkit-text-size-adjust: none;
 }
@@ -23,7 +23,7 @@ body {
     width: 65px;
     height: 65px;
     justify-content: center;
-    background: rgb(20, 14, 8);
+    background: #c58026;
     transition: opacity .6s ease;
     color: #d81111;
     align-items: center;

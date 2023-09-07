@@ -33,5 +33,5 @@ def near(a:list, b:list) -> tuple:
             break
     return (reta, retb, retd)
 #prefix#
-# Lib_差分最小値探索
+# Lib_A_差分最小値探索
 #end#

@@ -7,6 +7,7 @@ import glob
 cwd = os.path.dirname(__file__)
 html_file = os.path.join(cwd, '../index.html')
 lib_files = glob.glob('./lib/lib/Lib_*.py')
+memo_files = glob.glob('./lib/lib/Memo_*.md')
 
 rdata = defaultdict(list)
 
@@ -47,6 +48,11 @@ for filepath in sorted(lib_files):
 
 for s in rdata['segments']:
     s.append(contents[s[0]])
+
+rdata['memos'] = []
+for filepath in sorted(memo_files):
+    x = os.path.basename(filepath)
+    rdata['memos'].append(x)
 
 #テンプレート読み込み
 env = Environment(loader=FileSystemLoader('./templates', encoding='utf8'))

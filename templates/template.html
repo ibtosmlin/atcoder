@@ -16,6 +16,7 @@
             {% for x in segments%}
             <li><a href="#{{x[0]}}">{{x[1]}}</a></li>
             {% endfor %}
+            <li><a href="#memo">メモ</a></li>
         </ul>
         </nav>
 </header>
@@ -23,21 +24,31 @@
 <div id="pagetop"><a href="#top"><i class="fas fa-angle-up"></i></a></div>
     {% for x in segments%}
         <section id="{{x[0]}}"><h2>{{x[1]}}</h2>
-        <ul>
-            {% for xi in x[2] %}
-                <li>
-                    {{xi.title}}<a href="https://github.com/ibtosmlin/atcoder/blob/main/lib/lib/{{xi.fname}}" target="_blank">{{xi.fname}}</a>
-                    <ul>
-                        {% for xij in xi.subtitle %}
-                            <li>
-                                {{xij}}
-                            </li>
-                        {% endfor %}
-                    </ul>
-                </li>
+            <ul>
+                {% for xi in x[2] %}
+                    <li>
+                        {{xi.title}}[<a href="https://github.com/ibtosmlin/atcoder/blob/main/lib/lib/{{xi.fname}}" target="_blank">{{xi.fname}}</a>]
+                        <ul>
+                            {% for xij in xi.subtitle %}
+                                <li>
+                                    {{xij}}
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </li>
                 {% endfor %}
             </ul>
         </section>
     {% endfor %}
+
+    <section id="memo"><h2>メモ</h2>
+        <ul>
+        {% for x in memos%}
+            <li>
+                <a href="https://github.com/ibtosmlin/atcoder/blob/main/lib/lib/{{x.fname}}" target="_blank"></a>
+            </li>
+        {% endfor %}
+        </ul>
+    </section>
 </main>
 </html>

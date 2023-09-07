@@ -99,5 +99,5 @@ lp = Loop(n, 0, f, g)
 print(lp.get_kth(k))
 
 #prefix#
-# Lib_Loop_ループ
+# Lib_A_Loop_ループ
 #end#

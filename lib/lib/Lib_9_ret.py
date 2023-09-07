@@ -23,7 +23,7 @@ print(-1 if $ret == INF else $ret)
 #description#
 # print(3'\n'.join(map)
 #body#
-print('\n'.join(map(str, ret)))
+print('\n'.join(map(str, $ret)))
 #prefix#
 # print(3'\n'.join(map(str)
 #end#
@@ -33,7 +33,7 @@ print('\n'.join(map(str, ret)))
 #description#
 # print("".join)
 #body#
-print(''.join(ret))
+print(''.join($ret))
 #prefix#
 # print(4''.join(ret))
 #end#
@@ -44,8 +44,7 @@ print(''.join(ret))
 #description#
 # interactive
 #body#
-def req(ret):
-    print(ret, flush=True)
+def req($ret): print($ret, flush=True)
 
 #prefix#
 # print(6interactive)
