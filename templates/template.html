@@ -21,16 +21,20 @@
 </header>
 <main>
     {% for x in segments%}
-    <section id="{{x[0]}}"><h2>{{x[1]}}</h2>
-        {% for xi in x[2] %}<h3>
-        <a href="https://github.com/ibtosmlin/atcoder/blob/main/lib/lib/{{xi.fname}}" target="_blank">{{xi.fname}}</a>
-        </h3>
+        <section id="{{x[0]}}"><h2>{{x[1]}}</h2>
         <ul>
-            {% for xij in xi.title %}<li>
-                {{xij}}{{xi.subtitle}}
-            </li>{% endfor %}
-        </ul>{% endfor %}
+            {% for xi in x[2] %}
+                <li>
+                    {{xi.title}}<a href="https://github.com/ibtosmlin/atcoder/blob/main/lib/lib/{{xi.fname}}" target="_blank">{{xi.fname}}</a>
+                    {% for xij in xi.subtitle %}
+                        <li>
+                            {{xi}}
+                        </li>
+                    {% endfor %}
+                </li>
+                {% endfor %}
+            </ul>
+        </section>
     {% endfor %}
-    </section>
 </main>
 </html>

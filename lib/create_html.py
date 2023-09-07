@@ -32,7 +32,7 @@ for filepath in sorted(lib_files):
     f = open(filepath, 'r')
     flist = [fi.replace('\n', "") for fi in f.readlines()]
     now = None
-    title = []
+    title = None
     subtitle = []
     for fi in flist:
         if fi in ['#title#', '#subtitle#', '#name#']:
@@ -41,7 +41,7 @@ for filepath in sorted(lib_files):
         if now == 'name': break
         fstr = fi[2:]
         if fstr:
-            if now == 'title':title.append(fstr)
+            if now == 'title':title = fstr
             if now == 'subtitle': subtitle.append(fstr)
     contents[y].append({'fname':x, 'title':title, 'subtitle':subtitle})
 
