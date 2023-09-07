@@ -26,11 +26,13 @@
             {% for xi in x[2] %}
                 <li>
                     {{xi.title}}<a href="https://github.com/ibtosmlin/atcoder/blob/main/lib/lib/{{xi.fname}}" target="_blank">{{xi.fname}}</a>
-                    {% for xij in xi.subtitle %}
-                        <li>
-                            {{xi}}
-                        </li>
-                    {% endfor %}
+                    <ul>
+                        {% for xij in xi.subtitle %}
+                            <li>
+                                {{xij}}
+                            </li>
+                        {% endfor %}
+                    </ul>
                 </li>
                 {% endfor %}
             </ul>
