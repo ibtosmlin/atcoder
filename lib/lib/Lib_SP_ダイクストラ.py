@@ -1,3 +1,9 @@
+#title#
+# ダイクストラ法
+#subtitle#
+# dijkstra: 重み付き隣接リストにより単一始点最短経路のリストを作る
+# O((E+V)logV)
+
 #name#
 # ダイクストラ法
 #description#

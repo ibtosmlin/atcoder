@@ -297,6 +297,127 @@
             "グラフの橋・関節をO(n)で検出"
         ]
     },
+    "n=intinput": {
+        "prefix": [
+            "nin"
+        ],
+        "body": [
+            "n = int(input())"
+        ],
+        "description": [
+            "整数nの読み込み"
+        ]
+    },
+    "nainput": {
+        "prefix": [
+            "nain"
+        ],
+        "body": [
+            "n = int(input())",
+            "a = list(map(int, input().split()))"
+        ],
+        "description": [
+            "整数nの読み込み"
+        ]
+    },
+    "s=input": {
+        "prefix": [
+            "sin"
+        ],
+        "body": [
+            "s = list(input())"
+        ],
+        "description": [
+            "文字列sの読み込み"
+        ]
+    },
+    "ab=mapintinput": {
+        "prefix": [
+            "a, b=map"
+        ],
+        "body": [
+            "a, b = map(int1, input().split())"
+        ],
+        "description": [
+            "整数a, bの読み込み"
+        ]
+    },
+    "n,m=map(int, input().split())": {
+        "prefix": [
+            "n, m=map"
+        ],
+        "body": [
+            "n, m = map(int, input().split())"
+        ],
+        "description": [
+            "整数n, mの読み込み"
+        ]
+    },
+    "a=list(map(int, input().split()))": {
+        "prefix": [
+            "a =list"
+        ],
+        "body": [
+            "a = list(map(int, input().split()))"
+        ],
+        "description": [
+            "リストの読み込み"
+        ]
+    },
+    "b=list(map(int, input().split()))": {
+        "prefix": [
+            "b =list"
+        ],
+        "body": [
+            "b = list(map(int, input().split()))"
+        ],
+        "description": [
+            "リストの読み込み"
+        ]
+    },
+    "edges": {
+        "prefix": [
+            "G ="
+        ],
+        "body": [
+            "G = [[] for _ in range($n)]",
+            "for _ in range($m):",
+            "    a, b = map(int1, input().split())",
+            "    G[a].append(b)",
+            "    G[b].append(a)",
+            ""
+        ],
+        "description": [
+            "edges"
+        ]
+    },
+    "edgesweighted": {
+        "prefix": [
+            "G = w"
+        ],
+        "body": [
+            "G = [[] for _ in range($n)]",
+            "for _ in range($m):",
+            "    a, b, w = map(int1, input().split())",
+            "    G[a].append((b, w))",
+            "    G[b].append((a, w))",
+            ""
+        ],
+        "description": [
+            "edges(重み付き)"
+        ]
+    },
+    "0インデックス": {
+        "prefix": [
+            "a -= 1; b -= 1"
+        ],
+        "body": [
+            "a -= 1; b -= 1"
+        ],
+        "description": [
+            "0-indexed"
+        ]
+    },
     "半分全列挙": {
         "prefix": [
             "Lib_A_半分全列挙"
@@ -338,7 +459,7 @@
     },
     "ループ#": {
         "prefix": [
-            "Lib_Loop_ループ"
+            "Lib_A_Loop_ループ"
         ],
         "body": [
             "class Loop():",
@@ -537,94 +658,6 @@
             "強連結成分分解(SCC): グラフgに対するSCCを行う"
         ]
     },
-    "intinput": {
-        "prefix": [
-            "intinput"
-        ],
-        "body": [
-            "int(input())"
-        ],
-        "description": [
-            "int型でのinput"
-        ]
-    },
-    "inputsplit": {
-        "prefix": [
-            "inputsplit"
-        ],
-        "body": [
-            "input().split()"
-        ],
-        "description": [
-            "inputをsplit"
-        ]
-    },
-    "mapint": {
-        "prefix": [
-            "mapintinput"
-        ],
-        "body": [
-            "map(int, input().split())"
-        ],
-        "description": [
-            "int型で複数数値のinput"
-        ]
-    },
-    "mapint1": {
-        "prefix": [
-            "mapintinput1"
-        ],
-        "body": [
-            "map(lambda x: int(x)-1, input().split())"
-        ],
-        "description": [
-            "int型で複数数値の0-index input"
-        ]
-    },
-    "listmapint": {
-        "prefix": [
-            "listmapintinput"
-        ],
-        "body": [
-            "list(map(int, input().split()))"
-        ],
-        "description": [
-            "int型でlistのinput"
-        ]
-    },
-    "tuplemapint": {
-        "prefix": [
-            "tuplemapintinput"
-        ],
-        "body": [
-            "tuple(map(int, input().split()))"
-        ],
-        "description": [
-            "int型でtupleのinput"
-        ]
-    },
-    "matrixintinput": {
-        "prefix": [
-            "[listmapint"
-        ],
-        "body": [
-            "[list(map(int, input().split())) for _ in range($n)"
-        ],
-        "description": [
-            "int型でmatrixのinput"
-        ]
-    },
-    "matrixinput": {
-        "prefix": [
-            "[tupleinput()"
-        ],
-        "body": [
-            "[tuple(map(int, input().split())) for _ in range($n)"
-        ],
-        "description": [
-            "文字列でmatrixのinput"
-        ]
-    },
     "LIS最長増加部分列": {
         "prefix": [
             "Lib_LIS最長増加部分列"
@@ -692,13 +725,332 @@
             "Lib_LIS最長増加部分列"
         ]
     },
+    "遅延評価セグメント木": {
+        "prefix": [
+            "Lib_Q_LazySeg_区間Add,Update x 区間Min,Sumクエリ"
+        ],
+        "body": [
+            "import sys",
+            "def input(): return sys.stdin.readline().rstrip()",
+            "",
+            "####################################",
+            "class LazySegmentTree_RAQ:",
+            "    \"\"\"RAQRangeQuery",
+            "    区間加算・区間Min/Sum",
+            "    Parameters",
+            "    ----------",
+            "    a : list",
+            "        初期リスト",
+            "    e : 単位元",
+            "        by default float('inf')",
+            "    Attributes",
+            "    ----------",
+            "    log : int",
+            "        木の高さ",
+            "    size : int",
+            "        木のノード数",
+            "    data : list",
+            "        木のノードの値",
+            "    lazy : list",
+            "        遅延評価用値",
+            "    \"\"\"",
+            "    def __init__(self, a:list, f, ie, type) -> None:",
+            "        self.type = type.lower()",
+            "        self.f = f",
+            "        self.INF = ie",
+            "        self.n = len(a)",
+            "        self.log = self.n.bit_length()",
+            "        self.size = 1 << self.log",
+            "        self.data = [self.INF] * (2*self.size)",
+            "        self.lazy = [0] * (2*self.size)",
+            "        for i, ai in enumerate(a):",
+            "            self.data[i + self.size] = ai",
+            "        for i in range(self.size)[::-1]:",
+            "            self.data[i] = self.f(self.data[2*i], self.data[2*i+1])",
+            "",
+            "    def _prop_value(self, v):",
+            "        if self.type == 'min':",
+            "            return v",
+            "        elif self.type == 'sum':",
+            "            return v // 2",
+            "",
+            "    def _update_value(self, x):",
+            "        if self.type == 'min':",
+            "            return x",
+            "        elif self.type == 'sum':",
+            "            return x * 2",
+            "",
+            "    def __gindex(self, l, r):",
+            "        \"\"\"伝搬される区間のインデックス(1-indexed)を全て列挙するgenerator",
+            "        \"\"\"",
+            "        L = l + self.size; R = r + self.size",
+            "        lm = (L // (L & -L)) >> 1",
+            "        rm = (R // (R & -R)) >> 1",
+            "        while L < R:",
+            "            if R <= rm:",
+            "                yield R",
+            "            if L <= lm:",
+            "                yield L",
+            "            L >>= 1; R >>= 1",
+            "        while L:",
+            "            yield L",
+            "            L >>= 1",
+            "",
+            "",
+            "    def __propagates(self, *ids):",
+            "        \"\"\"遅延伝搬処理",
+            "        \"\"\"",
+            "        for i in reversed(ids):",
+            "            v = self.lazy[i]",
+            "            if not v: continue",
+            "            v = self._prop_value(v)",
+            "            self.lazy[2*i] += v",
+            "            self.lazy[2*i+1] += v",
+            "            self.data[2*i] += v",
+            "            self.data[2*i+1] += v",
+            "            self.lazy[i] = 0",
+            "",
+            "",
+            "    def update(self, l: int, r: int, x: int) -> None:",
+            "        \"\"\"半開区間[l, r)に対して値xxを加算",
+            "        \"\"\"",
+            "        *ids, = self.__gindex(l, r)",
+            "        self.__propagates(*ids)",
+            "        L = self.size + l; R = self.size + r",
+            "        xx = x",
+            "        while L < R:",
+            "            if R & 1:",
+            "                R -= 1",
+            "                self.lazy[R] += xx",
+            "                self.data[R] += xx",
+            "            if L & 1:",
+            "                self.lazy[L] += xx",
+            "                self.data[L] += xx",
+            "                L += 1",
+            "            L >>= 1; R >>= 1",
+            "            xx = self._update_value(xx)",
+            "        for i in ids:",
+            "            self.data[i] = self.f(self.data[2*i], self.data[2*i+1])",
+            "            self.data[i] += self.lazy[i]",
+            "",
+            "",
+            "    def query(self, l: int, r: int) -> None:",
+            "        \"\"\"半開区間[l, r)内のfを求める",
+            "        \"\"\"",
+            "        self.__propagates(*self.__gindex(l, r))",
+            "        L = self.size + l; R = self.size + r",
+            "",
+            "        s = self.INF",
+            "        while L < R:",
+            "            if R & 1:",
+            "                R -= 1",
+            "                s = self.f(s, self.data[R])",
+            "            if L & 1:",
+            "                s = self.f(s, self.data[L])",
+            "                L += 1",
+            "            L >>= 1; R >>= 1",
+            "        return s",
+            "",
+            "",
+            "    def __getitem__(self, i:int) -> int:",
+            "        \"\"\"index = i の値を求める",
+            "        \"\"\"",
+            "        return self.query(i, i+1)",
+            "",
+            "",
+            "    def __str__(self):",
+            "        \"\"\"元の配列を出力",
+            "        \"\"\"",
+            "        for i in range(self.size):",
+            "            self.__getitem__(i)",
+            "        return \" \".join(map(str, self.data[self.size:]))",
+            "",
+            "####################################",
+            "class LazySegmentTree_RUQ:",
+            "    \"\"\"RUQRangeQuery",
+            "    区間更新・区間Min/Sum",
+            "    Parameters",
+            "    ----------",
+            "    a : list",
+            "        初期リスト",
+            "    e : 単位元",
+            "        by default float('inf')",
+            "    Attributes",
+            "    ----------",
+            "    log : int",
+            "        木の高さ",
+            "    size : int",
+            "        木のノード数",
+            "    data : list",
+            "        木のノードの値",
+            "    lazy : list",
+            "        遅延評価用値",
+            "    \"\"\"",
+            "    def __init__(self, a:list, f, ie, type) -> None:",
+            "        self.type = type.lower()",
+            "        self.f = f",
+            "        self.INF = ie",
+            "        self.log = len(a).bit_length()",
+            "        self.size = 1 << self.log",
+            "        self.data = [self.INF] * (2*self.size)",
+            "        self.lazy = [None] * (2*self.size)",
+            "        for i, ai in enumerate(a):",
+            "            self.data[i + self.size] = ai",
+            "        for i in range(self.size)[::-1]:",
+            "            self.data[i] = self.f(self.data[2*i], self.data[2*i+1])",
+            "",
+            "    def _prop_value(self, v):",
+            "        if self.type == 'min':",
+            "            return v",
+            "        elif self.type == 'sum':",
+            "            return v // 2",
+            "",
+            "    def _update_value(self, x):",
+            "        if self.type == 'min':",
+            "            return x",
+            "        elif self.type == 'sum':",
+            "            return x * 2",
+            "",
+            "    def __gindex(self, l, r):",
+            "        \"\"\"伝搬される区間のインデックス(1-indexed)を全て列挙するgenerator",
+            "        \"\"\"",
+            "        L = l + self.size; R = r + self.size",
+            "        lm = (L // (L & -L)) >> 1",
+            "        rm = (R // (R & -R)) >> 1",
+            "        while L < R:",
+            "            if R <= rm:",
+            "                yield R",
+            "            if L <= lm:",
+            "                yield L",
+            "            L >>= 1; R >>= 1",
+            "        while L:",
+            "            yield L",
+            "            L >>= 1",
+            "",
+            "",
+            "    def __propagates(self, *ids):",
+            "        \"\"\"遅延伝搬処理",
+            "        \"\"\"",
+            "        for i in reversed(ids):",
+            "            v = self.lazy[i]",
+            "            if v is None: continue",
+            "            v = self._prop_value(v)",
+            "            self.lazy[2*i] = v",
+            "            self.lazy[2*i+1] = v",
+            "            self.data[2*i] = v",
+            "            self.data[2*i+1] = v",
+            "            self.lazy[i] = None",
+            "",
+            "",
+            "    def update(self, l: int, r: int, x: int) -> None:",
+            "        \"\"\"半開区間[l, r)に対して値をxに更新",
+            "        \"\"\"",
+            "        *ids, = self.__gindex(l, r)",
+            "        self.__propagates(*ids)",
+            "        L = self.size + l; R = self.size + r",
+            "        xx = x",
+            "        while L < R:",
+            "            if R & 1:",
+            "                R -= 1",
+            "                self.lazy[R] = xx",
+            "                self.data[R] = xx",
+            "            if L & 1:",
+            "                self.lazy[L] = xx",
+            "                self.data[L] = xx",
+            "                L += 1",
+            "            L >>= 1; R >>= 1",
+            "            xx = self._update_value(xx)",
+            "        for i in ids:",
+            "            self.data[i] = self.f(self.data[2*i], self.data[2*i+1])",
+            "",
+            "",
+            "    def query(self, l: int, r: int) -> None:",
+            "        \"\"\"半開区間[l, r)内のfを求める",
+            "        \"\"\"",
+            "        self.__propagates(*self.__gindex(l, r))",
+            "        L = self.size + l; R = self.size + r",
+            "",
+            "        s = self.INF",
+            "        while L < R:",
+            "            if R & 1:",
+            "                R -= 1",
+            "                s = self.f(s, self.data[R])",
+            "            if L & 1:",
+            "                s = self.f(s, self.data[L])",
+            "                L += 1",
+            "            L >>= 1; R >>= 1",
+            "        return s",
+            "",
+            "",
+            "    def __getitem__(self, i:int) -> int:",
+            "        \"\"\"index = i の値を求める",
+            "        \"\"\"",
+            "        return self.query(i, i+1)",
+            "",
+            "",
+            "    def __str__(self):",
+            "        \"\"\"元の配列を出力",
+            "        \"\"\"",
+            "        for i in range(self.size):",
+            "            self.__getitem__(i)",
+            "        return \" \".join(map(str, self.data[self.size:]))",
+            "",
+            "",
+            "####################################",
+            "# Range Minimum Query",
+            "class RAQRMQ(LazySegmentTree_RAQ):",
+            "    def __init__(self, a):",
+            "        super().__init__(a, min, float('inf') ,'min')",
+            "",
+            "# Range Sum Query",
+            "class RAQRSQ(LazySegmentTree_RAQ):",
+            "    def __init__(self, a):",
+            "        super().__init__(a, lambda x, y: x+y, 0 ,'sum')",
+            "",
+            "####################################",
+            "# Range Minimum Query",
+            "class RUQRMQ(LazySegmentTree_RUQ):",
+            "    def __init__(self, a):",
+            "        super().__init__(a, min, 2**31-1 ,'min')",
+            "",
+            "# Range Sum Query",
+            "class RUQRSQ(LazySegmentTree_RUQ):",
+            "    def __init__(self, a):",
+            "        super().__init__(a, lambda x, y: x+y, 0 ,'sum')",
+            "",
+            "####################################",
+            "",
+            "n, q = map(int, input().split())",
+            "lst = RAQRSQ([0]*n)",
+            "lst = RAQRMQ([0]*n)",
+            "lst = RUQRMQ([2**31-1] * n)",
+            "lst = RUQRSQ([0]*n)",
+            "",
+            "ret = []",
+            "for _ in range(q):",
+            "    t, *qry = map(int, input().split())",
+            "    if t == 0:",
+            "        l, r, x = qry",
+            "        r += 1",
+            "        lst.update(l, r, x)",
+            "    else:",
+            "        l, r = qry",
+            "        r += 1",
+            "        ret.append(lst.query(l, r))",
+            "print('\\n'.join(map(str, ret)))",
+            ""
+        ],
+        "description": [
+            "遅延評価セグメント木"
+        ]
+    },
     "memo": {
         "prefix": [
-            "memo_lru_chache"
+            "memo_lru_cache"
         ],
         "body": [
             "from functools import lru_cache",
-            "@lru_chache(1000000)"
+            "@lru_cache(1000000)"
         ],
         "description": [
             "memo"
@@ -709,7 +1061,9 @@
             "from collections"
         ],
         "body": [
-            "from collections import defaultdict, Counter, deque"
+            "from collections import defaultdict",
+            "from collections import deque",
+            "from collections import Counter"
         ],
         "description": [
             "collectionslib"
@@ -726,20 +1080,9 @@
             "heapqlib"
         ]
     },
-    "priorityqlib": {
-        "prefix": [
-            "priorityque"
-        ],
-        "body": [
-            "from heapq import heapify, heappop, heappush"
-        ],
-        "description": [
-            "priorityqlib"
-        ]
-    },
     "差分最小値探索": {
         "prefix": [
-            "Lib_差分最小値探索"
+            "Lib_A_差分最小値探索"
         ],
         "body": [
             "def near(a:list, b:list) -> tuple:",
@@ -818,69 +1161,6 @@
             "各桁の寄与度",
             "356"
         ]
-    },
-    "高速フーリエ変換(convolution, FFT)": {
-        "prefix": [
-            "Lib_C_FFT"
-        ],
-        "body": [
-            "# https://atcoder.jp/contests/practice2/tasks/practice2_f",
-            "# https://atcoder.jp/contests/atc001/tasks/fft_c",
-            "# Σa_i * x^i * Σb_j * x^j  = Σ(Σa_i*b_j) * x ^t  t = i + jとなる場合の",
-            "# Σa_i*b_j の列を求める",
-            "",
-            "mod = 998244353",
-            "",
-            "g = 3   #primitive root",
-            "ginv = pow(g, mod-2, mod)",
-            "",
-            "W = [pow(g, (mod-1)>>i, mod) for i in range(24)]",
-            "Winv = [pow(ginv, (mod-1)>>i, mod) for i in range(24)]",
-            "",
-            "def fft(k, f):",
-            "    for l in range(1, k+1)[::-1]:",
-            "        d = 1 << l - 1",
-            "        U = [1]",
-            "        for i in range(d):",
-            "            U.append(U[-1]*W[l]%mod)",
-            "        for i in range(1<<k - l):",
-            "            for j in range(d):",
-            "                s = i*2*d + j",
-            "                f[s], f[s+d] = (f[s] + f[s+d])%mod, U[j]*(f[s] - f[s+d])%mod",
-            "",
-            "def ifft(k, f):",
-            "    for l in range(1,k+1):",
-            "        d = 1 << l - 1",
-            "        for i in range(1<<k - l):",
-            "            u = 1",
-            "            for j in range(i*2*d, (i*2+1)*d):",
-            "                f[j+d] *= u",
-            "                f[j],f[j+d] = (f[j]+f[j+d])%mod, (f[j]-f[j+d])%mod",
-            "                u = u * Winv[l] % mod",
-            "",
-            "def convolve(a, b):",
-            "    la, lb = len(a), len(b)",
-            "    le = la + lb - 1",
-            "    k = le.bit_length()",
-            "    n = 1 << k",
-            "    ninv = pow(n,mod-2,mod)",
-            "    a += [0]*(n-la)",
-            "    b += [0]*(n-lb)",
-            "    fft(k,a)",
-            "    fft(k,b)",
-            "    a = [ai * bi % mod for ai, bi in zip(a, b)]",
-            "    ifft(k,a)",
-            "    return [ai * ninv % mod for ai in a[:le]]",
-            "",
-            "",
-            "n,m = map(int,input().split())",
-            "A = list(map(int,input().split()))",
-            "B = list(map(int,input().split()))",
-            "",
-            "print(*convolve(A,B))",
-            ""
-        ],
-        "description": []
     },
     "ユニオンファインド重み付き": {
         "prefix": [
@@ -1180,6 +1460,94 @@
         "prefix": [],
         "body": [],
         "description": []
+    },
+    "intinput": {
+        "prefix": [
+            "intinput"
+        ],
+        "body": [
+            "int(input())"
+        ],
+        "description": [
+            "int型でのinput"
+        ]
+    },
+    "inputsplit": {
+        "prefix": [
+            "inputsplit"
+        ],
+        "body": [
+            "input().split()"
+        ],
+        "description": [
+            "inputをsplit"
+        ]
+    },
+    "mapint": {
+        "prefix": [
+            "mapintinput"
+        ],
+        "body": [
+            "map(int, input().split())"
+        ],
+        "description": [
+            "int型で複数数値のinput"
+        ]
+    },
+    "mapint1": {
+        "prefix": [
+            "mapintinput1"
+        ],
+        "body": [
+            "map(lambda x: int(x)-1, input().split())"
+        ],
+        "description": [
+            "int型で複数数値の0-index input"
+        ]
+    },
+    "listmapint": {
+        "prefix": [
+            "listmapintinput"
+        ],
+        "body": [
+            "list(map(int, input().split()))"
+        ],
+        "description": [
+            "int型でlistのinput"
+        ]
+    },
+    "tuplemapint": {
+        "prefix": [
+            "tuplemapintinput"
+        ],
+        "body": [
+            "tuple(map(int, input().split()))"
+        ],
+        "description": [
+            "int型でtupleのinput"
+        ]
+    },
+    "matrixintinput": {
+        "prefix": [
+            "[listmapint"
+        ],
+        "body": [
+            "[list(map(int, input().split())) for _ in range($n)"
+        ],
+        "description": [
+            "int型でmatrixのinput"
+        ]
+    },
+    "matrixinput": {
+        "prefix": [
+            "[tupleinput()"
+        ],
+        "body": [
+            "[tuple(map(int, input().split())) for _ in range($n)"
+        ],
+        "description": [
+            "文字列でmatrixのinput"
+        ]
     },
     "長方形探索": {
         "prefix": [
@@ -2479,8 +2847,41 @@
             "        return None",
             "",
             "# c = Compress([100,300,50,900,200], spacing=True)",
+            ""
+        ],
+        "description": [
+            "座標圧縮"
+        ]
+    },
+    "座標圧縮二次元": {
+        "prefix": [
+            "Lib_A_座標圧縮2D_compress_zaatsu"
+        ],
+        "body": [
+            "from bisect import bisect_left",
+            "class Compress:",
+            "    def __init__(self, points, spacing=False, reverse=False):",
+            "        pos, vals, sx = {}, {}, set(points)",
+            "        if spacing: #スペースを作る場合",
+            "            for p in points: sx.add(p+1)",
+            "            sx.add(-1)",
+            "            sx.add(10**10)",
             "",
-            "##########################################################################3",
+            "        for i, xi in enumerate(sorted(set(sx), reverse=reverse)):",
+            "            pos[xi], vals[i] = i, xi",
+            "        self.pos, self.vals = pos, vals",
+            "        self.original_list, self.list = points, [pos[xi] for xi in points]",
+            "        self.valuesequence = sorted(self.pos.keys())",
+            "",
+            "    def __contains__(self, original_value):",
+            "        return original_value in self.pos.keys()",
+            "",
+            "    def index(self, original_value):",
+            "        return bisect_left(self.valuesequence, original_value)",
+            "",
+            "    def value(self, index):",
+            "        if index in self.vals: return self.vals(index)",
+            "        return None",
             "",
             "class Compress2d:",
             "    \"\"\"二次元座標圧縮",
@@ -2518,82 +2919,7 @@
             "# print(c.list)"
         ],
         "description": [
-            "座標圧縮"
-        ]
-    },
-    "レーベンシュタイン距離": {
-        "prefix": [
-            "Lib_A_レーベンシュタイン距離_Levenshtein_distance#"
-        ],
-        "body": [
-            "#####################################",
-            "# レーベンシュタイン距離",
-            "# 文字列の近似度",
-            "# 文字削除・挿入・変更により文字列を一致させる",
-            "# 最小の手順回数",
-            "#####################################",
-            "# https://algo-method.com/tasks/315",
-            "# https://onlinejudge.u-aizu.ac.jp/courses/library/7/DPL/1/DPL_1_E",
-            "",
-            "class Levenshtein:",
-            "    def __init__(self, S, T) -> None:",
-            "        self.Type = type(S)",
-            "        if self.Type == str:",
-            "            S = list(S)",
-            "            T = list(T)",
-            "        self.S = S",
-            "        self.T = T",
-            "        self.ls = len(S)",
-            "        self.lt = len(T)",
-            "        self.dp = [[10**10]*(self.lt+1) for _ in range(self.ls+1)]",
-            "        dp = self.dp",
-            "        for i in range(self.ls):",
-            "            dp[i][0] = i",
-            "        for j in range(self.lt):",
-            "            dp[0][j] = j",
-            "        for i in range(self.ls):",
-            "            for j in range(self.lt):",
-            "                if S[i] == T[j]:",
-            "                    dp[i+1][j+1] = min(dp[i][j]  , dp[i+1][j]+1, dp[i][j+1]+1)",
-            "                else:",
-            "                    dp[i+1][j+1] = min(dp[i][j]+1, dp[i+1][j]+1, dp[i][j+1]+1)",
-            "        self.length = self.dp[self.ls][self.lt]",
-            "",
-            "",
-            "    def restore(self):",
-            "        # 復元",
-            "        ret = []",
-            "        i, j = self.ls, self.lt",
-            "        dp = self.dp",
-            "        while i and j:",
-            "            # (i-1, j) -> (i, j) と更新されていた場合",
-            "            if dp[i][j] == dp[i-1][j]:",
-            "                i-=1   # DP の遷移を遡る",
-            "            # (i, j-1) -> (i, j) と更新されていた場合",
-            "            elif dp[i][j] == dp[i][j-1]:",
-            "                j-=1   # DP の遷移を遡る",
-            "            # (i-1, j-1) -> (i, j) と更新されていた場合",
-            "            else:",
-            "                ret.append(self.S[i-1])",
-            "                # このとき s[i-1] == t[j-1] なので、t[j-1] + res でも OK",
-            "                i-=1",
-            "                j-=1   # DP の遷移を遡る",
-            "        ret = ret[::-1]",
-            "        if self.Type == str: ret = ''.join(ret)",
-            "        return ret",
-            "",
-            "",
-            "#####################",
-            "",
-            "s = input()",
-            "t = input()",
-            "",
-            "ldiff = Levenshtein(s, t)",
-            "print(ldiff.length)",
-            ""
-        ],
-        "description": [
-            "Lib_レーベンシュタイン距離"
+            "座標圧縮二次元"
         ]
     },
     "LCS最長共通部分列": {
@@ -2855,7 +3181,7 @@
     },
     "区間和の最大値": {
         "prefix": [
-            "Lib_区間和の最大値"
+            "Lib_A_区間和の最大値"
         ],
         "body": [
             "",
@@ -3796,7 +4122,7 @@
             "print(3'\\n'.join(map(str)"
         ],
         "body": [
-            "print('\\n'.join(map(str, ret)))"
+            "print('\\n'.join(map(str, $ret)))"
         ],
         "description": [
             "print(3'\\n'.join(map)"
@@ -3807,7 +4133,7 @@
             "print(4''.join(ret))"
         ],
         "body": [
-            "print(''.join(ret))"
+            "print(''.join($ret))"
         ],
         "description": [
             "print(\"\".join)"
@@ -3818,8 +4144,7 @@
             "print(6interactive)"
         ],
         "body": [
-            "def req(ret):",
-            "    print(ret, flush=True)",
+            "def req($ret): print($ret, flush=True)",
             ""
         ],
         "description": [
@@ -4143,137 +4468,50 @@
         ],
         "description": []
     },
-    "尺取り": {
+    "最大フロー": {
         "prefix": [
-            "Lib_A_尺取り"
+            "Lib_GD_最大フロー_maximumflow_dinic"
         ],
         "body": [
-            "######################################################################",
-            "# The Smallest Window I",
-            "# 長さNの数列a1,a2,a3,...,aNと整数Sが与えられます。",
-            "# 要素の総和がS以上となる連続する部分列のうち、",
-            "# 最も短いものの長さ（smallest window length）を求めてください。",
-            "# ただし、そのような部分列が存在しない場合は 0 と報告してください。",
-            "# https://onlinejudge.u-aizu.ac.jp/problems/DSL_3_A",
-            "######################################################################",
             "",
-            "N, S = map(int, input().split())",
-            "A = list(map(int, input().split()))",
-            "INF = 2*N",
-            "ret = INF",
+            "# 最大流問題",
+            "# 始点sと終点tが区別された有向グラフ",
+            "# 各辺(u,v)には容量c(u,v)が設定されており、超えないフローが流れます。",
+            "# 始点sから終点tへの最大流を求める。",
+            "#",
+            "# Dinic's algorithm",
+            "# 幅優先探索で水を流す向きをざっと決める．",
+            "# 深さ優先探索で決められた向きで流せる経路を探し，水を流す．",
+            "# 流せなくなったら1に戻る.",
+            "# O(∣V∣**2・∣E∣), O(∣V+E∣・E**0.5 辺が全て1の時)",
+            "# https://onlinejudge.u-aizu.ac.jp/courses/library/5/GRL/all/GRL_6_A",
             "",
-            "l, r, now = 0, 0, 0",
-            "while True:",
-            "    while r < N and now < S:",
-            "        now += A[r]",
-            "        r += 1",
-            "    if now >=S:",
-            "        ret = min(ret, r - l)",
-            "        now -= A[l]",
-            "        l += 1",
-            "    else:",
-            "        break",
+            "# https://github.com/not522/ac-library-python/blob/master/atcoder/maxflow.py",
+            "# https://github.com/atcoder/ac-library/blob/master/document_ja/maxflow.md",
+            "# Edge",
+            "# __init__(n)",
+            "# add_edge(src, dst, cap)",
+            "# flow(s, t, flow_limit)",
+            "# (1) 頂点 から へ流せる限り流し、流せた量を返す。",
+            "# (2) 頂点 から へ流量 flow_limit に達するまで流せる限り流し、流せた量を返す。",
+            "# change_edge(i, newcap, newflow)",
+            "# edges(): 辺の情報",
+            "# min_cut(s)",
+            "from atcoder.maxflow import MFGraph",
             "",
-            "if ret == INF:",
-            "    print(0)",
-            "else:",
-            "    print(ret)",
+            "#############",
+            "n, m = map(int, input().split())",
+            "mf = MFGraph(n)",
+            "for _ in range(m):",
+            "    a, b, e = map(int, input().split())",
+            "    a -= 1; b -= 1",
+            "    mf.add_edge(a, b, e)",
             "",
-            "######################################################################",
-            "# The Smallest Window II",
-            "# 長さNの数列a1,a2,a3,...,aNと整数Kが与えられます。",
-            "# 1からKまでの整数1, 2, ...,Kをすべて含む連続する部分列のうち、",
-            "# 最も短いものの長さ（smallest window length）を求めてください。",
-            "# ただし、そのような部分列が存在しない場合は 0 と報告してください。",
-            "# https://onlinejudge.u-aizu.ac.jp/problems/DSL_3_B",
-            "######################################################################",
-            "",
-            "N, K = map(int, input().split())",
-            "A = list(map(int, input().split()))",
-            "now_each_counter = [0] * (K+1)",
-            "now_total_counter = 0",
-            "l, r = 0, 0",
-            "INF = 2*N",
-            "ret = INF",
-            "while l < N:",
-            "    while r < N and now_total_counter < K:",
-            "        ar = A[r]",
-            "        if ar <= K:",
-            "            now_each_counter[ar] += 1",
-            "            if now_each_counter[ar] == 1:",
-            "                now_total_counter += 1",
-            "        r += 1",
-            "    if now_total_counter == K:",
-            "        ret = min(ret, r-l)",
-            "    al = A[l]",
-            "    if al <= K:",
-            "        now_each_counter[al] -= 1",
-            "        if now_each_counter[al] == 0:",
-            "            now_total_counter -= 1",
-            "    l += 1",
-            "if ret == INF:",
-            "    print(0)",
-            "else:",
-            "    print(ret)",
-            "",
-            "######################################################################",
-            "# The Number of Windows",
-            "# 長さNの数列a1,a2,a3,...,aNが与えられます。",
-            "# また, 次のような質問がQ個与えられます。",
-            "# i個目の質問では,整数x,iが与えられます。",
-            "# 各質問について1<=l<=r<=Nかつsum(al,al+1,...,ar-1,ar) <= xiを満たす整数",
-            "# (l,r)の組の個数を求めてください。",
-            "# https://onlinejudge.u-aizu.ac.jp/problems/DSL_3_C",
-            "######################################################################",
-            "N, Q = map(int, input().split())",
-            "A = list(map(int, input().split()))",
-            "X = list(map(int, input().split()))",
-            "",
-            "def solv(x):",
-            "    l, r, ret = 0, 0, 0",
-            "    now = 0",
-            "    while l < N:",
-            "        while r < N and now <= x:",
-            "            now += A[r]",
-            "            r += 1",
-            "        if now > x:",
-            "            r -= 1",
-            "            now -= A[r]",
-            "        ret += r - l",
-            "        now -= A[l]",
-            "        l += 1",
-            "    return ret",
-            "",
-            "for xi in X:",
-            "    print(solv(xi))",
-            "",
-            "######################################################################",
-            "# Sliding Minimum Element",
-            "# 長さNの数列a1,a2,a3,...,aNと整数Lが与えられます。",
-            "# 長さLの連続する部分列すべてについて、",
-            "# 各部分列の中の最小の要素を先頭から順番に報告してください。",
-            "# 例えば、数列が{1,7,7,4,8,1,6} で、L が 3 の場合、",
-            "# 長さLの部分列は{1,7,7},{7,7,4},{7,4,8},{4,8,1},{8,1,6}となりますが、",
-            "# それぞれの部分列の最小値となる 1, 4, 4, 1, 1 を先頭の方から順番に出力してください。",
-            "# https://onlinejudge.u-aizu.ac.jp/problems/DSL_3_D",
-            "######################################################################",
-            "from heapq import heapify, heappop, heappush",
-            "N, L = map(int, input().split())",
-            "A = list(map(int, input().split()))",
-            "ret = []",
-            "que = []",
-            "heapify(que)",
-            "for i, ai in enumerate(A):",
-            "    heappush(que, (ai, i))",
-            "    if i < L-1: continue",
-            "    while que[0][1] <= i - L:",
-            "        heappop(que)",
-            "    ret.append(que[0][0])",
-            "print(*ret)",
+            "print(mf.max_flow(0, n-1))",
             ""
         ],
         "description": [
-            "Lib_尺取り"
+            "最大フローO(∣V∣**2・∣E∣)"
         ]
     },
     "最小費用流": {
@@ -4287,62 +4525,294 @@
             "# 始点s から終点t まで流量F のフローを流すための最小コストを求める",
             "# Minimum Cost Flow : O(FElogV) ダイクストラ",
             "# https://onlinejudge.u-aizu.ac.jp/courses/library/5/GRL/all/GRL_6_B",
-            "from heapq import heappush, heappop",
-            "class MinCostFlow:",
-            "    def __init__(self, n:int) -> None:",
-            "        self.n = n",
-            "        self.ln = n.bit_length()",
-            "        self.g = [[] for _ in range(n)]",
-            "        self.INF = float('inf')",
+            "# https://atcoder.jp/contests/practice2/tasks/practice2_d",
             "",
-            "    def add_edge(self, fm: int, to: int, cap: int, cost: int):",
-            "        # to/fm:行き先, cap: 容量, cost:費用  (rev:相方の辺)",
-            "        forward = [cap, to, cost, len(self.g[to])]",
-            "        backward = [0, fm, -cost, len(self.g[fm])]",
-            "        self.g[fm].append(forward); self.g[to].append(backward)",
-            "",
-            "    def min_cost_flow(self, s: int, t: int, f: int):",
-            "        # s⇒t       f:フローの大きさ",
-            "        flow, prev_v, prev_e = 0, [-1] * self.n, [-1] * self.n",
-            "        while f > 0:",
-            "            h = [0] * self.n",
-            "            dist, que = [self.INF]*self.n, []",
-            "            dist[s] = 0; heappush(que, s)",
-            "            while que:",
-            "                x = heappop(que)",
-            "                d, v = x >> self.ln, x % (1 << self.ln)",
-            "                if dist[v] < d: continue",
-            "                for i, (_cap, nv, c, r) in enumerate(self.g[v]):",
-            "                    nd = dist[v] + c + h[v] - h[nv]",
-            "                    if _cap > 0 and dist[nv] > nd:",
-            "                        dist[nv], prev_v[nv], prev_e[nv]= nd, v, i",
-            "                        heappush(que, (dist[nv] << self.ln) + nv)",
-            "            if dist[t] == self.INF: return -1",
-            "            d, v = f, t",
-            "            while v != s:",
-            "                d = min(d, self.g[prev_v[v]][prev_e[v]][0])",
-            "                v = prev_v[v]",
-            "            f, v, flow = f - d, t, flow + d * dist[t]",
-            "            while v != s:",
-            "                pvv, pev = prev_v[v], prev_e[v]",
-            "                self.g[pvv][pev][0] -= d",
-            "                self.g[v][self.g[pvv][pev][3]][0] += d",
-            "                v = pvv",
-            "        return flow",
-            "",
+            "# https://github.com/not522/ac-library-python/blob/master/atcoder/mincostflow.py",
+            "# https://github.com/atcoder/ac-library/blob/master/document_ja/mincostflow.md",
+            "# Edge",
+            "# __init__(n)",
+            "# add_edge(src, dst, cap, cost)",
+            "# flow(s, t, flow_limit)",
+            "# (1) 頂点 から へ流せる限り流し、流せた量とコストを返す。",
+            "# (2) 頂点 から へ流量 flow_limit に達するまで流せる限り流し、流せた量とコストを返す。",
+            "# change_edge(i, newcap, newflow)",
+            "# edges(): 辺の情報",
+            "# min_cut(s)",
+            "from atcoder.mincostflow import MCFGraph",
             "",
             "#############",
             "n, m, f = map(int, input().split())",
-            "mf = MinCostFlow(n)",
+            "mf = MCFGraph(n)",
             "for _ in range(m):",
-            "    u, v, c, d = map(int, input().split())",
-            "    mf.add_edge(u, v, c, d)",
+            "    u, v, cap, cost = map(int, input().split())",
+            "    mf.add_edge(u, v, cap, cost)",
             "",
             "print(mf.min_cost_flow(0, n-1, f))",
             ""
         ],
         "description": [
             "最小費用流を算出するO(FElogV) ダイクストラ"
+        ]
+    },
+    "Mo'sAlgorythm#": {
+        "prefix": [
+            "Lib_Mos_モアルゴリズム"
+        ],
+        "body": [
+            "",
+            "# A:リスト n = 10**5",
+            "# Q: l, r, q = 10**5",
+            "# O(NQ−−√)が間に合う条件である*3",
+            "# 区間伸縮の計算がO(1) またはそれに近い",
+            "# クエリがオフラインで与えられる(先読みができる)",
+            "# 配列の要素が不変である",
+            "",
+            "class _Mo:",
+            "    def __init__(self, N:int, Q:int):",
+            "        self.N=N",
+            "        self.Q = Q",
+            "        self.shift = 20",
+            "        self.M = int(Q**0.5)+1  # bucket num",
+            "        self.data = [0] * Q",
+            "        self.query = [[] for _ in range(self.M)]",
+            "",
+            "    def add_query(self, l:int, r:int, i:int):",
+            "        \"\"\"",
+            "        半開区間 [l,r)",
+            "        \"\"\"",
+            "        sft=self.shift",
+            "        h=l*self.M//self.N",
+            "        self.data[i]=(l<<sft)|r",
+            "        self.query[h].append(((r if h&1 else -r)<<sft)+i)",
+            "    def solve(self):",
+            "        mask=(1<<self.shift)-1",
+            "        assert max(self.N, self.Q)<=mask",
+            "        L=R=0",
+            "        ret = [0]*self.Q",
+            "        for bucket in self.query:",
+            "            bucket.sort()",
+            "            for lri in bucket:",
+            "                i = lri&mask",
+            "                l,r=divmod(self.data[i],1<<self.shift)",
+            "                while L>l:",
+            "                    L-=1",
+            "                    self.add_left(L)",
+            "                while R<r:",
+            "                    self.add_right(R)",
+            "                    R+=1",
+            "                while L<l:",
+            "                    self.remove_left(L)",
+            "                    L+=1",
+            "                while R>r:",
+            "                    R-=1",
+            "                    self.remove_right(R)",
+            "                ret[i] = self.get_state()",
+            "        return ret",
+            "",
+            "N,Q=map(int,input().split())",
+            "# N=int(input())",
+            "A=list(map(int,input().split()))",
+            "",
+            "class Mo(_Mo):",
+            "    def __init__(self, N, Q):",
+            "        super().__init__(N, Q)",
+            "        self.value = 0",
+            "        self.count = [0] * (max(A)+1)",
+            "    def get_state(self):",
+            "        return self.value",
+            "    # https://atcoder.jp/contests/abc293/tasks/abc293_g",
+            "    def add_left(self, i):",
+            "        a = A[i]",
+            "        x = self.count[a]",
+            "        self.count[a] += 1",
+            "        self.value += x*(x-1) // 2",
+            "    def remove_left(self, i):",
+            "        a = A[i]",
+            "        x = self.count[a]",
+            "        self.count[a] -= 1",
+            "        self.value -= (x-1)*(x-2)//2",
+            "",
+            "    # https://atcoder.jp/contests/abc174/tasks/abc174_f",
+            "    # def add_left(self, i):",
+            "    #     a = A[i]",
+            "    #     if a in self.count:",
+            "    #         self.count[a] += 1",
+            "    #     else:",
+            "    #         self.count[a] = 1",
+            "    #     if self.count[a] == 1:",
+            "    #         self.value += 1",
+            "    # def remove_left(self, i):",
+            "    #     a = A[i]",
+            "    #     self.count[a] -= 1",
+            "    #     if self.count[a] == 0:",
+            "    #         self.value -= 1",
+            "",
+            "# https://atcoder.jp/contests/abc242/tasks/abc242_g",
+            "    # def add_left(self, i):",
+            "    #     a = A[i]",
+            "    #     x = self.count[a]",
+            "    #     self.count[a] += 1",
+            "    #     self.value += (x+1) // 2 - x // 2",
+            "    # def remove_left(self, i):",
+            "    #     a = A[i]",
+            "    #     x = self.count[a]",
+            "    #     self.count[a] -= 1",
+            "    #     self.value -= x // 2 - (x-1) // 2",
+            "",
+            "    add_right = add_left",
+            "    remove_right = remove_left",
+            "",
+            "",
+            "mo = Mo(N, Q)",
+            "# Q=int(input())",
+            "for i in range(Q):",
+            "    l,r=map(int,input().split())",
+            "    mo.add_query(l-1,r, i)",
+            "ans = mo.solve()",
+            "",
+            "print(\"\\n\".join(map(str,ans)))",
+            "",
+            ""
+        ],
+        "description": [
+            "Mo'sAlgorythm#"
+        ]
+    },
+    "三分探索": {
+        "prefix": [
+            "Lib_A_三分探索"
+        ],
+        "body": [
+            "#######################",
+            "# ムーアの法則",
+            "# 三分探索/黄金分割探索",
+            "#######################",
+            "",
+            "def f(x): return x**2",
+            "",
+            "d = 0.000000001",
+            "low, high = 0, 1000",
+            "",
+            "# 分割割合",
+            "alp = 1/3           #三分探索",
+            "alp = (3-5**0.5)/2  #黄金分割探索",
+            "",
+            "while abs(f(low) - f(high)) > d:",
+            "    l_ = high * alp + (1-alp) * low",
+            "    h_ = high * (1-alp) + alp * low",
+            "    if f(h_) < f(l_):",
+            "        low = l_",
+            "    else:",
+            "        high = h_",
+            "print(f'{f(low):.10f}')",
+            "",
+            "",
+            "",
+            "",
+            "#######################",
+            "# 内包円",
+            "# 三分探索",
+            "# https://atcoder.jp/contests/abc151/tasks/abc151_f",
+            "# 平面上の N 個の点 (xi, yi) が与えられます。",
+            "# これら全てを内部または周上に含む円の半径の最小値を求めてください。",
+            "#######################",
+            "",
+            "n = int(input())",
+            "pt = [tuple(map(int, input().split())) for i in range(n)]",
+            "",
+            "def f(x, y):",
+            "    # (x, y)を与えたときに、各点との距離の最大値",
+            "    return max([((x-u)**2 + (y-v)**2)**0.5 for u, v in pt])",
+            "",
+            "d = 0.0000001",
+            "",
+            "def g(x):",
+            "    low, high = 0, 1000",
+            "    for i in range(80):",
+            "        l_ = (high+2*low)/3",
+            "        h_ = (high*2+low)/3",
+            "        if f(x, h_)<f(x, l_):",
+            "            low = l_",
+            "        else:",
+            "            high = h_",
+            "    return f(x, low)",
+            "",
+            "",
+            "low, high = 0, 1000",
+            "for i in range(80):",
+            "    l_ = (high+2*low)/3",
+            "    h_ = (high*2+low)/3",
+            "    if g(h_)<g(l_):",
+            "        low = l_",
+            "    else:",
+            "        high = h_",
+            "",
+            "print(g(low))",
+            ""
+        ],
+        "description": [
+            "三分探索"
+        ]
+    },
+    "トポロジカルソート木": {
+        "prefix": [
+            "Lib_GT_木トポロジカルソート_topologicalsort"
+        ],
+        "body": [
+            "# トポロジカルソート",
+            "# 有向非巡回グラフ（DAG）の各ノードを順序付けして、どのノードもその出力辺の先のノードより前にくるように並べることである。",
+            "# 有向非巡回グラフは必ずトポロジカルソートすることができる。",
+            "from collections import deque",
+            "",
+            "class topological_sort:",
+            "    def __init__(self, n:int, G) -> None:",
+            "        self.n = n",
+            "        self.ts = []            # トポロジカルソート",
+            "        self.parents = [-1] * n # 親 -1は根",
+            "        self.G = G              # 辺",
+            "        self.childrens = G.copy() # 辺",
+            "",
+            "",
+            "    def build(self, root):",
+            "        que = deque([root])",
+            "        self.ts = []            # トポロジカルソート",
+            "        while que:",
+            "            x = que.popleft()",
+            "            self.ts.append(x)",
+            "            for nx in self.G[x]:",
+            "                if nx == self.parents[x]: continue",
+            "                self.parents[nx] = x",
+            "                self.childrens[nx].remove(x)",
+            "                que.append(nx)",
+            "",
+            "#########################################",
+            "# n, m = map(int, input().split())",
+            "n = int(input())",
+            "G = [[] for _ in range(n)]",
+            "m = n",
+            "for _ in range(m):",
+            "    a, b = map(int, input().split())",
+            "    a -= 1; b -= 1",
+            "    w = 0",
+            "    G[a].append((b, w))",
+            "",
+            "ts = topological_sort(n, G)",
+            "",
+            "ts.build(0)",
+            "",
+            "print(ts.ts)",
+            "print(ts.parents)",
+            "",
+            "# 木dp  #ノードに1を置いて葉から合計する",
+            "dp = [1] * n",
+            "for i in ts.ts[::-1]:  #葉から",
+            "    for j in ts.childrens[i]:",
+            "        dp[i] += dp[j]",
+            "",
+            ""
+        ],
+        "description": [
+            "木トポロジカルソート topologicalsort"
         ]
     },
     "遅延評価セグメント木plain": {
@@ -4519,350 +4989,6 @@
             "遅延評価セグメント木"
         ]
     },
-    "reverse=True": {
-        "prefix": [
-            "reverse=True"
-        ],
-        "body": [
-            "reverse=True"
-        ],
-        "description": [
-            "ソートでのリバース"
-        ]
-    },
-    "sort(key=itemgetter": {
-        "prefix": [
-            "sort(key=l"
-        ],
-        "body": [
-            "sort(key=lambda x: x[1])"
-        ],
-        "description": [
-            "itemgetterソート"
-        ]
-    },
-    "順列・組み合わせ": {
-        "prefix": [
-            "itertools",
-            "Lib_順列・組み合わせ"
-        ],
-        "body": [
-            "from itertools import *",
-            "P = list(permutations(range(n), r))   # 順列(nPr)",
-            "C = list(combinations(range(n), r))   # 組み合わせ(nCr)",
-            "CR = list(combinations_with_replacement(range(n), r))  # 重複も許容した組み合わせ(nHr=n+r-1Cr)",
-            "PN = list(product(range(n), repeat=r)) # 重複順列(n**r)",
-            "T = [[1, 2],[3, 4, 5, 6],[7, 8, 9]]",
-            "PT = list(product(*T))"
-        ],
-        "description": [
-            "順列・組み合わせ"
-        ]
-    },
-    "区間カウント": {
-        "prefix": [
-            "Lib_区間カウント"
-        ],
-        "body": [
-            "def count_intervals(a:list, x)->int:",
-            "    dm = a + [float('inf')]",
-            "    ret = 0",
-            "    is_yes = False",
-            "    for ai in dm:",
-            "        if ai == x:",
-            "            if is_yes: continue",
-            "            is_yes = True",
-            "        else:",
-            "            if not is_yes: continue",
-            "            is_yes = False",
-            "            ret += 1",
-            "",
-            "    return ret",
-            "# A=[0, 0, 1, 1, 1, 1, 0, 1, 1, 1]",
-            "# x=1 の区間がいくつあるか ans = 2"
-        ],
-        "description": [
-            "区間カウント",
-            "A=[0, 0, 1, 1, 1, 1, 0, 1, 1, 1]",
-            "x=1 の区間がいくつあるか ans = 2"
-        ]
-    },
-    "direc": {
-        "prefix": [
-            "direc_isinhw"
-        ],
-        "body": [
-            "direc = {(1, 0), (-1, 0), (0, 1), (0, -1)}",
-            "direc = {(1, 0), (-1, 0), (0, 1), (0, -1), (1, 1), (1, -1) (-1, 1), (-1, -1)}",
-            "",
-            "def notisinhw(i, j, h, w): return not ((0 <= i < h) and (0 <= j < w))",
-            ""
-        ],
-        "description": [
-            "direc"
-        ]
-    },
-    "Mo'sAlgorythm#": {
-        "prefix": [
-            "Lib_Mos_モアルゴリズム"
-        ],
-        "body": [
-            "",
-            "# A:リスト n = 10**5",
-            "# Q: l, r, q = 10**5",
-            "# O(NQ−−√)が間に合う条件である*3",
-            "# 区間伸縮の計算がO(1) またはそれに近い",
-            "# クエリがオフラインで与えられる(先読みができる)",
-            "# 配列の要素が不変である",
-            "",
-            "class _Mo:",
-            "    def __init__(self, N:int, Q:int):",
-            "        self.N=N",
-            "        self.Q = Q",
-            "        self.shift = 20",
-            "        self.M = int(Q**0.5)+1  # bucket num",
-            "        self.data = [0] * Q",
-            "        self.query = [[] for _ in range(self.M)]",
-            "",
-            "    def add_query(self, l:int, r:int, i:int):",
-            "        \"\"\"",
-            "        半開区間 [l,r)",
-            "        \"\"\"",
-            "        sft=self.shift",
-            "        h=l*self.M//self.N",
-            "        self.data[i]=(l<<sft)|r",
-            "        self.query[h].append(((r if h&1 else -r)<<sft)+i)",
-            "    def solve(self):",
-            "        mask=(1<<self.shift)-1",
-            "        assert max(self.N, self.Q)<=mask",
-            "        L=R=0",
-            "        ret = [0]*self.Q",
-            "        for bucket in self.query:",
-            "            bucket.sort()",
-            "            for lri in bucket:",
-            "                i = lri&mask",
-            "                l,r=divmod(self.data[i],1<<self.shift)",
-            "                while L>l:",
-            "                    L-=1",
-            "                    self.add_left(L)",
-            "                while R<r:",
-            "                    self.add_right(R)",
-            "                    R+=1",
-            "                while L<l:",
-            "                    self.remove_left(L)",
-            "                    L+=1",
-            "                while R>r:",
-            "                    R-=1",
-            "                    self.remove_right(R)",
-            "                ret[i] = self.get_state()",
-            "        return ret",
-            "",
-            "N,Q=map(int,input().split())",
-            "# N=int(input())",
-            "A=list(map(int,input().split()))",
-            "",
-            "class Mo(_Mo):",
-            "    def __init__(self, N, Q):",
-            "        super().__init__(N, Q)",
-            "        self.value = 0",
-            "        self.count = [0] * (max(A)+1)",
-            "    def get_state(self):",
-            "        return self.value",
-            "    # https://atcoder.jp/contests/abc293/tasks/abc293_g",
-            "    def add_left(self, i):",
-            "        a = A[i]",
-            "        x = self.count[a]",
-            "        self.count[a] += 1",
-            "        self.value += x*(x-1) // 2",
-            "    def remove_left(self, i):",
-            "        a = A[i]",
-            "        x = self.count[a]",
-            "        self.count[a] -= 1",
-            "        self.value -= (x-1)*(x-2)//2",
-            "",
-            "    # https://atcoder.jp/contests/abc174/tasks/abc174_f",
-            "    # def add_left(self, i):",
-            "    #     a = A[i]",
-            "    #     if a in self.count:",
-            "    #         self.count[a] += 1",
-            "    #     else:",
-            "    #         self.count[a] = 1",
-            "    #     if self.count[a] == 1:",
-            "    #         self.value += 1",
-            "    # def remove_left(self, i):",
-            "    #     a = A[i]",
-            "    #     self.count[a] -= 1",
-            "    #     if self.count[a] == 0:",
-            "    #         self.value -= 1",
-            "",
-            "# https://atcoder.jp/contests/abc242/tasks/abc242_g",
-            "    # def add_left(self, i):",
-            "    #     a = A[i]",
-            "    #     x = self.count[a]",
-            "    #     self.count[a] += 1",
-            "    #     self.value += (x+1) // 2 - x // 2",
-            "    # def remove_left(self, i):",
-            "    #     a = A[i]",
-            "    #     x = self.count[a]",
-            "    #     self.count[a] -= 1",
-            "    #     self.value -= x // 2 - (x-1) // 2",
-            "",
-            "    add_right = add_left",
-            "    remove_right = remove_left",
-            "",
-            "",
-            "mo = Mo(N, Q)",
-            "# Q=int(input())",
-            "for i in range(Q):",
-            "    l,r=map(int,input().split())",
-            "    mo.add_query(l-1,r, i)",
-            "ans = mo.solve()",
-            "",
-            "print(\"\\n\".join(map(str,ans)))",
-            "",
-            ""
-        ],
-        "description": [
-            "Mo'sAlgorythm#"
-        ]
-    },
-    "三分探索": {
-        "prefix": [
-            "Lib_A_三分探索"
-        ],
-        "body": [
-            "#######################",
-            "# ムーアの法則",
-            "# 三分探索/黄金分割探索",
-            "#######################",
-            "",
-            "def f(x):",
-            "    return x**2",
-            "",
-            "d = 0.000000001",
-            "low, high = 0, 1000",
-            "",
-            "# 分割割合",
-            "alp = 1/3           #三分探索",
-            "alp = (3-5**0.5)/2  #黄金分割探索",
-            "",
-            "while abs(f(low) - f(high)) > d:",
-            "    l_ = high * alp + (1-alp) * low",
-            "    h_ = high * (1-alp) + alp * low",
-            "    if f(h_) < f(l_):",
-            "        low = l_",
-            "    else:",
-            "        high = h_",
-            "print(f(low))",
-            "",
-            "",
-            "",
-            "#######################",
-            "# 内包円",
-            "# 三分探索",
-            "# https://atcoder.jp/contests/abc151/tasks/abc151_f",
-            "# 平面上の N 個の点 (xi, yi) が与えられます。",
-            "# これら全てを内部または周上に含む円の半径の最小値を求めてください。",
-            "#######################",
-            "",
-            "n = int(input())",
-            "pt = [tuple(map(int, input().split())) for i in range(n)]",
-            "",
-            "def f(x, y):",
-            "    # (x, y)を与えたときに、各点との距離の最大値",
-            "    return max([((x-u)**2 + (y-v)**2)**0.5 for u, v in pt])",
-            "",
-            "d = 0.0000001",
-            "",
-            "def g(x):",
-            "    low, high = 0, 1000",
-            "    for i in range(80):",
-            "        l_ = (high+2*low)/3",
-            "        h_ = (high*2+low)/3",
-            "        if f(x, h_)<f(x, l_):",
-            "            low = l_",
-            "        else:",
-            "            high = h_",
-            "    return f(x, low)",
-            "",
-            "",
-            "low, high = 0, 1000",
-            "for i in range(80):",
-            "    l_ = (high+2*low)/3",
-            "    h_ = (high*2+low)/3",
-            "    if g(h_)<g(l_):",
-            "        low = l_",
-            "    else:",
-            "        high = h_",
-            "",
-            "print(g(low))",
-            ""
-        ],
-        "description": [
-            "三分探索"
-        ]
-    },
-    "トポロジカルソート木": {
-        "prefix": [
-            "Lib_GT_木トポロジカルソート_topologicalsort"
-        ],
-        "body": [
-            "# トポロジカルソート",
-            "# 有向非巡回グラフ（DAG）の各ノードを順序付けして、どのノードもその出力辺の先のノードより前にくるように並べることである。",
-            "# 有向非巡回グラフは必ずトポロジカルソートすることができる。",
-            "from collections import deque",
-            "",
-            "class topological_sort:",
-            "    def __init__(self, n:int, G) -> None:",
-            "        self.n = n",
-            "        self.ts = []            # トポロジカルソート",
-            "        self.parents = [-1] * n # 親 -1は根",
-            "        self.G = G              # 辺",
-            "        self.childrens = G.copy() # 辺",
-            "",
-            "",
-            "    def build(self, root):",
-            "        que = deque([root])",
-            "        self.ts = []            # トポロジカルソート",
-            "        while que:",
-            "            x = que.popleft()",
-            "            self.ts.append(x)",
-            "            for nx in self.G[x]:",
-            "                if nx == self.parents[x]: continue",
-            "                self.parents[nx] = x",
-            "                self.childrens[nx].remove(x)",
-            "                que.append(nx)",
-            "",
-            "#########################################",
-            "# n, m = map(int, input().split())",
-            "n = int(input())",
-            "G = [[] for _ in range(n)]",
-            "m = n",
-            "for _ in range(m):",
-            "    a, b = map(int, input().split())",
-            "    a -= 1; b -= 1",
-            "    w = 0",
-            "    G[a].append((b, w))",
-            "",
-            "ts = topological_sort(n, G)",
-            "",
-            "ts.build(0)",
-            "",
-            "print(ts.ts)",
-            "print(ts.parents)",
-            "",
-            "# 木dp  #ノードに1を置いて葉から合計する",
-            "dp = [1] * n",
-            "for i in ts.ts[::-1]:  #葉から",
-            "    for j in ts.childrens[i]:",
-            "        dp[i] += dp[j]",
-            "",
-            ""
-        ],
-        "description": [
-            "木トポロジカルソート topologicalsort"
-        ]
-    },
     "ワーシャルフロイド法": {
         "prefix": [],
         "body": [],
@@ -4895,7 +5021,6 @@
             "            self.d[i][i] = 0 #自身のところに行くコストは０",
             "",
             "",
-            "",
             "    def build(self):",
             "        n = self.n",
             "        wf = copy.deepcopy(self.d)",
@@ -4903,7 +5028,6 @@
             "            for i in range(n):",
             "                for j in range(n):",
             "                    wf[i][j] = min(wf[i][j], wf[i][k] + wf[k][j])",
-            "",
             "        self.wf = wf #wf[i][j]に頂点i, j間の最短距離を格納",
             "",
             "",
@@ -4979,7 +5103,7 @@
             "",
             "",
             "##############################",
-            "# n!が素数pで何回割れるか O(logn)",
+            "# n!がpで何回割れるか O(logn)",
             "# legendre(n, p)",
             "##############################",
             "def legendre(n, p):",
@@ -4989,7 +5113,7 @@
             "        n //= p",
             "    return ret",
             "",
-            "    "
+            ""
         ],
         "description": []
     },
@@ -5271,6 +5395,110 @@
             "最小共通祖先"
         ]
     },
+    "reverse=True": {
+        "prefix": [
+            "reverse=True"
+        ],
+        "body": [
+            "reverse=True"
+        ],
+        "description": [
+            "ソートでのリバース"
+        ]
+    },
+    "sort(key=itemgetter": {
+        "prefix": [
+            "sort(key=l"
+        ],
+        "body": [
+            "sort(key=lambda x: x[1])"
+        ],
+        "description": [
+            "itemgetterソート"
+        ]
+    },
+    "順列・組み合わせ": {
+        "prefix": [
+            "itertools",
+            "Lib_順列・組み合わせ"
+        ],
+        "body": [
+            "from itertools import *",
+            "P = list(permutations(range(n), r))   # 順列(nPr)",
+            "C = list(combinations(range(n), r))   # 組み合わせ(nCr)",
+            "CR = list(combinations_with_replacement(range(n), r))  # 重複も許容した組み合わせ(nHr=n+r-1Cr)",
+            "PN = list(product(range(n), repeat=r)) # 重複順列(n**r)",
+            "T = [[1, 2],[3, 4, 5, 6],[7, 8, 9]]",
+            "PT = list(product(*T))"
+        ],
+        "description": [
+            "順列・組み合わせ"
+        ]
+    },
+    "区間カウント": {
+        "prefix": [
+            "Lib_区間カウント"
+        ],
+        "body": [
+            "def count_intervals(a:list, x)->int:",
+            "    dm = a + [float('inf')]",
+            "    ret = 0",
+            "    is_yes = False",
+            "    for ai in dm:",
+            "        if ai == x:",
+            "            if is_yes: continue",
+            "            is_yes = True",
+            "        else:",
+            "            if not is_yes: continue",
+            "            is_yes = False",
+            "            ret += 1",
+            "",
+            "    return ret",
+            "# A=[0, 0, 1, 1, 1, 1, 0, 1, 1, 1]",
+            "# x=1 の区間がいくつあるか ans = 2"
+        ],
+        "description": [
+            "区間カウント",
+            "A=[0, 0, 1, 1, 1, 1, 0, 1, 1, 1]",
+            "x=1 の区間がいくつあるか ans = 2"
+        ]
+    },
+    "direc": {
+        "prefix": [
+            "direc_isinhw"
+        ],
+        "body": [
+            "direc = {(1, 0), (-1, 0), (0, 1), (0, -1)}",
+            "direc = {(1, 0), (-1, 0), (0, 1), (0, -1), (1, 1), (1, -1) (-1, 1), (-1, -1)}",
+            "",
+            "isinhw = lambda i,j,h,w: (0 <= i < h) and (0 <= j < w)",
+            "notinhw = lambda i,j,h,w: not ((0 <= i < h) and (0 <= j < w))",
+            ""
+        ],
+        "description": [
+            "direc"
+        ]
+    },
+    "フロアサム": {
+        "prefix": [],
+        "body": [],
+        "description": []
+    },
+    "一次直線(y=ax+b (0<=x<n の下にあるmの倍数の整数点の個数)": {
+        "prefix": [
+            "Lib_N_floor_sum"
+        ],
+        "body": [
+            "",
+            "from atcoder.math import floor_sum",
+            "",
+            "for _ in range(int(input())):",
+            "    n, m, a, b = map(int, input().split())",
+            "    print(floor_sum(n, m, a, b))",
+            ""
+        ],
+        "description": []
+    },
     "中国式剰余定理": {
         "prefix": [],
         "body": [],
@@ -5356,51 +5584,32 @@
             "# 転倒数",
             "# 配列中 i<j, ai>ajとなるものの個数",
             "# https://atcoder.jp/contests/chokudai_S001/tasks/chokudai_S001_j",
-            "# ex: a = [3, 5, 2, 0, 4, 1]  -> 10",
-            "# index: 0  1  2  3  4  5",
-            "# a    : 3  5  2  0  4  1",
-            "# bit_0:          1*        (a_0=3) 右側/反転数0",
-            "# bit_1:          1     1*  (a_1=5) 右側/反転数0",
-            "# bit_2:       1* 1     1   (a_2=2) 右側/反転数2",
-            "# bit_3: 1*    1  1     1   (a_3=0) 右側/反転数3",
-            "# bit_4: 1     1  1  1* 1   (a_4=4) 右側/反転数1",
-            "# bit_5: 1  1* 1  1  1  1   (a_5=1) 右側/反転数4",
-            "",
-            "class BinaryIndexedTree:",
-            "    # 初期化処理",
+            "class BIT:",
             "    def __init__(self, size):",
-            "        self.size = size",
-            "        self.dat = [0]*(size+1)",
-            "        self.depth = size.bit_length()",
+            "        self.size = size; self.dat = [0]*(size+1)",
             "",
             "    def add(self, i, x):",
             "        i += 1",
             "        while i <= self.size:",
-            "            self.dat[i] += x",
-            "            i += i & -i # 更新すべき位置",
+            "            self.dat[i] += x; i += i & -i",
             "",
             "    def sum(self, r):",
-            "        r += 1",
-            "        ret = 0",
+            "        r += 1; s = 0",
             "        while r>0:",
-            "            ret += self.dat[r]",
-            "            r -= r & -r # 加算すべき位置",
-            "        return ret",
+            "            s += self.dat[r];r -= r & -r",
+            "        return s",
             "",
-            "def compress(points:list) -> list:",
-            "    pos = {}",
+            "def _compress(points:list) -> list:",
             "    sx = set(points)",
-            "    for i, xi in enumerate(sorted(set(sx))):",
-            "        pos[xi] = i",
+            "    pos = {xi:i for i, xi in enumerate(sorted(set(sx)))}",
             "    return [pos[xi] for xi in points]",
             "",
-            "def inv_numbers(a: list) -> int:",
-            "    _a = compress(a)",
-            "    bit = BinaryIndexedTree(max(_a) + 2)",
+            "def inv_numbers(a: list, compress=False) -> int:",
+            "    _a = _compress(a) if compress else a",
+            "    bit = BIT(max(_a) + 2)",
             "    ret = 0",
             "    for i, ai in enumerate(_a):",
-            "        ret += i - bit.sum(ai)  #aiの位置より右側の合計=見てきた総計i - 左側の合計 => 反転数",
-            "        bit.add(ai, 1)          #aiの位置にメモ",
+            "        ret += i - bit.sum(ai); bit.add(ai, 1)",
             "    return ret",
             "",
             "###################################",
@@ -5594,7 +5803,7 @@
             "",
             "# https://atcoder.jp/contests/abc061/tasks/abc061_d",
             "",
-            "def bellman_ford(st=0):",
+            "def bellman_ford(G, st=0):",
             "    \"\"\"",
             "    n: グラフの頂点数",
             "    st: 始点",
@@ -5643,7 +5852,7 @@
             "    G[_a].append((_b, -_c))",
             "",
             "st = 0",
-            "ret = bellman_ford(st)",
+            "ret = bellman_ford(G, st)",
             "if ret == -1:",
             "    print('inf')",
             "else:",
@@ -5653,6 +5862,79 @@
         "description": [
             "ベルマンフォード法・負閉路OK",
             "O(NM)"
+        ]
+    },
+    "レーベンシュタイン距離": {
+        "prefix": [
+            "Lib_Str_レーベンシュタイン距離_Levenshtein_distance#"
+        ],
+        "body": [
+            "#####################################",
+            "# レーベンシュタイン距離 文字列の近似度",
+            "# 文字削除・挿入・変更により文字列を一致させる最小の手順回数",
+            "#####################################",
+            "# https://algo-method.com/tasks/315",
+            "# https://onlinejudge.u-aizu.ac.jp/courses/library/7/DPL/1/DPL_1_E",
+            "",
+            "class Levenshtein:",
+            "    def __init__(self, S, T) -> None:",
+            "        self.Type = type(S)",
+            "        if self.Type == str:",
+            "            S = list(S)",
+            "            T = list(T)",
+            "        self.S = S",
+            "        self.T = T",
+            "        self.ls = len(S)",
+            "        self.lt = len(T)",
+            "        self.dp = [[10**10]*(self.lt+1) for _ in range(self.ls+1)]",
+            "        dp = self.dp",
+            "        for i in range(self.ls):",
+            "            dp[i][0] = i",
+            "        for j in range(self.lt):",
+            "            dp[0][j] = j",
+            "        for i in range(self.ls):",
+            "            for j in range(self.lt):",
+            "                if S[i] == T[j]:",
+            "                    dp[i+1][j+1] = min(dp[i][j]  , dp[i+1][j]+1, dp[i][j+1]+1)",
+            "                else:",
+            "                    dp[i+1][j+1] = min(dp[i][j]+1, dp[i+1][j]+1, dp[i][j+1]+1)",
+            "        self.length = self.dp[self.ls][self.lt]",
+            "",
+            "",
+            "    def restore(self):",
+            "        # 復元",
+            "        ret = []",
+            "        i, j = self.ls, self.lt",
+            "        dp = self.dp",
+            "        while i and j:",
+            "            # (i-1, j) -> (i, j) と更新されていた場合",
+            "            if dp[i][j] == dp[i-1][j]:",
+            "                i-=1   # DP の遷移を遡る",
+            "            # (i, j-1) -> (i, j) と更新されていた場合",
+            "            elif dp[i][j] == dp[i][j-1]:",
+            "                j-=1   # DP の遷移を遡る",
+            "            # (i-1, j-1) -> (i, j) と更新されていた場合",
+            "            else:",
+            "                ret.append(self.S[i-1])",
+            "                # このとき s[i-1] == t[j-1] なので、t[j-1] + res でも OK",
+            "                i-=1",
+            "                j-=1   # DP の遷移を遡る",
+            "        ret = ret[::-1]",
+            "        if self.Type == str: ret = ''.join(ret)",
+            "        return ret",
+            "",
+            "",
+            "#####################",
+            "",
+            "s = input()",
+            "t = input()",
+            "",
+            "ldiff = Levenshtein(s, t)",
+            "print(ldiff.length)",
+            ""
+        ],
+        "description": [
+            "Lib_レーベンシュタイン距離"
         ]
     },
     "ランレングス圧縮": {
@@ -6350,446 +6632,6 @@
         ],
         "description": [
             "トポロジカルソート topologicalsort"
-        ]
-    },
-    "遅延評価セグメント木": {
-        "prefix": [
-            "Lib_Q_LazySeg_区間Add,Update x 区間Min,Sumクエリ"
-        ],
-        "body": [
-            "import sys",
-            "def input(): return sys.stdin.readline().rstrip()",
-            "",
-            "####################################",
-            "class LazySegmentTree_RAQ:",
-            "    \"\"\"RAQRangeQuery",
-            "    区間加算・区間Min/Sum",
-            "    Parameters",
-            "    ----------",
-            "    a : list",
-            "        初期リスト",
-            "    e : 単位元",
-            "        by default float('inf')",
-            "    Attributes",
-            "    ----------",
-            "    log : int",
-            "        木の高さ",
-            "    size : int",
-            "        木のノード数",
-            "    data : list",
-            "        木のノードの値",
-            "    lazy : list",
-            "        遅延評価用値",
-            "    \"\"\"",
-            "    def __init__(self, a:list, f, ie, type) -> None:",
-            "        self.type = type.lower()",
-            "        self.f = f",
-            "        self.INF = ie",
-            "        self.n = len(a)",
-            "        self.log = self.n.bit_length()",
-            "        self.size = 1 << self.log",
-            "        self.data = [self.INF] * (2*self.size)",
-            "        self.lazy = [0] * (2*self.size)",
-            "        for i, ai in enumerate(a):",
-            "            self.data[i + self.size] = ai",
-            "        for i in range(self.size)[::-1]:",
-            "            self.data[i] = self.f(self.data[2*i], self.data[2*i+1])",
-            "",
-            "    def _prop_value(self, v):",
-            "        if self.type == 'min':",
-            "            return v",
-            "        elif self.type == 'sum':",
-            "            return v // 2",
-            "",
-            "    def _update_value(self, x):",
-            "        if self.type == 'min':",
-            "            return x",
-            "        elif self.type == 'sum':",
-            "            return x * 2",
-            "",
-            "    def __gindex(self, l, r):",
-            "        \"\"\"伝搬される区間のインデックス(1-indexed)を全て列挙するgenerator",
-            "        \"\"\"",
-            "        L = l + self.size; R = r + self.size",
-            "        lm = (L // (L & -L)) >> 1",
-            "        rm = (R // (R & -R)) >> 1",
-            "        while L < R:",
-            "            if R <= rm:",
-            "                yield R",
-            "            if L <= lm:",
-            "                yield L",
-            "            L >>= 1; R >>= 1",
-            "        while L:",
-            "            yield L",
-            "            L >>= 1",
-            "",
-            "",
-            "    def __propagates(self, *ids):",
-            "        \"\"\"遅延伝搬処理",
-            "        \"\"\"",
-            "        for i in reversed(ids):",
-            "            v = self.lazy[i]",
-            "            if not v: continue",
-            "            v = self._prop_value(v)",
-            "            self.lazy[2*i] += v",
-            "            self.lazy[2*i+1] += v",
-            "            self.data[2*i] += v",
-            "            self.data[2*i+1] += v",
-            "            self.lazy[i] = 0",
-            "",
-            "",
-            "    def update(self, l: int, r: int, x: int) -> None:",
-            "        \"\"\"半開区間[l, r)に対して値xxを加算",
-            "        \"\"\"",
-            "        *ids, = self.__gindex(l, r)",
-            "        self.__propagates(*ids)",
-            "        L = self.size + l; R = self.size + r",
-            "        xx = x",
-            "        while L < R:",
-            "            if R & 1:",
-            "                R -= 1",
-            "                self.lazy[R] += xx",
-            "                self.data[R] += xx",
-            "            if L & 1:",
-            "                self.lazy[L] += xx",
-            "                self.data[L] += xx",
-            "                L += 1",
-            "            L >>= 1; R >>= 1",
-            "            xx = self._update_value(xx)",
-            "        for i in ids:",
-            "            self.data[i] = self.f(self.data[2*i], self.data[2*i+1])",
-            "            self.data[i] += self.lazy[i]",
-            "",
-            "",
-            "    def query(self, l: int, r: int) -> None:",
-            "        \"\"\"半開区間[l, r)内のfを求める",
-            "        \"\"\"",
-            "        self.__propagates(*self.__gindex(l, r))",
-            "        L = self.size + l; R = self.size + r",
-            "",
-            "        s = self.INF",
-            "        while L < R:",
-            "            if R & 1:",
-            "                R -= 1",
-            "                s = self.f(s, self.data[R])",
-            "            if L & 1:",
-            "                s = self.f(s, self.data[L])",
-            "                L += 1",
-            "            L >>= 1; R >>= 1",
-            "        return s",
-            "",
-            "",
-            "    def __getitem__(self, i:int) -> int:",
-            "        \"\"\"index = i の値を求める",
-            "        \"\"\"",
-            "        return self.query(i, i+1)",
-            "",
-            "",
-            "    def __str__(self):",
-            "        \"\"\"元の配列を出力",
-            "        \"\"\"",
-            "        for i in range(self.size):",
-            "            self.__getitem__(i)",
-            "        return \" \".join(map(str, self.data[self.size:]))",
-            "",
-            "####################################",
-            "class LazySegmentTree_RUQ:",
-            "    \"\"\"RUQRangeQuery",
-            "    区間更新・区間Min/Sum",
-            "    Parameters",
-            "    ----------",
-            "    a : list",
-            "        初期リスト",
-            "    e : 単位元",
-            "        by default float('inf')",
-            "    Attributes",
-            "    ----------",
-            "    log : int",
-            "        木の高さ",
-            "    size : int",
-            "        木のノード数",
-            "    data : list",
-            "        木のノードの値",
-            "    lazy : list",
-            "        遅延評価用値",
-            "    \"\"\"",
-            "    def __init__(self, a:list, f, ie, type) -> None:",
-            "        self.type = type.lower()",
-            "        self.f = f",
-            "        self.INF = ie",
-            "        self.log = len(a).bit_length()",
-            "        self.size = 1 << self.log",
-            "        self.data = [self.INF] * (2*self.size)",
-            "        self.lazy = [None] * (2*self.size)",
-            "        for i, ai in enumerate(a):",
-            "            self.data[i + self.size] = ai",
-            "        for i in range(self.size)[::-1]:",
-            "            self.data[i] = self.f(self.data[2*i], self.data[2*i+1])",
-            "",
-            "    def _prop_value(self, v):",
-            "        if self.type == 'min':",
-            "            return v",
-            "        elif self.type == 'sum':",
-            "            return v // 2",
-            "",
-            "    def _update_value(self, x):",
-            "        if self.type == 'min':",
-            "            return x",
-            "        elif self.type == 'sum':",
-            "            return x * 2",
-            "",
-            "    def __gindex(self, l, r):",
-            "        \"\"\"伝搬される区間のインデックス(1-indexed)を全て列挙するgenerator",
-            "        \"\"\"",
-            "        L = l + self.size; R = r + self.size",
-            "        lm = (L // (L & -L)) >> 1",
-            "        rm = (R // (R & -R)) >> 1",
-            "        while L < R:",
-            "            if R <= rm:",
-            "                yield R",
-            "            if L <= lm:",
-            "                yield L",
-            "            L >>= 1; R >>= 1",
-            "        while L:",
-            "            yield L",
-            "            L >>= 1",
-            "",
-            "",
-            "    def __propagates(self, *ids):",
-            "        \"\"\"遅延伝搬処理",
-            "        \"\"\"",
-            "        for i in reversed(ids):",
-            "            v = self.lazy[i]",
-            "            if v is None: continue",
-            "            v = self._prop_value(v)",
-            "            self.lazy[2*i] = v",
-            "            self.lazy[2*i+1] = v",
-            "            self.data[2*i] = v",
-            "            self.data[2*i+1] = v",
-            "            self.lazy[i] = None",
-            "",
-            "",
-            "    def update(self, l: int, r: int, x: int) -> None:",
-            "        \"\"\"半開区間[l, r)に対して値をxに更新",
-            "        \"\"\"",
-            "        *ids, = self.__gindex(l, r)",
-            "        self.__propagates(*ids)",
-            "        L = self.size + l; R = self.size + r",
-            "        xx = x",
-            "        while L < R:",
-            "            if R & 1:",
-            "                R -= 1",
-            "                self.lazy[R] = xx",
-            "                self.data[R] = xx",
-            "            if L & 1:",
-            "                self.lazy[L] = xx",
-            "                self.data[L] = xx",
-            "                L += 1",
-            "            L >>= 1; R >>= 1",
-            "            xx = self._update_value(xx)",
-            "        for i in ids:",
-            "            self.data[i] = self.f(self.data[2*i], self.data[2*i+1])",
-            "",
-            "",
-            "    def query(self, l: int, r: int) -> None:",
-            "        \"\"\"半開区間[l, r)内のfを求める",
-            "        \"\"\"",
-            "        self.__propagates(*self.__gindex(l, r))",
-            "        L = self.size + l; R = self.size + r",
-            "",
-            "        s = self.INF",
-            "        while L < R:",
-            "            if R & 1:",
-            "                R -= 1",
-            "                s = self.f(s, self.data[R])",
-            "            if L & 1:",
-            "                s = self.f(s, self.data[L])",
-            "                L += 1",
-            "            L >>= 1; R >>= 1",
-            "        return s",
-            "",
-            "",
-            "    def __getitem__(self, i:int) -> int:",
-            "        \"\"\"index = i の値を求める",
-            "        \"\"\"",
-            "        return self.query(i, i+1)",
-            "",
-            "",
-            "    def __str__(self):",
-            "        \"\"\"元の配列を出力",
-            "        \"\"\"",
-            "        for i in range(self.size):",
-            "            self.__getitem__(i)",
-            "        return \" \".join(map(str, self.data[self.size:]))",
-            "",
-            "",
-            "####################################",
-            "# Range Minimum Query",
-            "class RAQRMQ(LazySegmentTree_RAQ):",
-            "    def __init__(self, a):",
-            "        super().__init__(a, min, float('inf') ,'min')",
-            "",
-            "# Range Sum Query",
-            "class RAQRSQ(LazySegmentTree_RAQ):",
-            "    def __init__(self, a):",
-            "        super().__init__(a, lambda x, y: x+y, 0 ,'sum')",
-            "",
-            "####################################",
-            "# Range Minimum Query",
-            "class RUQRMQ(LazySegmentTree_RUQ):",
-            "    def __init__(self, a):",
-            "        super().__init__(a, min, 2**31-1 ,'min')",
-            "",
-            "# Range Sum Query",
-            "class RUQRSQ(LazySegmentTree_RUQ):",
-            "    def __init__(self, a):",
-            "        super().__init__(a, lambda x, y: x+y, 0 ,'sum')",
-            "",
-            "####################################",
-            "",
-            "n, q = map(int, input().split())",
-            "lst = RAQRSQ([0]*n)",
-            "lst = RAQRMQ([0]*n)",
-            "lst = RUQRMQ([2**31-1] * n)",
-            "lst = RUQRSQ([0]*n)",
-            "",
-            "ret = []",
-            "for _ in range(q):",
-            "    t, *qry = map(int, input().split())",
-            "    if t == 0:",
-            "        l, r, x = qry",
-            "        r += 1",
-            "        lst.update(l, r, x)",
-            "    else:",
-            "        l, r = qry",
-            "        r += 1",
-            "        ret.append(lst.query(l, r))",
-            "print('\\n'.join(map(str, ret)))",
-            ""
-        ],
-        "description": [
-            "遅延評価セグメント木"
-        ]
-    },
-    "n=intinput": {
-        "prefix": [
-            "nin"
-        ],
-        "body": [
-            "n = int(input())"
-        ],
-        "description": [
-            "整数nの読み込み"
-        ]
-    },
-    "nainput": {
-        "prefix": [
-            "nain"
-        ],
-        "body": [
-            "n = int(input())",
-            "a = list(map(int, input().split()))"
-        ],
-        "description": [
-            "整数nの読み込み"
-        ]
-    },
-    "s=input": {
-        "prefix": [
-            "sin"
-        ],
-        "body": [
-            "s = list(input())"
-        ],
-        "description": [
-            "文字列sの読み込み"
-        ]
-    },
-    "ab=mapintinput": {
-        "prefix": [
-            "a, b=map"
-        ],
-        "body": [
-            "a, b = map(int1, input().split())"
-        ],
-        "description": [
-            "整数a, bの読み込み"
-        ]
-    },
-    "n,m=map(int, input().split())": {
-        "prefix": [
-            "n, m=map"
-        ],
-        "body": [
-            "n, m = map(int, input().split())"
-        ],
-        "description": [
-            "整数n, mの読み込み"
-        ]
-    },
-    "a=list(map(int, input().split()))": {
-        "prefix": [
-            "a =list"
-        ],
-        "body": [
-            "a = list(map(int, input().split()))"
-        ],
-        "description": [
-            "リストの読み込み"
-        ]
-    },
-    "b=list(map(int, input().split()))": {
-        "prefix": [
-            "b =list"
-        ],
-        "body": [
-            "b = list(map(int, input().split()))"
-        ],
-        "description": [
-            "リストの読み込み"
-        ]
-    },
-    "edges": {
-        "prefix": [
-            "G ="
-        ],
-        "body": [
-            "G = [[] for _ in range($n)]",
-            "for _ in range($m):",
-            "    a, b = map(int1, input().split())",
-            "    G[a].append(b)",
-            "    G[b].append(a)",
-            ""
-        ],
-        "description": [
-            "edges"
-        ]
-    },
-    "edgesweighted": {
-        "prefix": [
-            "G = w"
-        ],
-        "body": [
-            "G = [[] for _ in range($n)]",
-            "for _ in range($m):",
-            "    a, b, w = map(int1, input().split())",
-            "    G[a].append((b, w))",
-            "    G[b].append((a, w))",
-            ""
-        ],
-        "description": [
-            "edges(重み付き)"
-        ]
-    },
-    "0インデックス": {
-        "prefix": [
-            "a -= 1; b -= 1"
-        ],
-        "body": [
-            "a -= 1; b -= 1"
-        ],
-        "description": [
-            "0-indexed"
         ]
     },
     "巡回セールスマン問題": {
@@ -7675,47 +7517,38 @@
             "# nCr % 10**9+7",
             "# http://zakii.la.coocan.jp/enumeration/10_balls_boxes.htm",
             "#####################################",
-            "",
-            "mod = 998244353",
-            "maxn = 10**6",
-            "fac, facinv = [1]*(maxn+1), [1]*(maxn+1)",
-            "for i in range(2, maxn + 1):",
-            "    fac[i] = fac[i-1] * i % mod",
-            "facinv[-1] = pow(fac[-1], mod-2, mod)",
-            "for i in range(maxn, 0, -1):",
-            "    facinv[i-1] = facinv[i] * i % mod",
-            "",
-            "def nCr(n, r):",
-            "    \"\"\"nCr",
-            "    n個のものからr個選ぶ",
-            "    \"\"\"",
-            "    if ( r<0 or r>n ):",
-            "        return 0",
-            "    r = min(r, n-r)",
-            "    return fac[n] * facinv[r] * facinv[n-r] % mod",
-            "",
-            "",
-            "ret = nCr(4, 2)",
-            "",
-            "#####################################",
-            "nは大きいが固定で,rは小さい場合",
-            "#####################################",
             "class Combination:",
-            "    \"\"\"nCrの前計算",
+            "    def __init__(self, maxn:int=10**9, mod:int=1000000007) -> None:",
+            "        self.mod = mod",
+            "        self.maxn = maxn",
+            "        fac, facinv = [1]*(maxn+1), [1]*(maxn+1)",
+            "        for i in range(2, maxn + 1):",
+            "            fac[i] = fac[i-1] * i % mod",
+            "        facinv[-1] = pow(fac[-1], mod-2, mod)",
+            "        for i in range(maxn, 0, -1):",
+            "            facinv[i-1] = facinv[i] * i % mod",
+            "        self.fac = fac; self.facinv = facinv",
             "",
-            "    Parameters",
-            "    ----------",
-            "    n : int, optional",
-            "        n固定 by default 1",
-            "    mod : int, optional",
-            "        modの値, by default 10**9+7",
+            "    def nCr(self, n, r):",
+            "        \"\"\"nCr",
+            "        n個のものからr個選ぶ",
+            "        \"\"\"",
+            "        if ( r<0 or r>n ):",
+            "            return 0",
+            "        r = min(r, n-r)",
+            "        return self.fac[n] * self.facinv[r] * self.facinv[n-r] % self.mod",
             "",
-            "    Note:",
-            "    ----------",
-            "    nCr % 10**9+7  n～10^9 r～10^5",
-            "    nは大きいが固定で,rは小さい場合",
-            "    \"\"\"",
-            "    def __init__(self, n : int=10**9, mod : int=10**9+7) -> None:",
+            "cmb = Combination",
+            "ret = cmb.nCr(4, 2)",
+            "",
+            "",
+            "#####################################",
+            "# nは大きいが固定で,rは小さい場合",
+            "# nCr % 10**9+7  n～10^9 r～10^5",
+            "# nは大きいが固定で,rは小さい場合",
+            "#####################################",
+            "class CombinationSmallR:",
+            "    def __init__(self, n:int=10**9, mod:int=1000000007) -> None:",
             "        self.n = n",
             "        self.max_r = 1",
             "        self.mod = mod",
@@ -7723,8 +7556,8 @@
             "",
             "",
             "    def __preprocessing(self, max_r:int) -> None:",
-            "        seq = self.nCrseq",
-            "        mod = self.mod",
+            "        if max_r <= self.max_r: return",
+            "        mod, seq = self.mod, self.nCrseq",
             "        seq += [0] * (max_r - self.max_r)",
             "        for i in range(self.max_r + 1, max_r + 1):",
             "            seq[i] = (seq[i-1] * (self.n-i+1) * pow(i,mod-2,mod)) % mod",
@@ -7732,10 +7565,10 @@
             "",
             "",
             "    def nCr(self, r:int) -> int:",
-            "        if r > self.max_r: self.__preprocessing(r)",
+            "        self.__preprocessing(r)",
             "        return self.nCrseq[r]",
             "",
-            "cmb = Combination(10)",
+            "cmb = CombinationSmallR(10)",
             "print(cmb.nCr(4))",
             "",
             "",
@@ -7743,18 +7576,15 @@
             "#####################################",
             "# nCr % 3",
             "#####################################",
-            "class combination_mod_3:",
-            "    def __init__(self):",
-            "        n = 10**6",
-            "        self.bf = [0] * n",
-            "        self.bg = [0] * n",
+            "class CombinationMod3:",
+            "    def __init__(self, n=10**6):",
+            "        self.bf, self.bg = [0] * n, [0] * n",
             "        self.bg[0] = 1",
             "",
             "        for i in range(1, n):",
             "            pos = i",
             "            while pos % 3 == 0:",
-            "                pos //= 3",
-            "                self.bf[i] += 1",
+            "                pos //= 3; self.bf[i] += 1",
             "            self.bg[i] = pos % 3",
             "",
             "        for i in range(1, n):",
@@ -7768,14 +7598,15 @@
             "        bgn = self.bg[n]",
             "        bgrnr = self.bg[r] * self.bg[n-r]",
             "        if bgn == 1 and bgrnr == 1: return 1",
-            "        if bgn == 1 and bgrnr == 2: return 2",
             "        if bgn == 1 and bgrnr == 4: return 1",
-            "        if bgn == 2 and bgrnr == 1: return 2",
             "        if bgn == 2 and bgrnr == 2: return 1",
+            "        if bgn == 1 and bgrnr == 2: return 2",
+            "        if bgn == 2 and bgrnr == 1: return 2",
             "        if bgn == 2 and bgrnr == 4: return 2",
             "        return -1",
             "",
-            "c = combination_mod_3()",
+            "",
+            "c = CombinationMod3(10**6)",
             "print(c.nCr(5,1))   #5mod3->2",
             "print(c.nCr(5,2))   #10mod3->1",
             "print(c.nCr(6,2))   #15mod3->0",
@@ -7791,6 +7622,7 @@
             "Lib_G_unionfind"
         ],
         "body": [
+            "",
             "class UnionFind:",
             "    def __init__(self, n):                      # 初期化",
             "        self.n = n                              # 要素数",
@@ -7841,21 +7673,16 @@
             "        \"\"\"",
             "        return self.sizes[self.find(x)]",
             "",
-            "    def get_roots(self):",
+            "    def get_groups(self):",
             "        \"\"\"親のリスト取得",
-            "           親ごとのグループのメンバー一覧取得",
+            "            親ごとのグループのメンバー一覧取得",
             "        \"\"\"",
-            "        _dum = [[] for _ in range(self.n)]",
-            "        self.roots = []",
-            "        self.group_members = dict()",
-            "        for x in range(self.n):",
-            "            r = self.find(x)",
-            "            if r == x:",
-            "                self.roots.append(r)",
-            "            _dum[r].append(x)",
-            "        for r in self.roots:",
-            "            self.group_members[r] = _dum[r]",
-            "",
+            "        leader_buf = [self.find(i) for i in range(self.n)]",
+            "        result = [[] for _ in range(self.n)]",
+            "        for i in range(self.n):",
+            "            result[leader_buf[i]].append(i)",
+            "        self.groups = result",
+            "        return result",
             "",
             "    def __str__(self):",
             "        return '\\n'.join(f'{r}: {self.members(r)}' for r in self.roots)",
@@ -7924,6 +7751,139 @@
             ""
         ],
         "description": []
+    },
+    "尺取り": {
+        "prefix": [
+            "Lib_O_尺取り"
+        ],
+        "body": [
+            "######################################################################",
+            "# The Smallest Window I",
+            "# 長さNの数列a1,a2,a3,...,aNと整数Sが与えられます。",
+            "# 要素の総和がS以上となる連続する部分列のうち、",
+            "# 最も短いものの長さ（smallest window length）を求めてください。",
+            "# ただし、そのような部分列が存在しない場合は 0 と報告してください。",
+            "# https://onlinejudge.u-aizu.ac.jp/problems/DSL_3_A",
+            "######################################################################",
+            "",
+            "N, S = map(int, input().split())",
+            "A = list(map(int, input().split()))",
+            "INF = 2*N",
+            "ret = INF",
+            "",
+            "l, r, now = 0, 0, 0",
+            "while True:",
+            "    while r < N and now < S:",
+            "        now += A[r]",
+            "        r += 1",
+            "    if now >=S:",
+            "        ret = min(ret, r - l)",
+            "        now -= A[l]",
+            "        l += 1",
+            "    else:",
+            "        break",
+            "",
+            "if ret == INF:",
+            "    print(0)",
+            "else:",
+            "    print(ret)",
+            "",
+            "######################################################################",
+            "# The Smallest Window II",
+            "# 長さNの数列a1,a2,a3,...,aNと整数Kが与えられます。",
+            "# 1からKまでの整数1, 2, ...,Kをすべて含む連続する部分列のうち、",
+            "# 最も短いものの長さ（smallest window length）を求めてください。",
+            "# ただし、そのような部分列が存在しない場合は 0 と報告してください。",
+            "# https://onlinejudge.u-aizu.ac.jp/problems/DSL_3_B",
+            "######################################################################",
+            "",
+            "N, K = map(int, input().split())",
+            "A = list(map(int, input().split()))",
+            "now_each_counter = [0] * (K+1)",
+            "now_total_counter = 0",
+            "l, r = 0, 0",
+            "INF = 2*N",
+            "ret = INF",
+            "while l < N:",
+            "    while r < N and now_total_counter < K:",
+            "        ar = A[r]",
+            "        if ar <= K:",
+            "            now_each_counter[ar] += 1",
+            "            if now_each_counter[ar] == 1:",
+            "                now_total_counter += 1",
+            "        r += 1",
+            "    if now_total_counter == K:",
+            "        ret = min(ret, r-l)",
+            "    al = A[l]",
+            "    if al <= K:",
+            "        now_each_counter[al] -= 1",
+            "        if now_each_counter[al] == 0:",
+            "            now_total_counter -= 1",
+            "    l += 1",
+            "if ret == INF:",
+            "    print(0)",
+            "else:",
+            "    print(ret)",
+            "",
+            "######################################################################",
+            "# The Number of Windows",
+            "# 長さNの数列a1,a2,a3,...,aNが与えられます。",
+            "# また, 次のような質問がQ個与えられます。",
+            "# i個目の質問では,整数x,iが与えられます。",
+            "# 各質問について1<=l<=r<=Nかつsum(al,al+1,...,ar-1,ar) <= xiを満たす整数",
+            "# (l,r)の組の個数を求めてください。",
+            "# https://onlinejudge.u-aizu.ac.jp/problems/DSL_3_C",
+            "######################################################################",
+            "N, Q = map(int, input().split())",
+            "A = list(map(int, input().split()))",
+            "X = list(map(int, input().split()))",
+            "",
+            "def solv(x):",
+            "    l, r, ret = 0, 0, 0",
+            "    now = 0",
+            "    while l < N:",
+            "        while r < N and now <= x:",
+            "            now += A[r]",
+            "            r += 1",
+            "        if now > x:",
+            "            r -= 1",
+            "            now -= A[r]",
+            "        ret += r - l",
+            "        now -= A[l]",
+            "        l += 1",
+            "    return ret",
+            "",
+            "for xi in X:",
+            "    print(solv(xi))",
+            "",
+            "######################################################################",
+            "# Sliding Minimum Element",
+            "# 長さNの数列a1,a2,a3,...,aNと整数Lが与えられます。",
+            "# 長さLの連続する部分列すべてについて、",
+            "# 各部分列の中の最小の要素を先頭から順番に報告してください。",
+            "# 例えば、数列が{1,7,7,4,8,1,6} で、L が 3 の場合、",
+            "# 長さLの部分列は{1,7,7},{7,7,4},{7,4,8},{4,8,1},{8,1,6}となりますが、",
+            "# それぞれの部分列の最小値となる 1, 4, 4, 1, 1 を先頭の方から順番に出力してください。",
+            "# https://onlinejudge.u-aizu.ac.jp/problems/DSL_3_D",
+            "######################################################################",
+            "from heapq import heapify, heappop, heappush",
+            "N, L = map(int, input().split())",
+            "A = list(map(int, input().split()))",
+            "ret = []",
+            "que = []",
+            "heapify(que)",
+            "for i, ai in enumerate(A):",
+            "    heappush(que, (ai, i))",
+            "    if i < L-1: continue",
+            "    while que[0][1] <= i - L:",
+            "        heappop(que)",
+            "    ret.append(que[0][0])",
+            "print(*ret)",
+            ""
+        ],
+        "description": [
+            "Lib_尺取り"
+        ]
     },
     "オイラーツアー eulartour 再帰版": {
         "prefix": [
@@ -8079,93 +8039,68 @@
             "Graph最遠パス"
         ]
     },
-    "最大フロー": {
+    "高速フーリエ変換(convolution, FFT)": {
         "prefix": [
-            "Lib_GD_最大フロー_maximumflow_dinic"
+            "Lib_A_FFT_convolution"
         ],
         "body": [
+            "# https://atcoder.jp/contests/practice2/tasks/practice2_f",
+            "# https://atcoder.jp/contests/atc001/tasks/fft_c",
+            "# Σa_i * x^i * Σb_j * x^j  = Σ(Σa_i*b_j) * x ^t  t = i + jとなる場合の",
+            "# Σa_i*b_j の列を求める",
             "",
-            "# 最大流問題",
-            "# 始点sと終点tが区別された有向グラフ",
-            "# 各辺(u,v)には容量c(u,v)が設定されており、超えないフローが流れます。",
-            "# 始点sから終点tへの最大流を求める。",
-            "#",
-            "# Dinic's algorithm",
-            "# 幅優先探索で水を流す向きをざっと決める．",
-            "# 深さ優先探索で決められた向きで流せる経路を探し，水を流す．",
-            "# 流せなくなったら1に戻る.",
-            "# O(∣V∣**2・∣E∣)",
-            "# https://onlinejudge.u-aizu.ac.jp/courses/library/5/GRL/all/GRL_6_A",
-            "from collections import deque",
-            "class Dinic:",
-            "    def __init__(self, n:int) -> None:",
-            "        self.n = n",
-            "        self.inf = float('inf')",
-            "        self.g = [[] for i in range(n)]",
-            "        self.depth = None",
-            "        self.progress = None",
+            "mod = 998244353",
             "",
+            "g = 3   #primitive root",
+            "ginv = pow(g, mod-2, mod)",
             "",
-            "    def add_edge(self, fm:int, to:int, cap:int):",
-            "        # cap: 容量, to/fm:行き先, rev:相方の辺",
-            "        forward = [cap, to, len(self.g[to])]",
-            "        backward = [0, fm, len(self.g[fm])]",
-            "        self.g[fm].append(forward); self.g[to].append(backward)",
+            "W = [pow(g, (mod-1)>>i, mod) for i in range(24)]",
+            "Winv = [pow(ginv, (mod-1)>>i, mod) for i in range(24)]",
             "",
-            "    # sからの最短距離を計算",
-            "    def _bfs(self, s:int):",
-            "        depth = [-1] * self.n",
-            "        depth[s] = 0; que = deque([s])",
-            "        while que:",
-            "            v = que.popleft()",
-            "            for cap, to, _rev in self.g[v]:",
-            "                if cap == 0 or depth[to] >= 0: continue",
-            "                depth[to] = depth[v] + 1",
-            "                que.append(to)",
-            "        self.depth = depth",
+            "def fft(k, f):",
+            "    for l in range(1, k+1)[::-1]:",
+            "        d = 1 << l - 1",
+            "        U = [1]",
+            "        for i in range(d):",
+            "            U.append(U[-1]*W[l]%mod)",
+            "        for i in range(1<<k - l):",
+            "            for j in range(d):",
+            "                s = i*2*d + j",
+            "                f[s], f[s+d] = (f[s] + f[s+d])%mod, U[j]*(f[s] - f[s+d])%mod",
             "",
-            "    # 増加パスをdfsで探す",
-            "    def _dfs(self, v:int, t:int, flow:int):",
-            "        if v == t: return flow",
-            "        g_v = self.g[v]",
-            "        for i in range(self.progress[v], len(g_v)):",
-            "            self.progress[v] = i",
-            "            cap, to, rev = g = g_v[i]",
-            "            if cap == 0: continue",
-            "            if self.depth[v] >= self.depth[to]: continue",
-            "            d = self._dfs(to, t, min(flow, cap))",
-            "            if d == 0: continue",
-            "            g[0] -= d",
-            "            self.g[to][rev][0] += d",
-            "            return d",
-            "        return 0",
+            "def ifft(k, f):",
+            "    for l in range(1,k+1):",
+            "        d = 1 << l - 1",
+            "        for i in range(1<<k - l):",
+            "            u = 1",
+            "            for j in range(i*2*d, (i*2+1)*d):",
+            "                f[j+d] *= u",
+            "                f[j],f[j+d] = (f[j]+f[j+d])%mod, (f[j]-f[j+d])%mod",
+            "                u = u * Winv[l] % mod",
             "",
-            "    def max_flow(self, s, t):",
-            "        flow = 0",
-            "        while True:",
-            "            self._bfs(s)",
-            "            if self.depth[t] < 0: return flow",
-            "            self.progress = [0] * self.n",
-            "            current_flow = self._dfs(s, t, self.inf)",
-            "            while current_flow > 0:",
-            "                flow += current_flow",
-            "                current_flow = self._dfs(s, t, self.inf)",
+            "def convolve(a, b):",
+            "    la, lb = len(a), len(b)",
+            "    le = la + lb - 1",
+            "    k = le.bit_length()",
+            "    n = 1 << k",
+            "    ninv = pow(n,mod-2,mod)",
+            "    a += [0]*(n-la)",
+            "    b += [0]*(n-lb)",
+            "    fft(k,a)",
+            "    fft(k,b)",
+            "    a = [ai * bi % mod for ai, bi in zip(a, b)]",
+            "    ifft(k,a)",
+            "    return [ai * ninv % mod for ai in a[:le]]",
             "",
             "",
-            "#############",
-            "n, m = map(int, input().split())",
-            "mf = Dinic(n)",
-            "for _ in range(m):",
-            "    a, b, e = map(int, input().split())",
-            "    a -= 1; b -= 1",
-            "    mf.add_edge(a, b, e)",
+            "n,m = map(int,input().split())",
+            "A = list(map(int,input().split()))",
+            "B = list(map(int,input().split()))",
             "",
-            "print(mf.max_flow(0, n-1))",
+            "print(*convolve(A,B))",
             ""
         ],
-        "description": [
-            "最大フローO(∣V∣**2・∣E∣)Dinic"
-        ]
+        "description": []
     },
     "セグメント木区間更新一点集約": {
         "prefix": [

@@ -4,9 +4,9 @@
 # memo
 #body#
 from functools import lru_cache
-@lru_chache(1000000)
+@lru_cache(1000000)
 #prefix#
-# memo_lru_chache
+# memo_lru_cache
 #end#
 
 #name#
@@ -14,7 +14,9 @@ from functools import lru_cache
 #description#
 # collectionslib
 #body#
-from collections import defaultdict, Counter, deque
+from collections import defaultdict
+from collections import deque
+from collections import Counter
 #prefix#
 # from collections
 #end#
@@ -29,12 +31,3 @@ from heapq import heapify, heappop, heappush
 # from heapq
 #end#
 
-#name#
-# priorityqlib
-#description#
-# priorityqlib
-#body#
-from heapq import heapify, heappop, heappush
-#prefix#
-# priorityque
-#end#

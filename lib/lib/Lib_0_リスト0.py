@@ -70,7 +70,8 @@ def count_intervals(a:list, x)->int:
 direc = {(1, 0), (-1, 0), (0, 1), (0, -1)}
 direc = {(1, 0), (-1, 0), (0, 1), (0, -1), (1, 1), (1, -1) (-1, 1), (-1, -1)}
 
-def notisinhw(i, j, h, w): return not ((0 <= i < h) and (0 <= j < w))
+isinhw = lambda i,j,h,w: (0 <= i < h) and (0 <= j < w)
+notinhw = lambda i,j,h,w: not ((0 <= i < h) and (0 <= j < w))
 
 #prefix#
 # direc_isinhw

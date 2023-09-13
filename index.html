@@ -28,7 +28,7 @@
             
             <li><a href="#GT">木</a></li>
             
-            <li><a href="#SP">最短距離</a></li>
+            <li><a href="#SP">最短経路</a></li>
             
             <li><a href="#N">整数</a></li>
             
@@ -485,26 +485,50 @@
             </ul>
         </section>
     
-        <section id="SP"><h2>最短距離</h2>
+        <section id="SP"><h2>最短経路</h2>
             <ul>
                 
                     <li>
-                        None[<a href="https://github.com/ibtosmlin/atcoder/blob/main/lib/lib/Lib_SP_ダイクストラ.py" target="_blank">Lib_SP_ダイクストラ.py</a>]
+                        ダイクストラ法[<a href="https://github.com/ibtosmlin/atcoder/blob/main/lib/lib/Lib_SP_ダイクストラ.py" target="_blank">Lib_SP_ダイクストラ.py</a>]
                         <ul>
+                            
+                                <li>
+                                    dijkstra: 重み付き隣接リストにより単一始点最短経路のリストを作る
+                                </li>
+                            
+                                <li>
+                                    O((E+V)logV)
+                                </li>
                             
                         </ul>
                     </li>
                 
                     <li>
-                        None[<a href="https://github.com/ibtosmlin/atcoder/blob/main/lib/lib/Lib_SP_ベルマンフォード.py" target="_blank">Lib_SP_ベルマンフォード.py</a>]
+                        ベルマンフォード法[<a href="https://github.com/ibtosmlin/atcoder/blob/main/lib/lib/Lib_SP_ベルマンフォード.py" target="_blank">Lib_SP_ベルマンフォード.py</a>]
                         <ul>
+                            
+                                <li>
+                                    bellman_ford: 重み付き隣接リストにより単一始点最短経路のリストを作る
+                                </li>
+                            
+                                <li>
+                                    負閉路OK  O((E+V)logV)
+                                </li>
                             
                         </ul>
                     </li>
                 
                     <li>
-                        None[<a href="https://github.com/ibtosmlin/atcoder/blob/main/lib/lib/Lib_SP_ワーシャルフロイド.py" target="_blank">Lib_SP_ワーシャルフロイド.py</a>]
+                        ワーシャルフロイド法[<a href="https://github.com/ibtosmlin/atcoder/blob/main/lib/lib/Lib_SP_ワーシャルフロイド.py" target="_blank">Lib_SP_ワーシャルフロイド.py</a>]
                         <ul>
+                            
+                                <li>
+                                    warshall_floyd: 全頂点間最短経路のリストを作る
+                                </li>
+                            
+                                <li>
+                                    O(N^3)
+                                </li>
                             
                         </ul>
                     </li>
@@ -545,8 +569,16 @@
                     </li>
                 
                     <li>
-                        None[<a href="https://github.com/ibtosmlin/atcoder/blob/main/lib/lib/Lib_N_約数列挙.py" target="_blank">Lib_N_約数列挙.py</a>]
+                        約数列挙[<a href="https://github.com/ibtosmlin/atcoder/blob/main/lib/lib/Lib_N_約数列挙.py" target="_blank">Lib_N_約数列挙.py</a>]
                         <ul>
+                            
+                                <li>
+                                    make_divisores(n): nの約数を列挙する O(n**0.5)
+                                </li>
+                            
+                                <li>
+                                    legendre(n, p): nはpで何回割れるか? O(log(n))
+                                </li>
                             
                         </ul>
                     </li>
@@ -693,34 +725,39 @@
         <ul>
         
             <li>
-                <a href="https://github.com/ibtosmlin/atcoder/blob/main/lib/lib/" target="_blank">Memo_GM_ゲーム.md</a>
+                <a href="https://github.com/ibtosmlin/atcoder/blob/main/lib/lib/Memo_.md" target="_blank">Memo_.md</a>
             </li>
         
             <li>
-                <a href="https://github.com/ibtosmlin/atcoder/blob/main/lib/lib/" target="_blank">Memo_Xorの性質.md</a>
+                <a href="https://github.com/ibtosmlin/atcoder/blob/main/lib/lib/Memo_GM_ゲーム.md" target="_blank">Memo_GM_ゲーム.md</a>
             </li>
         
             <li>
-                <a href="https://github.com/ibtosmlin/atcoder/blob/main/lib/lib/" target="_blank">Memo_グラフの性質.md</a>
+                <a href="https://github.com/ibtosmlin/atcoder/blob/main/lib/lib/Memo_Xorの性質.md" target="_blank">Memo_Xorの性質.md</a>
             </li>
         
             <li>
-                <a href="https://github.com/ibtosmlin/atcoder/blob/main/lib/lib/" target="_blank">Memo_マンハッタン距離.md</a>
+                <a href="https://github.com/ibtosmlin/atcoder/blob/main/lib/lib/Memo_グラフの性質.md" target="_blank">Memo_グラフの性質.md</a>
             </li>
         
             <li>
-                <a href="https://github.com/ibtosmlin/atcoder/blob/main/lib/lib/" target="_blank">Memo_再帰.md</a>
+                <a href="https://github.com/ibtosmlin/atcoder/blob/main/lib/lib/Memo_マンハッタン距離.md" target="_blank">Memo_マンハッタン距離.md</a>
             </li>
         
             <li>
-                <a href="https://github.com/ibtosmlin/atcoder/blob/main/lib/lib/" target="_blank">Memo_場合の数.md</a>
+                <a href="https://github.com/ibtosmlin/atcoder/blob/main/lib/lib/Memo_再帰.md" target="_blank">Memo_再帰.md</a>
             </li>
         
             <li>
-                <a href="https://github.com/ibtosmlin/atcoder/blob/main/lib/lib/" target="_blank">Memo_遅延評価Seg木.md</a>
+                <a href="https://github.com/ibtosmlin/atcoder/blob/main/lib/lib/Memo_場合の数.md" target="_blank">Memo_場合の数.md</a>
+            </li>
+        
+            <li>
+                <a href="https://github.com/ibtosmlin/atcoder/blob/main/lib/lib/Memo_遅延評価Seg木.md" target="_blank">Memo_遅延評価Seg木.md</a>
             </li>
         
         </ul>
     </section>
 </main>
+<footer></footer>
 </html>

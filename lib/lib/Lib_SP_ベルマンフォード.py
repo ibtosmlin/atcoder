@@ -1,3 +1,9 @@
+#title#
+# ベルマンフォード法
+#subtitle#
+# bellman_ford: 重み付き隣接リストにより単一始点最短経路のリストを作る
+# 負閉路OK  O((E+V)logV)
+
 #name#
 # ベルマンフォード法
 #description#
@@ -11,7 +17,7 @@
 
 # https://atcoder.jp/contests/abc061/tasks/abc061_d
 
-def bellman_ford(st=0):
+def bellman_ford(G, st=0):
     """
     n: グラフの頂点数
     st: 始点
@@ -60,7 +66,7 @@ for _ in range(m):
     G[_a].append((_b, -_c))
 
 st = 0
-ret = bellman_ford(st)
+ret = bellman_ford(G, st)
 if ret == -1:
     print('inf')
 else:

@@ -11,7 +11,7 @@ body {
 }
 
 header {width: 100%}
-footer {width: 100%; top: 100vh; position: sticky}
+footer {height: 10%; top: 100vh; position: sticky}
 
 #pagetop {
     position: fixed;

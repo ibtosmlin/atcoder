@@ -1,3 +1,9 @@
+#title#
+# 約数列挙
+#subtitle#
+# make_divisores(n): nの約数を列挙する O(n**0.5)
+# legendre(n, p): nはpで何回割れるか? O(log(n))
+
 #name#
 # 約数列挙
 #descripiton#
@@ -22,7 +28,7 @@ print(make_divisors(10))
 
 
 ##############################
-# n!が素数pで何回割れるか O(logn)
+# n!がpで何回割れるか O(logn)
 # legendre(n, p)
 ##############################
 def legendre(n, p):
@@ -32,7 +38,7 @@ def legendre(n, p):
         n //= p
     return ret
 
-    
+
 #prefix#
 # Lib_N_約数列挙
 #end#

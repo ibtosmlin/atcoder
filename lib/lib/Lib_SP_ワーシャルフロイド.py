@@ -1,3 +1,9 @@
+#title#
+# ワーシャルフロイド法
+#subtitle#
+# warshall_floyd: 全頂点間最短経路のリストを作る
+# O(N^3)
+
 #name#
 # ワーシャルフロイド法
 #discription#
@@ -17,7 +23,6 @@ class warshall_floyd:
             self.d[i][i] = 0 #自身のところに行くコストは０
 
 
-
     def build(self):
         n = self.n
         wf = copy.deepcopy(self.d)
@@ -25,7 +30,6 @@ class warshall_floyd:
             for i in range(n):
                 for j in range(n):
                     wf[i][j] = min(wf[i][j], wf[i][k] + wf[k][j])
-
         self.wf = wf #wf[i][j]に頂点i, j間の最短距離を格納
 
 

@@ -145,9 +145,18 @@ class Line:
         dd = self.p0.dist2(self.p1)
         return self.p0 + self.vector * (dv/dd)
 
-    def dist_from_point(self, p: Point):
+    def dist_from_point_to_project(self, p: Point):
         # 垂線の長さ
         return p.dist2(self.project(p)) ** 0.5
+
+    def dist_from_point(self, p: Point):
+        # 線分としての点からの距離
+        dv = self.p0.dot3(self.p1, p)
+        dd = self.p0.dist2(self.p1)
+        if 0 <= dv <= dd:
+            return p.dist2(self.project(p)) ** 0.5
+        else:
+            return min(self.p0.dist(p), self.p1.dist(p))
 
     def reflect(self, p: Point):
     # https://onlinejudge.u-aizu.ac.jp/courses/library/4/CGL/1/CGL_1_B
@@ -246,7 +255,22 @@ class Polygon:
         P = self.points
         return not any((P[i-2].counter_clockwise(P[i-1], P[i]) == -1 for i in range(self.N)))
 
-    def contains(self, p:Point):
+    def contains(self, p:Point, isconvex=False):
+        """
+        returns
+        0: not
+        1: on 線上
+        2: contain 包含
+        """
+        ON_EDGE = 1
+        INCLUDE = 2
+        NOT_INCLUDE = 0
+        if isconvex:
+            return self._contains_convex(p)
+        else:
+            return self._contains_notconvex(p)
+
+    def _contains_notconvex(self, p:Point):
     # https://onlinejudge.u-aizu.ac.jp/courses/library/4/CGL/3/CGL_3_C
     # 多角形-点の包含 凸多角形とは限らない
     # O(N)
@@ -266,6 +290,35 @@ class Polygon:
             if p0.y > p1.y: p0, p1 = p1, p0
             if p0.y < EPS < p1.y and p0.det(p1) > EPS: included = not included
         if included: return INCLUDE
+        return NOT_INCLUDE
+
+
+    def _contains_convex(self, p: Point):
+        # https://atcoder.jp/contests/abc296/tasks/abc296_g
+        # ある点が凸多角形に入っているか
+        # log(N)
+        ON_EDGE = 1
+        INCLUDE = 2
+        NOT_INCLUDE = 0
+        ######################
+        left = 1; right = self.N
+        q0 = self.points[0]
+        while right - left > 1:
+            mid = (left + right) // 2
+            if q0.det3(p, self.points[mid]) < EPS: left = mid
+            else: right = mid
+        if left == self.N-1:
+            left -= 1
+        qi = self.points[left]; qj = self.points[left + 1]
+        v0 = q0.det3(qi, qj)
+        v1, v2 = q0.det3(p, qj), q0.det3(qi, p)
+        if v0 < -EPS:
+            v1 = -v1; v2 = -v2
+        if 0 <= v1 and 0 <= v2 and v1 + v2 <= v0:
+            if left == 1 and abs(v2) < EPS: return ON_EDGE
+            if left + 1 == self.N - 1 and abs(v1) < EPS: return ON_EDGE
+            if abs(v1 + v2 - v0) < EPS: return ON_EDGE
+            return INCLUDE
         return NOT_INCLUDE
 
     @property
@@ -326,32 +379,6 @@ class Polygon:
             if cv1 > -EPS: q.append(p1)
         return Polygon(q)
 
-    def contains(self, p: Point):
-        # https://atcoder.jp/contests/abc296/tasks/abc296_g
-        # ある点が凸多角形に入っているか
-        ON_EDGE = 1
-        INCLUDE = 2
-        NOT_INCLUDE = 0
-        ######################
-        left = 1; right = self.N
-        q0 = self.points[0]
-        while right - left > 1:
-            mid = (left + right) // 2
-            if q0.det3(p, self.points[mid]) < EPS: left = mid
-            else: right = mid
-        if left == self.N-1:
-            left -= 1
-        qi = self.points[left]; qj = self.points[left + 1]
-        v0 = q0.det3(qi, qj)
-        v1, v2 = q0.det3(p, qj), q0.det3(qi, p)
-        if v0 < -EPS:
-            v1 = -v1; v2 = -v2
-        if 0 <= v1 and 0 <= v2 and v1 + v2 <= v0:
-            if left == 1 and abs(v2) < EPS: return ON_EDGE
-            if left + 1 == self.N - 1 and abs(v1) < EPS: return ON_EDGE
-            if abs(v1 + v2 - v0) < EPS: return ON_EDGE
-            return INCLUDE
-        return NOT_INCLUDE
 
 ######################################################################
 class Circle:
@@ -577,7 +604,7 @@ def closestPair(points):
 # p = Point(x, y)
 # x, y, u, v = map(int, input().split())
 # l = Line(Point(x, y), Point(u, v))
-# poly = Polygon([Point(tuple(map(int, input().split()))) for _ in range(m)])
+# poly = Polygon([Point(*tuple(map(int, input().split()))) for _ in range(m)])
 # x, y, r = map(int, input().split())
 # cir = Circle(Point(x, y), r)
 # tri = Polygon([tuple(map(int, input().split())) for _ in range(3)])
