@@ -1,3 +1,13 @@
+#title#
+# 行列演算
+#subtitle#
+# prod: (ma*mb, mod)行列の掛け算(modで)
+# powmat: 正方行列のべき乗計算
+# trans: 転置行列を返す
+# rotate: 90度回転 reverse = True時計 False反時計
+# gauss_jordan: F2(二進数)での上三角行列
+# solve_linear_equation: F2(二進数)でAx=bとなるxを求める
+
 #name#
 # 行列演算
 #descripiton#
@@ -8,23 +18,19 @@
 # returns nxk - matrix
 
 def prod(ma, mb, mod=1):
-    n_a = len(ma)
-    m_a = len(ma[0])
-    n_b = len(mb)
-    m_b = len(mb[0])
-    if n_a*m_a*n_b*m_b == 0: return 0
-    if m_a != n_b: return 0
-
-    ret = []
-    for i in range(n_a):
-        rw = []
-        for j in range(m_b):
-            c = 0
-            for k in range(m_a):
+    h_a = len(ma)
+    w_a = len(ma[0])
+    h_b = len(mb)
+    w_b = len(mb[0])
+    if h_a*w_a*h_b*w_b == 0: return 0
+    if w_a != h_b: return 0
+    ret = [[0] * h_a for _ in range(w_b)]
+    for i in range(h_a):
+        for j in range(w_b):
+            for k in range(w_a):
                 c += ma[i][k]*mb[k][j]
                 c %= mod
-            rw.append(c)
-        ret.append(rw)
+            ret[i][j] = c
     return ret
 
 
@@ -78,4 +84,66 @@ def rotate(A, reverse = False):
         return [list(x) for x in zip(*A[::-1])]
 #prefix#
 # Lib_M_rotate_matrix
+#end#
+
+
+#name#
+# F2(2進数)での上三角行列生成
+#description#
+# F2(2進数)での上三角行列生成
+#body#
+def gauss_jordan(ma):
+    n, m = len(ma), len(ma[0])
+    rank = 0
+    for col in range(m):
+        if rank>=n: break
+        if ma[rank][col] == 0:
+            for row in range(rank+1, n):
+                if ma[row][col]:
+                    ma[rank], ma[row] = ma[row], ma[rank]
+                    break
+        if ma[rank][col] == 1:
+            for row in range(rank+1, n):
+                if ma[row][col]:
+                    for _col in range(col, m):
+                        ma[row][_col] ^= ma[rank][_col]
+            rank += 1
+    return ma, rank
+
+#prefix#
+# Lib_M_上三角行列
+#end#
+
+#name#
+# F2(2進数)でのA・x = b となるxを見つける
+#description#
+# F2(2進数)でのA・x = b となるxを見つける
+#body#
+def solve_linear_equation(A, b):
+    """A・x = b となるxを見つける"""
+    h, w = len(A), len(A[0])
+    """extend"""
+    _A = []
+    for Ai, bi in zip(A, b):
+        _A.append(Ai + [bi])
+    rank = 0
+    for col in range(w):
+        for row in range(rank, h):
+            if _A[row][col]:
+                _A[row], _A[rank] = _A[rank], _A[row]
+                break
+        else: continue
+        for row in range(h):
+            if row != rank and _A[row][col]:
+                for _col in range(w + 1):
+                    _A[row][_col] ^= _A[rank][_col]
+        rank += 1
+    # for ai in A: print(ai)
+    # print("---")
+    # for ai in _A: print(ai)
+    # print(rank)
+    return _A, rank
+
+#prefix#
+# Lib_M_線形方程式
 #end#

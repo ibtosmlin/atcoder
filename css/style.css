@@ -42,3 +42,7 @@ footer {height: 10%; top: 100vh; position: sticky}
     height: 45px;
 }
 }
+
+a {
+    color:green;
+}

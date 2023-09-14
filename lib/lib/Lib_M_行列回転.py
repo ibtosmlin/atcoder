@@ -1,3 +1,11 @@
+#title#
+# 行列回転
+#subtitle#
+# rotate: tだけシフト回転
+# reverse_lr: 左右反転
+# reverse_ud: 上下反転
+
+
 #name#
 # 行列演算2
 #descripiton#
