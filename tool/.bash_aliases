@@ -1,5 +1,5 @@
 # ls aliases
-alias ll='ls -alX'
+alias ll="ls -alX"
 
 # atcoder contest
 alias at="source ~/atcoder/tool/atcoder.sh"
@@ -15,7 +15,7 @@ alias pyg="source ~/atcoder/tool/g.py.sh"
 alias pyh="source ~/atcoder/tool/h.py.sh"
 
 # atcoder tool settings
-alias setat="source ~/atcoder/tool/settings.sh"
+alias setat="source ~/atcoder/tool/set_atcoder.sh"
 
 # test
 alias test="source ~/atcoder/tool/algo.sh"
@@ -29,3 +29,6 @@ eval "$(oh-my-posh init bash --config ~/.poshthemes/ibtosm.omp.json)"
 
 # python alias
 alias py="python3"
+
+# atcoder work clear
+alias clearwork="source ~/atcoder/tool/set_clear_work.sh"
