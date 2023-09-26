@@ -37,11 +37,25 @@ if [ $arg = 'd' ]; then
     cd $ctaskwd
     oj d $url
     cd $cp
-    cp $ctemplate $cfname
-    sed -i "1i # $url" $cfname
-    code $cfname
-    echo "${ctemplate} created in ${cfname}"
+    if [ ! -f $cfname ]; then
+        cp $ctemplate $cfname
+        sed -i "1i # $url" $cfname
+        code $cfname
+        echo "${ctemplate} created in ${cfname}"
+    else
+        echo "${cfname} already exists."
+    fi
 
+elif [ $arg = 'template' ]; then
+    if [ ! -f $cfname ]; then
+        cp $ctemplate $cfname
+        sed -i "1i # $url" $cfname
+        code $cfname
+        echo "${ctemplate} created in ${cfname}"
+    else
+        code $cfname
+        echo "${cfname} already exists."
+    fi
 
 elif [ $arg = 't' ]; then
 # test

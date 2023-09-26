@@ -27,6 +27,9 @@ class Point:
     def __truediv__(self, const):
         return Point(self.x / const, self.y / const)
 
+    def __eq__(self, other):
+        return (self - other).norm2 < EPS
+
     @property
     def norm2(self):
         return self.x **2 + self.y **2
@@ -113,6 +116,7 @@ class Point:
 
 ######################################################################
 class Line:
+    """基本は線分"""
     def __init__(self, p0: Point, p1: Point):
         self.p0, self.p1 = p0, p1
         self.vector = p1 - p0
@@ -179,7 +183,7 @@ class Line:
 
     def cross_point(self, other):
     # https://onlinejudge.u-aizu.ac.jp/courses/library/4/CGL/2/CGL_2_C
-    # 直線の交点
+    # 線分(直線含む)の交点
         if self.is_parallel(other): return None
         d = self.vector.det(other.vector)
         sn = (other.p0 - self.p0).det(other.vector)
@@ -235,6 +239,16 @@ class Polygon:
         self.points = pts
         self.pts = [p.value for p in pts]
 
+    def __len__(self, other):
+        return self.N
+
+    def sort(self):
+        if self.N == 0: return
+        p0 = sorted(self.points)[0]
+        points = [q + p0 for q in sorted([p - p0 for p in self.points])]
+        self.points = points
+        self.pts = [p.value for p in points]
+
     @property
     def value(self):
         return self.pts
@@ -255,7 +269,7 @@ class Polygon:
         P = self.points
         return not any((P[i-2].counter_clockwise(P[i-1], P[i]) == -1 for i in range(self.N)))
 
-    def contains(self, p:Point, isconvex=False):
+    def contains(self, p:Point, isconvex=True):
         """
         returns
         0: not
@@ -379,6 +393,32 @@ class Polygon:
             if cv1 > -EPS: q.append(p1)
         return Polygon(q)
 
+    def intersection(self, other):
+        sps = self.points
+        ops = other.points
+        points = []
+        for p in sps:
+            if other.contains(p): points.append(p)
+        for p in ops:
+            if self.contains(p): points.append(p)
+
+        for i in range(self.N):
+            p0, p1 = sps[i-1], sps[i]
+            self_line = Line(p0, p1)
+            for j in range(other.N):
+                q0, q1 = ops[j-1], ops[j]
+                other_line = Line(q0, q1)
+                if self_line.is_intersect(other_line):
+                    p = self_line.cross_point(other_line)
+                    if p: points.append(p)
+        points.sort()
+        sub = []
+        for i in range(len(points)):
+            if points[i-1] != points[i]:
+                sub.append(points[i-1])
+        inter = Polygon(sub)
+        inter.sort()
+        return inter
 
 ######################################################################
 class Circle:
@@ -596,7 +636,6 @@ def closestPair(points):
         return d
     points.sort(key=lambda p: p.x)
     return _closest_Pair(points)
-
 
 ######################################################################
 
