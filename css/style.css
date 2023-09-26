@@ -56,6 +56,7 @@ table{
 
 table, th, td {
     border:1px solid #333;
+    border-collapse:collapse0;
   }
 #col0 {
     width: 30%
