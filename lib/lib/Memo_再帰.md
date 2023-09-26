@@ -1,5 +1,5 @@
 
-
+```
 ret = 0
 
 def dfs(bit, xo):
@@ -14,3 +14,4 @@ def dfs(bit, xo):
 
 dfs((1<<(2*n))-1, 0)
 print(ret)
+```
