@@ -24,20 +24,22 @@
 <div id="pagetop"><a href="#top"><i class="fas fa-angle-up"></i></a></div>
     {% for x in segments%}
         <section id="{{x[0]}}"><h2>{{x[1]}}</h2>
-            <ul>
                 {% for xi in x[2] %}
-                    <li>
+                <table>
+                    <td id="col0">
+                        <li>
                         {{xi.title}}[<a href="https://github.com/ibtosmlin/atcoder/blob/main/lib/lib/{{xi.fname}}" target="_blank">{{xi.fname}}</a>]
-                        <ul>
-                            {% for xij in xi.subtitle %}
-                                <li>
-                                    {{xij}}
-                                </li>
-                            {% endfor %}
-                        </ul>
-                    </li>
+                        </li>
+                    </td>
+                    <td id="col1">
+                        {% for xij in xi.subtitle %}
+                            <li>
+                                {{xij}}
+                            </li>
+                        {% endfor %}
+                    </td>
+                </table>
                 {% endfor %}
-            </ul>
         </section>
     {% endfor %}
 
