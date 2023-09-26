@@ -1,3 +1,9 @@
+#title#
+# 高速フーリエ変換(convolution, FFT)
+#subtitle#
+# convolve(a, b): リストa(len=n)とリストb(len=m)のコンボリューションc = a*b(len=n+m)を出力
+# c[t] = Σa_i * b_j  (i+j=t)
+
 #name#
 # 高速フーリエ変換(convolution, FFT)
 #description#
