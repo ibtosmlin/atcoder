@@ -1,3 +1,8 @@
+#title#
+# ランレングス圧縮
+#subtitle#
+# 文字列を文字＋個数で表記する
+
 #name#
 # ランレングス圧縮
 #description#
