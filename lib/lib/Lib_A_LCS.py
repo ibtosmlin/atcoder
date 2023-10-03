@@ -1,3 +1,10 @@
+#title#
+# 最長共通部分列
+#subtitle#
+# LCS(S, T): SとTでクラスを構築
+# len: LCSの長さ
+# str: 最長共通部分列を構築
+
 #name#
 # LCS最長共通部分列
 #description#

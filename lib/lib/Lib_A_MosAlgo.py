@@ -1,15 +1,18 @@
-#name#
-# Mo'sAlgorythm#
-#description#
-# Mo'sAlgorythm#
-#body#
-
+#title#
+# Mo アルゴリズム
+#subtitle#
 # A:リスト n = 10**5
 # Q: l, r, q = 10**5
 # O(NQ−−√)が間に合う条件である*3
 # 区間伸縮の計算がO(1) またはそれに近い
 # クエリがオフラインで与えられる(先読みができる)
 # 配列の要素が不変である
+
+#name#
+# Mo'sAlgorithm#
+#description#
+# Mo'sAlgorithm#
+#body#
 
 class _Mo:
     def __init__(self, N:int, Q:int):

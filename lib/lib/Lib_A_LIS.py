@@ -1,3 +1,12 @@
+#title#
+# 最長増加部分列
+
+#subtitle#
+# LIS(x, fg): xは数列で構築
+# fg: 0:単調非減少, 1:単調増加
+# LIS.length: 長さ
+# LIS.restore: 数列
+
 #name#
 # LIS最長増加部分列
 #description#

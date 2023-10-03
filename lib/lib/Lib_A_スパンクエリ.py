@@ -1,3 +1,10 @@
+#title#
+# スパンクエリ
+
+#subtitle#
+# left_min_positon(A, v):左で自分より小さいものがあるindexを高速で計算
+# right_min_positon(A, v):右で自分より小さいものがあるindexを高速で計算
+
 #name#
 # スパンクエリ
 #description#
@@ -17,7 +24,7 @@ def left_min_position(A, min_value=0):
     return ret
 
 def right_min_position(A, min_value=0):
-# 左で自分より小さいものがあるindexを高速で計算
+# 右で自分より小さいものがあるindexを高速で計算
     n = len(A)
     return [n - pi - 1 for pi in reversed(left_min_position(A[::-1]))]
 

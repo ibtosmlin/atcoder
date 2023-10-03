@@ -4679,18 +4679,11 @@
             "最小費用流を算出するO(FElogV) ダイクストラ"
         ]
     },
-    "Mo'sAlgorythm#": {
+    "Mo'sAlgorithm#": {
         "prefix": [
             "Lib_Mos_モアルゴリズム"
         ],
         "body": [
-            "",
-            "# A:リスト n = 10**5",
-            "# Q: l, r, q = 10**5",
-            "# O(NQ−−√)が間に合う条件である*3",
-            "# 区間伸縮の計算がO(1) またはそれに近い",
-            "# クエリがオフラインで与えられる(先読みができる)",
-            "# 配列の要素が不変である",
             "",
             "class _Mo:",
             "    def __init__(self, N:int, Q:int):",
@@ -4800,7 +4793,7 @@
             ""
         ],
         "description": [
-            "Mo'sAlgorythm#"
+            "Mo'sAlgorithm#"
         ]
     },
     "三分探索": {
