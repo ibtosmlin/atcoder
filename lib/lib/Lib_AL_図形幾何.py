@@ -1,3 +1,11 @@
+#title#
+# 図形のライブラリ
+#subtitle#
+# Point:
+# Line:
+# Circle:
+# Polygon:
+
 #name#
 # Lib_AL_図形_n角形/円
 #description#

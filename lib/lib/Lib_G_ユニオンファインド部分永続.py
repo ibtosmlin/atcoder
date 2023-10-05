@@ -1,3 +1,12 @@
+#title#
+# ユニオンファインド部分永続
+#subtitle#
+# UnionFindPP(n): クラス
+# .find(t, x): 時刻t における xの親を見つける
+# .unite(x, y): x,yをつなげる,時刻は自動で記録される
+# .same(t,x,y):時刻tにおけるxとyが連結か？
+# .time_join(x, y): xとyが連結となった時刻を返す
+
 #name#
 # ユニオンファインド部分永続
 #description#

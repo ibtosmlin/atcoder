@@ -1,3 +1,8 @@
+#title#
+# 順序付き重複あり集合
+#subtitle#
+# SortedMultiSet:クラス
+
 #name#
 # Sorted Multi Set
 #description#

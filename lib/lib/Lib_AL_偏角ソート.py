@@ -1,3 +1,9 @@
+#title#
+# 偏角ソート
+#subtitle#
+# degree_sort(points): 偏角ソートした配列
+# 原点<第一象限<第二象限<第三象限<第四象限
+
 #name#
 # 偏角ソート
 #description#

@@ -1,8 +1,16 @@
-#name#
+#title#
 # Wavelet Matrix
-#description#
+#subtitle#
 # WaveletMatrix: 数列のある範囲での値の頻度やインデックスを求める
-#body#
+# access(k): k番目の要素の値
+# select(v, k): k番目のvのインデックス
+# rank(l, r, v): 区間 [l,r) に含まれる v の個数
+# freq(l, r, s, t): 区間 [l,r) に含まれる要素のうち,値が[s, t) である要素の個数
+# quantile(l, r, k):区間[l,r)に含まれる要素のうち,値がk番目(0-ind>k+1番目)の値
+# kth_smallest(l, r, k): 区間[l,r) に含まれる要素のうち k 番目(0-indexed) に小さいものを返す.
+# kth_largest(l, r, k): 区間 [l,r) に含まれる要素のうち k 番目 (0-indexed) に大きいものを返す.
+# prev_value(l, r, value): 区間[l, r) に含まれる要素のうち valueより小さいもの
+# next_value(l, r, value): 区間[l, r) に含まれる要素のうち value以上の値(valueのこともあり得る)
 
 #name#
 # Wavelet Matrix
@@ -316,4 +324,3 @@ for _ in range(q):
 #prefix#
 # Lib_D_WaveletMatrix
 #end#
-

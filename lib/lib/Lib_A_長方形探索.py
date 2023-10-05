@@ -1,3 +1,11 @@
+#title#
+# 長方形探索
+#subtitle#
+# max_square(h, w, G, block):最大正方形
+# max_rect(h, w, G, block):最大長方形
+# left_min_position(A, min_value=0): 左で自分より小さいものがあるindexを高速で計算
+
+
 #name#
 # 長方形探索
 #description#
@@ -73,9 +81,9 @@ def left_min_position(A, min_value=0):
     return ret
 
 def right_min_position(A, min_value=0):
-# 左で自分より小さいものがあるindexを高速で計算
+# 右で自分より小さいものがあるindexを高速で計算
     n = len(A)
-    return [n - pi - 1 for pi in reversed(left_min_position(A[::-1]))]
+    return [n - pi - 1 for pi in reversed(left_min_position(A[::-1], min_value))]
 
 
 n = int(input())

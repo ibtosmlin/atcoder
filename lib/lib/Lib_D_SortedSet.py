@@ -1,3 +1,8 @@
+#title#
+# 順序付き集合
+#subtitle#
+# SortedSet:クラス
+
 #name#
 # Sorted Set
 #description#

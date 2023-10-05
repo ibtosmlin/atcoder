@@ -1,3 +1,8 @@
+#title#
+# 二次元累積和
+#subtitle#
+# Imos:クラス
+
 #name#
 # 累積和
 #description#

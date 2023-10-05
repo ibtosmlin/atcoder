@@ -1,3 +1,9 @@
+#title#
+# 二次元点クエリ
+#subtitle#
+# RangeSearchQuery(A): ポイントのリストAを与えてクラスをインスタンス
+# query(sx, tx, sy, ty): 二次元点のリストで範囲を指定して、含まれる要素番号を出力する
+
 #name#
 # 二次元点クエリ
 #description#

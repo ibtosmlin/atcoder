@@ -1,3 +1,9 @@
+#title
+# 三角形
+#subtitle
+# C(a, b, R): 二辺a,bと挟角Rから対辺の長さを計算
+# S(a, b, R): 二辺a,bと挟角Rから面積を計算
+
 #name#
 # Lib_AL_図形_三角形_角度
 #description#

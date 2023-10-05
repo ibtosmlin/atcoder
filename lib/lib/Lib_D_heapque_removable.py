@@ -1,3 +1,14 @@
+#title#
+# 削除機能付きheapque
+#subtitle#
+# DeletableMaxMinHeapQ: クラス
+# heappush:
+# heappopmax: 大きいものを取り出す
+# heappopmin: 小さいものを取り出す
+# heapmax: 大きいものにアクセス
+# heapmin: 小さいものにアクセス
+# heapdel(x): xを削除
+
 #name#
 # 削除機能付きheapque
 #description#
