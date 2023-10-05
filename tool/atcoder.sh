@@ -15,14 +15,19 @@ cfname="${cwd}/${taskid}.py"
 ctest="${cwd}/testlib"
 ctaskwd="${ctest}/${taskid}"
 ctaskfname="${ctest}/${taskid}/main.py"
+ctaskwdtest="${ctest}/${taskid}/test"
+
+msg1="Downloading................"
+msg2="Testing...................."
+msg3="Submitting by Pypy3........"
+msg4="SkipDownload..............."
 
 cd ${cwd}
 
 # argument 1
 # example: https://atcoder.jp/contests/abc235/tasks/abc235_a
 # argument 2
-# example: 'd' or 't'
-
+# example: 'd' or 't' or 'template'
 
 # echo $url
 # echo $arg
@@ -30,9 +35,9 @@ cd ${cwd}
 # echo $filename    -> abc235_a.py
 
 if [ $arg = 'd' ]; then
-# download
+# download test data and set template
 #    x-www-browser $url
-    echo "Downloading................"
+    echo $msg1
     mkdir -p $ctaskwd
     cd $ctaskwd
     oj d $url
@@ -47,6 +52,7 @@ if [ $arg = 'd' ]; then
     fi
 
 elif [ $arg = 'template' ]; then
+# set template
     if [ ! -f $cfname ]; then
         cp $ctemplate $cfname
         sed -i "1i # $url" $cfname
@@ -58,8 +64,18 @@ elif [ $arg = 'template' ]; then
     fi
 
 elif [ $arg = 't' ]; then
+# download test data and test
+    if [ ! -d $ctaskwdtest ]; then
+        echo $msg1
+        mkdir -p $ctaskwd
+        cd $ctaskwd
+        oj d $url
+        cd $cp
+    else
+        echo $msg4
+    fi
 # test
-    echo "Testing....................."
+    echo $msg2
     cp $cfname $ctaskfname
     cd $ctaskwd
     # oj t -c 'python3 main.py' -S
@@ -67,19 +83,19 @@ elif [ $arg = 't' ]; then
     cd $cp
 
 
-elif [ $arg = 'ss' ]; then
-# submit
-    echo "Submitting by Python3......."
-    cp $cfname $ctaskfname
-    cd $ctaskwd
-    # echo y | oj s main.py
-    oj s --language 5055 --no-guess main.py --yes
-    cd $cp
+# elif [ $arg = 'ss' ]; then
+# # submit
+#     echo "Submitting by Python3......."
+#     cp $cfname $ctaskfname
+#     cd $ctaskwd
+#     # echo y | oj s main.py
+#     oj s --language 5055 --no-guess main.py --yes
+#     cd $cp
 
 
 elif [ $arg = 's' ]; then
 # submit
-    echo "Submitting by Pypy3........."
+    echo $msg3
     fm="$cwd/$filename"
     to="$cp/$taskid/main.py"
     cp $cfname $ctaskfname
