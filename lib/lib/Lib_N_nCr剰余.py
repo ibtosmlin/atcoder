@@ -10,15 +10,15 @@
 # http://zakii.la.coocan.jp/enumeration/10_balls_boxes.htm
 #####################################
 class Combination:
-    def __init__(self, maxn:int=10**9, mod:int=1000000007) -> None:
+    def __init__(self, maxn:int=10**6, mod:int=1000000007) -> None:
         self.mod = mod
         self.maxn = maxn
-        fac, facinv = [1]*(maxn+1), [1]*(maxn+1)
-        for i in range(2, maxn + 1):
+        _maxn = maxn + 1
+        fac, facinv, inv = [1]*_maxn, [1]*_maxn, [1]*_maxn
+        for i in range(2, _maxn):
             fac[i] = fac[i-1] * i % mod
-        facinv[-1] = pow(fac[-1], mod-2, mod)
-        for i in range(maxn, 0, -1):
-            facinv[i-1] = facinv[i] * i % mod
+            inv[i] = _inv = (mod - inv[mod % i] * (mod // i) % mod) % mod
+            facinv[i] = facinv[i-1] * _inv % mod
         self.fac = fac; self.facinv = facinv
 
     def nCr(self, n, r):
@@ -28,7 +28,7 @@ class Combination:
         if ( r<0 or r>n ):
             return 0
         r = min(r, n-r)
-        return self.fac[n] * self.facinv[r] * self.facinv[n-r] % self.mod
+        return self.fac[n] * (self.facinv[r] * self.facinv[n-r] % self.mod) % self.mod
 
 cmb = Combination
 ret = cmb.nCr(4, 2)
