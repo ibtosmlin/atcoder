@@ -29,6 +29,7 @@ class Kruskal:
         self.edges = [False] * len(G)
         self.weight = 0
         self.nodes = set([])
+        self.INF = 10**20
         self.build()
 
     def build(self)->None:
@@ -40,8 +41,8 @@ class Kruskal:
                 self.nodes |= {u, v}
                 self.edges[i] = True
 
-        if len(self.nodes) != self.n:
-            self.weight = float('inf')
+        if sum(self.edges) != self.n - 1:
+            self.weight = self.INF
 ################################
 
 n, m = map(int, input().split())
