@@ -1,3 +1,12 @@
+#title#
+# 順列のライブラリ
+#subtitle#
+# permutationクラス:
+# id_of_permutation(): 何番目か
+# kth_permutation(k): k番目を出力
+# prev():前の順列
+# next():次の順列
+
 #name#
 # Lib_permutation
 #description#
