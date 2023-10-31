@@ -17,13 +17,11 @@ class BIT:
 
     def add(self, i, x):
         i += 1
-        while i <= self.size:
-            self.dat[i] += x; i += i & -i
+        while i <= self.size: self.dat[i] += x; i += i & -i
 
     def sum(self, r):
         r += 1; s = 0
-        while r>0:
-            s += self.dat[r];r -= r & -r
+        while r: s += self.dat[r];r -= r & -r
         return s
 
 def _compress(points:list) -> list:
