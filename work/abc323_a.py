@@ -1,1 +1,0 @@
-print('No' if int(input()[1::2]) else 'Yes')

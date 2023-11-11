@@ -1,9 +1,8 @@
-# https://atcoder.jp/contests/abc183/tasks/abc183_f
+# https://atcoder.jp/contests/joi2023yo2/tasks/joi2023_yo2_c
 import sys; input: lambda _: sys.stdin.readline().rstrip()
 sys.setrecursionlimit(10001000); import pypyjit; pypyjit.set_param('max_unroll_recursion=-1')
 int1=lambda x: int(x) - 1
 
-from collections import defaultdict
 
 class UnionFind:
     def __init__(self, n):                      # 初期化
@@ -12,7 +11,7 @@ class UnionFind:
         self.ranks = [0] * n                    # 木の深さ
         self.sizes = [1] * n                    # グループの要素数
         self.group_count = n                    # グループの数
-        self.classcnt = [defaultdict(int) for _ in range(n)]
+
 
     def find(self, x):
         """親を出力
@@ -37,8 +36,6 @@ class UnionFind:
             self.ranks[y] += 1
         self.parents[x] = y
         self.sizes[y] += self.sizes[x]
-        for k, v in self.classcnt[x].items():
-            self.classcnt[y][k] += v
         self.group_count -= 1
 
     def same(self, x, y) -> bool:
@@ -73,18 +70,39 @@ class UnionFind:
 
 ################
 
-n, q = map(int, input().split())
-C = list(map(int1, input().split()))
-uf = UnionFind(n)
-for i in range(n):
-    uf.classcnt[i][C[i]] = 1
 
-for _ in range(q):
-    p, a, b = map(int,input().split())
-    a -= 1; b -= 1
-    if p == 1:
-        uf.unite(a, b)
-    else:
-        print(uf.classcnt[uf.find(a)][b])
+h, w = map(int, input().split())
+A = [list(map(int, input().split())) for _ in range(h)]
 
-# https://atcoder.jp/contests/atc001/tasks/unionfind_a
+uf = UnionFind(h*w)
+vals = set()
+
+for i in range(h):
+    for j in range(w):
+        # right
+        if j + 1 < w and A[i][j] == A[i][j+1]:
+            uf.unite(i*w+j, i*w+j+1)
+        # down
+        if i + 1 < h and A[i][j] == A[i+1][j]:
+            uf.unite(i*w+j, i*w+w+j)
+        vals.add(A[i][j])
+
+
+vals = sorted(vals)
+n = len(vals)
+valsid = {v:i for i, v in enumerate(vals)}
+
+count = [0] * n
+maxs = [0] * n
+
+for i in range(h*w):
+    if uf.parents[i] == i:
+        u, v = divmod(i, w)
+        j = valsid[A[u][v]]
+        ufs = uf.sizes[i]
+        count[j] += ufs
+        maxs[j] = max(maxs[j], ufs)
+
+print(vals)
+print(count)
+print(maxs)
