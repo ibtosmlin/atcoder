@@ -1,27 +1,36 @@
 # https://atcoder.jp/contests/abc328/tasks/abc328_g
 import sys; input: lambda _: sys.stdin.readline().rstrip()
-sys.setrecursionlimit(10001000); import pypyjit; pypyjit.set_param('max_unroll_recursion=-1')
+sys.setrecursionlimit(10001000)
+import pypyjit; pypyjit.set_param('max_unroll_recursion=-1')
 int1=lambda x: int(x) - 1
+
+def popcount(x):
+    ret = 0
+    while x:
+        ret += x%2
+        x //= 2
+    return ret
 
 N, C = map(int, input().split())
 A = list(map(int, input().split()))
 B = list(map(int, input().split()))
-INF = 10**20
-dp = [[INF] * (N+1)
-for i in range(N):
-    dp[i][i] = 0
-    dp[i][i+1] = abs(A[i]-B[i])
-for d in range(2, N):
-    for l in range(N):
-        r = l+d
-        if r > N: break
-        for m in range(l, r):
-            u = A[m:r] + A[l:m]
-            v = B[l:r]
-            nw = 0
-            for x, y in zip(u, v):
-                nw += abs(x-y)
-            dp[l][r] = min(dp[l][r], nw+C, dp[l][m]+dp[m][r])
+INF = -1
 
-print(dp[0][N])
-print(dp)
+"""dp[s]: sまで使って一番右がiの場合の最小値"""
+dp = [INF for _ in range(1<<N)]
+dp[0] = 0
+
+for s in range(1<<N):
+    p = popcount(s)
+    if dp[s] == -1: continue
+    for l in range(N):
+        if s >> l & 1: continue
+        now = 0
+        for r in range(l, N):
+            if s >> r & 1: break
+            now += abs(A[r] - B[p+r-l])
+            t = s | ((1<<(r-l+1)) - 1 << l)
+            nv = dp[s] + now + C
+            if dp[t] == -1 or dp[t] > nv:
+                dp[t] = nv
+print(dp[-1]-C)
