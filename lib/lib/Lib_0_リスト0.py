@@ -68,7 +68,7 @@ def count_intervals(a:list, x)->int:
 # direc
 #body#
 direc = {(1, 0), (-1, 0), (0, 1), (0, -1)}
-direc = {(1, 0), (-1, 0), (0, 1), (0, -1), (1, 1), (1, -1) (-1, 1), (-1, -1)}
+direc = {(1, 0), (-1, 0), (0, 1), (0, -1), (1, 1), (1, -1), (-1, 1), (-1, -1)}
 
 isinhw = lambda i,j,h,w: (0 <= i < h) and (0 <= j < w)
 notinhw = lambda i,j,h,w: not ((0 <= i < h) and (0 <= j < w))

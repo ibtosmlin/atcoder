@@ -1,3 +1,8 @@
+#title#
+# 二つのソートされたリストの要素の差の最小値を探索
+#subtitle#
+# near(a, b):最小となる位置の組み合わせと値(i, j, a[i]-b[j])
+
 #name#
 # 差分最小値探索
 #description#

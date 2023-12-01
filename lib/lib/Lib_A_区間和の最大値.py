@@ -1,3 +1,8 @@
+#title#
+# 区間和の最大値
+#subtitle#
+# 区間和を累積和の差分としてその最大値を求めるar-al
+
 #name#
 # 区間和の最大値
 #description#

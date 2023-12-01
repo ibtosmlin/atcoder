@@ -15,8 +15,6 @@ class UnionFind:
         self.parents = [i for i in range(n)]    # 親
         self.ranks = [0] * n                    # 木の深さ
         self.sizes = [1] * n                    # グループの要素数
-        self.group_count = n                    # グループの数
-
 
     def find(self, x):
         """親を出力
@@ -41,7 +39,6 @@ class UnionFind:
             self.ranks[y] += 1
         self.parents[x] = y
         self.sizes[y] += self.sizes[x]
-        self.group_count -= 1
 
     def same(self, x, y) -> bool:
         """xとyが同じグループかどうか
@@ -64,11 +61,14 @@ class UnionFind:
             親ごとのグループのメンバー一覧取得
         """
         leader_buf = [self.find(i) for i in range(self.n)]
+        self.leaders = []
         result = [[] for _ in range(self.n)]
         for i in range(self.n):
+            if leader_buf[i] == i:
+                self.leaders.append(i)
             result[leader_buf[i]].append(i)
         self.groups = result
-        return result
+        return
 
     def __str__(self):
         return '\n'.join(f'{r}: {self.members(r)}' for r in self.roots)

@@ -74,6 +74,32 @@ for i in range(80):
 
 print(g(low))
 
+
 #prefix#
 # Lib_A_三分探索
+#end#
+
+
+#name#
+# 三分探索
+#description#
+# 三分探索
+#body#
+
+def f(x): return x**2
+
+low, high = 0, 1000
+while high - low > 2:
+    l_ = low + (high - low) // 3
+    h_ = high - (high - low) // 3
+    if f(h_) < f(l_):
+        low = l_
+    else:
+        high = h_
+ret = min(f(low), f(high))
+print(ret)
+
+
+#prefix#
+# Lib_A_三分探索整数
 #end#
