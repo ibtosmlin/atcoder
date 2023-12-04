@@ -1,6 +1,6 @@
-#title
+#title#
 # 二次元の座標回転
-#subtitle
+#subtitle#
 # rotate(point, R, isradian):
 
 #name#
