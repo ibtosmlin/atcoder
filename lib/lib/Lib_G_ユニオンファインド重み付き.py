@@ -1,3 +1,13 @@
+#title#
+# ユニオンファインド重み付き（ポテンシャル）
+
+#subtitle#
+# UnionFindWeighted(n)
+# .find(x): xの親
+# .unite(x, y, w): x　と　y　の差を　w として結合
+# .weight(x):　xの重み
+# .diff(x, y):　x と　y　の重みの差
+
 #name#
 # ユニオンファインド重み付き
 #description#
