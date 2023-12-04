@@ -1,3 +1,9 @@
+#title#
+# 文字列等の部分列の個数を数える
+#subtitle#
+# count_subsets(S): Sの部分列を数える
+# CountSubsets(S,T): S,Tの共通した部分列を数える
+
 #name#
 # 部分列の個数
 #description#
