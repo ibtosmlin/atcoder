@@ -1,3 +1,8 @@
+#title#
+# nCr剰余
+#subtitle#
+# 数え上げをmodで行う
+
 #name#
 # nCr
 #description#
