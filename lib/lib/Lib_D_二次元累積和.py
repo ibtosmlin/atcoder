@@ -18,11 +18,11 @@ class Imos:
     def import_grid(self, grid):
         for i in range(self.h):
             for j in range(self.w):
-                self.grid[i+1][j+1] = grid[i][j]
-
-    def grid_add(self, i, j, ad):
-        # i, j is 0 index on self.grid
-        self.grid[i][j] += ad
+                self.grid_add(i, j, grid[i][j])
+                              
+    def grid_add(self, i, j, value):
+        # i, j is 0 index on original_grid
+        self.grid[i+1][j+1] += value
 
     def accumlate(self):
         # 累積和
@@ -33,7 +33,8 @@ class Imos:
             for i in range(1, self.h+1):
                 self.grid[i][j] += self.grid[i-1][j]
 
-    def count(self, x, y, u, v):
+    def sum(self, x, y, u, v):
+        # x <= i < u, y <= j < v　の範囲をカウント
         if not 0<= x <= u < self.h+1: return 0
         if not 0<= y <= v < self.w+1: return 0
         gd = self.grid
