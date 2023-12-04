@@ -1,6 +1,6 @@
-#title
+#title#
 # 三角形
-#subtitle
+#subtitle#
 # C(a, b, R): 二辺a,bと挟角Rから対辺の長さを計算
 # S(a, b, R): 二辺a,bと挟角Rから面積を計算
 
