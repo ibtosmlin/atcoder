@@ -14,16 +14,16 @@ for _ in range(n):
     u = list(map(int, input().split()))
     G.append(u)
 
-def dfs(x, y):
+def dfs(x, y, c):
     global G
+    ret = c
     for dx, dy in direc:
-        ret = 0
         nx = x + dx
         ny = y + dy
         if notinhw(nx, ny, n, m): continue
         if G[nx][ny] == 0: continue
         G[nx][ny] = 0
-        ret = max(ret, 1+dfs(x, y))
+        ret = max(ret, dfs(nx, ny, c+1))
         G[nx][ny] = 1
     return ret
 
@@ -31,6 +31,6 @@ ret = 0
 for i in range(n):
     for j in range(m):
         if G[i][j] == 0: continue
-        u = dfs(i, j)
+        u = dfs(i, j, 0)
         ret = max(ret, u)
 print(ret)

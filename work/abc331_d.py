@@ -3,13 +3,6 @@ import sys; input: lambda _: sys.stdin.readline().rstrip()
 import pypyjit; pypyjit.set_param('max_unroll_recursion=-1')
 sys.setrecursionlimit(10001000)
 int1=lambda x: int(x) - 1
-n, q = map(int, input().split())
-P = [[0] * n for _ in range(n)]
-for i in range(n):
-    s = input()
-    for j in range(n):
-        if s[j] == 'B':
-            P[i][j] = 1
 
 class Imos:
     def __init__(self, h, w):
@@ -43,16 +36,31 @@ class Imos:
         return gd[u][v] - gd[u][y] - gd[x][v] + gd[x][y]
 
 ###############################################
-im = Imos(n, n)
-im.import_grid(P)
+N, Q = map(int, input().split())
+G = [list(input()) for _ in range(N)]
+for i in range(N):
+    for j in range(N):
+        G[i][j] = int(G[i][j] == 'B')
+
+im = Imos(N, N)
+im.import_grid(G)
 im.accumlate()
 
-print(im.grid)
-def cnt(a, b, c, d):
-    ca, a = divmod(a, n)
-    c -= ca * n
-    cx = c // n
+def cgd(x, y):
+    cx, x = divmod(x, N)
+    cy, y = divmod(y, N)
+    ret = 0
+    ret += im.count(0,0,N,N) * cx * cy
+    ret += im.count(0,0,N,y) * cx
+    ret += im.count(0,0,x,N) * cy
+    ret += im.count(0,0,x,y)
+    return ret
 
-    cb, b = divmod(b, n)
-    d -= cb * n
-    cy = d // n
+def count(x, y, u, v):
+    if not 0 <= x <= u : return 0
+    if not 0 <= y <= v : return 0
+    return cgd(u, v) - cgd(u, y) - cgd(x, v) + cgd(x, y)
+
+for _ in range(Q):
+    a, b, c, d = map(lambda x:int(x), input().split())
+    print(count(a, b, c+1, d+1))

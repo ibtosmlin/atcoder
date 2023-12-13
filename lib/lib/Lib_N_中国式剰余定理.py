@@ -1,3 +1,10 @@
+#title#
+# 中国式剰余定理
+
+#subtitle#
+# mod ai = xi i=1...nとなるような整数の最小値を求める
+# CRT(X, M)
+
 #name#
 # 中国式剰余定理
 #descripiton#

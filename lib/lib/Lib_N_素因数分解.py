@@ -1,3 +1,10 @@
+#title#
+# 素因数分解
+
+#subtitle#
+# prime_factorize(n) -> {prime: degree}
+# prime_factorize(A) 複数個版
+
 #name#
 # 素因数分解
 #descripiton#
