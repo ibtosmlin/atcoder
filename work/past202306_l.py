@@ -15,7 +15,7 @@ for i in range(h):
         if B[i][j] != -1:
             G[i][j] = A[i][j] ^ B[i][j]
 
-def check(u):
+def bfs(u):
     E = [[] for _ in range(h+w)]
     for i in range(h):
         for j in range(w):
@@ -41,6 +41,6 @@ def check(u):
     return True
 
 for i in range(30):
-    if check(i) == False:
+    if bfs(i) == False:
         exit(print('No'))
 print('Yes')

@@ -3,9 +3,6 @@ import sys; input: lambda _: sys.stdin.readline().rstrip()
 import pypyjit; pypyjit.set_param('max_unroll_recursion=-1')
 sys.setrecursionlimit(10001000)
 int1=lambda x: int(x) - 1
-# 転倒数
-# 配列中 i<j, ai>ajとなるものの個数
-# https://atcoder.jp/contests/chokudai_S001/tasks/chokudai_S001_j
 class BIT:
     def __init__(self, size):
         self.size = size; self.dat = [0]*(size+1)
@@ -18,14 +15,6 @@ class BIT:
         r += 1; s = 0
         while r: s += self.dat[r];r -= r & -r
         return s
-
-
-def inv_numbers(a: list, compress=False) -> int:
-    bit = BIT(max(_a) + 2)
-    ret = 0
-    for i, ai in enumerate(_a):
-        ret += i - bit.sum(ai); bit.add(ai, 1)
-    return ret
 
 ###################################
 
