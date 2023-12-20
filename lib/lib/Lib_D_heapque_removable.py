@@ -1,22 +1,59 @@
 #title#
 # 削除機能付きheapque
 #subtitle#
+# DeletableHeapq: クラス
 # DeletableMaxMinHeapQ: クラス
 # heappush:
 # heappopmax: 大きいものを取り出す
 # heappopmin: 小さいものを取り出す
 # heapmax: 大きいものにアクセス
 # heapmin: 小さいものにアクセス
-# heapdel(x): xを削除
+# discard(x): xを削除
 
 #name#
-# 削除機能付きheapque
+# 削除機能付きHeapque
 #description#
-# 削除機能付きheapque
+# 削除機能付きHeapque
+#body#
+
+from heapq import heapify, heappush, heappop
+class Heapq:
+    def __init__(self, a=None):
+        self.q = a if a else []
+        self.p = []
+        heapify(self.q)
+
+    def heappush(self, x):
+        heappush(self.q, x)
+    def discard(self, x):
+        heappush(self.p, x)
+    def _clean(self):
+        while self.p and self.q[0]==self.p[0]:
+            heappop(self.q)
+            heappop(self.p)
+    def pop(self, exc=None):
+        self._clean()
+        if self.q:
+            return heappop(self.q)
+        return exc
+    def heapmin(self, exc=None):
+        self._clean()
+        if self.q:
+            return self.q[0]
+        return exc
+#prefix#
+# Lib_D_heapque_min
+#end#
+
+
+#name#
+# 削除機能付きMaxMinheapque
+#description#
+# 削除機能付きMaxMinheapque
 #body#
 from heapq import heappush, heappop
 from collections import defaultdict
-class DeletableMaxMinHeapQ():
+class DeletableMaxMinHeapq():
     def __init__(self):
         self.Hma = []
         self.Hmi = []
@@ -49,13 +86,13 @@ class DeletableMaxMinHeapQ():
             heappop(self.Hmi)
             t = self.Hmi[0]
         return t
-    def heapdel(self, x):
+    def dicard(self, x):
         assert self.HC[x] > 0
         self.HC[x] -= 1
     def __contains__(self, x):
         return 1 if x in self.HC and self.HC[x] else 0
 
-hq = DeletableMaxMinHeapQ()
+hq = DeletableMaxMinHeapq()
 n, q = map(int, input().split())
 a = list(map(int, input().split()))
 for ai in a:
@@ -78,5 +115,5 @@ for _ in range(q):
 ############
 
 #prefix#
-# Lib_D_heapque
+# Lib_D_heapque_minmax
 #end#
