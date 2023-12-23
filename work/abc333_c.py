@@ -5,9 +5,8 @@ sys.setrecursionlimit(10001000)
 int1=lambda x: int(x) - 1
 n = int(input())
 core = [1]
-for i in range(120):
+for i in range(12):
     core.append(core[-1] * 10 + 1)
-
 nums = set()
 for i in core:
     for j in core:

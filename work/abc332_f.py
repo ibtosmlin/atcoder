@@ -1,15 +1,6 @@
-#title#
-# 遅延評価セグメント木plain
-#subtitle#
-# 遅延評価セグメント木plain
-# LazySegTree:(op, e, mapping, composition, id_, v)
+# https://atcoder.jp/contests/abc332/tasks/abc332_f
+import sys; input: lambda _: sys.stdin.readline().rstrip()
 
-#name#
-# 遅延評価セグメント木plain
-#description#
-# 遅延評価セグメント木
-
-#body#
 from atcoder.lazysegtree import LazySegTree
 class LazySegmentTree(LazySegTree):
     # def __init__(self, op, e, mapping, composition, id, v):
@@ -24,47 +15,44 @@ class LazySegmentTree(LazySegTree):
     # prod(l, r): 半開区間[l, r)の計算結果を取得する
     # all_prod(): 全区間[0, self._n)計算結果を取得する
     # apply(l, r, f): 半開区間[l, r)の各要素にfを施す
-    # max_right(l, isok): g(v[i])がTrueとなる一番右のindex（lからスタート）
-    # min_left(r, isok): g(v[i])がTrueとなる一番左のindex（rからスタート）
+    # max_right(l, g): g(v[i])がTrueとなる一番右のindex（lからスタート）
+    # min_left(r, g): g(v[i])がTrueとなる一番左のindex（rからスタート）
 
 #######################################################
-n, d = map(int, input().split())
-A = list(input().split())
-bs = pow(10, d-1)
-for i in range(n):
-    x = [int(A[i])]
-    for j in range(d-1):
-        f, s = divmod(x[-1], bs)
-        x.append(s*10+f)
-    A[i] = x
+mod = 998244353
+N, M = map(int, input().split())
+A = list(map(int, input().split()))
 
 # 区間集約演算 *: G * G -> G の定義.
 def op(x, y):
-    ret = [0] * d
-    for i in range(d):
-        ret[i] = x[i]^y[i]
-    return ret
+    return (x+y) % mod
 
 # op演算の単位元
-ie = [0] * d
+ie = 0
 
 # 区間更新演算 ·: F · G -> G の定義.
-def mapping(f,x):
-    ret = [0] * d
-    for i in range(d):
-        ret[(i-f)%d] = x[i]
-    return ret
+def mapping(f, x):
+    a, b = f
+    return (a*x + b) % mod
 
 # 遅延評価演算 ·: F · F -> F の定義.
 def composition(f, g):
-    return (f+g)%d
+    a, b = f
+    c, d = g
+    return (a * c % mod, (a * d + b) % mod)
 
 # 遅延評価演算の単位元
-id = 0
+id = (1, 0)
 
-sgt = LazySegTree(op, ie, mapping, composition, id, A)
+sgt = LazySegmentTree(op, ie, mapping, composition, id, A)
 
+for _ in range(M):
+    l, r, x = map(int, input().split())
+    l -= 1
+    d = r-l
+    invd = pow(d, -1, mod)
+    a = (d-1) * invd % mod
+    b = invd * x % mod
+    sgt.apply(l, r, (a, b))
 
-#prefix#
-# Lib_Q_LazySeg_plain
-#end#
+print(sgt)

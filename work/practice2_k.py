@@ -1,15 +1,8 @@
-#title#
-# 遅延評価セグメント木plain
-#subtitle#
-# 遅延評価セグメント木plain
-# LazySegTree:(op, e, mapping, composition, id_, v)
-
-#name#
-# 遅延評価セグメント木plain
-#description#
-# 遅延評価セグメント木
-
-#body#
+# https://atcoder.jp/contests/practice2/tasks/practice2_k
+import sys; input: lambda _: sys.stdin.readline().rstrip()
+# import pypyjit; pypyjit.set_param('max_unroll_recursion=-1')
+sys.setrecursionlimit(10001000)
+int1=lambda x: int(x) - 1
 from atcoder.lazysegtree import LazySegTree
 class LazySegmentTree(LazySegTree):
     # def __init__(self, op, e, mapping, composition, id, v):
@@ -24,47 +17,41 @@ class LazySegmentTree(LazySegTree):
     # prod(l, r): 半開区間[l, r)の計算結果を取得する
     # all_prod(): 全区間[0, self._n)計算結果を取得する
     # apply(l, r, f): 半開区間[l, r)の各要素にfを施す
-    # max_right(l, isok): g(v[i])がTrueとなる一番右のindex（lからスタート）
-    # min_left(r, isok): g(v[i])がTrueとなる一番左のindex（rからスタート）
+    # max_right(l, g): g(v[i])がTrueとなる一番右のindex（lからスタート）
+    # min_left(r, g): g(v[i])がTrueとなる一番左のindex（rからスタート）
 
 #######################################################
-n, d = map(int, input().split())
-A = list(input().split())
-bs = pow(10, d-1)
-for i in range(n):
-    x = [int(A[i])]
-    for j in range(d-1):
-        f, s = divmod(x[-1], bs)
-        x.append(s*10+f)
-    A[i] = x
-
+n, q = map(int, input().split())
+A = list(map(int, input().split()))
+mod = 998244353
 # 区間集約演算 *: G * G -> G の定義.
 def op(x, y):
-    ret = [0] * d
-    for i in range(d):
-        ret[i] = x[i]^y[i]
-    return ret
+    return (x+y)% mod
 
 # op演算の単位元
-ie = [0] * d
+ie = 0
 
 # 区間更新演算 ·: F · G -> G の定義.
 def mapping(f,x):
-    ret = [0] * d
-    for i in range(d):
-        ret[(i-f)%d] = x[i]
-    return ret
+    return (f[0] * x + f[1]) % mod
 
 # 遅延評価演算 ·: F · F -> F の定義.
 def composition(f, g):
-    return (f+g)%d
+    # f・g = a * (c*x+d) + b
+    # f・g = a*c * x + a*d+b
+    return (f[0] * g[0] % mod, (f[0]*g[1] + f[1])%mod)
 
 # 遅延評価演算の単位元
-id = 0
+id = (1, 0)
 
-sgt = LazySegTree(op, ie, mapping, composition, id, A)
+sgt = LazySegmentTree(op, ie, mapping, composition, id, A)
+for _ in range(q):
+    f, *que = map(int, input().split())
+    if f == 0:
+        l, r, b, c = que
+        sgt.apply(l, r, (b, c))
+    else:
+        l, r = que
+        print(sgt.prod(l, r))
 
-
-#prefix#
-# Lib_Q_LazySeg_plain
-#end#
+print(sgt)
