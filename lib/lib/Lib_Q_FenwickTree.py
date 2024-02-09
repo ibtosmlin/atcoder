@@ -1,5 +1,10 @@
+#title#
+# FenwickTree
+#subtitle#
+# FenwickTree/Binary Indexed Tree
+
 #name#
-# Binary Indexed Tree
+# FenwickTree/Binary Indexed Tree
 #description#
 #body#
 # 部分和の計算と要素の更新の両方を効率的に行える
@@ -112,17 +117,6 @@ class BinaryIndexedTree:
 
 ########################################
 
-a = [5,3,7,9,6,4]
-n = len(a)
-
-bit = BinaryIndexedTree(n)
-bit.init(a)
-
-print(bit[1])
-for i in range(36):
-    print(i, bit.right_bound_of_x(i), bit.right_bound_include_x(i), bit.left_bound_of_x(i), bit.left_bound_include_x(i))
-
-print(bit)
 #prefix#
 # Lib_Q_BIT_Fenwick
 #end#

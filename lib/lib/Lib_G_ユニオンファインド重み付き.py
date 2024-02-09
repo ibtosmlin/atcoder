@@ -4,100 +4,98 @@
 #subtitle#
 # UnionFindWeighted(n)
 # .find(x): xの親
-# .unite(x, y, w): x　と　y　の差を　w として結合
-# .weight(x):　xの重み
-# .diff(x, y):　x と　y　の重みの差
+# .unite(x, y, w): x と y の差を w として結合
+# もし、不整合だったら"invalid"を返す
+# .weight(x): xの重み
+# .diff(x, y): x と y の重みの差
+# .is_same(x, y): 同じグループかどうか
+# .get_groups(): リーダーに所属する要素一覧リストを返す
+# self.leadersはリーダーの集合も作成
 
 #name#
 # ユニオンファインド重み付き
 #description#
 # ユニオンファインド重み付き
 #body#
+
 class UnionFindWeighted:
     def __init__(self, n):                      # 初期化
+        self.INF = 1e18
         self.n = n                              # 要素数
         self.parents = [i for i in range(n)]    # 親
         self.ranks = [0] * n                    # 木の深さ
         self.sizes = [1] * n                    # グループの要素数
         self.weights = [0] * n                  # 親との重み
         self.isvalid = [True] * n               # ポテンシャルがプラスの閉路あり
+        self.leaders = None                     # リーダー
+        self.groups = None                      # グループ
 
-    #親を出力
     def find(self, x):
-        if self.parents[x] == x:
-            return x
-        else:
-            p = self.find(self.parents[x])
-            self.weights[x] += self.weights[self.parents[x]]
-            self.parents[x] = p
-            return p
+        if self.parents[x] == x: return x
+        p = self.find(self.parents[x])
+        self.weights[x] += self.weights[self.parents[x]]
+        self.parents[x] = p
+        return p
 
-    # ユニオン
     def unite(self, x, y, w):
         rx = self.find(x)
         ry = self.find(y)
         if rx == ry:
             if self.diff(x, y) != w:
                 self.isvalid[rx] = False
-                return "invalid"
+                return "invalid"    # 整合性がない情報がある
             else:
-                return "pass"
+                return "pass"       # 整合性がある
         # a[x]->a[y]  の差はw  # a[y] = a[x] + w
         wx = self.weight(x)
         wy = self.weight(y)
-        if rx == ry: return
         if self.ranks[rx] > self.ranks[ry]:
             rx , ry = ry, rx    #ryを親にする
             wx , wy = wy, wx
             w *= -1
+        elif self.ranks[rx]==self.ranks[ry]:
+            self.ranks[ry] += 1
         self.parents[rx] = ry
         self.sizes[ry] += self.sizes[rx]
         self.weights[rx] = wy - wx - w
-        if self.ranks[rx]==self.ranks[ry]:
-            self.ranks[rx] += 1
         self.isvalid[ry] &= self.isvalid[rx]
         return "unite"
 
-    #xとyが同じグループかどうか
-    def same(self, x, y):
+    def is_same(self, x, y) -> bool:
         return self.find(x) == self.find(y)
 
-    #xと同じグループの要素
-    def members(self, x):
-        root = self.find(x)
-        return {i for i in range(self.n) if self.find(i) == root}
+    def get_size(self, x):
+        """xのグループの要素数"""
+        return self.sizes[self.find(x)]
 
-    #グループの要素数
-    def size(self, x):
-        root = self.find(x)
-        return self.sizes[root]
+    def get_groups(self):
+        """親のリスト取得
+            親ごとのグループのメンバー一覧取得
+        """
+        leader_buf = [self.find(i) for i in range(self.n)]
+        self.leaders = []
+        result = [[] for _ in range(self.n)]
+        for i in range(self.n):
+            if leader_buf[i] == i:
+                self.leaders.append(i)
+            result[leader_buf[i]].append(i)
+        self.gropus = result
+        return result
 
-    #親の要素一覧
-    def roots(self):
-        return {i for i, x in enumerate(self.parents) if i == x}
-
-    #グループの個数
-    def group_count(self):
-        return len(self.roots())
-
-    #グループのメンバー一覧
-    def all_group_members(self):
-        return {r: self.members(r) for r in self.roots()}
-
-    #重みの差
     def weight(self, x):
-        _ = self.find(x)
+        """重み"""
+        self.find(x)
         return self.weights[x]
 
-    #重み
     def diff(self, x, y):
+        """重みの差"""
         rx = self.find(x)
         ry = self.find(y)
-        if rx != ry: return float('inf')
+        if rx != ry: return self.INF
         return self.weight(y) - self.weight(x)
 
     def __str__(self):
-        return '\n'.join('{}: {}'.format(r, self.members(r)) for r in self.roots())
+        return '\n'.join(f'{r}: {self.members(r)}' for r in self.leaders)
 
 ################
 

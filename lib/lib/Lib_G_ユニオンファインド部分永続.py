@@ -4,7 +4,7 @@
 # UnionFindPP(n): クラス
 # .find(t, x): 時刻t における xの親を見つける
 # .unite(x, y): x,yをつなげる,時刻は自動で記録される
-# .same(t,x,y):時刻tにおけるxとyが連結か？
+# .is_same(t,x,y):時刻tにおけるxとyが連結か？
 # .time_join(x, y): xとyが連結となった時刻を返す
 
 #name#
@@ -13,13 +13,13 @@
 # ユニオンファインド部分永続
 #body#
 class UnionFindPP:
-    def __init__(self,N):
-        INF = 10**9
+    def __init__(self, n):
+        self.INF = 1e20
         self.now = 0
-        self.N = 0
-        self.parent = [-1 for i in range(N)]
-        self.time = [INF for i in range(N)]
-        self.num = [[(0,1)] for i in range(N)]
+        self.n = 0
+        self.parents = [-1 for i in range(n)]
+        self.time = [self.INF for i in range(n)]
+        self.num = [[(0,1)] for i in range(n)]
 
     def find(self,t,x):
         '''
@@ -29,7 +29,7 @@ class UnionFindPP:
         return : int : 根
         '''
         while self.time[x] <= t:
-            x = self.parent[x]
+            x = self.parents[x]
         return x
 
     def unite(self,x,y):
@@ -45,15 +45,15 @@ class UnionFindPP:
         if x == y:
             return
 
-        if self.parent[x] > self.parent[y]:
+        if self.parents[x] > self.parents[y]:
             x,y = y,x
 
-        self.parent[x] += self.parent[y]
-        self.parent[y] = x
+        self.parents[x] += self.parents[y]
+        self.parents[y] = x
         self.time[y] = self.now
-        self.num[x].append((self.now,-self.parent[x]))
+        self.num[x].append((self.now,-self.parents[x]))
 
-    def same(self,t,x,y):
+    def is_same(self,t,x,y):
         '''
         version:tにおけるx,yが同じかどうかO(logN)
         t (any) : version
@@ -90,11 +90,11 @@ class UnionFindPP:
         return : int :同一のグループとなった時
         '''
         upper = self.now
-        if not self.same(upper, x, y): return -1
+        if not self.is_same(upper, x, y): return -1
         lower = 0
         while upper - lower > 1:
             mid = (upper+lower)//2
-            if self.same(mid, x, y):
+            if self.is_same(mid, x, y):
                 upper = mid
             else:
                 lower = mid

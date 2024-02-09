@@ -31,3 +31,7 @@ from heapq import heapify, heappop, heappush
 # from heapq
 #end#
 
+#name#
+# atcoder lib
+from atcoder.fenwicktree import FenwickTree
+from atcoder.dsu import DSU

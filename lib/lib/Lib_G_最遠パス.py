@@ -1,5 +1,5 @@
 #name#
-# Graph最短パス
+# Graph最遠パス
 #description#
 # Graph最遠パス
 #body#
@@ -12,6 +12,7 @@ def bfs(n, G, root=0, cost=1):
     q.append(root)
     _depth[root] = 0
     _parent = [-1] * n
+    farest_dist = -1
     while q:
         cur = q.popleft()
         dep = _depth[cur]

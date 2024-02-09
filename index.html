@@ -559,10 +559,14 @@
                 <table>
                     <td id="col0">
                         <li>
-                        None[<a href="https://github.com/ibtosmlin/atcoder/blob/main/lib/lib/Lib_Q_FenwickTree.py" target="_blank">Lib_Q_FenwickTree.py</a>]
+                        FenwickTree[<a href="https://github.com/ibtosmlin/atcoder/blob/main/lib/lib/Lib_Q_FenwickTree.py" target="_blank">Lib_Q_FenwickTree.py</a>]
                         </li>
                     </td>
                     <td id="col1">
+                        
+                            <li>
+                                FenwickTree/Binary Indexed Tree
+                            </li>
                         
                     </td>
                 </table>
@@ -687,7 +691,62 @@
                     <td id="col1">
                         
                             <li>
-                                UnionFind: 連結成分分解
+                                UnionFind(n)
+                            </li>
+                        
+                            <li>
+                                .find(x): xの親
+                            </li>
+                        
+                            <li>
+                                .unite(x, y, w): x と y の差を w として結合
+                            </li>
+                        
+                            <li>
+                                もし、不整合だったら"invalid"を返す
+                            </li>
+                        
+                            <li>
+                                .is_same(x, y): 同じグループかどうか
+                            </li>
+                        
+                            <li>
+                                .get_groups(): リーダーに所属する要素一覧リストを返す
+                            </li>
+                        
+                            <li>
+                                self.leadersはリーダーの集合も作成
+                            </li>
+                        
+                    </td>
+                </table>
+                
+                <table>
+                    <td id="col0">
+                        <li>
+                        ユニオンファインドRollback付き[<a href="https://github.com/ibtosmlin/atcoder/blob/main/lib/lib/Lib_G_ユニオンファインドRollback付き.py" target="_blank">Lib_G_ユニオンファインドRollback付き.py</a>]
+                        </li>
+                    </td>
+                    <td id="col1">
+                        
+                            <li>
+                                UnionFindRollback(n)
+                            </li>
+                        
+                            <li>
+                                .find(x): xの親
+                            </li>
+                        
+                            <li>
+                                .unite(x, y, w): x と y の差を w として結合
+                            </li>
+                        
+                            <li>
+                                もし、不整合だったら"invalid"を返す
+                            </li>
+                        
+                            <li>
+                                .is_same(x, y): 同じグループかどうか
                             </li>
                         
                     </td>
@@ -714,7 +773,7 @@
                             </li>
                         
                             <li>
-                                .same(t,x,y):時刻tにおけるxとyが連結か？
+                                .is_same(t,x,y):時刻tにおけるxとyが連結か？
                             </li>
                         
                             <li>
@@ -741,15 +800,31 @@
                             </li>
                         
                             <li>
-                                .unite(x, y, w): x　と　y　の差を　w として結合
+                                .unite(x, y, w): x と y の差を w として結合
                             </li>
                         
                             <li>
-                                .weight(x):　xの重み
+                                もし、不整合だったら"invalid"を返す
                             </li>
                         
                             <li>
-                                .diff(x, y):　x と　y　の重みの差
+                                .weight(x): xの重み
+                            </li>
+                        
+                            <li>
+                                .diff(x, y): x と y の重みの差
+                            </li>
+                        
+                            <li>
+                                .is_same(x, y): 同じグループかどうか
+                            </li>
+                        
+                            <li>
+                                .get_groups(): リーダーに所属する要素一覧リストを返す
+                            </li>
+                        
+                            <li>
+                                self.leadersはリーダーの集合も作成
                             </li>
                         
                     </td>
@@ -967,10 +1042,54 @@
                 <table>
                     <td id="col0">
                         <li>
-                        None[<a href="https://github.com/ibtosmlin/atcoder/blob/main/lib/lib/Lib_GT_木上の辺の１点更新区間クエリ.py" target="_blank">Lib_GT_木上の辺の１点更新区間クエリ.py</a>]
+                        木の上の範囲クエリ[<a href="https://github.com/ibtosmlin/atcoder/blob/main/lib/lib/Lib_GT_木上の辺の１点更新区間クエリ.py" target="_blank">Lib_GT_木上の辺の１点更新区間クエリ.py</a>]
                         </li>
                     </td>
                     <td id="col1">
+                        
+                            <li>
+                                木の上の範囲クエリ RangeQuery
+                            </li>
+                        
+                            <li>
+                                SegTree_EularTour(n ,G, node_cost): node_costなしの場合 [0] * n
+                            </li>
+                        
+                            <li>
+                                set_euler_tour(root=0): rootを親として、オイラーツアーを計算
+                            </li>
+                        
+                            <li>
+                                root_edge_dist(u:int): rootからノードuへのパス上の辺の数の合計（距離）
+                            </li>
+                        
+                            <li>
+                                root_edge_cost(u:int): rootからノードuへのパス上の辺の重み合計
+                            </li>
+                        
+                            <li>
+                                uv_edge_dist(u:int, v:int): ノードuとノードvの距離
+                            </li>
+                        
+                            <li>
+                                uv_edge_cost(u:int, v:int): ノードuとノードvのパス上の辺の重み合計
+                            </li>
+                        
+                            <li>
+                                update_edge_cost(u, v, w): エッジコストを変更
+                            </li>
+                        
+                            <li>
+                                add_edge_cost(u, v, w): エッジコストに加算
+                            </li>
+                        
+                            <li>
+                                set_query(): セグメント木の設定
+                            </li>
+                        
+                            <li>
+                                set_euler_tour(x)
+                            </li>
                         
                     </td>
                 </table>
@@ -1474,6 +1593,9 @@
                 <a href="https://github.com/ibtosmlin/atcoder/blob/main/lib/lib/Memo_遅延評価Seg木.md" target="_blank">Memo_遅延評価Seg木.md</a>
             </li>
         
+            <li>
+            <a href="https://github.com/not522/ac-library-python/blob/master/README_ja.md" target="_blank">atcoder lib</a>
+            </li>
         </ul>
     </section>
 </main>

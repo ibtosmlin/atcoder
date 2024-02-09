@@ -1,3 +1,13 @@
+#title#
+# 素数判定・出力
+
+#subtitle#
+# is_prime(n):素数判定 O(n**0.5)
+# miller_rabin(n):素数ミラーラビン判定 n < 10**18, Q = 10**5回
+# get_prime(n):n以下の素数出力 O(n**0.5)
+# count_primes(n):n以下の素数の数 O(n**0.5)
+
+
 #name#
 # 素数判定・出力
 #descripiton#
@@ -19,6 +29,41 @@ def is_prime(n:int) -> bool:
 print(10, is_prime(10))
 print(31, is_prime(31))
 #####################
+
+
+##############################
+# 素数ミラーラビン判定
+# N < 10**18, Q = 10**5回
+##############################
+
+from random import randint as ri
+
+def miller_rabin(N, Times=10):
+    if N == 2: return True
+    if N == 1 or N%2 == 0: return False
+
+    q = N-1
+    k = 0
+    while q&1==0:
+        q >>= 1
+        k += 1
+
+    for _ in range(Times):
+        m = ri(2, N-1)
+        y = pow(m, q, N)
+        if y == 1: continue
+
+        for _ in range(k):
+            if (y+1) % N == 0: break
+            y = y * y % N
+
+        else: return False
+    return True
+
+
+for _ in range(int(input())):
+    n = int(input())
+    print('Yes' if miller_rabin(n, 10) else 'No')
 
 
 ##############################

@@ -19,7 +19,7 @@ class Imos:
         for i in range(self.h):
             for j in range(self.w):
                 self.grid_add(i, j, grid[i][j])
-                              
+
     def grid_add(self, i, j, value):
         # i, j is 0 index on original_grid
         self.grid[i+1][j+1] += value

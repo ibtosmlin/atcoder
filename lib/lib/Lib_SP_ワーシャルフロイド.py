@@ -15,7 +15,7 @@ import copy
 
 class warshall_floyd:
     def __init__(self, n:int) -> None:
-        self.INF = float("inf")
+        self.INF = 1e18
         self.n = n
         self.d = [[self.INF] * n for _ in range(n)]
         #d[u][v] : 辺uvのコスト(存在しないときはinf)
@@ -29,6 +29,7 @@ class warshall_floyd:
         for k in range(n):
             for i in range(n):
                 for j in range(n):
+                    if wf[i][k] == self.INF or wf[k][j] == self.INF: continue
                     wf[i][j] = min(wf[i][j], wf[i][k] + wf[k][j])
         self.wf = wf #wf[i][j]に頂点i, j間の最短距離を格納
 
@@ -69,10 +70,10 @@ n, m = map(int,input().split()) #N:頂点数 m:辺の数
 WF = warshall_floyd(n)
 
 for _ in range(m):
-    _u, _v, _w = map(int,input().split())
-    _u -= 1; _v -= 1
-    WF.add_edge(_u, _v, _w)
-    WF.add_edge(_v, _u, _w)
+    u, v, w = map(int,input().split())
+    u -= 1; v -= 1
+    WF.add_edge(u, v, w)
+#    WF.add_edge(v, u, w)
 
 WF.build()
 

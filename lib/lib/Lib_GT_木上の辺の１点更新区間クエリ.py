@@ -1,3 +1,18 @@
+#title#
+# 木の上の範囲クエリ
+#subtitle#
+# 木の上の範囲クエリ RangeQuery
+# SegTree_EularTour(n ,G, node_cost): node_costなしの場合 [0] * n
+# set_euler_tour(root=0): rootを親として、オイラーツアーを計算
+# root_edge_dist(u:int): rootからノードuへのパス上の辺の数の合計（距離）
+# root_edge_cost(u:int): rootからノードuへのパス上の辺の重み合計
+# uv_edge_dist(u:int, v:int): ノードuとノードvの距離
+# uv_edge_cost(u:int, v:int): ノードuとノードvのパス上の辺の重み合計
+# update_edge_cost(u, v, w): エッジコストを変更
+# add_edge_cost(u, v, w): エッジコストに加算
+# set_query(): セグメント木の設定
+
+# set_euler_tour(x)
 #name#
 # 木の上の範囲クエリ
 #description#
@@ -62,7 +77,7 @@ class SegmentTree:
         return self._f(lret, rret)
 
 
-class EulerTour:
+class SegTree_EulerTour:
     def __init__(self, n, G, node_cost=None):
         self.n = n
         self.G = G
@@ -194,17 +209,17 @@ for _ in range(n-1):
     G[b].append((a, w))
     edges.append([a, b, w])
 
-et = EulerTour(n, G)
-et.set_euler_tour(0)
+seget = SegTree_EulerTour(n, G)
+seget.set_euler_tour(0)
 
 q = int(input())
 for _ in range(q):
     f, x, y = map(int, input().split())
     if f == 1:
         u, v, _ = edges[x-1]
-        et.update_edge_cost(u, v, y)
+        seget.update_edge_cost(u, v, y)
     else:
-        print(et.uv_edge_cost(x-1, y-1))
+        print(seget.uv_edge_cost(x-1, y-1))
 
 
 #prefix#

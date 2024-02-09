@@ -26,7 +26,7 @@ def bellman_ford(G, st=0):
     dist or -1 if 閉路あり
     """
 
-    INF = float('INF')
+    INF = 1e18
     dist = [INF] * n
     dist[st] = 0
     prev = [-1] * n

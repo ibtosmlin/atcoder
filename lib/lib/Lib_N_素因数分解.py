@@ -6,7 +6,7 @@
 # prime_factorize(A) 複数個版
 
 #name#
-# 素因数分解
+# 素因数分解prime_factorize
 #descripiton#
 # 素因数分解
 #body#

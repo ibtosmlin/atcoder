@@ -42,6 +42,7 @@ class topological_sort:
 
 
     def _build_sort_by_nodeid(self) -> None:
+        from heapq import heapify, heappop, heappush
         q = self.node_zero[:]
         heapify(q)
         while q:

@@ -1,7 +1,13 @@
 #title#
 # ユニオンファインド
 #subtitle#
-# UnionFind: 連結成分分解
+# UnionFind(n)
+# .find(x): xの親
+# .unite(x, y, w): x と y の差を w として結合
+# もし、不整合だったら"invalid"を返す
+# .is_same(x, y): 同じグループかどうか
+# .get_groups(): リーダーに所属する要素一覧リストを返す
+# self.leadersはリーダーの集合も作成
 
 #name#
 # ユニオンファインド
@@ -15,21 +21,15 @@ class UnionFind:
         self.parents = [i for i in range(n)]    # 親
         self.ranks = [0] * n                    # 木の深さ
         self.sizes = [1] * n                    # グループの要素数
+        self.leaders = None                     # リーダー
+        self.groups = None                      # グループ
 
     def find(self, x):
-        """親を出力
-        Parameters
-        ----------
-        x : int
-            ノード番号
-        """
         if self.parents[x] == x: return x
         self.parents[x] = p = self.find(self.parents[x])
         return p
 
     def unite(self, x, y):
-        """ユニオン
-        """
         x = self.find(x)
         y = self.find(y)
         if x == y: return
@@ -40,20 +40,11 @@ class UnionFind:
         self.parents[x] = y
         self.sizes[y] += self.sizes[x]
 
-    def same(self, x, y) -> bool:
-        """xとyが同じグループかどうか
-        """
+    def is_same(self, x, y) -> bool:
         return self.find(x) == self.find(y)
 
-    def members(self, x):
-        """xと同じグループの要素
-        """
-        root = self.find(x)
-        return [i for i in range(self.n) if self.find(i) == root]
-
-    def size(self, x):
-        """xのグループの要素数
-        """
+    def get_size(self, x):
+        """xのグループの要素数"""
         return self.sizes[self.find(x)]
 
     def get_groups(self):
@@ -67,11 +58,11 @@ class UnionFind:
             if leader_buf[i] == i:
                 self.leaders.append(i)
             result[leader_buf[i]].append(i)
-        self.groups = result
-        return
+        self.gropus = result
+        return result
 
     def __str__(self):
-        return '\n'.join(f'{r}: {self.members(r)}' for r in self.roots)
+        return '\n'.join(f'{r}: {self.members(r)}' for r in self.leaders)
 
 ################
 
@@ -83,7 +74,7 @@ for _ in range(q):
     if p == 0:
         uf.unite(a, b)
     else:
-        if uf.same(a, b):
+        if uf.is_same(a, b):
             print('Yes')
         else:
             print('No')
