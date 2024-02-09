@@ -637,10 +637,26 @@
                 <table>
                     <td id="col0">
                         <li>
-                        None[<a href="https://github.com/ibtosmlin/atcoder/blob/main/lib/lib/Lib_Q_SegTree_１点更新区間集約.py" target="_blank">Lib_Q_SegTree_１点更新区間集約.py</a>]
+                        セグメント木１点更新区間集約[<a href="https://github.com/ibtosmlin/atcoder/blob/main/lib/lib/Lib_Q_SegTree_１点更新区間集約.py" target="_blank">Lib_Q_SegTree_１点更新区間集約.py</a>]
                         </li>
                     </td>
                     <td id="col1">
+                        
+                            <li>
+                                SegmentTree(op, e, v):
+                            </li>
+                        
+                            <li>
+                                op: モノイドの演算
+                            </li>
+                        
+                            <li>
+                                e: モノイドの単位元
+                            </li>
+                        
+                            <li>
+                                v: 要素数orリスト
+                            </li>
                         
                     </td>
                 </table>
@@ -716,37 +732,6 @@
                         
                             <li>
                                 self.leadersはリーダーの集合も作成
-                            </li>
-                        
-                    </td>
-                </table>
-                
-                <table>
-                    <td id="col0">
-                        <li>
-                        ユニオンファインドRollback付き[<a href="https://github.com/ibtosmlin/atcoder/blob/main/lib/lib/Lib_G_ユニオンファインドRollback付き.py" target="_blank">Lib_G_ユニオンファインドRollback付き.py</a>]
-                        </li>
-                    </td>
-                    <td id="col1">
-                        
-                            <li>
-                                UnionFindRollback(n)
-                            </li>
-                        
-                            <li>
-                                .find(x): xの親
-                            </li>
-                        
-                            <li>
-                                .unite(x, y, w): x と y の差を w として結合
-                            </li>
-                        
-                            <li>
-                                もし、不整合だったら"invalid"を返す
-                            </li>
-                        
-                            <li>
-                                .is_same(x, y): 同じグループかどうか
                             </li>
                         
                     </td>
@@ -848,10 +833,22 @@
                 <table>
                     <td id="col0">
                         <li>
-                        None[<a href="https://github.com/ibtosmlin/atcoder/blob/main/lib/lib/Lib_GB_二部グラフ判定.py" target="_blank">Lib_GB_二部グラフ判定.py</a>]
+                        二部グラフ判定[<a href="https://github.com/ibtosmlin/atcoder/blob/main/lib/lib/Lib_GB_二部グラフ判定.py" target="_blank">Lib_GB_二部グラフ判定.py</a>]
                         </li>
                     </td>
                     <td id="col1">
+                        
+                            <li>
+                                二部グラフ(bipartite graph)
+                            </li>
+                        
+                            <li>
+                                頂点集合を2つに分割して各部分の頂点は互いに隣接しないようにできるグラフ
+                            </li>
+                        
+                            <li>
+                                ノード2色を塗って、辺の両端は異なるようにできるか
+                            </li>
                         
                     </td>
                 </table>
@@ -901,10 +898,14 @@
                 <table>
                     <td id="col0">
                         <li>
-                        None[<a href="https://github.com/ibtosmlin/atcoder/blob/main/lib/lib/Lib_GD_強連結成分分解.py" target="_blank">Lib_GD_強連結成分分解.py</a>]
+                        強連結成分分解[<a href="https://github.com/ibtosmlin/atcoder/blob/main/lib/lib/Lib_GD_強連結成分分解.py" target="_blank">Lib_GD_強連結成分分解.py</a>]
                         </li>
                     </td>
                     <td id="col1">
+                        
+                            <li>
+                                強連結成分分解(SCC): グラフに対するSCCを行う
+                            </li>
                         
                     </td>
                 </table>
@@ -998,10 +999,26 @@
                 <table>
                     <td id="col0">
                         <li>
-                        None[<a href="https://github.com/ibtosmlin/atcoder/blob/main/lib/lib/Lib_GT_最小全域木_kruskal.py" target="_blank">Lib_GT_最小全域木_kruskal.py</a>]
+                        最小全域木[<a href="https://github.com/ibtosmlin/atcoder/blob/main/lib/lib/Lib_GT_最小全域木_kruskal.py" target="_blank">Lib_GT_最小全域木_kruskal.py</a>]
                         </li>
                     </td>
                     <td id="col1">
+                        
+                            <li>
+                                最小全域木 クラスカル法 minimum_spanning_tree
+                            </li>
+                        
+                            <li>
+                                重み付き無向グラフで、それらの全ての頂点を結び連結するような木の最小のコストを求める
+                            </li>
+                        
+                            <li>
+                                辺の重みの小さい順にみて、連結成分が閉路にならない辺を追加していく
+                            </li>
+                        
+                            <li>
+                                つなぐ頂点が同じ連結成分にないことをUnion Find Tree でみる
+                            </li>
                         
                     </td>
                 </table>
@@ -1284,10 +1301,26 @@
                 <table>
                     <td id="col0">
                         <li>
-                        None[<a href="https://github.com/ibtosmlin/atcoder/blob/main/lib/lib/Lib_N_素数判定.py" target="_blank">Lib_N_素数判定.py</a>]
+                        素数判定・出力[<a href="https://github.com/ibtosmlin/atcoder/blob/main/lib/lib/Lib_N_素数判定.py" target="_blank">Lib_N_素数判定.py</a>]
                         </li>
                     </td>
                     <td id="col1">
+                        
+                            <li>
+                                is_prime(n):素数判定 O(n**0.5)
+                            </li>
+                        
+                            <li>
+                                miller_rabin(n):素数ミラーラビン判定 n < 10**18, Q = 10**5回
+                            </li>
+                        
+                            <li>
+                                get_prime(n):n以下の素数出力 O(n**0.5)
+                            </li>
+                        
+                            <li>
+                                count_primes(n):n以下の素数の数 O(n**0.5)
+                            </li>
                         
                     </td>
                 </table>
