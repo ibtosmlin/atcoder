@@ -63,4 +63,4 @@ rendered_html = template.render(rdata)
 with open(html_file, 'w') as f:
     f.write(rendered_html)
 
-print(rendered_html)
+# print(rendered_html)

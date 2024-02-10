@@ -6,5 +6,5 @@ echo 'update .bash_aliases'
 python3 ~/atcoder/lib/create_snippets.py
 echo 'update snippets'
 # git.ioの作成
-pypy3 ~/atcoder/lib/create_html.py
+#pypy3 ~/atcoder/lib/create_html.py
 echo 'update html'

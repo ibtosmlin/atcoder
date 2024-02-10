@@ -3,6 +3,7 @@ alias ll="ls -alX"
 
 # atcoder contest
 alias at="source ~/atcoder/tool/atcoder.sh"
+alias atat="source ~/atcoder/tool/atcoder_alltest.sh"
 
 alias setconid="source ~/atcoder/tool/set_contest_id.sh"
 alias pya="source ~/atcoder/tool/a.py.sh"
@@ -12,7 +13,6 @@ alias pyd="source ~/atcoder/tool/d.py.sh"
 alias pye="source ~/atcoder/tool/e.py.sh"
 alias pyf="source ~/atcoder/tool/f.py.sh"
 alias pyg="source ~/atcoder/tool/g.py.sh"
-alias pyh="source ~/atcoder/tool/h.py.sh"
 
 # atcoder tool settings
 alias setat="source ~/atcoder/tool/set_atcoder.sh"
