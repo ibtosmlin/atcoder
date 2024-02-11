@@ -28,8 +28,9 @@ def prime_factorize(n:int) -> dict:
     if n != 1: pd[n] = 1
     return pd
 
-print(prime_factorize(360))  # 72 = 2**3 * 3**2 * 5**1
-                             # {2: 3, 3: 2, 5: 1}
+print(prime_factorize(360))
+# 72 = 2**3 * 3**2 * 5**1
+# {2: 3, 3: 2, 5: 1}
 
 ##############################
 # 素因数分解（複数個版）

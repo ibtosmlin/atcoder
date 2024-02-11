@@ -42,5 +42,5 @@ A, cnt = SelectionSort(A, n)
 print(*A)
 print(cnt)
 #prefix#
-# Lib_Sort_ソートアルゴリズム
+# Lib_O_ソートアルゴリズム_Sort
 #end#
