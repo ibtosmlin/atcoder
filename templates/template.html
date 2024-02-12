@@ -16,9 +16,12 @@
             {% for x in segments%}
             <li><a href="#{{x[0]}}">{{x[1]}}</a></li>
             {% endfor %}
+        </ul>
+        <ul id="tag2">
+            <li><a href="#link">リンク</a></li>
             <li><a href="#memo">メモ</a></li>
         </ul>
-        </nav>
+    </nav>
 </header>
 <main>
 <div id="pagetop"><a href="#top"><i class="fas fa-angle-up"></i></a></div>
@@ -43,6 +46,15 @@
         </section>
     {% endfor %}
 
+    <section id="link"><h2>リンク</h2>
+        <ul>
+        {% for x, y in links%}
+            <li>
+                <a href="{{y}}" target="_blank">{{x}}</a>
+            </li>
+        {% endfor %}
+        </ul>
+    </section>
     <section id="memo"><h2>メモ</h2>
         <ul>
         {% for x in memos%}
@@ -50,9 +62,6 @@
                 <a href="https://github.com/ibtosmlin/atcoder/blob/main/lib/lib/{{x}}" target="_blank">{{x}}</a>
             </li>
         {% endfor %}
-            <li>
-            <a href="https://github.com/not522/ac-library-python/blob/master/README_ja.md" target="_blank">atcoder lib</a>
-            </li>
         </ul>
     </section>
 </main>

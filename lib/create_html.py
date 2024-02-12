@@ -8,6 +8,7 @@ cwd = os.path.dirname(__file__)
 html_file = os.path.join(cwd, '../index.html')
 lib_files = glob.glob('./lib/lib/Lib_*.py')
 memo_files = glob.glob('./lib/lib/Memo_*.md')
+links_file = './lib/lib/Links.json'
 
 rdata = defaultdict(list)
 
@@ -53,6 +54,9 @@ rdata['memos'] = []
 for filepath in sorted(memo_files):
     x = os.path.basename(filepath)
     rdata['memos'].append(x)
+
+with open(links_file) as f:
+    rdata['links'] = json.load(f)
 
 #テンプレート読み込み
 env = Environment(loader=FileSystemLoader('./templates', encoding='utf8'))

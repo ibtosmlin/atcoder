@@ -2,8 +2,8 @@
 # ユークリッド互除法
 
 #subtitle#
-# gcd(x, y):xとyの最大公約数を求める
-# CRT(X, M)
+# gcd(x, y): xとyの最大公約数を求める
+# extgcd(x, y): ax + by = d ,  d = gcd(x, y)となるa, b, dを出力
 
 #name#
 # ユークリッド互除法

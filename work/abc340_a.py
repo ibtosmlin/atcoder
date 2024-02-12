@@ -1,2 +1,4 @@
 A, B, D= map(int, input().split())
-print(*range(A, B+1, D))
+while A<=B:
+    print(A)
+    A += D
