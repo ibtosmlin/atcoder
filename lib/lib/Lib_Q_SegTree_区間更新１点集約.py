@@ -1,17 +1,18 @@
 #title#
-# セグメント木区間更新・一点集約
+# セグメント木双対：区間＜更新・加算・min＞・一点集約
 #subtitle#
 # 区間更新・一点集約
 # 区間加算・一点集約
+# 区間min・一点集約
 
 #name#
-# セグメント木区間x一点
+# 双対セグメント木区間x一点
 #description#
-# セグメント木区間x一点
+# 双対セグメント木区間x一点
 #body#
 class SegmentTree:  # 初期化処理
-    """cheap Segment Tree
-    区間更新・1点抽出
+    """dual Segment Tree
+    区間＜更新・加算・mi＞・1点抽出
     Parameters
     ----------
     op: monoid
@@ -73,8 +74,10 @@ class SegmentTree:  # 初期化処理
 ###################################################
 n, q = map(int, input().split())
 INF = (1<<31) - 1
-RUQ = SegmentTree(lambda x, y: max(x, y), INF, n, [INF]*n)
-RAQ = SegmentTree(lambda x, y: (max(x[0], y[0]), x[1]+y[1]), 0, n, [0]*n)
+# RUQ = SegmentTree(lambda x, y: max(x, y), INF, n, [INF]*n)
+# RAQ = SegmentTree(lambda x, y: (max(x[0], y[0]), x[1]+y[1]), 0, n, [0]*n)
+RMQ = SegmentTree(lambda x, y: (max(x[0], y[0]), min(x[1],y[1])), INF, n, [INF]*n)
+
 
 for _ in range(q):
     t, *qry = map(int, input().split())
@@ -82,12 +85,13 @@ for _ in range(q):
         l, r, x = qry
         # l -= 1
         r += 1
-        RUQ.update(l, r, x)
-    else:
-        i = qry[0]
+        RMQ.update(l, r, x)
+    # else:
+    #     i = qry[0]
         # i -= 1
-        print(RUQ[i])
+        # print(RUQ[i])
+        print([RMQ[i] for i in range(n)])
 
 #prefix#
-# Lib_Q_Seg_区間更新一点集約
+# Lib_Q_SegDual_双対_区間更新一点集約
 #end#
