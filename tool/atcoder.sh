@@ -101,7 +101,7 @@ elif [ $arg = 's' ]; then
     cp $cfname $ctaskfname
     cd $ctaskwd
     # echo y | oj s --guess-python-interpreter pypy main.py
-    oj s --language 5078 --no-guess main.py --yes
+    oj s --language 5078 --no-guess main.py --yes --open
     cd $cp
 
 

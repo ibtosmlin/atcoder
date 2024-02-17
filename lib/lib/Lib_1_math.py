@@ -12,9 +12,6 @@ math.radians(180)
 # radian→度
 math.degrees(3.1415)
 
-print(math.gcd(x, y))
-def lcm(x, y): return x * y // math.gcd(x, y)
-
 #prefix#
 # Lib_math_最大公約数_三角関数
 # import math

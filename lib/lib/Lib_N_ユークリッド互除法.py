@@ -12,14 +12,10 @@
 #body#
 
 INF = 1 << 64
+import math
 
-def gcd(a, b):
-    """
-    return gcd(a,b)
-    """
-    if b == 0: return a
-    return gcd(b, a%b)
-
+# math.gcd(a, b)
+# math.lcm(a, b)
 
 def extgcd(a, b):
     """

@@ -127,7 +127,7 @@ class WaveletMatrix:
         Number of elements in A[l,r) whose value is in [s, t)
         """
         if s >= t: return 0
-        return self.freq_to(l, r, t) - self.freq_to(l, r, t)
+        return self.freq_to(l, r, t) - self.freq_to(l, r, s)
 
     def freq_to(self, l, r, value):
         """
@@ -247,7 +247,7 @@ class WaveletMatrixCompressed(WaveletMatrix):
         cmpsidx = self.cmp.index(s)
         cmptidx = self.cmp.index(t)
         if s >= t: return 0
-        return self.freq_to(l, r, t) - self.freq_to(l, r, t)
+        return self.freq_to(l, r, t) - self.freq_to(l, r, s)
 
     def freq_to(self, l, r, value):
         cmpidx = self.cmp.index(value)

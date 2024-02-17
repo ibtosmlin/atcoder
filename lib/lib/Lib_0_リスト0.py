@@ -67,12 +67,15 @@ def count_intervals(a:list, x)->int:
 #description#
 # direc
 #body#
-direc = {(1, 0), (-1, 0), (0, 1), (0, -1)}
-direc = {(1, 0), (-1, 0), (0, 1), (0, -1), (1, 1), (1, -1), (-1, 1), (-1, -1)}
+direc = [(0, 1), (1, 0), (0, -1), (-1, 0)]  # RULD
+direc = [(0, 1), (1, 1), (1, 0), (1, -1), (0, -1), (-1, -1), (-1, 0), (-1, 1)]
 
-isinhw = lambda i,j,h,w: (0 <= i < h) and (0 <= j < w)
-notinhw = lambda i,j,h,w: not ((0 <= i < h) and (0 <= j < w))
+def canmove(i, j, H, W, A=None):
+    if A:
+        return (0 <= i < H) and (0 <= j < W) and A[i][j] == "."
+    else:
+        return (0 <= i < H) and (0 <= j < W)
 
 #prefix#
-# direc_isinhw
+# direc_canmove
 #end#

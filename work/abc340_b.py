@@ -1,7 +1,5 @@
 l = []
 for _ in range(int(input())):
-    f, v = map(int, input().split())
-    if f//2:
-        print(l[-v])
-    else:
-        l.append(v)
+    f, v = input().split()
+    if f != "1": print(l[-int(v)])
+    else: l.append(v)

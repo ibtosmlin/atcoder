@@ -1,9 +1,17 @@
-import sys
-input = sys.stdin.readline
-N,Q = map(int,input().split())
-A = list(map(int,input().split()))
-qs = [tuple(map(int,input().split())) for _ in range(Q)]
+#title#
+# MEX
+#subtitle#
+# Mex: 要素追加・削除機能付きClass
+# get: Mexを取得
+# add: 要素を追加
+# remove: 要素を削除
 
+
+#name#
+# 追加削除機能付きMex
+#description#
+# 追加削除機能付きMex
+#body#
 
 from heapq import heappop, heappush
 class Mex:
@@ -34,6 +42,12 @@ class Mex:
         if self.hist[x] == 0:
             heappush(self.q, x)
 
+import sys
+input = sys.stdin.readline
+N,Q = map(int,input().split())
+A = list(map(int,input().split()))
+qs = [tuple(map(int,input().split())) for _ in range(Q)]
+
 mex = Mex(A, N)
 for i,x in qs:
     i -= 1
@@ -41,3 +55,7 @@ for i,x in qs:
     mex.add(x)
     A[i] = x
     print(mex.get())
+
+#prefix#
+# Lib_D_Mex
+#end#

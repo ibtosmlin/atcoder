@@ -1043,7 +1043,7 @@
             "from heapq"
         ],
         "body": [
-            "from heapq import heapify, heappop, heappush"
+            "from heapq import heappop, heappush"
         ],
         "description": [
             "heapqlib"
@@ -1051,18 +1051,13 @@
     },
     "atcoder lib": {
         "prefix": [],
-        "body": [],
-        "description": []
-    },
-    "om atcoder.fenwicktree import FenwickTree": {
-        "prefix": [],
-        "body": [],
-        "description": []
-    },
-    "om atcoder.dsu import DSU": {
-        "prefix": [],
-        "body": [],
-        "description": []
+        "body": [
+            "from atcoder.fenwicktree import FenwickTree",
+            "from atcoder.dsu import DSU"
+        ],
+        "description": [
+            "atcoder lib"
+        ]
     },
     "差分最小値探索": {
         "prefix": [
@@ -1250,11 +1245,8 @@
             "Lib_M_行列演算_matrix"
         ],
         "body": [
-            "# ma: nxm",
-            "# mb: mxk",
-            "# returns nxk - matrix",
             "",
-            "def prod(ma, mb, mod=1):",
+            "def matprod(ma, mb, mod = 10**9+7):",
             "    h_a = len(ma)",
             "    w_a = len(ma[0])",
             "    h_b = len(mb)",
@@ -1262,25 +1254,23 @@
             "    if h_a*w_a*h_b*w_b == 0: return 0",
             "    if w_a != h_b: return 0",
             "    ret = [[0] * h_a for _ in range(w_b)]",
-            "    for i in range(h_a):",
-            "        for j in range(w_b):",
-            "            c = 0",
-            "            for k in range(w_a):",
-            "                c += ma[i][k]*mb[k][j]",
-            "                c %= mod",
-            "            ret[i][j] = c",
+            "    for i, reti in enumerate(ret):",
+            "        for k, aik in enumerate(ma[i]):",
+            "            for j, bkj in enumerate(mb[k]):",
+            "                reti[j] += aik * bkj",
+            "                reti[j] %= mod",
             "    return ret",
             "",
             "",
-            "def powmat(ma, k, mod = 10**9+7):",
+            "def matpow(ma, k, mod = 10**9+7):",
             "    n = len(ma)",
             "    ret = [[0]*n for _ in range(n)]",
             "    for i in range(n):",
             "        ret[i][i] = 1",
             "    for _ in range(k):",
             "        if k & 1:",
-            "            ret = prod(ret, ma, mod)",
-            "        ma = prod(ma, ma, mod)",
+            "            ret = matprod(ret, ma, mod)",
+            "        ma = matprod(ma, ma, mod)",
             "        k >>= 1",
             "        if k == 0: break",
             "    return ret",
@@ -1290,7 +1280,7 @@
             "ma = [list(map(int, input().split())) for _ in range(n)]",
             "mb = [list(map(int, input().split())) for _ in range(m)]",
             "",
-            "for r in prod(ma, mb):",
+            "for r in matprod(ma, mb):",
             "    print(*r)",
             ""
         ],
@@ -2246,7 +2236,7 @@
             "        Number of elements in A[l,r) whose value is in [s, t)",
             "        \"\"\"",
             "        if s >= t: return 0",
-            "        return self.freq_to(l, r, t) - self.freq_to(l, r, t)",
+            "        return self.freq_to(l, r, t) - self.freq_to(l, r, s)",
             "",
             "    def freq_to(self, l, r, value):",
             "        \"\"\"",
@@ -2366,7 +2356,7 @@
             "        cmpsidx = self.cmp.index(s)",
             "        cmptidx = self.cmp.index(t)",
             "        if s >= t: return 0",
-            "        return self.freq_to(l, r, t) - self.freq_to(l, r, t)",
+            "        return self.freq_to(l, r, t) - self.freq_to(l, r, s)",
             "",
             "    def freq_to(self, l, r, value):",
             "        cmpidx = self.cmp.index(value)",
@@ -4955,9 +4945,6 @@
             "math.radians(180)",
             "# radian→度",
             "math.degrees(3.1415)",
-            "",
-            "print(math.gcd(x, y))",
-            "def lcm(x, y): return x * y // math.gcd(x, y)",
             ""
         ],
         "description": [
@@ -5289,14 +5276,17 @@
     },
     "direc": {
         "prefix": [
-            "direc_isinhw"
+            "direc_canmove"
         ],
         "body": [
-            "direc = {(1, 0), (-1, 0), (0, 1), (0, -1)}",
-            "direc = {(1, 0), (-1, 0), (0, 1), (0, -1), (1, 1), (1, -1), (-1, 1), (-1, -1)}",
+            "direc = [(0, 1), (1, 0), (0, -1), (-1, 0)]  # RULD",
+            "direc = [(0, 1), (1, 1), (1, 0), (1, -1), (0, -1), (-1, -1), (-1, 0), (-1, 1)]",
             "",
-            "isinhw = lambda i,j,h,w: (0 <= i < h) and (0 <= j < w)",
-            "notinhw = lambda i,j,h,w: not ((0 <= i < h) and (0 <= j < w))",
+            "def canmove(i, j, H, W, A=None):",
+            "    if A:",
+            "        return (0 <= i < H) and (0 <= j < W) and A[i][j] == \".\"",
+            "    else:",
+            "        return (0 <= i < H) and (0 <= j < W)",
             ""
         ],
         "description": [
@@ -7541,14 +7531,10 @@
         "body": [
             "",
             "INF = 1 << 64",
+            "import math",
             "",
-            "def gcd(a, b):",
-            "    \"\"\"",
-            "    return gcd(a,b)",
-            "    \"\"\"",
-            "    if b == 0: return a",
-            "    return gcd(b, a%b)",
-            "",
+            "# math.gcd(a, b)",
+            "# math.lcm(a, b)",
             "",
             "def extgcd(a, b):",
             "    \"\"\"",
@@ -7994,14 +7980,14 @@
         ],
         "description": []
     },
-    "セグメント木区間x一点": {
+    "双対セグメント木区間x一点": {
         "prefix": [
-            "Lib_Q_Seg_区間更新一点集約"
+            "Lib_Q_SegDual_双対_区間更新一点集約"
         ],
         "body": [
             "class SegmentTree:  # 初期化処理",
-            "    \"\"\"cheap Segment Tree",
-            "    区間更新・1点抽出",
+            "    \"\"\"dual Segment Tree",
+            "    区間＜更新・加算・mi＞・1点抽出",
             "    Parameters",
             "    ----------",
             "    op: monoid",
@@ -8063,8 +8049,10 @@
             "###################################################",
             "n, q = map(int, input().split())",
             "INF = (1<<31) - 1",
-            "RUQ = SegmentTree(lambda x, y: max(x, y), INF, n, [INF]*n)",
-            "RAQ = SegmentTree(lambda x, y: (max(x[0], y[0]), x[1]+y[1]), 0, n, [0]*n)",
+            "# RUQ = SegmentTree(lambda x, y: max(x, y), INF, n, [INF]*n)",
+            "# RAQ = SegmentTree(lambda x, y: (max(x[0], y[0]), x[1]+y[1]), 0, n, [0]*n)",
+            "RMQ = SegmentTree(lambda x, y: (max(x[0], y[0]), min(x[1],y[1])), INF, n, [INF]*n)",
+            "",
             "",
             "for _ in range(q):",
             "    t, *qry = map(int, input().split())",
@@ -8072,15 +8060,70 @@
             "        l, r, x = qry",
             "        # l -= 1",
             "        r += 1",
-            "        RUQ.update(l, r, x)",
-            "    else:",
-            "        i = qry[0]",
+            "        RMQ.update(l, r, x)",
+            "    # else:",
+            "    #     i = qry[0]",
             "        # i -= 1",
-            "        print(RUQ[i])",
+            "        # print(RUQ[i])",
+            "        print([RMQ[i] for i in range(n)])",
             ""
         ],
         "description": [
-            "セグメント木区間x一点"
+            "双対セグメント木区間x一点"
+        ]
+    },
+    "追加削除機能付きMex": {
+        "prefix": [
+            "Lib_D_Mex"
+        ],
+        "body": [
+            "",
+            "from heapq import heappop, heappush",
+            "class Mex:",
+            "    def __init__(self, arr=[], MAX=10**6) -> None:",
+            "        self.MAX = MAX + 5",
+            "        self.hist = [0] * (self.MAX+1)",
+            "        for a in arr:",
+            "            if a > self.MAX: continue",
+            "            self.hist[a] += 1",
+            "        self.q = []",
+            "        self.d = []",
+            "        for i in range(self.MAX+1):",
+            "            if self.hist[i] == 0:",
+            "                heappush(self.q, i)",
+            "    def get(self):",
+            "        while self.q and self.d and self.q[0]==self.d[0]:",
+            "            heappop(self.q)",
+            "            heappop(self.d)",
+            "        return self.q[0] if self.q else None",
+            "    def add(self, x):",
+            "        if x > self.MAX: return",
+            "        self.hist[x] += 1",
+            "        if self.hist[x] == 1:",
+            "            heappush(self.d, x)",
+            "    def remove(self, x):",
+            "        if x > self.MAX: return",
+            "        self.hist[x] -= 1",
+            "        if self.hist[x] == 0:",
+            "            heappush(self.q, x)",
+            "",
+            "import sys",
+            "input = sys.stdin.readline",
+            "N,Q = map(int,input().split())",
+            "A = list(map(int,input().split()))",
+            "qs = [tuple(map(int,input().split())) for _ in range(Q)]",
+            "",
+            "mex = Mex(A, N)",
+            "for i,x in qs:",
+            "    i -= 1",
+            "    mex.remove(A[i])",
+            "    mex.add(x)",
+            "    A[i] = x",
+            "    print(mex.get())",
+            ""
+        ],
+        "description": [
+            "追加削除機能付きMex"
         ]
     },
     "回文": {

@@ -13,11 +13,8 @@
 #descripiton#
 # 行列演算
 #body#
-# ma: nxm
-# mb: mxk
-# returns nxk - matrix
 
-def prod(ma, mb, mod=1):
+def matprod(ma, mb, mod = 10**9+7):
     h_a = len(ma)
     w_a = len(ma[0])
     h_b = len(mb)
@@ -25,25 +22,23 @@ def prod(ma, mb, mod=1):
     if h_a*w_a*h_b*w_b == 0: return 0
     if w_a != h_b: return 0
     ret = [[0] * h_a for _ in range(w_b)]
-    for i in range(h_a):
-        for j in range(w_b):
-            c = 0
-            for k in range(w_a):
-                c += ma[i][k]*mb[k][j]
-                c %= mod
-            ret[i][j] = c
+    for i, reti in enumerate(ret):
+        for k, aik in enumerate(ma[i]):
+            for j, bkj in enumerate(mb[k]):
+                reti[j] += aik * bkj
+                reti[j] %= mod
     return ret
 
 
-def powmat(ma, k, mod = 10**9+7):
+def matpow(ma, k, mod = 10**9+7):
     n = len(ma)
     ret = [[0]*n for _ in range(n)]
     for i in range(n):
         ret[i][i] = 1
     for _ in range(k):
         if k & 1:
-            ret = prod(ret, ma, mod)
-        ma = prod(ma, ma, mod)
+            ret = matprod(ret, ma, mod)
+        ma = matprod(ma, ma, mod)
         k >>= 1
         if k == 0: break
     return ret
@@ -53,7 +48,7 @@ n, m, k = map(int, input().split())
 ma = [list(map(int, input().split())) for _ in range(n)]
 mb = [list(map(int, input().split())) for _ in range(m)]
 
-for r in prod(ma, mb):
+for r in matprod(ma, mb):
     print(*r)
 
 #prefix#
