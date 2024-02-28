@@ -1,7 +1,3 @@
-# https://atcoder.jp/contests/abc341/tasks/abc341_c
-import sys; input: lambda _: sys.stdin.readline().rstrip()
-# import pypyjit; pypyjit.set_param('max_unroll_recursion=-1')
-
 h, w, n = map(int, input().split())
 t = input()
 G = [input() for _ in range(h)]

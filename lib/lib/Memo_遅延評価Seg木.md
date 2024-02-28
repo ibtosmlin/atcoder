@@ -48,8 +48,7 @@ id = -1
 n, q = map(int, input().split())
 a = [(1, 1) for _ in range(n)]
 
-sgt = LazySegmentTree(a, op, e, mapping, composition, id)
-
+sgt = LazySegmentTree(op, ie, mapping, composition, id, a)
 for _ in range(q):
     l, r, d = map(int, input().split())
     l -= 1
@@ -60,7 +59,7 @@ for _ in range(q):
 
 ## AtCoder Library Practice Contest L - Lazy Segment Tree
 https://atcoder.jp/contests/practice2/tasks/practice2_l
-
+0,1の数列：区間反転：区間転倒数集約
 ```
 # 区間集約演算 *: G * G -> G の定義.
 def op(x, y):
@@ -68,7 +67,7 @@ def op(x, y):
     invy, c0y, c1y = y
     return (invx+invy+c0y*c1x, c0x+c0y, c1x+c1y)
 
-# op演算の単位元
+# op演算の単位元(反転数,区間内の０の数,区間内の１の数)
 e = (0, 0, 0)
 
 # 区間更新演算 ·: F · G -> G の定義.
@@ -96,7 +95,7 @@ for i in map(int, input().split()):
         a.append((0, 1, 0))
 
 
-sgt = LazySegmentTree(a, op, e, mapping, composition, id)
+sgt = LazySegmentTree(op, ie, mapping, composition, id, a)
 
 for _ in range(q):
     t, l, r = map(int, input().split())
@@ -147,7 +146,7 @@ def composition(f, g):
 # 遅延評価演算の単位元
 id = 0
 
-sgt = LazySegmentTree(A, op, ie, mapping, composition, id)
+sgt = LazySegmentTree(op, ie, mapping, composition, id, A)
 sft = 0
 for _ in range(int(input())):
     q = list(map(int, input().split()))

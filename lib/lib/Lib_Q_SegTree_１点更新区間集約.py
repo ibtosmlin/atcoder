@@ -12,36 +12,38 @@
 # セグメント木１点更新区間集約
 #body#
 
-# op: モノイドの演算
-# e: モノイドの単位元
-# v: 要素数orリスト
-
 from atcoder.segtree import SegTree
 
 class SegmentTree(SegTree):
     def __init__(self, op, e, v) -> None:
-        if isinstance(v, int): v = [e] * v
-        super.__init__(self, op, e, v)
+        super().__init__(op, e, v)
 
     def __getitem__(self, i):
         """index = i の値を求める"""
-        return self._dat[i + self._size]
+        return self._d[i + self._size]
 
     def __str__(self):
         """元のリストの値を表示"""
-        return ' '.join(map(str, (self[i] for i in range(self._n))))
+        return self._debug(self._d)
 
-    def update(self, i, x):
-        """one point update a[i] を xに更新 """
-        self.set(i, x)
+    def _debug(self, xs):
+        strs = [str(x) for x in xs] + [f"({x})" for x in range(self._n)]
+        minsize = max(len(s) for s in strs[self._size:])
+        result = ["|"] * (self._log + 2)
+        level = 0
+        next_level = 2
+        for i in range(1, len(strs)):
+            if i == next_level:
+                level += 1
+                next_level <<= 1
+            if level < self._log + 1:
+                width = ((minsize + 1) << (self._log - level)) - 1
+            result[level] += strs[i].center(width) + "|"
+        return "\n".join(result)
 
     def add(self, i, x):
         """one point add a[i] に xを加算 """
         self.set(i, self._d[i] + x)
-
-    def query(self, l, r):
-        """半開区間[l, r)にf(a[l], a[l+1])演算 """
-        return self.prod(l, r)
 
     # def max_right(self, l, isOk):
         # ex:
@@ -56,7 +58,6 @@ class SegmentTree(SegTree):
     #     l = r もしくは f(op(a[l], a[l + 1], ..., a[r - 1])) = true
     #     l = 0 もしくは f(op(a[l-1], a[l], ..., a[r-1])) = false
     #     fが単調だとすれば、f(op(a[l], a[l + 1], ..., a[r - 1])) = true となる最小のl
-
 
 ####################################
 class RMaxQSegmentTree(SegmentTree):
@@ -79,36 +80,29 @@ class RXorQSegmentTree(SegmentTree):
     def __init__(self, init):
         super().__init__(lambda x, y: x ^ y, 0, init)
 
-# GCD query
-from math import gcd
-ie = 0
-A = [2, 3, 6]
-def op(x, y):
-    if x == ie: return y
-    if y == ie: return x
-    return gcd(x, y)
+import math
+class RGCDSegmentTree(SegmentTree):
+    def __init__(self, init):
+        def op(x, y):
+            if x == 0: return y
+            if y == 0: return x
+            return math.gcd(x, y)
+        super().__init__(op, 0, init)
 
-sgt = SegmentTree(op, ie, A)
 
 ####################################
-
-
-# n, q = map(int, input().split())
-# a = list(map(int, input().split()))
-
-a = [1,2,3,2,1,3,3,5,2,1]
-# sgt = SegmentTree(a, op, ie)
-x, v = 3, 55123
-l, r = 2, 5
-sgt.update(x, v)
-print(sgt.query(l, r))
-# max_right   lを固定してlambdaを満たす最大のr
-# min_left    rを固定してlambdaを満たす最小のl
-for l in range(10):
-    r = sgt.max_right(l, lambda q: q > 2)
-    print(l, r, sgt.query(l, r))
-
-#print(sgt)
+# https://atcoder.jp/contests/practice2/tasks/practice2_j
+n, q = map(int, input().split())
+A = list(map(int, input().split()))
+sgt = RMaxQSegmentTree(A)
+for _ in range(q):
+    t, u, v = map(int, input().split())
+    if t == 1:
+        sgt.set(u-1, v)
+    elif t == 2:
+        print(sgt.prod(u-1, v))
+    else:
+        print(sgt.max_right(u-1, lambda y: y<v) + 1)
 
 #prefix#
 # Lib_Q_Seg_一点更新区間集約

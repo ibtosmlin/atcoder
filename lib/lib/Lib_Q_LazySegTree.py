@@ -12,11 +12,27 @@
 #body#
 from atcoder.lazysegtree import LazySegTree
 class LazySegmentTree(LazySegTree):
-    # def __init__(self, op, e, mapping, composition, id, v):
-    #     super().__init__(op, e, mapping, composition, id, v)
+    def __init__(self, op, e, mapping, composition, id, v):
+        super().__init__(op, e, mapping, composition, id, v)
 
     def __str__(self) -> str:
         return ' '.join(map(str, [self.get(i) for i in range(self._n)]))
+
+    def _debug(self, xs):
+        strs = [str(x) for x in xs] + [f"({x})" for x in range(self._n)]
+        minsize = max(len(s) for s in strs[self._size:])
+        result = ["|"] * (self._log + 2)
+        level = 0
+        next_level = 2
+        for i in range(1, len(strs)):
+            if i == next_level:
+                level += 1
+                next_level <<= 1
+            if level < self._log + 1:
+                width = ((minsize + 1) << (self._log - level)) - 1
+            result[level] += strs[i].center(width) + "|"
+        return "\n".join(result)
+
 
     # https://github.com/atcoder/ac-library/blob/master/document_ja/lazysegtree.md
     # set(p, x): p番目の要素をxに置き換える

@@ -12,7 +12,7 @@
 #body#
 class SegmentTree:  # 初期化処理
     """dual Segment Tree
-    区間＜更新・加算・mi＞・1点抽出
+    区間＜更新・加算・min・max＞・1点抽出
     Parameters
     ----------
     op: monoid
@@ -32,7 +32,7 @@ class SegmentTree:  # 初期化処理
         self._counter = 0
         self.INF = (-1, ie)
         # seg木の初期化
-        self._dat = [self.INF] * (2 * self._size)
+        self._d = [self.INF] * (2 * self._size)
         self._op = op
         if A:
             for i, ai in enumerate(A):
@@ -47,9 +47,9 @@ class SegmentTree:  # 初期化処理
         r += self._size
         while l < r:
             if r & 1:
-                r -= 1; self._dat[r] = self._op(self._dat[r], _x)
+                r -= 1; self._d[r] = self._op(self._d[r], _x)
             if l & 1:
-                self._dat[l] = self._op(self._dat[l], _x); l += 1
+                self._d[l] = self._op(self._d[l], _x); l += 1
             l >>= 1; r >>= 1
         self._counter += 1
 
@@ -57,8 +57,8 @@ class SegmentTree:  # 初期化処理
         k += self._size
         t = self.INF
         while k > 0:
-            if self._dat[k]:
-                t = self._op(t, self._dat[k])
+            if self._d[k]:
+                t = self._op(t, self._d[k])
             k >>= 1
         return t
 
@@ -70,14 +70,33 @@ class SegmentTree:  # 初期化処理
     def __getitem__(self, i:int) -> int:
         return self.query(i)
 
+    def __str__(self):
+        """元のリストの値を表示"""
+        return self._debug(self._d)
+
+    def _debug(self, xs):
+        strs = [str(x) for x in xs] + [f"({x})" for x in range(self._n)]
+        minsize = max(len(s) for s in strs[self._size:])
+        result = ["|"] * (self._log + 2)
+        level = 0
+        next_level = 2
+        for i in range(1, len(strs)):
+            if i == next_level:
+                level += 1
+                next_level <<= 1
+            if level < self._log + 1:
+                width = ((minsize + 1) << (self._log - level)) - 1
+            result[level] += strs[i].center(width) + "|"
+        return "\n".join(result)
+
 
 ###################################################
 n, q = map(int, input().split())
-INF = (1<<31) - 1
+INF = float('inf')#(1<<31) - 1
 # RUQ = SegmentTree(lambda x, y: max(x, y), INF, n, [INF]*n)
 # RAQ = SegmentTree(lambda x, y: (max(x[0], y[0]), x[1]+y[1]), 0, n, [0]*n)
-RMQ = SegmentTree(lambda x, y: (max(x[0], y[0]), min(x[1],y[1])), INF, n, [INF]*n)
-
+RMinQ = SegmentTree(lambda x, y: (max(x[0], y[0]), min(x[1],y[1])), INF, n, [INF]*n)
+RMaxQ = SegmentTree(lambda x, y: (max(x[0], y[0]), max(x[1],y[1])), INF, n, [INF]*n)
 
 for _ in range(q):
     t, *qry = map(int, input().split())
@@ -85,12 +104,12 @@ for _ in range(q):
         l, r, x = qry
         # l -= 1
         r += 1
-        RMQ.update(l, r, x)
+        RMinQ.update(l, r, x)
     # else:
     #     i = qry[0]
         # i -= 1
         # print(RUQ[i])
-        print([RMQ[i] for i in range(n)])
+        print([RMinQ[i] for i in range(n)])
 
 #prefix#
 # Lib_Q_SegDual_双対_区間更新一点集約
