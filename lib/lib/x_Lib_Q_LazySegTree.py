@@ -129,45 +129,39 @@ class LazySegmentTree:
         for i in range(self._n): ret[i] = self.getvalue(i)
         return ' '.join(map(str, ret))
 
-#######################################################
+INF = (1<<31) - 1
 
-n, d = map(int, input().split())
-A = list(input().split())
-bs = pow(10, d-1)
-for i in range(n):
-    x = [int(A[i])]
-    for j in range(d-1):
-        f, s = divmod(x[-1], bs)
-        x.append(s*10+f)
-    A[i] = x
 
-# 区間集約演算 *: G * G -> G の定義.
-def op(x, y):
-    ret = [0] * d
-    for i in range(d):
-        ret[i] = x[i]^y[i]
-    return ret
+N, Q = map(int, input().split())
 
-# op演算の単位元
-ie = [0] * d
+# RMinQ and RAQ
+# LST = LazySegmentTree([0]*N, min, INF, lambda f, x: f+x, lambda f, g: f+g, 0)
+# RMaxQ and RAQ
+# LST = LazySegmentTree([0]*N, max, -INF, lambda f, x: f+x, lambda f, g: f+g, 0)
+# #RSumQ and RAQ
+# op = lambda x, y: (x[0]+y[0], x[1]+y[1])
+# mp = lambda f, x: (x[0]+f*x[1], x[1])
+# LST = LazySegmentTree([(0,1)]*N, op, (0,0), mp, lambda f, g: f+g, 0)
+# #RMinQ and RUQ
+# LST = LazySegmentTree([INF]*N, min, INF, lambda f, x: x if f == INF else f, lambda f, g: g if f == INF else f, INF)
+# #RMaxQ and RUQ
+# LST = LazySegmentTree([-INF]*N, max, -INF, lambda f, x: x if f == -INF else f, lambda f, g: g if f == -INF else f, -INF)
+# #RSumQ and RUQ
+op = lambda x, y: (x[0]+y[0], x[1]+y[1])
+mp = lambda f, x: x if f == INF else (f*x[1], x[1])
+LST = LazySegmentTree([(0,1)]*N, op, (0,0), mp, lambda f, g: g if f == INF else f, INF)
 
-# 区間更新演算 ·: F · G -> G の定義.
-def mapping(f,x):
-    ret = [0] * d
-    for i in range(d):
-        ret[(i-f)%d] = x[i]
-    return ret
 
-# 遅延評価演算 ·: F · F -> F の定義.
-def composition(f, g):
-    return (f+g)%d
-
-# 遅延評価演算の単位元
-id = 0
-
-sgt = LazySegmentTree(A, op, ie, mapping, composition, id)
-
+ans = []
+for _ in range(Q):
+    t, *cmd = map(int, input().split())
+    if t:
+        s, t = cmd
+        ans.append(str(LST.query(s, t+1)[0]))
+    else:
+        s, t, x = cmd
+        LST.apply(s, t+1, x)
+print('\n'.join(ans))
 #prefix#
 # Lib_Q_LazySeg_plain
 #end#
-

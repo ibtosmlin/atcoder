@@ -19,9 +19,9 @@ class LazySegmentTree(LazySegTree):
         return ' '.join(map(str, [self.get(i) for i in range(self._n)]))
 
     def _debug(self, xs):
-        strs = [str(x) for x in xs] + [f"({x})" for x in range(self._n)]
+        strs = [str(x) for x in xs] + [f'({x})' for x in range(self._n)]
         minsize = max(len(s) for s in strs[self._size:])
-        result = ["|"] * (self._log + 2)
+        result = ['|'] * (self._log + 2)
         level = 0
         next_level = 2
         for i in range(1, len(strs)):
@@ -30,8 +30,8 @@ class LazySegmentTree(LazySegTree):
                 next_level <<= 1
             if level < self._log + 1:
                 width = ((minsize + 1) << (self._log - level)) - 1
-            result[level] += strs[i].center(width) + "|"
-        return "\n".join(result)
+            result[level] += strs[i].center(width) + '|'
+        return '\n'.join(result)
 
 
     # https://github.com/atcoder/ac-library/blob/master/document_ja/lazysegtree.md
@@ -42,6 +42,25 @@ class LazySegmentTree(LazySegTree):
     # apply(l, r, f): 半開区間[l, r)の各要素にfを施す
     # max_right(l, isok): g(v[i])がTrueとなる一番右のindex（lからスタート）
     # min_left(r, isok): g(v[i])がTrueとなる一番左のindex（rからスタート）
+#######################################################
+
+# INF = 10 ** 18
+# RMinQ and RAQ
+# LST = LazySegmentTree([0]*N, min, INF, lambda f, x: f+x, lambda f, g: f+g, 0)
+# RMaxQ and RAQ
+# LST = LazySegmentTree([0]*N, max, -INF, lambda f, x: f+x, lambda f, g: f+g, 0)
+# #RSumQ and RAQ
+# op = lambda x, y: (x[0]+y[0], x[1]+y[1])
+# mp = lambda f, x: (x[0]+f*x[1], x[1])
+# LST = LazySegmentTree([(0,1)]*N, op, (0,0), mp, lambda f, g: f+g, 0)
+# #RMinQ and RUQ
+# LST = LazySegmentTree([INF]*N, min, INF, lambda f, x: x if f == INF else f, lambda f, g: g if f == INF else f, INF)
+# #RMaxQ and RUQ
+# LST = LazySegmentTree([-INF]*N, max, -INF, lambda f, x: x if f == -INF else f, lambda f, g: g if f == -INF else f, -INF)
+# #RSumQ and RUQ
+# op = lambda x, y: (x[0]+y[0], x[1]+y[1])
+# mp = lambda f, x: x if f == INF else (f*x[1], x[1])
+# LST = LazySegmentTree([(0,1)]*N, op, (0,0), mp, lambda f, g: g if f == INF else f, INF)
 
 #######################################################
 n, d = map(int, input().split())
