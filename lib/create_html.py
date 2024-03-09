@@ -59,7 +59,7 @@ with open(links_file) as f:
     rdata['links'] = json.load(f)
 
 #テンプレート読み込み
-env = Environment(loader=FileSystemLoader('./templates', encoding='utf8'))
+env = Environment(loader=FileSystemLoader('./web/templates', encoding='utf8'))
 template = env.get_template('template.html')
 
 #レンダリングしてhtml出力
