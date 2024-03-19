@@ -1,3 +1,5 @@
-/work/testlib/*
+/.work/testlib/*
+/.work/*py
 bk_*
-!/work/testlib/.gitkeep
+!/.work/testlib/.gitkeep
+/.venv

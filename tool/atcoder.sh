@@ -6,11 +6,11 @@ url=${1}
 arg=${2}
 taskid=${url##*/}
 
-cp=~/atcoder
+cp="`pwd`"
 ctool="${cp}/tool"
-ctemplate="${ctool}/template.py"
+cwd="${cp}/.work"
 
-cwd="${cp}/work"
+ctemplate="${ctool}/template.py"
 cfname="${cwd}/${taskid}.py"
 ctest="${cwd}/testlib"
 ctaskwd="${ctest}/${taskid}"
@@ -22,7 +22,17 @@ msg2="Testing...................."
 msg3="Submitting by Pypy3........"
 msg4="SkipDownload..............."
 
-cd ${cwd}
+function set_template(){            #
+    if [ ! -f $2 ]; then
+        cp $1 $2                    # テンプレのコピー
+        sed -i "1i # $url" $2       # テンプレの一行目に問題urlを設定
+        echo "${1} created in ${2}"
+    else
+        echo "${2} already exists."
+    fi
+    code $2                         # VSコードで表示
+}
+
 
 # argument 1
 # example: https://atcoder.jp/contests/abc235/tasks/abc235_a
@@ -37,31 +47,17 @@ cd ${cwd}
 if [ $arg = 'd' ]; then
 # download test data and set template
 #    x-www-browser $url
-    echo $msg1
-    mkdir -p $ctaskwd
-    cd $ctaskwd
-    oj d $url
+    echo $msg1          # メッセージ表示
+    mkdir -p $ctaskwd && cd $ctaskwd    # タスクのフォルダ作成と移動
+    cd $cwd
+    oj d $url && cd $cp                 # ダウンロードと移動
     cd $cp
-    if [ ! -f $cfname ]; then
-        cp $ctemplate $cfname
-        sed -i "1i # $url" $cfname
-        code $cfname
-        echo "${ctemplate} created in ${cfname}"
-    else
-        echo "${cfname} already exists."
-    fi
+    set_template $ctemplate $cfname
+
 
 elif [ $arg = 'template' ]; then
 # set template
-    if [ ! -f $cfname ]; then
-        cp $ctemplate $cfname
-        sed -i "1i # $url" $cfname
-        code $cfname
-        echo "${ctemplate} created in ${cfname}"
-    else
-        code $cfname
-        echo "${cfname} already exists."
-    fi
+    set_template $ctemplate $cfname
 
 elif [ $arg = 't' ]; then
 # download test data and test
@@ -78,19 +74,8 @@ elif [ $arg = 't' ]; then
     echo $msg2
     cp $cfname $ctaskfname
     cd $ctaskwd
-    # oj t -c 'python3 main.py' -S
-    oj t -c 'pypy3 main.py' -S
+    oj t -c 'python3 main.py' -S
     cd $cp
-
-
-# elif [ $arg = 'ss' ]; then
-# # submit
-#     echo "Submitting by Python3......."
-#     cp $cfname $ctaskfname
-#     cd $ctaskwd
-#     # echo y | oj s main.py
-#     oj s --language 5055 --no-guess main.py --yes
-#     cd $cp
 
 
 elif [ $arg = 's' ]; then
@@ -100,7 +85,6 @@ elif [ $arg = 's' ]; then
     to="$cp/$taskid/main.py"
     cp $cfname $ctaskfname
     cd $ctaskwd
-    # echo y | oj s --guess-python-interpreter pypy main.py
     oj s --language 5078 --no-guess main.py --yes --open
     cd $cp
 

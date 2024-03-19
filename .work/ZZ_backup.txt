@@ -1319,3 +1319,22 @@ Sat Mar  9 18:16:10 JST 2024
 -rw-r--r-- 1 ibtosm ibtosm  924 Mar  7 09:10 /home/ibtosm/atcoder/work/ahc001_a.py
 -rw-r--r-- 1 ibtosm ibtosm  290 Mar  8 10:38 /home/ibtosm/atcoder/work/abc343_a.py
 -rw-r--r-- 1 ibtosm ibtosm  375 Mar  8 10:46 /home/ibtosm/atcoder/work/abc343_c.py
+Tue Mar 19 15:10:41 JST 2024
+-rw-r--r-- 1 ibtosm ibtosm 238 Mar 19 14:02 /home/ibtosm/app/atcoder/.work/arc174_a.py
+-rw-r--r-- 1 ibtosm ibtosm 238 Mar 19 15:01 /home/ibtosm/app/atcoder/.work/abc344_e.py
+-rw-r--r-- 1 ibtosm ibtosm 238 Mar 19 15:09 /home/ibtosm/app/atcoder/.work/abc344_d.py
+-rw-r--r-- 1 ibtosm ibtosm 238 Mar 19 15:09 /home/ibtosm/app/atcoder/.work/abc344_c.py
+-rw-r--r-- 1 ibtosm ibtosm 238 Mar 19 15:09 /home/ibtosm/app/atcoder/.work/abc344_b.py
+-rw-r--r-- 1 ibtosm ibtosm 238 Mar 19 15:09 /home/ibtosm/app/atcoder/.work/abc344_a.py
+Tue Mar 19 15:18:31 JST 2024
+-rw-r--r-- 1 ibtosm ibtosm 238 Mar 19 15:12 /home/ibtosm/app/atcoder/.work/abc344_e.py
+-rw-r--r-- 1 ibtosm ibtosm 238 Mar 19 15:12 /home/ibtosm/app/atcoder/.work/abc344_d.py
+-rw-r--r-- 1 ibtosm ibtosm 238 Mar 19 15:12 /home/ibtosm/app/atcoder/.work/abc344_c.py
+-rw-r--r-- 1 ibtosm ibtosm 238 Mar 19 15:12 /home/ibtosm/app/atcoder/.work/abc344_b.py
+-rw-r--r-- 1 ibtosm ibtosm 238 Mar 19 15:12 /home/ibtosm/app/atcoder/.work/abc344_a.py
+Tue Mar 19 15:40:56 JST 2024
+-rw-r--r-- 1 ibtosm ibtosm 238 Mar 19 15:19 /home/ibtosm/app/atcoder/.work/abc344_e.py
+-rw-r--r-- 1 ibtosm ibtosm 238 Mar 19 15:19 /home/ibtosm/app/atcoder/.work/abc344_d.py
+-rw-r--r-- 1 ibtosm ibtosm 280 Mar 19 15:30 /home/ibtosm/app/atcoder/.work/abc344_a.py
+-rw-r--r-- 1 ibtosm ibtosm 358 Mar 19 15:33 /home/ibtosm/app/atcoder/.work/abc344_b.py
+-rw-r--r-- 1 ibtosm ibtosm 596 Mar 19 15:36 /home/ibtosm/app/atcoder/.work/abc344_c.py
