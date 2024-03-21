@@ -80,8 +80,6 @@ elif [ $arg = 't' ]; then
 elif [ $arg = 's' ]; then
 # submit
     echo $msg3
-    fm="$cwd/$filename"
-    to="$cp/$taskid/main.py"
     cp $cfname $ctaskfname
     cd $ctaskwd
     oj s --language 5078 --no-guess main.py --yes --open
