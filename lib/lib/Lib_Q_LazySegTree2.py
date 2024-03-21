@@ -1,28 +1,22 @@
-#title#
-# 遅延評価セグメント木plain
-#subtitle#
-# 遅延評価セグメント木plain
-# LazySegTree:(op, e, mapping, composition, id_, v)
-
 #name#
-# 遅延評価セグメント木plain
+# 遅延評価セグメント木code
 #description#
 # 遅延評価セグメント木
-
 #body#
-from atcoder.lazysegtree import LazySegTree as LazySegTreeACL
+import sys
+def input(): return sys.stdin.readline().rstrip()
 
-class LazySegTreeLight:
+####################################
+import sys
+class LazySegTree:
     def __init__(self, op, e, mapping, composition, id_, v):
         n = len(v)
-        self._n = n
         self._op = op
         self._e = e
         self._mapping = mapping
         self._composition = composition
         self._id = id_
-        self._log = (n - 1).bit_length()
-        self._size = 1 << self._log
+        self._size = 1 << (n - 1).bit_length()
         self._d = [e] * (2 * self._size)
         self._lz = [id_] * 2 * self._size
         for i in range(n):
@@ -82,45 +76,13 @@ class LazySegTreeLight:
                 resr = self._op(self._d[r - 1], resr)
             l >>= 1; r >>= 1
         return self._op(resl, resr)
-    def get(self, p):
-        return self.prod(p, p+1)
 
 
-class LazySegmentTree(LazySegTreeLight):
-#class LazySegmentTree(LazySegTreeACL):
-    def __init__(self, op, e, mapping, composition, id, v):
-        super().__init__(op, e, mapping, composition, id, v)
-
-    def __str__(self) -> str:
-        return ' '.join(map(str, [self.get(i) for i in range(self._n)]))
-
-    def _debug(self, xs):
-        strs = [str(x) for x in xs] + [f'({x})' for x in range(self._n)]
-        minsize = max(len(s) for s in strs[self._size:])
-        result = ['|'] * (self._log + 2)
-        level = 0
-        next_level = 2
-        for i in range(1, len(strs)):
-            if i == next_level:
-                level += 1
-                next_level <<= 1
-            if level < self._log + 1:
-                width = ((minsize + 1) << (self._log - level)) - 1
-            result[level] += strs[i].center(width) + '|'
-        return '\n'.join(result)
+INF = (1<<31) - 1
 
 
-    # https://github.com/atcoder/ac-library/blob/master/document_ja/lazysegtree.md
-    # set(p, x): p番目の要素をxに置き換える
-    # get(p, x): p番目の要素を取得する
-    # prod(l, r): 半開区間[l, r)の計算結果を取得する
-    # all_prod(): 全区間[0, self._n)計算結果を取得する
-    # apply(l, r, f): 半開区間[l, r)の各要素にfを施す
-    # max_right(l, isok): g(v[i])がTrueとなる一番右のindex（lからスタート）
-    # min_left(r, isok): g(v[i])がTrueとなる一番左のindex（rからスタート）
-#######################################################
+N, Q = map(int, input().split())
 
-# INF = 10 ** 18
 # RMinQ and RAQ
 # LST = LazySegmentTree([0]*N, min, INF, lambda f, x: f+x, lambda f, g: f+g, 0)
 # RMaxQ and RAQ
@@ -134,48 +96,21 @@ class LazySegmentTree(LazySegTreeLight):
 # #RMaxQ and RUQ
 # LST = LazySegmentTree([-INF]*N, max, -INF, lambda f, x: x if f == -INF else f, lambda f, g: g if f == -INF else f, -INF)
 # #RSumQ and RUQ
-# op = lambda x, y: (x[0]+y[0], x[1]+y[1])
-# mp = lambda f, x: x if f == INF else (f*x[1], x[1])
-# LST = LazySegmentTree([(0,1)]*N, op, (0,0), mp, lambda f, g: g if f == INF else f, INF)
-
-#######################################################
-n, d = map(int, input().split())
-A = list(input().split())
-bs = pow(10, d-1)
-for i in range(n):
-    x = [int(A[i])]
-    for j in range(d-1):
-        f, s = divmod(x[-1], bs)
-        x.append(s*10+f)
-    A[i] = x
-
-# 区間集約演算 *: G * G -> G の定義.
-def op(x, y):
-    ret = [0] * d
-    for i in range(d):
-        ret[i] = x[i]^y[i]
-    return ret
-
-# op演算の単位元
-ie = [0] * d
-
-# 区間更新演算 ·: F · G -> G の定義.
-def mapping(f,x):
-    ret = [0] * d
-    for i in range(d):
-        ret[(i-f)%d] = x[i]
-    return ret
-
-# 遅延評価演算 ·: F · F -> F の定義.
-def composition(f, g):
-    return (f+g)%d
-
-# 遅延評価演算の単位元
-id = 0
-
-sgt = LazySegTree(op, ie, mapping, composition, id, A)
+op = lambda x, y: (x[0]+y[0], x[1]+y[1])
+mp = lambda f, x: x if f == INF else (f*x[1], x[1])
+LST = LazySegTree([(0,1)]*N, op, (0,0), mp, lambda f, g: g if f == INF else f, INF)
 
 
+ans = []
+for _ in range(Q):
+    t, *cmd = map(int, input().split())
+    if t:
+        s, t = cmd
+        ans.append(str(LST.query(s, t+1)[0]))
+    else:
+        s, t, x = cmd
+        LST.apply(s, t+1, x)
+print('\n'.join(ans))
 #prefix#
 # Lib_Q_LazySeg_plain
 #end#

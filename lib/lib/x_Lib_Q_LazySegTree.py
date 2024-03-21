@@ -20,7 +20,9 @@ class LazySegmentTree:
         if type(init) == int: init = [ie] * init
         self._n = len(init)
         self._log = (self._n-1).bit_length(); self._size = 1 << self._log
-        self._dat = [ie] * self._size + init + [ie] * (self._size - len(init))
+        self._dat = [ie] * (2*self._size)
+        for i in range(self._n):
+            self._dat[self.size+i] = init[i]
         for i in range(self._size-1, 0, -1): self._update(i)
         self._id = id; self._lazy = [id] * self._size
         self._mapping = mapping; self._composition = composition
