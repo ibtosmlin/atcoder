@@ -33,6 +33,17 @@ function set_template(){            #
     code $2                         # VSコードで表示
 }
 
+function download_testcase(){
+    if [ ! -d $ctaskwdtest ]; then
+        echo $msg1
+        mkdir -p $ctaskwd
+        cd $ctaskwd
+        oj d $url
+        cd $cp
+    else
+        echo $msg4
+    fi
+}
 
 # argument 1
 # example: https://atcoder.jp/contests/abc235/tasks/abc235_a
@@ -47,11 +58,7 @@ function set_template(){            #
 if [ $arg = 'd' ]; then
 # download test data and set template
 #    x-www-browser $url
-    echo $msg1          # メッセージ表示
-    mkdir -p $ctaskwd && cd $ctaskwd    # タスクのフォルダ作成と移動
-    cd $cwd
-    oj d $url && cd $cp                 # ダウンロードと移動
-    cd $cp
+    download_testcase
     set_template $ctemplate $cfname
 
 
@@ -61,15 +68,7 @@ elif [ $arg = 'template' ]; then
 
 elif [ $arg = 't' ]; then
 # download test data and test
-    if [ ! -d $ctaskwdtest ]; then
-        echo $msg1
-        mkdir -p $ctaskwd
-        cd $ctaskwd
-        oj d $url
-        cd $cp
-    else
-        echo $msg4
-    fi
+    download_testcase
 # test
     echo $msg2
     cp $cfname $ctaskfname
