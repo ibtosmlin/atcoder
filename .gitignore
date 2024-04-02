@@ -1,5 +1,5 @@
+/.venv
 /.work/testlib/*
 /.work/*py
-bk_*
 !/.work/testlib/.gitkeep
-/.venv
+bk_*
