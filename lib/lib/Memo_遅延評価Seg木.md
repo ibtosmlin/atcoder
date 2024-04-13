@@ -1,5 +1,58 @@
 # 遅延評価セグメント木
 
+## AtCoder Library Practice Contest K - Range Affine Range Sum
+https://atcoder.jp/contests/practice2/tasks/practice2_k
+```
+mod = 998244353
+bit = 30
+msk = (1<<bit)-1
+n, q = map(int, input().split())
+A = list(map(int, input().split()))
+A = [ai<<bit|1 for ai in A]
+
+# 区間集約演算 *: G * G -> G の定義.
+def op(x, y):
+    xv, xlen = x>>bit, x&msk
+    yv, ylen = y>>bit, y&msk
+    r0 = (xv+yv)%mod
+    r1 = (xlen+ylen)%mod
+    return r0<<bit|r1
+
+# op演算の単位元
+ie = 0
+
+# 区間更新演算 ·: F · G -> G の定義.
+def mapping(f,x):
+    f0, f1 = f>>bit, f&msk
+    sx, lx = x>>bit, x&msk
+    r0 = (f0*sx + f1*lx)%mod
+    r1 = lx
+    return r0<<bit|r1
+
+# 遅延評価演算 ·: F · F -> F の定義.
+def composition(f, g):
+    f0, f1 = f>>bit, f&msk
+    g0, g1 = g>>bit, g&msk
+    r0 = f0*g0%mod
+    r1 = (f0*g1+f1)%mod
+    return r0<<bit|r1
+
+# 遅延評価演算の単位元
+id = 1<<bit
+
+sgt = LazySegmentTree(op, ie, mapping, composition, id, A)
+
+for _ in range(q):
+    t, *qry = map(int, input().split())
+    if t == 0:
+        l, r, b, c = qry
+        sgt.apply(l, r, b<<bit|c)
+    else:
+        l, r = qry
+        ans = sgt.prod(l, r)
+        print(ans>>bit)
+```
+
 ## ACL Beginner Contest E - Replace Digits
 https://atcoder.jp/contests/abl/tasks/abl_e
 

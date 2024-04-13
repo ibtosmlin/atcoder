@@ -18,11 +18,13 @@ for file in lib_files:
     for fi in flist:
         if fi in ['#name#', '#prefix#', '#body#', '#description#', '#end#']:
             now = fi.replace('#', '')
+
         elif now == 'name':
             name = fi[2:]
             d[name]['prefix'] = []
             d[name]['body'] = []
             d[name]['description'] = []
+            d[name]['scope'] = "python"
 
         elif now != 'end':
             if not name: continue

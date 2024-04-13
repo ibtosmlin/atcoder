@@ -89,6 +89,19 @@ class RGCDSegmentTree(SegmentTree):
             return math.gcd(x, y)
         super().__init__(op, 0, init)
 
+mod = 998244353
+class PointSetRangeComposite(SegmentTree):
+# https://judge.yosupo.jp/problem/point_set_range_composite
+    def __init__(self, init):
+        def op(x, y):
+            a, b = x
+            c, d = y
+            return ((a*c)%mod, (b*c+d)%mod)
+        super().__init__(op, (1, 0), init)
+
+    def get(self, x):
+        a, b = super().get(x)
+        return (a*x+b) % mod
 
 ####################################
 # https://atcoder.jp/contests/practice2/tasks/practice2_j

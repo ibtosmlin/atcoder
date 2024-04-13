@@ -15,18 +15,19 @@
 #body#
 
 def matprod(ma, mb, mod = 10**9+7):
-    h_a = len(ma)
-    w_a = len(ma[0])
-    h_b = len(mb)
-    w_b = len(mb[0])
-    if h_a*w_a*h_b*w_b == 0: return 0
-    if w_a != h_b: return 0
-    ret = [[0] * h_a for _ in range(w_b)]
-    for i, reti in enumerate(ret):
-        for k, aik in enumerate(ma[i]):
-            for j, bkj in enumerate(mb[k]):
-                reti[j] += aik * bkj
-                reti[j] %= mod
+    h_a = len(ma)   # n
+    w_a = len(ma[0])    # m
+    h_b = len(mb)   # m
+    w_b = len(mb[0])    # k
+    assert(w_a == h_b)
+    assert(h_a*w_a*h_b*w_b)
+
+    tmb = [list(x) for x in zip(*mb)]
+    ret = [[0] * w_b for _ in range(h_a)]
+    for _i, mai in enumerate(ma):
+        reti = ret[_i]
+        for _j, mbk in enumerate(tmb):
+            reti[_j] = sum(a*b%mod for a, b in zip(mai, mbk)) % mod
     return ret
 
 
@@ -43,13 +44,16 @@ def matpow(ma, k, mod = 10**9+7):
         if k == 0: break
     return ret
 
-
+mod = 998244353
 n, m, k = map(int, input().split())
 ma = [list(map(int, input().split())) for _ in range(n)]
 mb = [list(map(int, input().split())) for _ in range(m)]
 
-for r in matprod(ma, mb):
+
+
+for r in matprod(ma, mb, mod):
     print(*r)
+
 
 #prefix#
 # Lib_M_行列演算_matrix

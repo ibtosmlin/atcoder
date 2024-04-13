@@ -10,22 +10,22 @@ cp="`pwd`"
 ctool="${cp}/tool"
 cwd="${cp}/.work"
 
-ctemplate="${ctool}/template.py"
-cfname="${cwd}/${taskid}.py"
+ctemplate="${ctool}/template.ts"
+cfname="${cwd}/${taskid}.ts"
 ctest="${cwd}/testlib"
 ctaskwd="${ctest}/${taskid}"
-ctaskfname="${ctest}/${taskid}/main.py"
+ctaskfname="${ctest}/${taskid}/main.ts"
 ctaskwdtest="${ctest}/${taskid}/test"
 
 msg1="Downloading................"
 msg2="Testing...................."
-msg3="Submitting by Pypy3........"
+msg3="Submitting by TypeScript..."
 msg4="SkipDownload..............."
 
 function set_template(){            #
     if [ ! -f $2 ]; then
         cp $1 $2                    # テンプレのコピー
-        sed -i "1i # $url" $2       # テンプレの一行目に問題urlを設定
+        sed -i "1i // $url" $2       # テンプレの一行目に問題urlを設定
         echo "${1} created in ${2}"
     else
         echo "${2} already exists."
@@ -45,15 +45,6 @@ function download_testcase(){
     fi
 }
 
-# argument 1
-# example: https://atcoder.jp/contests/abc235/tasks/abc235_a
-# argument 2
-# example: 'd' or 't' or 'template'
-
-# echo $url
-# echo $arg
-# echo $taskid      -> abc235_a
-# echo $filename    -> abc235_a.py
 
 if [ $arg = 'd' ]; then
 # download test data and set template
@@ -73,7 +64,8 @@ elif [ $arg = 't' ]; then
     echo $msg2
     cp $cfname $ctaskfname
     cd $ctaskwd
-    oj t -c 'python3 main.py' -D
+    tsc main.ts
+    oj t -c 'node main.js' -D
     cd $cp
 
 
@@ -82,7 +74,7 @@ elif [ $arg = 's' ]; then
     echo $msg3
     cp $cfname $ctaskfname
     cd $ctaskwd
-    oj s --language 5078 --no-guess main.py --yes --open
+    oj s --language 5058 --no-guess main.ts --yes --open
     cd $cp
 
 

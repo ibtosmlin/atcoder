@@ -1,15 +1,3 @@
-#title#
-# 遅延評価セグメント木plain
-#subtitle#
-# 遅延評価セグメント木plain
-# LazySegTree:(op, e, mapping, composition, id_, v)
-
-#name#
-# 遅延評価セグメント木plain
-#description#
-# 遅延評価セグメント木
-
-#body#
 from atcoder.lazysegtree import LazySegTree as LazySegTreeACL
 
 class LazySegTreeLight:
@@ -174,8 +162,3 @@ def composition(f, g):
 id = 0
 
 sgt = LazySegmentTree(op, ie, mapping, composition, id, A)
-
-
-#prefix#
-# Lib_Q_LazySeg_plain
-#end#

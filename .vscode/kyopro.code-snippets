@@ -102,7 +102,8 @@
         ],
         "description": [
             "ループ#"
-        ]
+        ],
+        "scope": "python"
     },
     "Lib_AL_図形_座標回転": {
         "prefix": [
@@ -127,7 +128,8 @@
         ],
         "description": [
             "図形のライブラリ"
-        ]
+        ],
+        "scope": "python"
     },
     "Ordered set (BIT)": {
         "prefix": [
@@ -352,7 +354,8 @@
             "",
             "#print(os.kthvalue(0))"
         ],
-        "description": []
+        "description": [],
+        "scope": "python"
     },
     "Wavelet Matrix": {
         "prefix": [
@@ -666,7 +669,8 @@
         ],
         "description": [
             "WaveletMatrix: 数列のある範囲での値の頻度やインデックスを求める"
-        ]
+        ],
+        "scope": "python"
     },
     "Graph二部マッチング": {
         "prefix": [
@@ -756,7 +760,8 @@
         ],
         "description": [
             "Graph二部マッチング"
-        ]
+        ],
+        "scope": "python"
     },
     "素数判定・出力": {
         "prefix": [
@@ -903,12 +908,14 @@
             "    return ret",
             ""
         ],
-        "description": []
+        "description": [],
+        "scope": "python"
     },
     "escripiton#": {
         "prefix": [],
         "body": [],
-        "description": []
+        "description": [],
+        "scope": "python"
     },
     "全方位木DP": {
         "prefix": [
@@ -1044,7 +1051,8 @@
         "description": [
             "全方位木DP",
             "https://algo-logic.info/tree-dp/"
-        ]
+        ],
+        "scope": "python"
     },
     "転倒数": {
         "prefix": [
@@ -1089,7 +1097,8 @@
         ],
         "description": [
             "Lib_転倒数"
-        ]
+        ],
+        "scope": "python"
     },
     "Diameter": {
         "prefix": [
@@ -1203,12 +1212,14 @@
         ],
         "description": [
             "木の直径"
-        ]
+        ],
+        "scope": "python"
     },
     "フロアサム": {
         "prefix": [],
         "body": [],
-        "description": []
+        "description": [],
+        "scope": "python"
     },
     "一次直線(y=ax+b (0<=x<n の下にあるmの倍数の整数点の個数)": {
         "prefix": [
@@ -1223,7 +1234,8 @@
             "    print(floor_sum(n, m, a, b))",
             ""
         ],
-        "description": []
+        "description": [],
+        "scope": "python"
     },
     "セグメント木１点更新区間集約": {
         "prefix": [
@@ -1326,12 +1338,14 @@
         ],
         "description": [
             "セグメント木１点更新区間集約"
-        ]
+        ],
+        "scope": "python"
     },
     "ユークリッド互除法": {
         "prefix": [],
         "body": [],
-        "description": []
+        "description": [],
+        "scope": "python"
     },
     "gcd, extgcd": {
         "prefix": [
@@ -1359,7 +1373,8 @@
             "",
             ""
         ],
-        "description": []
+        "description": [],
+        "scope": "python"
     },
     "Lib_AL_図形_三角形_角度": {
         "prefix": [
@@ -1404,7 +1419,8 @@
         ],
         "description": [
             "図形のライブラリ"
-        ]
+        ],
+        "scope": "python"
     },
     "LCA": {
         "prefix": [
@@ -1566,7 +1582,8 @@
         ],
         "description": [
             "最小共通祖先"
-        ]
+        ],
+        "scope": "python"
     },
     "LCS最長共通部分列": {
         "prefix": [
@@ -1637,7 +1654,8 @@
         ],
         "description": [
             "Lib_LCS最長共通部分列"
-        ]
+        ],
+        "scope": "python"
     },
     "行列演算": {
         "prefix": [
@@ -1683,7 +1701,8 @@
             "    print(*r)",
             ""
         ],
-        "description": []
+        "description": [],
+        "scope": "python"
     },
     "転置行列": {
         "prefix": [
@@ -1695,7 +1714,8 @@
         ],
         "description": [
             "転置行列"
-        ]
+        ],
+        "scope": "python"
     },
     "行列90度回転": {
         "prefix": [
@@ -1710,7 +1730,8 @@
         ],
         "description": [
             "行列90度回転"
-        ]
+        ],
+        "scope": "python"
     },
     "F2(2進数)での上三角行列生成": {
         "prefix": [
@@ -1738,7 +1759,8 @@
         ],
         "description": [
             "F2(2進数)での上三角行列生成"
-        ]
+        ],
+        "scope": "python"
     },
     "F2(2進数)でのA・x = b となるxを見つける": {
         "prefix": [
@@ -1773,7 +1795,8 @@
         ],
         "description": [
             "F2(2進数)でのA・x = b となるxを見つける"
-        ]
+        ],
+        "scope": "python"
     },
     "座標圧縮": {
         "prefix": [
@@ -1827,7 +1850,8 @@
         ],
         "description": [
             "座標圧縮"
-        ]
+        ],
+        "scope": "python"
     },
     "座標圧縮二次元": {
         "prefix": [
@@ -1896,7 +1920,8 @@
         ],
         "description": [
             "座標圧縮二次元"
-        ]
+        ],
+        "scope": "python"
     },
     "差分最小値探索": {
         "prefix": [
@@ -1935,7 +1960,8 @@
         ],
         "description": [
             "差分最小値探索"
-        ]
+        ],
+        "scope": "python"
     },
     "Lib_G_グラフ橋関節_lowlink": {
         "prefix": [
@@ -2119,7 +2145,8 @@
         ],
         "description": [
             "グラフの橋・関節をO(n)で検出"
-        ]
+        ],
+        "scope": "python"
     },
     "回文": {
         "prefix": [
@@ -2181,7 +2208,8 @@
         ],
         "description": [
             "回文クラス"
-        ]
+        ],
+        "scope": "python"
     },
     "ランレングス圧縮": {
         "prefix": [
@@ -2198,7 +2226,8 @@
         ],
         "description": [
             "ランレングス圧縮"
-        ]
+        ],
+        "scope": "python"
     },
     "偏角ソート": {
         "prefix": [
@@ -2229,7 +2258,8 @@
         ],
         "description": [
             "偏角ソート"
-        ]
+        ],
+        "scope": "python"
     },
     "Graph最遠パス": {
         "prefix": [
@@ -2278,7 +2308,8 @@
         ],
         "description": [
             "Graph最遠パス"
-        ]
+        ],
+        "scope": "python"
     },
     "Sorted Set": {
         "prefix": [
@@ -2464,7 +2495,8 @@
             "ss.remove(2)",
             "print(2 in ss)"
         ],
-        "description": []
+        "description": [],
+        "scope": "python"
     },
     "BIT演算": {
         "prefix": [
@@ -2577,7 +2609,8 @@
         ],
         "description": [
             "BIT演算"
-        ]
+        ],
+        "scope": "python"
     },
     "modval1": {
         "prefix": [
@@ -2588,7 +2621,8 @@
         ],
         "description": [
             "modval"
-        ]
+        ],
+        "scope": "python"
     },
     "modval2": {
         "prefix": [
@@ -2599,7 +2633,8 @@
         ],
         "description": [
             "modval"
-        ]
+        ],
+        "scope": "python"
     },
     "pival": {
         "prefix": [
@@ -2610,7 +2645,8 @@
         ],
         "description": [
             "pival"
-        ]
+        ],
+        "scope": "python"
     },
     "alphabet": {
         "prefix": [
@@ -2623,7 +2659,8 @@
         ],
         "description": [
             "alphabet"
-        ]
+        ],
+        "scope": "python"
     },
     "削除機能付きHeapque": {
         "prefix": [
@@ -2659,7 +2696,8 @@
         ],
         "description": [
             "削除機能付きHeapque"
-        ]
+        ],
+        "scope": "python"
     },
     "削除機能付きMaxMinheapque": {
         "prefix": [
@@ -2732,7 +2770,8 @@
         ],
         "description": [
             "削除機能付きMaxMinheapque"
-        ]
+        ],
+        "scope": "python"
     },
     "最大フロー": {
         "prefix": [
@@ -2778,7 +2817,8 @@
         ],
         "description": [
             "最大フローO(∣V∣**2・∣E∣)"
-        ]
+        ],
+        "scope": "python"
     },
     "スパンクエリ": {
         "prefix": [
@@ -2817,7 +2857,8 @@
         ],
         "description": [
             "スパンクエリ"
-        ]
+        ],
+        "scope": "python"
     },
     "translate": {
         "prefix": [
@@ -2832,7 +2873,8 @@
         ],
         "description": [
             "複数の文字列を変換"
-        ]
+        ],
+        "scope": "python"
     },
     "d進数": {
         "prefix": [
@@ -2888,7 +2930,8 @@
         ],
         "description": [
             "nをd進数表記"
-        ]
+        ],
+        "scope": "python"
     },
     "digital digit": {
         "prefix": [
@@ -2906,7 +2949,8 @@
             "| |",
             " -",
             ""
-        ]
+        ],
+        "scope": "python"
     },
     "ローリングハッシュ": {
         "prefix": [
@@ -2949,7 +2993,8 @@
             "        print('No')",
             ""
         ],
-        "description": []
+        "description": [],
+        "scope": "python"
     },
     "動的ローリングハッシュ(１点更新)": {
         "prefix": [
@@ -3022,7 +3067,8 @@
             "        print('Yes' if left.get(l-1, r) == right.get(n-r, n-l+1) else 'No')",
             ""
         ],
-        "description": []
+        "description": [],
+        "scope": "python"
     },
     "三分探索": {
         "prefix": [
@@ -3047,7 +3093,8 @@
         ],
         "description": [
             "三分探索"
-        ]
+        ],
+        "scope": "python"
     },
     "output0": {
         "prefix": [
@@ -3058,7 +3105,8 @@
         ],
         "description": [
             "print(ret)"
-        ]
+        ],
+        "scope": "python"
     },
     "output2": {
         "prefix": [
@@ -3069,7 +3117,8 @@
         ],
         "description": [
             "print(INF⇒-1)"
-        ]
+        ],
+        "scope": "python"
     },
     "output3": {
         "prefix": [
@@ -3080,7 +3129,8 @@
         ],
         "description": [
             "print(3'\\n'.join(map)"
-        ]
+        ],
+        "scope": "python"
     },
     "output4": {
         "prefix": [
@@ -3091,7 +3141,8 @@
         ],
         "description": [
             "print(\"\".join)"
-        ]
+        ],
+        "scope": "python"
     },
     "output interactive": {
         "prefix": [
@@ -3103,7 +3154,8 @@
         ],
         "description": [
             "interactive"
-        ]
+        ],
+        "scope": "python"
     },
     "output7": {
         "prefix": [
@@ -3115,7 +3167,8 @@
         ],
         "description": [
             "rounded"
-        ]
+        ],
+        "scope": "python"
     },
     "outputYesNo": {
         "prefix": [
@@ -3126,7 +3179,8 @@
         ],
         "description": [
             "outputYesNo"
-        ]
+        ],
+        "scope": "python"
     },
     "Lib_math": {
         "prefix": [
@@ -3146,7 +3200,8 @@
         ],
         "description": [
             "mathのライブラリ"
-        ]
+        ],
+        "scope": "python"
     },
     "Lib_decimal": {
         "prefix": [
@@ -3165,7 +3220,8 @@
         "description": [
             "四捨五入が正しくできるツール",
             "Decimal で扱う"
-        ]
+        ],
+        "scope": "python"
     },
     "Lib_math_複素数": {
         "prefix": [
@@ -3196,7 +3252,8 @@
         ],
         "description": [
             "Lib_複素数"
-        ]
+        ],
+        "scope": "python"
     },
     "Lib_sort_by_function": {
         "prefix": [
@@ -3225,7 +3282,8 @@
         ],
         "description": [
             "Lib_sort_by_function"
-        ]
+        ],
+        "scope": "python"
     },
     "Lib_sqroot": {
         "prefix": [
@@ -3239,7 +3297,8 @@
         ],
         "description": [
             "Lib_sqroot"
-        ]
+        ],
+        "scope": "python"
     },
     "高速フーリエ変換(convolution, FFT)": {
         "prefix": [
@@ -3302,7 +3361,8 @@
             "print(*convolve(A,B))",
             ""
         ],
-        "description": []
+        "description": [],
+        "scope": "python"
     },
     "ユニオンファインド重み付き": {
         "prefix": [
@@ -3401,7 +3461,8 @@
         ],
         "description": [
             "ユニオンファインド重み付き"
-        ]
+        ],
+        "scope": "python"
     },
     "Lib_permutation": {
         "prefix": [
@@ -3496,7 +3557,8 @@
         ],
         "description": [
             "順列のライブラリ"
-        ]
+        ],
+        "scope": "python"
     },
     "二部グラフ判定": {
         "prefix": [
@@ -3563,7 +3625,8 @@
         ],
         "description": [
             "隣接リストから二部グラフかどうか判定"
-        ]
+        ],
+        "scope": "python"
     },
     "Lib_G_枝刈り取る": {
         "prefix": [
@@ -3601,7 +3664,8 @@
         ],
         "description": [
             "グラフの葉から枝を刈り取って、ループ部分のみ抽出する"
-        ]
+        ],
+        "scope": "python"
     },
     "半分全列挙": {
         "prefix": [
@@ -3640,7 +3704,8 @@
         ],
         "description": [
             "半分全列挙"
-        ]
+        ],
+        "scope": "python"
     },
     "約数列挙": {
         "prefix": [
@@ -3678,7 +3743,8 @@
             "",
             ""
         ],
-        "description": []
+        "description": [],
+        "scope": "python"
     },
     "n=intinput": {
         "prefix": [
@@ -3689,7 +3755,8 @@
         ],
         "description": [
             "整数nの読み込み"
-        ]
+        ],
+        "scope": "python"
     },
     "nainput": {
         "prefix": [
@@ -3701,7 +3768,8 @@
         ],
         "description": [
             "整数nの読み込み"
-        ]
+        ],
+        "scope": "python"
     },
     "s=input": {
         "prefix": [
@@ -3712,7 +3780,8 @@
         ],
         "description": [
             "文字列sの読み込み"
-        ]
+        ],
+        "scope": "python"
     },
     "ab=mapintinput": {
         "prefix": [
@@ -3723,7 +3792,8 @@
         ],
         "description": [
             "整数a, bの読み込み"
-        ]
+        ],
+        "scope": "python"
     },
     "n,m=map(int, input().split())": {
         "prefix": [
@@ -3734,7 +3804,8 @@
         ],
         "description": [
             "整数n, mの読み込み"
-        ]
+        ],
+        "scope": "python"
     },
     "a=list(map(int, input().split()))": {
         "prefix": [
@@ -3745,7 +3816,8 @@
         ],
         "description": [
             "リストの読み込み"
-        ]
+        ],
+        "scope": "python"
     },
     "b=list(map(int, input().split()))": {
         "prefix": [
@@ -3756,7 +3828,8 @@
         ],
         "description": [
             "リストの読み込み"
-        ]
+        ],
+        "scope": "python"
     },
     "edges": {
         "prefix": [
@@ -3772,7 +3845,8 @@
         ],
         "description": [
             "edges"
-        ]
+        ],
+        "scope": "python"
     },
     "edgesweighted": {
         "prefix": [
@@ -3788,7 +3862,8 @@
         ],
         "description": [
             "edges(重み付き)"
-        ]
+        ],
+        "scope": "python"
     },
     "0インデックス": {
         "prefix": [
@@ -3799,12 +3874,14 @@
         ],
         "description": [
             "0-indexed"
-        ]
+        ],
+        "scope": "python"
     },
     "素因数分解prime_factorize": {
         "prefix": [],
         "body": [],
-        "description": []
+        "description": [],
+        "scope": "python"
     },
     "素因数分解": {
         "prefix": [
@@ -3882,7 +3959,8 @@
             "    return ret",
             ""
         ],
-        "description": []
+        "description": [],
+        "scope": "python"
     },
     "ユニオンファインド部分永続": {
         "prefix": [
@@ -3996,27 +4074,32 @@
         ],
         "description": [
             "ユニオンファインド部分永続"
-        ]
+        ],
+        "scope": "python"
     },
     "ワーシャルフロイド法": {
         "prefix": [],
         "body": [],
-        "description": []
+        "description": [],
+        "scope": "python"
     },
     "iscription#": {
         "prefix": [],
         "body": [],
-        "description": []
+        "description": [],
+        "scope": "python"
     },
     "全頂点間最短路": {
         "prefix": [],
         "body": [],
-        "description": []
+        "description": [],
+        "scope": "python"
     },
     "d[i][j]は2頂点間i, j間の移動コストを格納, Mは頂点数": {
         "prefix": [],
         "body": [],
-        "description": []
+        "description": [],
+        "scope": "python"
     },
     "O(N^3)": {
         "prefix": [
@@ -4092,7 +4175,8 @@
             "print(WF.path(0, n-1))",
             ""
         ],
-        "description": []
+        "description": [],
+        "scope": "python"
     },
     "ベルマンフォード法": {
         "prefix": [
@@ -4165,12 +4249,14 @@
         "description": [
             "ベルマンフォード法・負閉路OK",
             "O(NM)"
-        ]
+        ],
+        "scope": "python"
     },
     "中国式剰余定理": {
         "prefix": [],
         "body": [],
-        "description": []
+        "description": [],
+        "scope": "python"
     },
     "mod ai = xi となるような整数の最小値を求める": {
         "prefix": [
@@ -4242,7 +4328,8 @@
             "",
             ""
         ],
-        "description": []
+        "description": [],
+        "scope": "python"
     },
     "トポロジカルソート 有向グラフ": {
         "prefix": [
@@ -4342,7 +4429,8 @@
         ],
         "description": [
             "トポロジカルソート topologicalsort"
-        ]
+        ],
+        "scope": "python"
     },
     "DFS非再帰": {
         "prefix": [
@@ -4411,7 +4499,8 @@
         ],
         "description": [
             "DFS非再帰"
-        ]
+        ],
+        "scope": "python"
     },
     "遅延評価セグメント木plain": {
         "prefix": [
@@ -4588,7 +4677,8 @@
         "description": [
             "遅延評価セグメント木",
             ""
-        ]
+        ],
+        "scope": "python"
     },
     "memo": {
         "prefix": [
@@ -4600,7 +4690,8 @@
         ],
         "description": [
             "memo"
-        ]
+        ],
+        "scope": "python"
     },
     "collectionslib": {
         "prefix": [
@@ -4613,7 +4704,8 @@
         ],
         "description": [
             "collectionslib"
-        ]
+        ],
+        "scope": "python"
     },
     "heapqlib": {
         "prefix": [
@@ -4624,7 +4716,8 @@
         ],
         "description": [
             "heapqlib"
-        ]
+        ],
+        "scope": "python"
     },
     "atcoder lib": {
         "prefix": [],
@@ -4634,7 +4727,8 @@
         ],
         "description": [
             "atcoder lib"
-        ]
+        ],
+        "scope": "python"
     },
     "Mo'sAlgorithm#": {
         "prefix": [
@@ -4751,7 +4845,8 @@
         ],
         "description": [
             "Mo'sAlgorithm#"
-        ]
+        ],
+        "scope": "python"
     },
     "LIS最長増加部分列": {
         "prefix": [
@@ -4818,7 +4913,8 @@
         ],
         "description": [
             "Lib_LIS最長増加部分列"
-        ]
+        ],
+        "scope": "python"
     },
     "尺取り": {
         "prefix": [
@@ -4951,7 +5047,8 @@
         ],
         "description": [
             "Lib_尺取り"
-        ]
+        ],
+        "scope": "python"
     },
     "ソートアルゴリズム": {
         "prefix": [
@@ -4993,7 +5090,8 @@
         ],
         "description": [
             "ソートアルゴリズム"
-        ]
+        ],
+        "scope": "python"
     },
     "最小全域木": {
         "prefix": [
@@ -5045,7 +5143,8 @@
             "重み付き無向グラフで、それらの全ての頂点を結び連結するような木の最小のコストを求める",
             "辺の重みの小さい順にみて、連結成分が閉路にならない辺を追加していく",
             "つなぐ頂点が同じ連結成分にないことをUnion Find Tree でみる"
-        ]
+        ],
+        "scope": "python"
     },
     "遅延評価セグメント木code": {
         "prefix": [
@@ -5163,7 +5262,8 @@
         ],
         "description": [
             "遅延評価セグメント木"
-        ]
+        ],
+        "scope": "python"
     },
     "部分列の個数": {
         "prefix": [
@@ -5286,7 +5386,8 @@
         ],
         "description": [
             "Lib_Substrings_count"
-        ]
+        ],
+        "scope": "python"
     },
     "BITset": {
         "prefix": [
@@ -5322,7 +5423,8 @@
         ],
         "description": [
             "BITset"
-        ]
+        ],
+        "scope": "python"
     },
     "レーベンシュタイン距離": {
         "prefix": [
@@ -5395,7 +5497,8 @@
         ],
         "description": [
             "Lib_レーベンシュタイン距離"
-        ]
+        ],
+        "scope": "python"
     },
     "最小費用流": {
         "prefix": [
@@ -5435,7 +5538,8 @@
         ],
         "description": [
             "最小費用流を算出するO(FElogV) ダイクストラ"
-        ]
+        ],
+        "scope": "python"
     },
     "reverse=True": {
         "prefix": [
@@ -5446,7 +5550,8 @@
         ],
         "description": [
             "ソートでのリバース"
-        ]
+        ],
+        "scope": "python"
     },
     "sort(key=itemgetter": {
         "prefix": [
@@ -5457,7 +5562,8 @@
         ],
         "description": [
             "itemgetterソート"
-        ]
+        ],
+        "scope": "python"
     },
     "順列・組み合わせ": {
         "prefix": [
@@ -5475,7 +5581,8 @@
         ],
         "description": [
             "順列・組み合わせ"
-        ]
+        ],
+        "scope": "python"
     },
     "区間カウント": {
         "prefix": [
@@ -5503,7 +5610,8 @@
             "区間カウント",
             "A=[0, 0, 1, 1, 1, 1, 0, 1, 1, 1]",
             "x=1 の区間がいくつあるか ans = 2"
-        ]
+        ],
+        "scope": "python"
     },
     "direc": {
         "prefix": [
@@ -5522,7 +5630,8 @@
         ],
         "description": [
             "direc"
-        ]
+        ],
+        "scope": "python"
     },
     "ユニオンファインド": {
         "prefix": [
@@ -5599,7 +5708,8 @@
         ],
         "description": [
             "ユニオンファインド"
-        ]
+        ],
+        "scope": "python"
     },
     "区間和の最大値": {
         "prefix": [
@@ -5650,7 +5760,8 @@
         ],
         "description": [
             "区間和を累積和の差分としてその最大値を求めるar-al"
-        ]
+        ],
+        "scope": "python"
     },
     "Lib_AL_図形_n角形/円": {
         "prefix": [
@@ -6314,7 +6425,8 @@
         ],
         "description": [
             "図形のライブラリ"
-        ]
+        ],
+        "scope": "python"
     },
     "各桁の寄与度": {
         "prefix": [
@@ -6357,7 +6469,8 @@
         "description": [
             "各桁の寄与度",
             "356"
-        ]
+        ],
+        "scope": "python"
     },
     "強連結成分分解": {
         "prefix": [
@@ -6422,7 +6535,8 @@
         ],
         "description": [
             "強連結成分分解(SCC): グラフに対するSCCを行う"
-        ]
+        ],
+        "scope": "python"
     },
     "包除原理": {
         "prefix": [
@@ -6467,7 +6581,8 @@
         ],
         "description": [
             "包除原理"
-        ]
+        ],
+        "scope": "python"
     },
     "トポロジカルソート木": {
         "prefix": [
@@ -6528,7 +6643,8 @@
         ],
         "description": [
             "木トポロジカルソート topologicalsort"
-        ]
+        ],
+        "scope": "python"
     },
     "長方形探索": {
         "prefix": [
@@ -6623,7 +6739,8 @@
         ],
         "description": [
             "長方形探索"
-        ]
+        ],
+        "scope": "python"
     },
     "双対セグメント木区間x一点": {
         "prefix": [
@@ -6734,7 +6851,8 @@
         ],
         "description": [
             "双対セグメント木区間x一点"
-        ]
+        ],
+        "scope": "python"
     },
     "追加削除機能付きMex": {
         "prefix": [
@@ -6788,7 +6906,8 @@
         ],
         "description": [
             "追加削除機能付きMex"
-        ]
+        ],
+        "scope": "python"
     },
     "オイラーツアー eulartour 再帰版": {
         "prefix": [
@@ -6894,7 +7013,8 @@
         ],
         "description": [
             "オイラーツアー eulartour 再帰版"
-        ]
+        ],
+        "scope": "python"
     },
     "累積和": {
         "prefix": [
@@ -6950,7 +7070,8 @@
         ],
         "description": [
             "累積和"
-        ]
+        ],
+        "scope": "python"
     },
     "巡回セールスマン問題": {
         "prefix": [
@@ -7007,7 +7128,8 @@
         ],
         "description": [
             "巡回セールスマン問題"
-        ]
+        ],
+        "scope": "python"
     },
     "ダイクストラ法": {
         "prefix": [
@@ -7127,7 +7249,8 @@
             "ダイクストラ法",
             "辺の重みが小さいものから、決めていく",
             ""
-        ]
+        ],
+        "scope": "python"
     },
     "二次元点クエリ": {
         "prefix": [
@@ -7181,7 +7304,8 @@
         ],
         "description": [
             "二次元点クエリ"
-        ]
+        ],
+        "scope": "python"
     },
     "数直線上の距離の合計": {
         "prefix": [
@@ -7238,7 +7362,8 @@
         ],
         "description": [
             "数直線上の点を一か所に集める時のコスト"
-        ]
+        ],
+        "scope": "python"
     },
     "木の上の範囲クエリ": {
         "prefix": [
@@ -7452,7 +7577,8 @@
         ],
         "description": [
             "木の上の範囲クエリ RangeQuery"
-        ]
+        ],
+        "scope": "python"
     },
     "nCr": {
         "prefix": [
@@ -7563,7 +7689,8 @@
         ],
         "description": [
             "nCr剰余"
-        ]
+        ],
+        "scope": "python"
     },
     "Sorted Multi Set": {
         "prefix": [
@@ -7735,7 +7862,8 @@
             "",
             ""
         ],
-        "description": []
+        "description": [],
+        "scope": "python"
     },
     "ダブリング": {
         "prefix": [
@@ -7774,12 +7902,14 @@
             "print(fk(0, k)+1)",
             ""
         ],
-        "description": []
+        "description": [],
+        "scope": "python"
     },
     "行列演算2": {
         "prefix": [],
         "body": [],
-        "description": []
+        "description": [],
+        "scope": "python"
     },
     "行列回転": {
         "prefix": [
@@ -7855,7 +7985,8 @@
             "    print(''.join(map(str, ret)))",
             ""
         ],
-        "description": []
+        "description": [],
+        "scope": "python"
     },
     "intinput": {
         "prefix": [
@@ -7866,7 +7997,8 @@
         ],
         "description": [
             "int型でのinput"
-        ]
+        ],
+        "scope": "python"
     },
     "inputsplit": {
         "prefix": [
@@ -7877,7 +8009,8 @@
         ],
         "description": [
             "inputをsplit"
-        ]
+        ],
+        "scope": "python"
     },
     "mapint": {
         "prefix": [
@@ -7888,7 +8021,8 @@
         ],
         "description": [
             "int型で複数数値のinput"
-        ]
+        ],
+        "scope": "python"
     },
     "mapint1": {
         "prefix": [
@@ -7899,7 +8033,8 @@
         ],
         "description": [
             "int型で複数数値の0-index input"
-        ]
+        ],
+        "scope": "python"
     },
     "listmapint": {
         "prefix": [
@@ -7910,7 +8045,8 @@
         ],
         "description": [
             "int型でlistのinput"
-        ]
+        ],
+        "scope": "python"
     },
     "tuplemapint": {
         "prefix": [
@@ -7921,7 +8057,8 @@
         ],
         "description": [
             "int型でtupleのinput"
-        ]
+        ],
+        "scope": "python"
     },
     "matrixintinput": {
         "prefix": [
@@ -7932,7 +8069,8 @@
         ],
         "description": [
             "int型でmatrixのinput"
-        ]
+        ],
+        "scope": "python"
     },
     "matrixinput": {
         "prefix": [
@@ -7943,7 +8081,8 @@
         ],
         "description": [
             "文字列でmatrixのinput"
-        ]
+        ],
+        "scope": "python"
     },
     "FenwickTree/Binary Indexed Tree": {
         "prefix": [
@@ -8061,7 +8200,8 @@
             "########################################",
             ""
         ],
-        "description": []
+        "description": [],
+        "scope": "python"
     },
     "Zアルゴリズム": {
         "prefix": [
@@ -8109,6 +8249,7 @@
         "description": [
             "Zアルゴリズム",
             "S と S[i:]が接頭辞が一致する長さ"
-        ]
+        ],
+        "scope": "python"
     }
 }

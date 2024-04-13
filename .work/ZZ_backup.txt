@@ -1374,3 +1374,18 @@ Tue Apr  2 21:20:00 JST 2024
 -rw-r--r-- 1 ibtosm ibtosm  529 Apr  2 07:05 /home/ibtosm/app/atcoder/.work/abc347_c.py
 -rw-r--r-- 1 ibtosm ibtosm 1301 Apr  2 07:42 /home/ibtosm/app/atcoder/.work/abc347_d.py
 -rw-r--r-- 1 ibtosm ibtosm  816 Apr  2 08:15 /home/ibtosm/app/atcoder/.work/abc347_e.py
+Sat Apr 13 18:00:33 JST 2024
+-rw-r--r-- 1 ibtosm ibtosm  410 Apr  5 07:10 /home/ibtosm/app/atcoder/.work/abc347_a.py
+-rw-r--r-- 1 ibtosm ibtosm 1051 Apr  5 12:00 /home/ibtosm/app/atcoder/.work/arc175_a.py
+-rw-r--r-- 1 ibtosm ibtosm 1257 Apr  6 18:05 /home/ibtosm/app/atcoder/.work/arc173_a.py
+-rw-r--r-- 1 ibtosm ibtosm  370 Apr  7 16:33 /home/ibtosm/app/atcoder/.work/abc348_a.py
+-rw-r--r-- 1 ibtosm ibtosm  608 Apr  7 16:36 /home/ibtosm/app/atcoder/.work/abc348_b.py
+-rw-r--r-- 1 ibtosm ibtosm  411 Apr  7 16:41 /home/ibtosm/app/atcoder/.work/abc348_c.py
+-rw-r--r-- 1 ibtosm ibtosm 2011 Apr  9 09:52 /home/ibtosm/app/atcoder/.work/abc348_d.py
+-rw-r--r-- 1 ibtosm ibtosm 3288 Apr  9 12:15 /home/ibtosm/app/atcoder/.work/s8pc_4_d.py
+-rw-r--r-- 1 ibtosm ibtosm 3309 Apr  9 12:17 /home/ibtosm/app/atcoder/.work/abc348_e.py
+-rw-r--r-- 1 ibtosm ibtosm 3371 Apr  9 12:30 /home/ibtosm/app/atcoder/.work/abc160_f.py
+-rw-r--r-- 1 ibtosm ibtosm 3082 Apr  9 12:37 /home/ibtosm/app/atcoder/.work/abc222_f.py
+-rw-r--r-- 1 ibtosm ibtosm 1541 Apr 10 07:15 /home/ibtosm/app/atcoder/.work/abc295_e.py
+-rw-r--r-- 1 ibtosm ibtosm  318 Apr 10 16:02 /home/ibtosm/app/atcoder/.work/abc140_f.py
+-rw-r--r-- 1 ibtosm ibtosm 6420 Apr 13 17:49 /home/ibtosm/app/atcoder/.work/practice2_k.py

@@ -6,6 +6,7 @@ alias py="python3"
 
 # atcoder contest
 alias at="source ./tool/atcoder.sh"
+alias ts="source ./tool/atcoder_typescript.sh"
 
 alias setconid="source ./tool/set_contest_id.sh"
 alias setcontemplate="source ./tool/set_contest_template.sh"
