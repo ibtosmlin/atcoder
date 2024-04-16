@@ -1389,3 +1389,9 @@ Sat Apr 13 18:00:33 JST 2024
 -rw-r--r-- 1 ibtosm ibtosm 1541 Apr 10 07:15 /home/ibtosm/app/atcoder/.work/abc295_e.py
 -rw-r--r-- 1 ibtosm ibtosm  318 Apr 10 16:02 /home/ibtosm/app/atcoder/.work/abc140_f.py
 -rw-r--r-- 1 ibtosm ibtosm 6420 Apr 13 17:49 /home/ibtosm/app/atcoder/.work/practice2_k.py
+Tue Apr 16 17:15:39 JST 2024
+-rw-r--r-- 1 ibtosm ibtosm  308 Apr 14 17:20 /home/ibtosm/app/atcoder/.work/abc349_a.py
+-rw-r--r-- 1 ibtosm ibtosm  472 Apr 14 17:25 /home/ibtosm/app/atcoder/.work/abc349_b.py
+-rw-r--r-- 1 ibtosm ibtosm  648 Apr 14 17:43 /home/ibtosm/app/atcoder/.work/abc349_c.py
+-rw-r--r-- 1 ibtosm ibtosm  723 Apr 14 20:33 /home/ibtosm/app/atcoder/.work/abc349_d.py
+-rw-r--r-- 1 ibtosm ibtosm 1046 Apr 16 17:14 /home/ibtosm/app/atcoder/.work/abc349_e.py
