@@ -1,3 +1,5 @@
+# https://judge.yosupo.jp/problem/range_affine_point_get
+import sys; input: lambda _: sys.stdin.readline().rstrip()
 
 class DualSegmentTree:
     def __init__(self, op, e, v):
@@ -45,21 +47,43 @@ class DualSegmentTree:
             l >>= 1
             r >>= 1
 
+class RangeAffinePointGet(DualSegmentTree):
+    def __init__(self, A):
+        self.mod = 998244353
+        self.bit = 30
+        self.msk = (1<<self.bit)-1
+        id = 1<<self.bit
+        super().__init__(self._op, id, len(A))
+        self.A = A
+
+    def _op(self, x, y):
+        mod, bit, msk = self.mod, self.bit, self.msk
+        a, b = x>>bit, x&msk
+        c, d = y>>bit, y&msk
+        r0 = (a*c)%mod
+        r1 = (b*c+d)%mod
+        return r0<<bit|r1
+
+    def apply(self, l, r, u):
+        a, b = u
+        super().apply(l, r, a<<self.bit|b)
+
+    def get(self, i):
+        mod, bit, msk = self.mod, self.bit, self.msk
+        u = super().get(i)
+        a, b = u>>bit, u&msk
+        return (a*self.A[i]+b)%mod
 
 ####################################
+N, Q = map(int, input().split())
+A = list(map(int, input().split()))
+sgt = RangeAffinePointGet(A)
 
-n, q = map(int, input().split())
-
-def op(x, y):
-    return x
-
-sgt = DualSegmentTree(op, -1, [(1 << 31)-1] * n)
-for _ in range(q):
-    t, *que = map(int, input().split())
-    if t == 0:
-        l, r, b = que
-        sgt.apply(l, r+1, b)
+for _ in range(Q):
+    f, *que = map(int, input().split())
+    if f == 0:
+        l, r, b, c = que
+        sgt.apply(l, r, (b, c))
     else:
-        i, = que
-        v = sgt.get(i)
-        print(v)
+        i = que[0]
+        print(sgt.get(i))

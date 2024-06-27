@@ -14,7 +14,94 @@
 
 from atcoder.segtree import SegTree
 
+class SegmentTreeMine:
+    def __init__(self, op, e, v):
+        self._op = op
+        self._ie = e
+        if isinstance(v, int): v = [e] * v
+        self._n = len(v)
+        self._log = (self._n - 1).bit_length()
+        self._size = 1 << self._log
+        self._dat = [e] * (2*self._size)
+        self._dat[self._size:self._size+self._n] = v
+        for i in range(self._size-1, 0, -1):
+            self._update(i)
+
+    def _update(self, i):
+        self._dat[i] = self._op(self._dat[i*2], self._dat[i*2+1])
+
+    def __getitem__(self, i):
+        return self._dat[i + self._size]
+
+    def set(self, p, x):
+        p += self._size
+        self._dat[i] = x
+        for i in range(1, self._log + 1):
+            self._update(p >> i)
+
+    def add(self, p, x):
+        p += self._size
+        self._dat[i] += x
+        for i in range(1, self._log + 1):
+            self._update(p >> i)
+
+    def all_prod(self):
+        return self._dat[1]
+
+    def prod(self, l, r):
+        l += self._size
+        r += self._size
+        lret, rret = self._ie, self._ie
+        while l < r:    # lとrが重なるまで上記の判定を用いて演算を実行
+            if l & 1:
+                lret = self._op(lret, self._dat[l])
+                l += 1
+            if r & 1:
+                r -= 1
+                rret = self._op(self._dat[r], rret)
+            l >>= 1
+            r >>= 1
+        return self._op(lret, rret)
+
+    def max_right(self, l, isOk):
+        if l >= self._n: return self._n
+        l += self._size
+        sm = self._ie
+        while True:
+            while l % 2 == 0: l >>= 1
+            if not isOk(self._op(sm, self._dat[l])):
+                while l < self._size:
+                    l <<= 1
+                    if isOk(self._op(sm, self._dat[l])):
+                        sm = self._op(sm, self._dat[l])
+                        l += 1
+                return l - self._size
+            sm = self._op(sm, self._dat[l])
+            l += 1
+            if l & -l == l: break
+        return self._n
+
+    def min_left(self, r, isOk):
+        if r <= 0: return 0
+        r += self._size
+        sm = self._ie
+        while True:
+            r -= 1
+            while r > 1 and r % 2 == 1: r >>= 1
+            if not isOk(self._op(self._dat[r], sm)):
+                while r < self._size:
+                    r = r << 1 | 1
+                    if isOk(self._op(self._dat[r], sm)):
+                        sm = self._op(self._dat[r], sm)
+                        r -= 1
+                return r + 1 - self._size
+            sm = self._op(self._dat[r], sm)
+            if r & -r == r: break
+        return 0
+
+
 class SegmentTree(SegTree):
+# class SegmentTree(SegmentTreeMine):
     def __init__(self, op, e, v) -> None:
         super().__init__(op, e, v)
 
@@ -81,6 +168,7 @@ class RXorQSegmentTree(SegmentTree):
         super().__init__(lambda x, y: x ^ y, 0, init)
 
 import math
+
 class RGCDSegmentTree(SegmentTree):
     def __init__(self, init):
         def op(x, y):
@@ -89,19 +177,6 @@ class RGCDSegmentTree(SegmentTree):
             return math.gcd(x, y)
         super().__init__(op, 0, init)
 
-mod = 998244353
-class PointSetRangeComposite(SegmentTree):
-# https://judge.yosupo.jp/problem/point_set_range_composite
-    def __init__(self, init):
-        def op(x, y):
-            a, b = x
-            c, d = y
-            return ((a*c)%mod, (b*c+d)%mod)
-        super().__init__(op, (1, 0), init)
-
-    def get(self, x):
-        a, b = super().get(x)
-        return (a*x+b) % mod
 
 ####################################
 # https://atcoder.jp/contests/practice2/tasks/practice2_j

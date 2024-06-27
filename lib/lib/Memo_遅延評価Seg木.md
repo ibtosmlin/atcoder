@@ -19,7 +19,7 @@ def op(x, y):
     return r0<<bit|r1
 
 # op演算の単位元
-ie = 0
+e = 0
 
 # 区間更新演算 ·: F · G -> G の定義.
 def mapping(f,x):
@@ -40,7 +40,7 @@ def composition(f, g):
 # 遅延評価演算の単位元
 id = 1<<bit
 
-sgt = LazySegmentTree(op, ie, mapping, composition, id, A)
+sgt = LazySegmentTree(op, e, mapping, composition, id, A)
 
 for _ in range(q):
     t, *qry = map(int, input().split())
@@ -101,7 +101,7 @@ id = -1
 n, q = map(int, input().split())
 a = [(1, 1) for _ in range(n)]
 
-sgt = LazySegmentTree(op, ie, mapping, composition, id, a)
+sgt = LazySegmentTree(op, e, mapping, composition, id, a)
 for _ in range(q):
     l, r, d = map(int, input().split())
     l -= 1
@@ -148,7 +148,7 @@ for i in map(int, input().split()):
         a.append((0, 1, 0))
 
 
-sgt = LazySegmentTree(op, ie, mapping, composition, id, a)
+sgt = LazySegmentTree(op, e, mapping, composition, id, a)
 
 for _ in range(q):
     t, l, r = map(int, input().split())
@@ -183,7 +183,7 @@ def op(x, y):
     return ret
 
 # op演算の単位元
-ie = [0] * d
+e = [0] * d
 
 # 区間更新演算 ·: F · G -> G の定義.
 def mapping(f,x):
@@ -199,7 +199,7 @@ def composition(f, g):
 # 遅延評価演算の単位元
 id = 0
 
-sgt = LazySegmentTree(op, ie, mapping, composition, id, A)
+sgt = LazySegmentTree(op, e, mapping, composition, id, A)
 sft = 0
 for _ in range(int(input())):
     q = list(map(int, input().split()))

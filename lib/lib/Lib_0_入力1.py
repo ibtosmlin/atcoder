@@ -3,7 +3,7 @@
 #description#
 # 整数nの読み込み
 #body#
-n = int(input())
+N = int(input())
 #prefix#
 # nin
 #end#
@@ -14,8 +14,8 @@ n = int(input())
 #description#
 # 整数nの読み込み
 #body#
-n = int(input())
-a = list(map(int, input().split()))
+N = int(input())
+A = list(map(int, input().split()))
 #prefix#
 # nain
 #end#
@@ -25,7 +25,7 @@ a = list(map(int, input().split()))
 #description#
 # 文字列sの読み込み
 #body#
-s = list(input())
+S = list(input())
 #prefix#
 # sin
 #end#
@@ -45,7 +45,7 @@ a, b = map(int1, input().split())
 #description#
 # 整数n, mの読み込み
 #body#
-n, m = map(int, input().split())
+N, M = map(int, input().split())
 #prefix#
 # n, m=map
 #end#
@@ -55,28 +55,18 @@ n, m = map(int, input().split())
 #description#
 # リストの読み込み
 #body#
-a = list(map(int, input().split()))
+A = list(map(int, input().split()))
 #prefix#
 # a =list
 #end#
 
 #name#
-# b=list(map(int, input().split()))
-#description#
-# リストの読み込み
-#body#
-b = list(map(int, input().split()))
-#prefix#
-# b =list
-#end#
-
-#name#
 # edges
 #description#
 # edges
 #body#
-G = [[] for _ in range($n)]
-for _ in range($m):
+G = [[] for _ in range($N)]
+for _ in range($M):
     a, b = map(int1, input().split())
     G[a].append(b)
     G[b].append(a)
@@ -90,9 +80,10 @@ for _ in range($m):
 #description#
 # edges(重み付き)
 #body#
-G = [[] for _ in range($n)]
-for _ in range($m):
-    a, b, w = map(int1, input().split())
+G = [[] for _ in range($N)]
+for _ in range($M):
+    a, b, w = map(int, input().split())
+    a -= 1; b -= 1
     G[a].append((b, w))
     G[b].append((a, w))
 

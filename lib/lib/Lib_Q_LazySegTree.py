@@ -12,15 +12,15 @@
 #body#
 from atcoder.lazysegtree import LazySegTree as LazySegTreeACL
 
-class LazySegTreeLight:
+class LazySegTreeMine:
     def __init__(self, op, e, mapping, composition, id_, v):
-        n = len(v)
-        self._n = n
         self._op = op
         self._e = e
         self._mapping = mapping
         self._composition = composition
         self._id = id_
+        if isinstance(v, int): v = [e] * v
+        self._n = len(v)
         self._log = (n - 1).bit_length()
         self._size = 1 << self._log
         self._d = [e] * (2 * self._size)
@@ -86,10 +86,10 @@ class LazySegTreeLight:
         return self.prod(p, p+1)
 
 
-class LazySegmentTree(LazySegTreeLight):
+class LazySegmentTree(LazySegTreeMine):
 #class LazySegmentTree(LazySegTreeACL):
-    def __init__(self, op, e, mapping, composition, id, v):
-        super().__init__(op, e, mapping, composition, id, v)
+    def __init__(self, op, e, mapping, composition, id_, v):
+        super().__init__(op, e, mapping, composition, id_, v)
 
     def __str__(self) -> str:
         return ' '.join(map(str, [self.get(i) for i in range(self._n)]))
@@ -138,42 +138,38 @@ class LazySegmentTree(LazySegTreeLight):
 # mp = lambda f, x: x if f == INF else (f*x[1], x[1])
 # LST = LazySegmentTree([(0,1)]*N, op, (0,0), mp, lambda f, g: g if f == INF else f, INF)
 
+# https://github.com/ibtosmlin/atcoder/blob/main/lib/lib/Memo_%E9%81%85%E5%BB%B6%E8%A9%95%E4%BE%A1Seg%E6%9C%A8.md
 #######################################################
-n, d = map(int, input().split())
-A = list(input().split())
-bs = pow(10, d-1)
-for i in range(n):
-    x = [int(A[i])]
-    for j in range(d-1):
-        f, s = divmod(x[-1], bs)
-        x.append(s*10+f)
-    A[i] = x
-
 # 区間集約演算 *: G * G -> G の定義.
 def op(x, y):
-    ret = [0] * d
-    for i in range(d):
-        ret[i] = x[i]^y[i]
-    return ret
+    invx, c0x, c1x = x
+    invy, c0y, c1y = y
+    return (invx+invy+c0y*c1x, c0x+c0y, c1x+c1y)
 
-# op演算の単位元
-ie = [0] * d
+# op演算の単位元(反転数,区間内の０の数,区間内の１の数)
+e = (0, 0, 0)
 
 # 区間更新演算 ·: F · G -> G の定義.
-def mapping(f,x):
-    ret = [0] * d
-    for i in range(d):
-        ret[(i-f)%d] = x[i]
-    return ret
+def mapping(f, x):
+    if f==0: return x
+    inv, c0, c1 = x
+    return (c1*c0 - inv, c1, c0)
 
 # 遅延評価演算 ·: F · F -> F の定義.
 def composition(f, g):
-    return (f+g)%d
+    return f ^ g
 
 # 遅延評価演算の単位元
 id = 0
 
-sgt = LazySegmentTree(op, ie, mapping, composition, id, A)
+n, q = map(int, input().split())
+a = []
+for i in map(int, input().split()):
+    if i == 1:
+        a.append((0, 0, 1))
+    else:
+        a.append((0, 1, 0))
+sgt = LazySegmentTree(op, e, mapping, composition, id, a)
 
 
 #prefix#

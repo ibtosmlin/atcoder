@@ -63,7 +63,7 @@ tuple(map(int, input().split()))
 #description#
 # int型でmatrixのinput
 #body#
-[list(map(int, input().split())) for _ in range($n)
+[list(map(int, input().split())) for _ in range($N)
 #prefix#
 # [listmapint
 #end#
@@ -73,7 +73,7 @@ tuple(map(int, input().split()))
 #description#
 # 文字列でmatrixのinput
 #body#
-[list(input()) for _ in range($n)
+[list(input()) for _ in range($N)
 #prefix#
 # [listinput()
 #end#
@@ -83,7 +83,7 @@ tuple(map(int, input().split()))
 #description#
 # 文字列でmatrixのinput
 #body#
-[tuple(map(int, input().split())) for _ in range($n)
+[tuple(map(int, input().split())) for _ in range($N)
 #prefix#
 # [tupleinput()
 #end#

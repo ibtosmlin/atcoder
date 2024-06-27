@@ -1,4 +1,7 @@
-class LazySegTreeLight:
+# https://judge.yosupo.jp/problem/range_affine_range_sum
+import sys; input: lambda _: sys.stdin.readline().rstrip()
+
+class LazySegTreeMine:
     def __init__(self, op, e, mapping, composition, id_, v):
         n = len(v)
         self._n = n
@@ -72,87 +75,64 @@ class LazySegTreeLight:
         return self.prod(p, p+1)
 
 
-class LazySegmentTree(LazySegTreeLight):
-    def __init__(self, op, e, mapping, composition, id, v):
-        super().__init__(op, e, mapping, composition, id, v)
+class RangeAffineRangeSum(LazySegTreeMine):
+    def __init__(self, v):
+        self.mod = 998244353
+        self.bit = 30
+        self.msk = (1<<self.bit)-1
+        e = 0
+        id = 1 << self.bit
+        _v = [vi<<self.bit|1 for vi in v]
+        super().__init__(self._op, e, self._mapping, self._composition, id, _v)
 
-    def __str__(self) -> str:
-        return ' '.join(map(str, [self.get(i) for i in range(self._n)]))
+    def _op(self, x, y):
+    # 区間集約演算 *: G * G -> G の定義.
+        mod, bit, msk = self.mod, self.bit, self.msk
+        xv, xlen = x>>bit, x&msk
+        yv, ylen = y>>bit, y&msk
+        r0 = (xv+yv)%mod
+        r1 = (xlen+ylen)%mod
+        return r0<<bit|r1
 
-    def _debug(self, xs):
-        strs = [str(x) for x in xs] + [f'({x})' for x in range(self._n)]
-        minsize = max(len(s) for s in strs[self._size:])
-        result = ['|'] * (self._log + 2)
-        level = 0
-        next_level = 2
-        for i in range(1, len(strs)):
-            if i == next_level:
-                level += 1
-                next_level <<= 1
-            if level < self._log + 1:
-                width = ((minsize + 1) << (self._log - level)) - 1
-            result[level] += strs[i].center(width) + '|'
-        return '\n'.join(result)
+    # 区間更新演算 ·: F · G -> G の定義.
+    def _mapping(self, f,x):
+        mod, bit, msk = self.mod, self.bit, self.msk
+        f0, f1 = f>>bit, f&msk
+        sx, lx = x>>bit, x&msk
+        r0 = (f0*sx + f1*lx)%mod
+        r1 = lx
+        return r0<<bit|r1
 
+    # 遅延評価演算 ·: F · F -> F の定義.
+    def _composition(self, f, g):
+        mod, bit, msk = self.mod, self.bit, self.msk
+        f0, f1 = f>>bit, f&msk
+        g0, g1 = g>>bit, g&msk
+        r0 = f0*g0%mod
+        r1 = (f0*g1+f1)%mod
+        return r0<<bit|r1
 
+    def prod(self, l, r):
+        u = super().prod(l, r)
+        return u >> self.bit
+
+    def apply(self, l, r, u):
+        a, b = u
+        super().apply(l, r, a<<self.bit|b)
 
 #######################################################
-mod = 998244353
-bit = 30
-msk = (1<<bita) - 1
+
 
 n, q = map(int, input().split())
-A = []
-for _ in range(n):
-    a, b = map(int, input().split())
-    A.append((a<<bita|b)<<bitb|1)
-# 区間集約演算 *: G * G -> G の定義.
+A = list(map(int, input().split()))
 
-def op(x, y):
-    xa, xb, xlen = x>>(bita+bitb), (x>>bitb)&mskb, x&mskc
-    ya, yb, ylen = y>>(bita+bitb), (y>>bitb)&mskb, y&mskc
-    return (((xa*ya%mod)<<bita)|(xb*ya+yb)%mod)<<bitb|(xlen+ylen)
+sgt = RangeAffineRangeSum(A)
 
-# op演算の単位元
-ie = 1<<(bita+bitb)
-
-# 区間更新演算 ·: F · G -> G の定義.
-def _fast_pow(a: int, b: int) -> int:
-    res = 1
-    while b:
-        if b & 1:
-            res = res * a % mod
-        a = a * a % mod
-        b >>= 1
-    return res
-
-def mapping(f,x):
-    if f==id: return x
-    fa, fb, flen = f>>(bita+bitb), (f>>bitb)&mskb, f&mskc
-    xa, xb, xlen = x>>(bita+bitb), (x>>bitb)&mskb, x&mskc
-    A = _fast_pow(fa, xlen)
-    if fa <= 1:
-        B = xlen*fa * fb % mod
-    else:
-        B = (A-1) * _fast_pow(fa-1, mod-2) * fb % mod
-    return (A<<bita|B)<<bitb|xlen
-
-# 遅延評価演算 ·: F · F -> F の定義.
-def composition(f, g):
-    return g if f == id else f
-
-# 遅延評価演算の単位元
-id = 1<<bitb - 1
-
-sgt = LazySegmentTree(op, ie, mapping, composition, id, A)
 for _ in range(q):
-    f, l, r, *v = map(int, input().split())
-    if f:
-        x = sgt.prod(l, r)
-        xa, xb, xlen = x>>(bita+bitb), (x>>bitb)&mskb, x&mskc
-        print((xa*v[0]+xb)%mod)
+    t, *qry = map(int, input().split())
+    if t == 0:
+        l, r, (a, b) = qry
+        sgt.apply(l, r, (a, b))
     else:
-        sgt.apply(l, r,((v[0]<<bita)|v[1])<<bitb|1)
-#prefix#
-# Lib_Q_LazySeg_plain
-#end#
+        l, r = qry
+        print(sgt.prod(l, r))

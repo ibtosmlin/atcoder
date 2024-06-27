@@ -70,11 +70,7 @@ def count_intervals(a:list, x)->int:
 direc = [(0, 1), (1, 0), (0, -1), (-1, 0)]  # RULD
 direc = [(0, 1), (1, 1), (1, 0), (1, -1), (0, -1), (-1, -1), (-1, 0), (-1, 1)]
 
-def canmove(i, j, H, W, A=None):
-    if A:
-        return (0 <= i < H) and (0 <= j < W) and A[i][j] == "."
-    else:
-        return (0 <= i < H) and (0 <= j < W)
+def isin(i, j, H, W): return (0 <= i < H) and (0 <= j < W)
 
 #prefix#
 # direc_canmove
