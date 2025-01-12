@@ -11,9 +11,12 @@
 #####################################
 from itertools import groupby
 strings = "aabbbbbbbbbbbba"
+strings = [1,3,4,1,1,1,5,5,7]
 
-ans = [(k, len(list(g))) for k,g in groupby(strings)]
-print(ans)
+rle = [(k, len(list(g))) for k,g in groupby(strings)]
+split = [list(g) for k, g in groupby(strings)]
+print(rle)
+print(split)
 #[('a', 2), ('b', 12), ('a', 1)]
 #prefix#
 # Lib_A_ランレングス圧縮_rle

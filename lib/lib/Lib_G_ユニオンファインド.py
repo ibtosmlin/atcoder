@@ -6,8 +6,8 @@
 # .unite(x, y, w): x と y の差を w として結合
 # もし、不整合だったら"invalid"を返す
 # .is_same(x, y): 同じグループかどうか
+# .size(x): xが所属するグループの要素数を返す
 # .get_groups(): リーダーに所属する要素一覧リストを返す
-# self.leadersはリーダーの集合も作成
 
 #name#
 # ユニオンファインド
@@ -16,34 +16,38 @@
 #body#
 
 class UnionFind:
-    def __init__(self, n):                      # 初期化
+    """木の深さが小さい方を親にする"""
+    def __init__(self, n):
         self.n = n                              # 要素数
         self.parents = [i for i in range(n)]    # 親
         self.ranks = [0] * n                    # 木の深さ
         self.sizes = [1] * n                    # グループの要素数
-        self.leaders = None                     # リーダー
-        self.groups = None                      # グループ
+        self.groups = dict()                    # グループ key:parent, value:listofmember
 
     def find(self, x):
         if self.parents[x] == x: return x
         self.parents[x] = p = self.find(self.parents[x])
         return p
 
-    def unite(self, x, y):
-        x = self.find(x)
-        y = self.find(y)
-        if x == y: return
+    def _choose_parent(self, x, y):
+        """木の深さが大きい方を親とする"""
         if self.ranks[x] > self.ranks[y]:
-            x , y = y, x    #yを親にする
-        elif self.ranks[x] == self.ranks[y]:
+            x, y = y, x
+        if self.ranks[x] == self.ranks[y]:
             self.ranks[y] += 1
+        return x, y
+
+    def unite(self, x, y):
+        x, y = self.find(x), self.find(y)
+        if x == y: return
+        x, y = self._choose_parent(x, y)
         self.parents[x] = y
         self.sizes[y] += self.sizes[x]
 
     def is_same(self, x, y) -> bool:
         return self.find(x) == self.find(y)
 
-    def get_size(self, x):
+    def size(self, x):
         """xのグループの要素数"""
         return self.sizes[self.find(x)]
 
@@ -51,18 +55,33 @@ class UnionFind:
         """親のリスト取得
             親ごとのグループのメンバー一覧取得
         """
-        leader_buf = [self.find(i) for i in range(self.n)]
-        self.leaders = []
-        result = [[] for _ in range(self.n)]
+        self.groups = dict()
         for i in range(self.n):
-            if leader_buf[i] == i:
-                self.leaders.append(i)
-            result[leader_buf[i]].append(i)
-        self.gropus = result
-        return result
+            p = self.find(i)
+            if p not in self.groups:
+                self.groups[p] = []
+            self.groups[p].append(i)
+        return
 
     def __str__(self):
-        return '\n'.join(f'{r}: {self.members(r)}' for r in self.leaders)
+        self.get_groups()
+        print(f'group_count = {len(self.groups)}')
+        return ' '.join([f'{p}:{v}' for p, v in sorted(self.groups.items())])
+
+class UnionFindMax(UnionFind):
+    def _choose_parent(self, x, y):
+        """ノード番号が大きい方を親にする"""
+        if x > y:
+            x, y = y, x
+        return x, y
+
+class UnionFindMin(UnionFind):
+    def _choose_parent(self, x, y):
+        """ノード番号が小さい方を親にする"""
+        if x < y:
+            x, y = y, x
+        return x, y
+
 
 ################
 
@@ -70,7 +89,7 @@ n, q = map(int, input().split())
 uf = UnionFind(n)
 for _ in range(q):
     p, a, b = map(int,input().split())
-    a -= 1; b -= 1
+    # a -= 1; b -= 1
     if p == 0:
         uf.unite(a, b)
     else:
