@@ -130,7 +130,7 @@ class SegmentTree(SegTree):
 
     def add(self, i, x):
         """one point add a[i] に xを加算 """
-        self.set(i, self._d[i] + x)
+        self.set(i, self._d[i + self._size] + x)
 
     # def max_right(self, l, isOk):
         # ex:

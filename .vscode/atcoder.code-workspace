@@ -6,6 +6,15 @@
 	],
 	"settings": {
 		"python.defaultInterpreterPath": "${workspaceFolder}/.venv",
-		"python.terminal.activateEnvironment": true
+		"python.terminal.activateEnvironment": true,
+		"python.analysis.typeCheckingMode": "off",
+		"ruff.enable": false,
+		"[python]": {
+			"editor.defaultFormatter": "ms-python.vscode-pylance",
+			"editor.codeActionsOnSave": {
+			"source.fixAll": "never",
+			"source.organizeImports": "never"},
+			"editor.formatOnType": false
+		},
 	}
 }
