@@ -18,7 +18,8 @@
 def prime_factorize(n:int) -> dict:
     if n == 1: return {1: 1}
     pd = dict()
-    for p in range(2, int(n**0.5)+1):
+    test = [2] + list(range(3, int(n**0.5)+1, 2))
+    for p in test:
         if n % p != 0: continue
         d = 0
         while n % p == 0:

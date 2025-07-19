@@ -30,18 +30,21 @@ class EulerTour():
         self.n = n
         self.edges = [[] for _ in range(n)]
         self.root = None    # 根
-        self.etnodes = []    # i番目の頂点番号
-        self.etedges = []    # i番目の辺の番号
+        self.etnodes = []   # i番目の頂点番号
+        self.etedges = []   # i番目の辺の番号
+        self.etdepth = []   # i番目の頂点の深さ
         self.etL = [0] * n  # in
         self.etR = [0] * n  # out
+        self.parent = [-1] * n  # 各頂点の親
         self.depthbynodes = [0] * n
-        self.etdepth = []       # i番目の辺の
-
+        self.edge_id = 0
+        self.edge_tuple = []
 
     def add_edge(self, u, v):
-        self.edges[u].append(v)
-        self.edges[v].append(u)
-
+        self.edges[u].append((v, self.edge_id))
+        self.edges[v].append((u, self.edge_id))
+        self.edge_id += 1
+        self.edge_tuple.append((u, v))
 
     def set_euler_tour(self, root):
         self.root = root        # 根を設定して
@@ -60,11 +63,13 @@ class EulerTour():
                 self.depthbynodes[v] = de
                 self.etL[v] = ct
                 p = pa[v]
-                for w in self.edges[v][::-1]:
+                for w, eid in self.edges[v][::-1]:
                     if w == p: continue
                     pa[w] = v
                     stack.append(~w)
                     stack.append(w)
+                    self.parent[w] = v
+                    self.edge_tuple[eid] = (v, w)
             else:
                 de -= 1
                 self.etdepth.append(de)

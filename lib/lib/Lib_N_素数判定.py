@@ -72,15 +72,48 @@ for _ in range(int(input())):
 ##############################
 def get_primes(n:int) -> list:
 # n以下の素数列挙
-    n += 1
-    IsPrime = [True] * n
-    IsPrime[0:2] = [False, False]
-    for p in range(n):
-        if not IsPrime[p]: continue
-        for j in range(p*2, n, p):
-            IsPrime[j] = False
-    ret = [p for p in range(n) if IsPrime[p]]
-    return ret
+    isPrime = [False, False, True, True] + [False, True] * ((n - 4) // 2)
+    primes = [2]
+    for p in range(3, n, 2):
+        if isPrime[p]:
+           primes.append(p)
+           for q in range(p * p, n, p):
+               isPrime[q] = False
+    return primes
+
+
+##############################
+# 素数出力 O(n**0.5)
+# 区間篩
+# L = 10**14
+# R - L <= 10**5
+##############################
+def get_primes_segments(L:int , R:int) -> list:
+    # √R 以下の素数を炙り出すための篩
+    sqrtR = int(R**0.5)
+    isPrime = [True] * (sqrtR + 1)
+    isPrime2 = [True] * (R - L + 1)
+    primes = []
+    # ふるい
+    for p in range(2, sqrtR + 1):
+        # すでに合成数であるものはスキップする
+        if not isPrime[p]: continue
+        # p 以外の p の倍数から素数ラベルを剥奪
+        q = p * 2
+        while q * q <= R:
+            isPrime[q] = False
+            q += p
+        # L 以上の最小の p の倍数
+        start = L + (-L) % p
+        if start == p:
+            start = p * 2
+        # L 以上 R 以下の整数のうち、p の倍数をふるう
+        q = start
+        while q <= R:
+            isPrime2[q - L] = False
+            q += p
+    primes = [p + L for p, v in enumerate(isPrime2) if v]
+    return primes
 
 
 ##############################
